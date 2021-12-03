@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import lombok.var;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
+import org.springframework.web.reactive.function.client.ExchangeFilterFunctions;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import io.netty.channel.ChannelOption;
@@ -27,7 +28,8 @@ public class C01WebClientShowcases {
                 .price(BigDecimal.valueOf(23.99))
                 .build();
 
-        var webClient = WebClient.create("http://localhost:8080/routed");
+        var webClient = WebClient.builder().filter(ExchangeFilterFunctions.basicAuthentication("admin", "secret"))
+                .baseUrl("http://localhost:8080/routed").build();
         webClient.post().uri("/book")
             .body(Mono.just(book), Book.class)
             .exchange()

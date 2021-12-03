@@ -6,6 +6,7 @@
 	<modules>
 		<module>eureka-server</module>
 		<module>reactive</module>
+		<module>demo-client</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
