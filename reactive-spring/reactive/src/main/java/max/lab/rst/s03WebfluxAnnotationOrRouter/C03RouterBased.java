@@ -1,10 +1,11 @@
 package max.lab.rst.s03WebfluxAnnotationOrRouter;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import lombok.RequiredArgsConstructor;
 import lombok.var;
+import max.lab.rst.domain.Book;
+import max.lab.rst.domain.BookQuery;
+import max.lab.rst.domain.InMemoryDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.Validator;
@@ -13,13 +14,10 @@ import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import lombok.RequiredArgsConstructor;
-import max.lab.rst.domain.Book;
-import max.lab.rst.domain.BookQuery;
-import max.lab.rst.domain.InMemoryDataSource;
 import reactor.core.publisher.Mono;
 import reactor.util.function.Tuples;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 @RequiredArgsConstructor
 @Configuration
