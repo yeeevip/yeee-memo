@@ -1,10 +1,10 @@
-package max.lab.rst.s03WebfluxControllerAndRouter;
+package max.lab.rst.s03WebfluxAnnotationOrRouter;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
-import max.lab.rst.s03WebfluxControllerAndRouter.C04ReactiveControllerHelper.ValidationException;
+import max.lab.rst.s03WebfluxAnnotationOrRouter.C04ReactiveControllerHelper.ValidationException;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler;
 import org.springframework.boot.web.reactive.error.ErrorAttributes;

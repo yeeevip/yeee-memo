@@ -1,4 +1,4 @@
-package max.lab.rst.s03WebfluxControllerAndRouter;
+package max.lab.rst.s03WebfluxAnnotationOrRouter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;

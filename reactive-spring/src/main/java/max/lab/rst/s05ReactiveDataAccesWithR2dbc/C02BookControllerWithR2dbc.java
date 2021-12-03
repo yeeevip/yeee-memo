@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.var;
 import max.lab.rst.domain.Book;
 import max.lab.rst.domain.BookQuery;
-import max.lab.rst.s03WebfluxControllerAndRouter.C04ReactiveControllerHelper;
+import max.lab.rst.s03WebfluxAnnotationOrRouter.C04ReactiveControllerHelper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.reactive.TransactionalOperator;

@@ -1,4 +1,4 @@
-package max.lab.rst.s03WebfluxControllerAndRouter;
+package max.lab.rst.s03WebfluxAnnotationOrRouter;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

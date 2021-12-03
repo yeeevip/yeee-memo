@@ -13,8 +13,8 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.util.Base64Utils;
 import max.lab.rst.ReactiveSpringTutorialApplication;
 import max.lab.rst.domain.Book;
-import max.lab.rst.s03WebfluxControllerAndRouter.C03RouterBased;
-import max.lab.rst.s03WebfluxControllerAndRouter.C05GlobalErrorWebExceptionHandler;
+import max.lab.rst.s03WebfluxAnnotationOrRouter.C03RouterBased;
+import max.lab.rst.s03WebfluxAnnotationOrRouter.C05GlobalErrorWebExceptionHandler;
 import max.lab.rst.s06ReactiveWebSecurity.C01SecurityConfigurer;
 
 @ExtendWith(SpringExtension.class)

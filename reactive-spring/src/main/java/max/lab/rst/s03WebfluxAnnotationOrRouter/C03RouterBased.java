@@ -1,4 +1,4 @@
-package max.lab.rst.s03WebfluxControllerAndRouter;
+package max.lab.rst.s03WebfluxAnnotationOrRouter;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
