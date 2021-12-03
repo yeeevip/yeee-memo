@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: reactive-spring
+  # Only works with spring-web-mvc
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+
+    gateway:
+      routes:
+        - id: demo-rb-fb
+          uri: lb://demo-client
+          predicates:
+            - Path=/gw/rb-fb/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: gw-rb-fb
+                fallbackUri: forward:/fb
+            - RewritePath=/gw/rb-fb/(?<path>.*), /$\{path}
+
+logging:
+  level:
+    org.springframework.cloud.client.loadbalancer: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+circuitBreaker:
+  default:
+    failureRateThreshold: 30
+    minimumNumberOfCalls: 10
+    slidingWindowSize: 10
+    waitDurationInOpenState: 5S
+    timeoutDuration: 5S
+    cancelRunningFuture: true
+  hello:
+    waitDurationInOpenState: 30S
