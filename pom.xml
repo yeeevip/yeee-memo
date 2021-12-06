@@ -7,6 +7,7 @@
 		<module>reactive-spring</module>
 		<module>nio-learn</module>
 		<module>gatling-scripts</module>
+		<module>webservice-demo</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
