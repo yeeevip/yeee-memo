@@ -1,0 +1,170 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <title>聊天室</title>
+    <script src="./js/jquery-1.12.3.min.js"></script>
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<style>
+body{
+	margin-top:5px;
+}
+</style>
+</head>
+  <body>
+    <div class="container">
+    	<div class="row">
+    		<div class="col-md-3">
+    		<div class="panel panel-primary">
+				  <div class="panel-heading">
+				    <h3 class="panel-title">当前登录用户</h3>
+				  </div>
+				  <div class="panel-body">
+				    <div class="list-group">
+					 <a href="#" class="list-group-item">你好，<span id="user"></span></a>
+					 <a href="logout" class="list-group-item">退出</a>
+					</div>
+				  </div>
+				</div>
+    			<div class="panel panel-primary" id="online">
+				  <div class="panel-heading">
+				    <h3 class="panel-title">当前在线的其他用户</h3>
+				  </div>
+				  <div class="panel-body">
+				    <div class="list-group" id="users">
+					</div>
+				  </div>
+				</div>
+				<div class="panel panel-primary">
+				  <div class="panel-heading">
+				    <h3 class="panel-title">群发系统广播</h3>
+				  </div>
+				  <div class="panel-body">
+				    <input type="text" class="form-control"  id="msg" /><br>
+				    <button id="broadcast" type="button" class="btn btn-primary">发送</button>
+				  </div>
+				</div>
+    		</div>
+  			<div class="col-md-9">
+  				<div class="panel panel-primary">
+				  <div class="panel-heading">
+				    <h3 class="panel-title" id="talktitle"></h3>
+				  </div>
+				  <div class="panel-body">
+				    <div class="well" id="log-container" style="height:400px;overflow-y:scroll">
+				    
+				    </div>
+				    	<input type="text" id="myinfo" class="form-control col-md-12" /> <br>
+				    	<button id="send" type="button" class="btn btn-primary">发送</button>
+				    </div>
+				</div>
+  			</div>
+    	</div>
+    </div> 
+<script>
+Date.prototype.format = function(fmt) { 
+     var o = { 
+        "M+" : this.getMonth()+1,                 //月份 
+        "d+" : this.getDate(),                    //日 
+        "h+" : this.getHours(),                   //小时 
+        "m+" : this.getMinutes(),                 //分 
+        "s+" : this.getSeconds(),                 //秒 
+        "q+" : Math.floor((this.getMonth()+3)/3), //季度 
+        "S"  : this.getMilliseconds()             //毫秒 
+    }; 
+    if(/(y+)/.test(fmt)) {
+            fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length)); 
+    }
+     for(var k in o) {
+        if(new RegExp("("+ k +")").test(fmt)){
+             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+         }
+     }
+    return fmt; 
+}
+
+
+    $(document).ready(function() {
+    	var user;
+    	var uid;
+    	// 指定websocket路径
+	    var websocket;
+    	$.get("/currentuser",function(data){
+    		user = data.name;
+    		uid = data.uid;
+    		$("#user").html(user);
+    		
+	        if ('WebSocket' in window) {
+				websocket = new WebSocket("ws://localhost:8080/webSocket/"+user);
+			}
+			websocket.onmessage = function(event) {
+	       	 var data=JSON.parse(event.data);
+	            if(data.to==0){//上线消息
+	            	if(data.text!=user)
+	            	{	
+	            		$("#users").append('<a href="#" onclick="talk(this)" class="list-group-item">'+data.text+'</a>');
+	            		alert(data.text + "上线了");
+	            	}
+	            }else if(data.to==-2){//下线消息
+	            	if(data.text!=user)
+	            	{	
+	            		$("#users > a").remove(":contains('"+data.text+"')");
+	            		alert(data.text + "下线了");
+	            	}
+	            }else {
+	            	// 普通消息
+		            // 接收服务端的实时消息并添加到HTML页面中
+		            $("#log-container").append("<div class='bg-info'><label class='text-danger'>"+data.from+"&nbsp;"+data.date+"</label><div class='text-success'>"+data.text+"</div></div><br>");
+		            // 滚动条滚动到最低部
+		            scrollToBottom();
+	            }
+	        };
+	        
+	        $.post("/onlineusers?currentuser="+user,function(data){
+    		for(var i=0;i<data.length;i++)
+    			$("#users").append('<a href="#" onclick="talk(this)" class="list-group-item">'+data[i]+'</a>');
+    		});
+    	
+    	});
+    	
+    	
+        
+        
+        
+        $("#broadcast").click(function(){
+        	var data = {};
+			data["from"] = "系统消息";
+			data["to"] = -1;
+			data["text"] = $("#msg").val();
+			websocket.send(JSON.stringify(data));
+        });
+        
+        $("#send").click(function() {
+        	if ($("body").data("to")==undefined) {
+        		alert("请选择聊天对象");
+        		return false;
+        	}
+			var data = {};
+			data["from"] = user;
+			data["to"] = $("body").data("to");
+			data["text"] = $("#myinfo").val();
+			websocket.send(JSON.stringify(data));
+			$("#log-container").append("<div class='bg-success'><label class='text-info'>我&nbsp;" + new Date().format("yyyy-MM-dd hh:mm:ss") + "</label><div class='text-info'>" + $("#myinfo").val() + "</div></div><br>");
+			scrollToBottom();
+			$("#myinfo").val("");
+		});
+        
+    });
+   
+   function talk(a){
+   	$("#talktitle").text("与"+a.innerHTML+"的聊天");
+   	$("body").data("to",a.innerHTML);
+   }
+   function scrollToBottom(){
+		var div = document.getElementById('log-container');
+		div.scrollTop = div.scrollHeight;
+	}
+</script>    
+    
+  </body>
+</html>

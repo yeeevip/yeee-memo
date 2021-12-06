@@ -8,6 +8,7 @@
 		<module>nio-learn</module>
 		<module>gatling-scripts</module>
 		<module>webservice-demo</module>
+		<module>spring-websocket</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
