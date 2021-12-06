@@ -6,6 +6,7 @@
 	<modules>
 		<module>reactive-spring</module>
 		<module>nio-learn</module>
+		<module>gatling-scripts</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
