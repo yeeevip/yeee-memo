@@ -9,15 +9,14 @@
 		<module>demo-client</module>
 	</modules>
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.0.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<artifactId>java-study</artifactId>
+		<groupId>com.yeee.study</groupId>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>max.lab</groupId>
 	<artifactId>reactive-spring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>reactive-spring-tutorial</name>
+	<name>reactive-spring</name>
 	<description>The project for the reactive Spring tutorial</description>
 
 	<properties>
@@ -40,12 +39,6 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>-->
-
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
