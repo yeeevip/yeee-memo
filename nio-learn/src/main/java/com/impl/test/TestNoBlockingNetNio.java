@@ -71,7 +71,6 @@ class NoBlockClient {
     }
 }
 
-@Slf4j
 class NoBlockServer {
 
     public static void main(String[] args) throws IOException {
