@@ -27,9 +27,9 @@ class NoBlockClient {
         // 1.1切换成非阻塞模式
         clientChannel.configureBlocking(false);
 
-      /*  Selector selector = Selector.open();
+        Selector selector = Selector.open();
 
-        clientChannel.register(selector, SelectionKey.OP_READ);*/
+        clientChannel.register(selector, SelectionKey.OP_READ);
 
         // 2.发送一张图片给服务器
         FileChannel fileChannel = FileChannel.open(Paths.get("C:\\Users\\Administrator\\Desktop\\temp\\XXX_毕业证.jpg"), StandardOpenOption.READ);
@@ -43,8 +43,7 @@ class NoBlockClient {
         }
 
         fileChannel.close();
-        clientChannel.close();
-/*
+        // clientChannel.close();
         while (selector.select() > 0) {
             Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();
             while (iterator.hasNext()) {
@@ -65,13 +64,14 @@ class NoBlockClient {
                 }
                 iterator.remove();
             }
-        }*/
+        }
 
 
 
     }
 }
 
+@Slf4j
 class NoBlockServer {
 
     public static void main(String[] args) throws IOException {
@@ -90,7 +90,7 @@ class NoBlockServer {
         serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
 
         // 5.轮询的获取选择器上已“就绪”的事件 -- > 只要selector > 0 说明已就绪
-        while (selector.select() >  0) {
+        while (selector.select() > 0) {
 
             // 6.获取当前选择器所有注册的“选择键”（已就绪的事件）
             Iterator<SelectionKey> keyIterator = selector.selectedKeys().iterator();
@@ -99,7 +99,7 @@ class NoBlockServer {
 
                 SelectionKey selectionKey = keyIterator.next();
 
-                if (selectionKey.isAcceptable()) { // 接收事件就绪
+                if (selectionKey.isAcceptable()) { // 有新的socket链接进来
 
                     // 获取客户端的连接
                     SocketChannel client = serverSocketChannel.accept();
@@ -107,16 +107,20 @@ class NoBlockServer {
                     // 注册到选择器上-->拿到客户端的连接为了读取通道的数据（监听读就绪事件）
                     client.register(selector, SelectionKey.OP_READ);
 
+                    System.out.println("channel isAcceptable：" + client.hashCode());
+
                 }
                 if (selectionKey.isReadable()) { // 读事件就绪
 
                     // 获取当前选择器读事件就绪的通道
                     SocketChannel client = (SocketChannel) selectionKey.channel();
+                    System.out.println("channel isReadable：" + client.hashCode());
 
                     {
                         FileChannel fileChannel = FileChannel.open(Paths.get("C:\\Users\\Administrator\\Desktop\\temp\\XXX_毕业证1111111111.jpg"), StandardOpenOption.CREATE, StandardOpenOption.WRITE);
                         ByteBuffer fileChannelBuf = ByteBuffer.allocate(1024);
-                        while (client.read(fileChannelBuf) != -1) {
+                        int len = 0;
+                        while ((len = client.read(fileChannelBuf)) > 0) {
                             fileChannelBuf.flip();
                             fileChannel.write(fileChannelBuf);
                             fileChannelBuf.clear();
@@ -124,15 +128,22 @@ class NoBlockServer {
                         fileChannel.close();
                     }
 
-        /*            {
-                        ByteBuffer responseBuf = ByteBuffer.allocate(1024);
-                        responseBuf.put("收到了！".getBytes(StandardCharsets.UTF_8));
-                        responseBuf.flip();
-                        client.write(responseBuf);
-                        responseBuf.clear();
-                    }*/
+                    client.register(selector, SelectionKey.OP_WRITE);
 
 
+                }
+
+                if (selectionKey.isWritable()) {
+
+                    SocketChannel client = (SocketChannel) selectionKey.channel();
+
+                    System.out.println("channel isWritable：" + client.hashCode());
+
+                    ByteBuffer responseBuf = ByteBuffer.allocate(1024);
+                    responseBuf.put("收到了！".getBytes(StandardCharsets.UTF_8));
+                    responseBuf.flip();
+                    client.write(responseBuf);
+                    responseBuf.clear();
                 }
 
                 // 从选择器中取消已处理过的事件
