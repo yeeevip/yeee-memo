@@ -1,6 +1,6 @@
 package com.impl.test;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
@@ -52,26 +52,34 @@ class NoBlockClient {
                     SocketChannel channel = (SocketChannel) selectionKey.channel();
 
                     {
+                        StringBuilder sb = new StringBuilder();
                         int len = 0;
                         while ((len = channel.read(buf)) > 0) {
                             buf.flip();
-                            System.out.println(new String(buf.array(), 0, len));
-                            buf.clear();
+                            sb.append(new String(buf.array(), 0, len));
                         }
-                        //clientChannel.close();
+                        buf.clear();
+                        System.out.println("receive msg : \n" + sb);
+                        if (sb.toString().contains("收到了")) {
+                            selectionKey.cancel();
+                            clientChannel.socket().close();
+                            clientChannel.close();
+                            System.exit(0);
+                        } else {
+                            selectionKey.interestOps(selectionKey.interestOps() | SelectionKey.OP_READ);
+                        }
                     }
 
                 }
-                iterator.remove();
             }
         }
-
-
 
     }
 }
 
 class NoBlockServer {
+
+    private static final ByteBuffer fileChannelBuf = ByteBuffer.allocate(1024);
 
     public static void main(String[] args) throws IOException {
 
@@ -98,59 +106,83 @@ class NoBlockServer {
 
                 SelectionKey selectionKey = keyIterator.next();
 
-                if (selectionKey.isAcceptable()) { // 有新的socket链接进来
-
-                    // 获取客户端的连接
-                    SocketChannel client = serverSocketChannel.accept();
-                    client.configureBlocking(false);
-                    // 注册到选择器上-->拿到客户端的连接为了读取通道的数据（监听读就绪事件）
-                    client.register(selector, SelectionKey.OP_READ);
-
-                    System.out.println("channel isAcceptable：" + client.hashCode());
-
+                if (selectionKey.isValid()) {
+                    handleKey(serverSocketChannel, selector, selectionKey);
+                    keyIterator.remove();
                 }
-                if (selectionKey.isReadable()) { // 读事件就绪
-
-                    // 获取当前选择器读事件就绪的通道
-                    SocketChannel client = (SocketChannel) selectionKey.channel();
-                    System.out.println("channel isReadable：" + client.hashCode());
-
-                    {
-                        FileChannel fileChannel = FileChannel.open(Paths.get("C:\\Users\\Administrator\\Desktop\\temp\\XXX_毕业证1111111111.jpg"), StandardOpenOption.CREATE, StandardOpenOption.WRITE);
-                        ByteBuffer fileChannelBuf = ByteBuffer.allocate(1024);
-                        int len = 0;
-                        while ((len = client.read(fileChannelBuf)) > 0) {
-                            fileChannelBuf.flip();
-                            fileChannel.write(fileChannelBuf);
-                            fileChannelBuf.clear();
-                        }
-                        fileChannel.close();
-                    }
-
-                    client.register(selector, SelectionKey.OP_WRITE);
-
-
-                }
-
-                if (selectionKey.isWritable()) {
-
-                    SocketChannel client = (SocketChannel) selectionKey.channel();
-
-                    System.out.println("channel isWritable：" + client.hashCode());
-
-                    ByteBuffer responseBuf = ByteBuffer.allocate(1024);
-                    responseBuf.put("收到了！".getBytes(StandardCharsets.UTF_8));
-                    responseBuf.flip();
-                    client.write(responseBuf);
-                    responseBuf.clear();
-                }
-
-                // 从选择器中取消已处理过的事件
-                keyIterator.remove();
 
             }
         }
 
+    }
+
+    private static void handleKey(ServerSocketChannel serverSocketChannel, Selector selector, SelectionKey selectionKey) throws IOException {
+        if (selectionKey.isAcceptable()) { // 有新的socket链接进来
+
+            // 获取客户端的连接
+            SocketChannel client = serverSocketChannel.accept();
+            client.configureBlocking(false);
+            // 注册到选择器上-->拿到客户端的连接为了读取通道的数据（监听读就绪事件）
+            client.register(selector, SelectionKey.OP_READ);
+
+            //keyIterator.remove();
+
+        }
+        if (selectionKey.isReadable()) { // 读事件就绪
+
+            // 获取当前选择器读事件就绪的通道
+            SocketChannel client = (SocketChannel) selectionKey.channel();
+            System.out.println("channel isReadable：" + client.hashCode());
+
+            {
+                FileChannel fileChannel = FileChannel.open(Paths.get("C:\\Users\\Administrator\\Desktop\\temp\\XXX_毕业证1111111111.jpg")
+                        , StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+
+                int len = 0;
+                try {
+                    while ((len = client.read(fileChannelBuf)) > 0) {
+                        fileChannelBuf.flip();
+                        fileChannel.write(fileChannelBuf);
+                        fileChannelBuf.clear();
+                    }
+                    fileChannel.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    selectionKey.cancel();
+                    client.socket().close();
+                    client.close();
+                }
+                System.out.println("----------isReadable----------" + fileChannelBuf.remaining());
+            }
+
+            selectionKey.interestOps(selectionKey.interestOps() | SelectionKey.OP_WRITE);
+
+        }
+
+        if (selectionKey.isWritable()) {
+
+            SocketChannel client = (SocketChannel) selectionKey.channel();
+
+            System.out.println("channel isWritable：" + client.hashCode());
+
+            System.out.println("----------isWritable----------" + fileChannelBuf.hasRemaining());
+
+            try {
+                client.write(ByteBuffer.wrap(("收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了" +
+                        "收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了" +
+                        "收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了" +
+                        "收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了" +
+                        "收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了" +
+                        "收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了" +
+                        "收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了" +
+                        "收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了" +
+                        "收到了收到了！").getBytes(StandardCharsets.UTF_8)));
+            } catch (IOException e) {
+                e.printStackTrace();
+                client.socket().close();
+                client.close();
+            }
+        }
     }
 
 }
