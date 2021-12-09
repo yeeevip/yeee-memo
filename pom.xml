@@ -10,6 +10,7 @@
 		<module>webservice-demo</module>
 		<module>spring-websocket</module>
 		<module>simple-tools</module>
+		<module>MyWebServerBaseNetty</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
