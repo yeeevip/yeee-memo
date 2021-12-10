@@ -1,5 +1,7 @@
 package com.impl.test;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -15,9 +17,17 @@ import java.util.Iterator;
  * @Date: 2021/11/26 14:11
  */
 public class TestNoBlockingNetNio {
+
+    /*
+     * 功能概述：
+     * 1.客户端向服务端发送一个文件
+     * 2.服务端收到文件存储在本地
+     * 3.服务端响应message给客户端
+     * 4.客户端收到响应的message打印
+    **/
 }
 
-
+@Slf4j
 class NoBlockClient {
 
     public static void main(String[] args) throws IOException {
@@ -25,61 +35,53 @@ class NoBlockClient {
         SocketChannel clientChannel = SocketChannel.open(new InetSocketAddress("127.0.0.1", 6666));
 
         // 1.1切换成非阻塞模式
-        clientChannel.configureBlocking(false);
-
-        Selector selector = Selector.open();
-
-        clientChannel.register(selector, SelectionKey.OP_READ);
+        //clientChannel.configureBlocking(false);
 
         // 2.发送一张图片给服务器
         FileChannel fileChannel = FileChannel.open(Paths.get("C:\\Users\\Administrator\\Desktop\\temp\\XXX_毕业证.jpg"), StandardOpenOption.READ);
 
-        ByteBuffer buf = ByteBuffer.allocate(1024);
+        log.info("client write data to server ！！！ ");
+        // 写header （长度）
+        ByteBuffer lengthBuf = ByteBuffer.allocate(4);
+        lengthBuf.putInt((int) fileChannel.size());
+        lengthBuf.flip();
+        clientChannel.write(lengthBuf);
 
+        // 写文件流
+        ByteBuffer buf = ByteBuffer.allocate(10 * 1024);
         while (fileChannel.read(buf) != -1) {
             buf.flip();
             clientChannel.write(buf);
             buf.clear();
         }
 
+        log.info("client get resp data from server");
+        // 接收响应
+        lengthBuf.clear();
+        clientChannel.read(lengthBuf);
+
+        lengthBuf.flip();
+
+        ByteBuffer respData = ByteBuffer.allocate(lengthBuf.getInt());
+        log.info("client received resp data length = " + respData.capacity());
+
+        clientChannel.read(respData);
+        respData.flip();
+        log.info("client received resp data = " + new String(respData.array()));
+
+
         fileChannel.close();
-        // clientChannel.close();
-        while (selector.select() > 0) {
-            Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();
-            while (iterator.hasNext()) {
-                SelectionKey selectionKey = iterator.next();
-                if (selectionKey.isReadable()) {
-                    SocketChannel channel = (SocketChannel) selectionKey.channel();
-
-                    {
-                        StringBuilder sb = new StringBuilder();
-                        int len = 0;
-                        while ((len = channel.read(buf)) > 0) {
-                            buf.flip();
-                            sb.append(new String(buf.array(), 0, len));
-                        }
-                        buf.clear();
-                        System.out.println("receive msg : \n" + sb);
-                        if (sb.toString().contains("收到了")) {
-                            selectionKey.cancel();
-                            clientChannel.socket().close();
-                            clientChannel.close();
-                            System.exit(0);
-                        } else {
-                            selectionKey.interestOps(selectionKey.interestOps() | SelectionKey.OP_READ);
-                        }
-                    }
-
-                }
-            }
-        }
+        clientChannel.close();
 
     }
 }
 
+@Slf4j
 class NoBlockServer {
 
-    private static final ByteBuffer fileChannelBuf = ByteBuffer.allocate(1024);
+    private static boolean readHead;
+    private static ByteBuffer fileLengthBuf = ByteBuffer.allocate(4);
+    private static ByteBuffer fileDataBuf = null;
 
     public static void main(String[] args) throws IOException {
 
@@ -132,43 +134,58 @@ class NoBlockServer {
 
             // 获取当前选择器读事件就绪的通道
             SocketChannel client = (SocketChannel) selectionKey.channel();
-            System.out.println("channel isReadable：" + client.hashCode());
 
-            {
-                FileChannel fileChannel = FileChannel.open(Paths.get("C:\\Users\\Administrator\\Desktop\\temp\\XXX_毕业证1111111111.jpg")
-                        , StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+            if (!readHead) {
+                client.read(fileLengthBuf);
+                readHead = true;
+            } else {
 
-                int len = 0;
-                try {
-                    while ((len = client.read(fileChannelBuf)) > 0) {
-                        fileChannelBuf.flip();
-                        fileChannel.write(fileChannelBuf);
-                        fileChannelBuf.clear();
-                    }
-                    fileChannel.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    selectionKey.cancel();
-                    client.socket().close();
-                    client.close();
+                if (fileDataBuf == null) {
+                    fileLengthBuf.flip();
+                    int fileLength = fileLengthBuf.asIntBuffer().get();
+
+                    log.info("server received data length = " + fileLength);
+
+                    if (fileLength <= 0) return;
+                    fileDataBuf = ByteBuffer.allocate(fileLength);
                 }
-                System.out.println("----------isReadable----------" + fileChannelBuf.remaining());
+
+                int count = client.read(fileDataBuf);
+
+                log.info("server received seg data to buffer -- count = " + count);
+
+                if (count >= 0 && fileDataBuf.remaining() == 0) {
+
+                    log.info("server received seg data to buffer completed ！！！");
+
+                    FileChannel saveFileChannel = FileChannel.open(Paths.get("C:\\Users\\Administrator\\Desktop\\temp\\XXX_毕业证1111111111.jpg")
+                            , StandardOpenOption.CREATE, StandardOpenOption.WRITE);
+
+                    fileDataBuf.flip();
+
+                    saveFileChannel.write(fileDataBuf);
+                    saveFileChannel.close();
+
+                    fileDataBuf.clear();
+                    fileDataBuf = null;
+                    readHead = false;
+                    fileLengthBuf.clear();
+
+                    selectionKey.interestOps(SelectionKey.OP_WRITE);
+                }
+
             }
-
-            selectionKey.interestOps(selectionKey.interestOps() | SelectionKey.OP_WRITE);
-
         }
 
         if (selectionKey.isWritable()) {
 
             SocketChannel client = (SocketChannel) selectionKey.channel();
 
-            System.out.println("channel isWritable：" + client.hashCode());
-
-            System.out.println("----------isWritable----------" + fileChannelBuf.hasRemaining());
+            log.info("server response data to client");
 
             try {
-                client.write(ByteBuffer.wrap(("收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了" +
+
+                byte[] resp = ("收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了" +
                         "收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了" +
                         "收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了" +
                         "收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了" +
@@ -176,7 +193,18 @@ class NoBlockServer {
                         "收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了" +
                         "收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了" +
                         "收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了收到了" +
-                        "收到了收到了！").getBytes(StandardCharsets.UTF_8)));
+                        "收到了收到了！").getBytes(StandardCharsets.UTF_8);
+
+                ByteBuffer respBuf = ByteBuffer.allocate(4 + resp.length);
+                respBuf.putInt(resp.length);
+                respBuf.put(resp);
+
+                respBuf.flip();
+
+                client.write(respBuf);
+
+                selectionKey.interestOps(0);
+
             } catch (IOException e) {
                 e.printStackTrace();
                 client.socket().close();
