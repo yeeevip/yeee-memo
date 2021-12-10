@@ -10,14 +10,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import com.xiaoleilu.hutool.http.HttpUtil;
-import com.xiaoleilu.hutool.lang.Conver;
-import com.xiaoleilu.hutool.log.Log;
-import com.xiaoleilu.hutool.log.StaticLog;
-import com.xiaoleilu.hutool.util.CharsetUtil;
-import com.xiaoleilu.hutool.util.DateUtil;
-import com.xiaoleilu.hutool.util.StrUtil;
-import com.xiaoleilu.hutool.util.URLUtil;
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.CharsetUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.URLUtil;
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.FullHttpRequest;
@@ -45,7 +44,7 @@ import io.netty.handler.codec.http.multipart.InterfaceHttpData.HttpDataType;
  *
  */
 public class Request {
-	private static final Log log = StaticLog.get();
+	private static final Log log = LogFactory.get();
 
 	public static final String METHOD_DELETE = HttpMethod.DELETE.name();
 	public static final String METHOD_HEAD = HttpMethod.HEAD.name();
@@ -272,7 +271,7 @@ public class Request {
 	 * @return 获得Integer类型请求参数
 	 */
 	public Integer getIntParam(String name, Integer defaultValue) {
-		return Conver.toInt(getParam(name), defaultValue);
+		return Convert.toInt(getParam(name), defaultValue);
 	}
 
 	/**
@@ -281,7 +280,7 @@ public class Request {
 	 * @return 获得long类型请求参数
 	 */
 	public Long getLongParam(String name, Long defaultValue) {
-		return Conver.toLong(getParam(name), defaultValue);
+		return Convert.toLong(getParam(name), defaultValue);
 	}
 
 	/**
@@ -290,7 +289,7 @@ public class Request {
 	 * @return 获得Double类型请求参数
 	 */
 	public Double getDoubleParam(String name, Double defaultValue) {
-		return Conver.toDouble(getParam(name), defaultValue);
+		return Convert.toDouble(getParam(name), defaultValue);
 	}
 
 	/**
@@ -299,7 +298,7 @@ public class Request {
 	 * @return 获得Float类型请求参数
 	 */
 	public Float getFloatParam(String name, Float defaultValue) {
-		return Conver.toFloat(getParam(name), defaultValue);
+		return Convert.toFloat(getParam(name), defaultValue);
 	}
 
 	/**
@@ -308,7 +307,7 @@ public class Request {
 	 * @return 获得Boolean类型请求参数
 	 */
 	public Boolean getBoolParam(String name, Boolean defaultValue) {
-		return Conver.toBool(getParam(name), defaultValue);
+		return Convert.toBool(getParam(name), defaultValue);
 	}
 
 	/**
@@ -381,7 +380,7 @@ public class Request {
 
 		// HTTP/1.0只有Connection为Keep-Alive时才会保持连接
 		if (HttpVersion.HTTP_1_0.text().equals(getProtocolVersion())) {
-			if (false == HttpHeaderValues.KEEP_ALIVE.toString().equalsIgnoreCase(connectionHeader)) {
+			if (!HttpHeaderValues.KEEP_ALIVE.toString().equalsIgnoreCase(connectionHeader)) {
 				return false;
 			}
 		}
@@ -488,13 +487,26 @@ public class Request {
 	protected void putIp(ChannelHandlerContext ctx) {
 		String ip = getHeader("X-Forwarded-For");
 		if (StrUtil.isNotBlank(ip)) {
-			ip = HttpUtil.getMultistageReverseProxyIp(ip);
+			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+				ip = getHeader("Proxy-Client-IP");
+			}
+			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+				ip = getHeader("WL-Proxy-Client-IP");
+			}
+			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+				ip = getHeader("HTTP_CLIENT_IP");
+			}
+			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+				ip = getHeader("HTTP_X_FORWARDED_FOR");
+			}
+			ip = "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
 		} else {
 			final InetSocketAddress insocket = (InetSocketAddress) ctx.channel().remoteAddress();
 			ip = insocket.getAddress().getHostAddress();
 		}
 		this.ip = ip;
 	}
+
 	// --------------------------------------------------------- Protected method end
 
 	@Override
@@ -527,4 +539,5 @@ public class Request {
 	protected final static Request build(ChannelHandlerContext ctx, FullHttpRequest nettyRequest) {
 		return new Request(ctx, nettyRequest);
 	}
+
 }

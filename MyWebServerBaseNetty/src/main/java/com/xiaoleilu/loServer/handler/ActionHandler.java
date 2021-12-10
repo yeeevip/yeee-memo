@@ -2,9 +2,9 @@ package com.xiaoleilu.loServer.handler;
 
 import java.io.IOException;
 
-import com.xiaoleilu.hutool.lang.Singleton;
-import com.xiaoleilu.hutool.log.Log;
-import com.xiaoleilu.hutool.log.StaticLog;
+import cn.hutool.core.lang.Singleton;
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
 import com.xiaoleilu.loServer.ServerSetting;
 import com.xiaoleilu.loServer.action.Action;
 import com.xiaoleilu.loServer.action.ErrorAction;
@@ -21,7 +21,7 @@ import io.netty.handler.codec.http.FullHttpRequest;
  * @author Looly
  */
 public class ActionHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
-	private static final Log log = StaticLog.get();
+	private static final Log log = LogFactory.get();
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest fullHttpRequest) throws Exception {
@@ -44,7 +44,7 @@ public class ActionHandler extends SimpleChannelInboundHandler<FullHttpRequest> 
 		}
 		
 		//如果发送请求未被触发，则触发之，否则跳过。
-		if(false ==response.isSent()){
+		if(!response.isSent()){
 			response.send();
 		}
 	}
@@ -69,7 +69,7 @@ public class ActionHandler extends SimpleChannelInboundHandler<FullHttpRequest> 
 		//全局过滤器
 		Filter filter = ServerSetting.getFilter(ServerSetting.MAPPING_ALL);
 		if(null != filter){
-			if(false == filter.doFilter(request, response)){
+			if(!filter.doFilter(request, response)){
 				return false;
 			}
 		}
@@ -77,9 +77,7 @@ public class ActionHandler extends SimpleChannelInboundHandler<FullHttpRequest> 
 		//自定义Path过滤器
 		filter = ServerSetting.getFilter(request.getPath());
 		if(null != filter){
-			if(false == filter.doFilter(request, response)){
-				return false;
-			}
+			return filter.doFilter(request, response);
 		}
 		
 		return true;

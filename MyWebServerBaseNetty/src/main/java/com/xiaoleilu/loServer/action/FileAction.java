@@ -8,12 +8,13 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
-import com.xiaoleilu.hutool.log.Log;
-import com.xiaoleilu.hutool.log.StaticLog;
-import com.xiaoleilu.hutool.util.DateUtil;
-import com.xiaoleilu.hutool.util.FileUtil;
-import com.xiaoleilu.hutool.util.ReUtil;
-import com.xiaoleilu.hutool.util.StrUtil;
+import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.ReUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
 import com.xiaoleilu.loServer.ServerSetting;
 import com.xiaoleilu.loServer.handler.Request;
 import com.xiaoleilu.loServer.handler.Response;
@@ -28,19 +29,19 @@ import io.netty.handler.codec.http.HttpResponseStatus;
  *
  */
 public class FileAction implements Action {
-	private static final Log log = StaticLog.get();
+	private static final Log log = LogFactory.get();
 
 	private static final Pattern INSECURE_URI = Pattern.compile(".*[<>&\"].*");
-	private static final SimpleDateFormat HTTP_DATE_FORMATER = new SimpleDateFormat(DateUtil.HTTP_DATETIME_PATTERN, Locale.US);
+	private static final SimpleDateFormat HTTP_DATE_FORMATER = new SimpleDateFormat(DatePattern.HTTP_DATETIME_PATTERN, Locale.US);
 
 	@Override
 	public void doAction(Request request, Response response) {
-		if (false == Request.METHOD_GET.equalsIgnoreCase(request.getMethod())) {
+		if (!Request.METHOD_GET.equalsIgnoreCase(request.getMethod())) {
 			response.sendError(HttpResponseStatus.METHOD_NOT_ALLOWED, "Please use GET method to request file!");
 			return;
 		}
 		
-		if(ServerSetting.isRootAvailable() == false){
+		if(!ServerSetting.isRootAvailable()){
 			response.sendError(HttpResponseStatus.NOT_FOUND, "404 Root dir not avaliable!");
 			return;
 		}
@@ -55,7 +56,7 @@ public class FileAction implements Action {
 		}
 
 		// 非文件，跳过
-		if (false == file.isFile()) {
+		if (!file.isFile()) {
 			response.sendError(HttpResponseStatus.FORBIDDEN, "403 Forbidden!");
 			return;
 		}
