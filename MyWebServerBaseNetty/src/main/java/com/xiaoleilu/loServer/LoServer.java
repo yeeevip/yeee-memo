@@ -5,6 +5,7 @@ import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.xiaoleilu.loServer.handler.ActionHandler;
 
+import com.xiaoleilu.loServer.ssl.SSLChannelInitializer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
@@ -46,6 +47,7 @@ public class LoServer {
 				.option(ChannelOption.SO_BACKLOG, 1024)
 				.channel(NioServerSocketChannel.class)
 //				.handler(new LoggingHandler(LogLevel.INFO))
+				//.childHandler(new SSLChannelInitializer()) // SSL证书
 				.childHandler(new ChannelInitializer<SocketChannel>(){
 					@Override
 					protected void initChannel(SocketChannel ch) throws Exception {
