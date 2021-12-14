@@ -10,7 +10,7 @@ import java.nio.channels.SocketChannel;
  * @Author: anchun
  * @Date: 2021/12/14 15:15
  */
-public class MainTest {
+public class TestClient {
 
     public static void main(String[] args) throws IOException {
         SocketChannel socketChannel = SocketChannel.open();
