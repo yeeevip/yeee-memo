@@ -1,6 +1,6 @@
-package com.xiaoleilu.loServer.ssl;
+package com.netty.learn.httpserver.ssl;
 
-import com.xiaoleilu.loServer.handler.ActionHandler;
+import com.netty.learn.httpserver.HttpHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -51,7 +51,7 @@ public class SSLChannelInitializer extends ChannelInitializer<SocketChannel> {
                 .addLast("decoder", new HttpRequestDecoder())
                 .addLast("encoder", new HttpResponseEncoder())
                 .addLast("aggregator", new HttpObjectAggregator(512 * 1024))
-                .addLast("handler", new ActionHandler());
+                .addLast("handler", new HttpHandler());
         ;
     }
 }

@@ -5,7 +5,6 @@ import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.xiaoleilu.loServer.handler.ActionHandler;
 
-import com.xiaoleilu.loServer.ssl.SSLChannelInitializer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
