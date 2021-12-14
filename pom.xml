@@ -11,7 +11,8 @@
 		<module>spring-websocket</module>
 		<module>simple-tools</module>
 		<module>MyWebServerBaseNetty</module>
-	</modules>
+        <module>netty-learn</module>
+    </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
