@@ -1,8 +1,8 @@
-package com.jdk.learn.basicType;
+package basicType;
 
 /**
  * @Description:
- * @Author: anchun
+ * @Author: yeeeeee
  * @Date: 2021/12/15 15:02
  */
 public class Base8DataType {
