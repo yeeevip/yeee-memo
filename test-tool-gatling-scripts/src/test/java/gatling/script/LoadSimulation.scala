@@ -8,7 +8,7 @@ import scala.concurrent.duration._
 
 /**
  * @Description: mvn gatling:test -Dgatling.simulationClass=gatling.script.LoadSimulation -Dbase.url=http://localhost:9091/ -Dtest.path=hello/100 -Dsim.users=300
- * @Author: anchun
+ * @Author: yeeeeee
  * @Date: 2021/11/17 18:19
  */
 class LoadSimulation extends Simulation {
