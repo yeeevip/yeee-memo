@@ -2,7 +2,7 @@ package com.yeee.tools;
 
 /**
  * @Description:
- * @Author: anchun
+ * @Author: yeeeeee
  * @Date: 2020/12/4 13:35
  */
 public class OnlineInterviewBizException extends Exception {
