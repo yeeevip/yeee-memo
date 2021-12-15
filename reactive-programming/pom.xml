@@ -14,7 +14,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>max.lab</groupId>
-	<artifactId>reactive-spring</artifactId>
+	<artifactId>reactive-programming</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>reactive-spring</name>
 	<description>The project for the reactive Spring tutorial</description>
