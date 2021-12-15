@@ -4,15 +4,16 @@
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>pom</packaging>
 	<modules>
-		<module>reactive-spring</module>
-		<module>nio-learn</module>
-		<module>gatling-scripts</module>
+		<module>reactive-programming</module>
+		<module>nio-learn-jdk</module>
+		<module>test-tool-gatling-scripts</module>
 		<module>webservice-demo</module>
-		<module>spring-websocket</module>
-		<module>simple-tools</module>
-		<module>MyWebServerBaseNetty</module>
-        <module>netty-learn</module>
-    </modules>
+		<module>websocket-spring</module>
+		<module>simple-tools-my</module>
+		<module>nio-learn-ImplWebServerByNetty</module>
+        <module>nio-learn-netty</module>
+		<module>jdk-base-learn</module>
+	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
