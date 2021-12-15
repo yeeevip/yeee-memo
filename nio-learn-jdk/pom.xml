@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>nio-learn</artifactId>
+    <artifactId>nio-learn-jdk</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

@@ -9,7 +9,7 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
 /**
  * @Description:
- * @Author: anchun
+ * @Author: yeeeeee
  * @Date: 2021/12/7 10:49
  */
 public class SetNameFrame extends JFrame {

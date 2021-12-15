@@ -8,7 +8,7 @@ import java.awt.event.WindowEvent;
 
 /**
  * @Description:
- * @Author: anchun
+ * @Author: yeeeeee
  * @Date: 2021/12/7 11:44
  */
 public class ChatFrame {
