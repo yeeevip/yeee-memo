@@ -6,7 +6,7 @@ import io.netty.handler.codec.MessageToByteEncoder;
 
 /**
  * @Description:
- * @Author: anchun
+ * @Author: yeeeeee
  * @Date: 2021/12/14 18:03
  */
 public class ShortToByteEncoder extends MessageToByteEncoder<Short> {

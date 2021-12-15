@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * @Description:
- * @Author: anchun
+ * @Author: yeeeeee
  * @Date: 2021/12/14 16:48
  */
 public class HttpHandler extends SimpleChannelInboundHandler<FullHttpRequest> { // Handler需要声明泛型为<FullHttpRequest>，声明之后，只有msg为FullHttpRequest的消息才能进来。

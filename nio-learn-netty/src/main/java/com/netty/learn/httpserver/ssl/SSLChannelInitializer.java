@@ -18,7 +18,7 @@ import java.security.KeyStore;
 
 /**
  * @Description:
- * @Author: anchun
+ * @Author: yeeeeee
  * @Date: 2021/12/13 18:28
  */
 public class SSLChannelInitializer extends ChannelInitializer<SocketChannel> {
