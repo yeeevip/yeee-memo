@@ -1,4 +1,4 @@
-package com.jdk.learn;
+package com.jdk.learn.basicType;
 
 /**
  * @Description:
