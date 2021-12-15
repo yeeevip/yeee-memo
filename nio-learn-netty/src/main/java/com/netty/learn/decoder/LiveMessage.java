@@ -9,9 +9,12 @@ public class LiveMessage {
 
     private Integer length;
 
-    private Integer type;
+    private byte type;
 
     private String content;
+
+    public final static byte TYPE_HEART = 1;
+    public final static byte TYPE_MESSAGE = 2;
 
     public Integer getLength() {
         return length;
@@ -21,11 +24,11 @@ public class LiveMessage {
         this.length = length;
     }
 
-    public Integer getType() {
+    public Byte getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(Byte type) {
         this.type = type;
     }
 

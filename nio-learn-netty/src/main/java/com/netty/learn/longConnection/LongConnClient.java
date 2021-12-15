@@ -32,8 +32,8 @@ public class LongConnClient {
                 try {
                     byte[] input = new byte[64];
                     int readByte = socket.getInputStream().read(input);
-                    if (readByte == 0) {
-                        logger.debug("readByte " + readByte);
+                    if (readByte >= 0) {
+                        logger.debug(new String(input));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

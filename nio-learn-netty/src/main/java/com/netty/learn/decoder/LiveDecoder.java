@@ -32,7 +32,7 @@ public class LiveDecoder extends ReplayingDecoder<LiveDecoder.LiveState> { // �
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
         switch (state()) { // 读取的时候通过state()方法来确定当前处于什么状态
             case TYPE:
-                int type = in.readByte();
+                byte type = in.readByte();
                 log.debug("decode msg，state = TYPE，type = " + type);
                 message.setType(type);
                 checkpoint(LiveState.LENGTH);

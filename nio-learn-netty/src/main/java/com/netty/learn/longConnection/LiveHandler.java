@@ -16,6 +16,10 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @Description:
+ *
+ * 1.客户端发送的是msg且10s内没有发送心跳，则过期关闭连接并清除缓存
+ * 2.客户端在每个时间窗口5s内没有发送heart，则主动关闭连接
+ *
  * @Author: yeeeeee
  * @Date: 2021/12/14 18:23
  */
@@ -31,7 +35,7 @@ public class LiveHandler extends SimpleChannelInboundHandler<LiveMessage> {
         logger.debug("channel hashCode: " + hashCode + " msg: " + msg + " cache: " + channelCache.size());
 
         if (!channelCache.containsKey(hashCode)) {
-            System.out.println("channelCache.containsKey(hashCode), put key: " + hashCode);
+            logger.debug("channelCache.containsKey(hashCode), put key: " + hashCode);
             channel.closeFuture().addListener(future -> {
                 logger.debug("channel close, remove key: " + hashCode);
                 channelCache.remove(hashCode);
@@ -44,20 +48,21 @@ public class LiveHandler extends SimpleChannelInboundHandler<LiveMessage> {
         }
 
         switch (msg.getType()) {
-            case 1: {
+            case LiveMessage.TYPE_HEART: {
                 logger.debug("switch type 1");
                 LiveChannelCache cache = channelCache.get(hashCode);
                 ScheduledFuture<ChannelFuture> scheduledFuture = ctx.executor().schedule((Callable<ChannelFuture>) channel::close, 5, TimeUnit.SECONDS);
-                cache.getScheduledFuture().cancel(true);
-                cache.setScheduledFuture(scheduledFuture);
-                ctx.channel().writeAndFlush(msg);
+                cache.getScheduledFuture().cancel(true); // 取消
+                cache.setScheduledFuture(scheduledFuture); //  新的5s
+                ctx.channel().writeAndFlush(msg.getContent());
                 break;
             }
-            case 2: {
+            case LiveMessage.TYPE_MESSAGE: {
                 logger.debug("switch type 2");
                 channelCache.forEach((key, value) -> {
                     Channel otherChannel = value.getChannel();
-                    otherChannel.writeAndFlush(msg);
+                    logger.debug("write msg to otherChannel：" + otherChannel + " msg：" + msg);
+                    otherChannel.writeAndFlush(msg.getContent());
                 });
                 break;
             }
