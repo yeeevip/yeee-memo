@@ -1,4 +1,4 @@
-package max.lab.rst.s10;
+package max.lab.rst.s10ReactiveTesting;
 
 import java.time.Duration;
 

@@ -1,4 +1,4 @@
-package max.lab.rst.s08;
+package max.lab.rst.s08ReactiveCircuitBreaker;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import io.github.resilience4j.timelimiter.TimeLimiterConfig;
