@@ -1,4 +1,4 @@
-package com.yeee.jedis.lua;
+package com.yeee.jedis.lua.simp;
 
 import com.yeee.jedis.JedisRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,7 @@ import java.util.UUID;
  * @since 2021/12/22 14:48
  */
 @Slf4j
-public class InnerLock {
+public class JedisLock {
 
     private static final Long LOCKED = 1L;
     private static final Long UNLOCKED = 1L;
@@ -32,7 +32,7 @@ public class InnerLock {
     private final RedisScript<String> lockScript;
     private final RedisScript<String> unlockScript;
 
-    public InnerLock(Jedis jedis, String lockKey, String requestId) {
+    public JedisLock(Jedis jedis, String lockKey, String requestId) {
         this.jedis = jedis;
         this.lockKey = lockKey;
         this.requestId = requestId;
@@ -79,7 +79,7 @@ public class InnerLock {
         String lockKey = "test";
         String requestId = UUID.randomUUID().toString();
 
-        InnerLock innerLock = new InnerLock(jedis, lockKey, requestId);
+        JedisLock innerLock = new JedisLock(jedis, lockKey, requestId);
 
         // lock
         boolean res1 = innerLock.lock();
