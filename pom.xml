@@ -13,7 +13,7 @@
 		<module>nio-learn-ImplWebServerByNetty</module>
         <module>nio-learn-netty</module>
 		<module>jdk-base-learn</module>
-        <module>distribut-lock-redis</module>
+        <module>distribute-lock-redis</module>
     </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
