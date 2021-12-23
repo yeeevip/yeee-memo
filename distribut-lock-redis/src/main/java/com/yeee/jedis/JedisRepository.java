@@ -12,7 +12,7 @@ public class JedisRepository extends Jedis {
 
     private static Jedis jedisRepository = null;
 
-    public static Jedis getJedis() {
+/*    public static Jedis getJedis() {
         if (jedisRepository != null) {
             return jedisRepository;
         }
@@ -26,6 +26,13 @@ public class JedisRepository extends Jedis {
             jedisRepository = jedis;
         }
         return jedisRepository;
+    }*/
+
+    public synchronized static Jedis getJedis() {
+        Jedis jedis = new Jedis("127.0.0.1",6379);
+        jedis.auth("yeah");
+        jedis.select(15);
+        return jedis;
     }
 
 }

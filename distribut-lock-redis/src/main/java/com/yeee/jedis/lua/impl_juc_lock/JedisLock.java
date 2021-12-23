@@ -3,14 +3,16 @@ package com.yeee.jedis.lua.impl_juc_lock;
 import com.yeee.jedis.JedisRepository;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.redis.core.script.RedisScript;
 import redis.clients.jedis.Jedis;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
+import java.util.stream.Collectors;
 
 /**
  * description ...
@@ -36,17 +38,19 @@ public class JedisLock implements Lock {
     /**
      * 默认2000ms
      */
-    long expire = 20000L;
+    long expire = 2000L;
 
-    private final RedisScript<String> lockScript;
-    private final RedisScript<String> unlockScript;
+    // 加锁lua脚本
+    private static final String lockScript = new BufferedReader(new InputStreamReader(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("script/lock.lua"))))
+            .lines().collect(Collectors.joining(System.lineSeparator()));
+    // 释放锁脚本
+    private static final String unlockScript = new BufferedReader(new InputStreamReader(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("script/unlock.lua"))))
+            .lines().collect(Collectors.joining(System.lineSeparator()));
 
     public JedisLock(Jedis jedis, String lockKey, String requestId) {
         this.jedis = jedis;
         this.lockKey = lockKey;
         this.requestId = requestId;
-        lockScript = RedisScript.of(new ClassPathResource("script/lock.lua"));
-        unlockScript = RedisScript.of(new ClassPathResource("script/unlock.lua"));
     }
 
     @Override
@@ -74,7 +78,7 @@ public class JedisLock implements Lock {
             return true;
         }
 
-        Long millsToWait = unit != null ? unit.toMillis(time) : DEFAULT_TIMEOUT;
+        long millsToWait = unit != null ? unit.toMillis(time) : DEFAULT_TIMEOUT;
         long startMills = System.currentTimeMillis();
 
         boolean localLocked = false;
@@ -107,7 +111,7 @@ public class JedisLock implements Lock {
             return false;
         }
         try {
-            Long res = (Long) jedis.eval(lockScript.getScriptAsString(), 3, lockKey, requestId, String.valueOf(expire));
+            Long res = (Long) jedis.eval(lockScript, 3, lockKey, requestId, String.valueOf(expire));
             return res != null && res.equals(LOCKED);
         } catch (Exception e) {
             e.printStackTrace();
@@ -122,7 +126,7 @@ public class JedisLock implements Lock {
             return;
         }
         try {
-            jedis.eval(unlockScript.getScriptAsString(), 2, lockKey, requestId);
+            jedis.eval(unlockScript, 2, lockKey, requestId);
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("释放锁失败");
