@@ -15,6 +15,7 @@
 		<module>jdk-base-learn</module>
         <module>distribute-lock-redis</module>
 		<module>distribute-lock-redisson</module>
+		<module>simple-tools-execLinuxSSH</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>

@@ -1,0 +1,9 @@
+server:
+  port:8081
+
+
+spring:
+  quartz:
+    job-store-type: memory
+#    jdbc:
+#      initialize-schema: always
