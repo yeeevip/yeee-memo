@@ -40,15 +40,15 @@ public class JedisLockTest {
                 Jedis jedis = JedisRepository.getJedis();
 
                 Lock lock = new JedisLock(jedis, "test:lock:1", requestId);
+                boolean locked = false;
                 try {
-                    boolean locked = lock.tryLock(5, TimeUnit.SECONDS);
+                    locked = lock.tryLock(5, TimeUnit.SECONDS);
 
                     if (locked) {
                         for (int j = 0; j <  1000; j++) {
                             count++ ;
                         }
                         log.info("count = " + count);
-                        lock.unlock();
                     } else {
                         log.info("抢锁失败");
                     }
@@ -56,6 +56,7 @@ public class JedisLockTest {
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
+                    if (locked) lock.unlock();
                     jedis.close();
                 }
                 countDownLatch.countDown();
