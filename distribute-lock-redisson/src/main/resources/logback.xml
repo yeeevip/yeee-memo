@@ -30,12 +30,12 @@
 	<!-- 系统日志输出 -->
 	<appender name="file_info"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${log.path}/channel-api-info.log</file>
+		<file>${log.path}/lock-redisson-info.log</file>
 		<!-- 循环政策：基于时间创建日志文件 -->
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- 日志文件名格式 -->
-			<fileNamePattern>${log.path}/channel-api-info.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>${log.path}/lock-redisson-info.%d{yyyy-MM-dd}.log</fileNamePattern>
 			<!-- 日志最大的历史 60天 -->
 			<maxHistory>60</maxHistory>
 		</rollingPolicy>
@@ -55,12 +55,12 @@
 
 	<appender name="file_error"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${log.path}/channel-api-error.log</file>
+		<file>${log.path}/lock-redisson-error.log</file>
 		<!-- 循环政策：基于时间创建日志文件 -->
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- 日志文件名格式 -->
-			<fileNamePattern>${log.path}/channel-api-error.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>${log.path}/lock-redisson-error.%d{yyyy-MM-dd}.log</fileNamePattern>
 			<!-- 日志最大的历史 60天 -->
 			<maxHistory>60</maxHistory>
 		</rollingPolicy>
@@ -81,11 +81,11 @@
 	<!-- 用户访问日志输出 -->
 	<appender name="sys-user"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${log.path}/channel-api-user.log</file>
+		<file>${log.path}/lock-redisson-user.log</file>
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- 按天回滚 daily -->
-			<fileNamePattern>${log.path}/channel-api-user.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>${log.path}/lock-redisson-user.%d{yyyy-MM-dd}.log</fileNamePattern>
 			<!-- 日志最大的历史 60天 -->
 			<maxHistory>60</maxHistory>
 		</rollingPolicy>
