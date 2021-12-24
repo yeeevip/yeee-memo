@@ -204,7 +204,7 @@ public class RedissonTest {
     }
 
     public static void main(String[] args) {
-        System.out.println("temp1...");
+        System.out.println("temp11...");
     }
 
 }
