@@ -116,8 +116,6 @@ public class RedissonTest {
     @Test
     public void testRLockExample() {
 
-        RLock lock = redissonClient.getLock("redisson:test:lock；1");
-
         int threads = 100;
         ExecutorService pool = Executors.newFixedThreadPool(10);
         CountDownLatch countDownLatch = new CountDownLatch(threads);
@@ -125,7 +123,7 @@ public class RedissonTest {
         long start = System.currentTimeMillis();
         for (int i = 0; i < threads; i++) {
             pool.submit(() -> {
-
+                RLock lock = redissonClient.getLock("redisson:test:lock；1");
                 lock.lock();
                 try {
                     for (int j = 0; j < 1000; j++) {
