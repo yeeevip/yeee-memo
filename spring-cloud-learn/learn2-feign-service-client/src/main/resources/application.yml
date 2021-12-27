@@ -1,0 +1,29 @@
+server:
+  port: 8083
+
+feign:
+  compression:
+    response:
+      enabled: true
+      useGzipDecoder: true
+  circuitbreaker:
+    enabled: true
+  client:
+    config:
+      default:
+        decode404: true
+        logger-level: full
+logging:
+  level:
+    max:
+      lab: DEBUG
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: *
+
+circuitBreaker:
+  default:
+    minimumNumberOfCalls: 10
+    waitDurationInOpenState: 15m

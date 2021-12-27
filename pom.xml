@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>pom</packaging>
 	<modules>
-		<module>reactive-programming</module>
+		<module>spring-cloud-learn</module>
 		<module>nio-learn-jdk</module>
 		<module>test-tool-gatling-scripts</module>
 		<module>webservice-demo</module>
@@ -13,14 +13,14 @@
 		<module>nio-learn-ImplWebServerByNetty</module>
         <module>nio-learn-netty</module>
 		<module>jdk-base-learn</module>
-        <module>distribute-lock-redis</module>
+        <module>distribute-lock-jedis</module>
 		<module>distribute-lock-redisson</module>
 		<module>simple-tools-execLinuxSSH</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.0.RELEASE</version>
+		<version>2.3.12.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.yeee.study</groupId>

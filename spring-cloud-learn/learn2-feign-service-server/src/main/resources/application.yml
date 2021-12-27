@@ -1,0 +1,11 @@
+server:
+  port: 8081
+  compression:
+    enabled: true
+    mime-types: application/json
+    min-response-size: 1B
+spring:
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false

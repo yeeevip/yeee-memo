@@ -4,9 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>pom</packaging>
 	<modules>
-		<module>eureka-client-app1</module>
-		<module>eureka-server</module>
-		<module>reactive-programming</module>
+		<module>learn1-eureka-client-app1</module>
+		<module>learn1-eureka-server</module>
+		<module>learn1-reactive-programming</module>
+		<module>learn2-feign-service-client</module>
+		<module>learn2-feign-service-server</module>
 	</modules>
 	<parent>
 		<artifactId>java-study</artifactId>
@@ -21,7 +23,7 @@
 
 	<properties>
 		<java.version>8</java.version>
-		<spring-cloud.version>Hoxton.SR4</spring-cloud.version>
+		<spring-cloud.version>Hoxton.SR11</spring-cloud.version>
 	</properties>
 
 	<dependencies>
