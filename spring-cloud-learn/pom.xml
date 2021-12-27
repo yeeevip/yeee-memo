@@ -4,9 +4,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>pom</packaging>
 	<modules>
+		<module>eureka-client-app1</module>
 		<module>eureka-server</module>
-		<module>reactive</module>
-		<module>demo-client</module>
+		<module>reactive-programming</module>
 	</modules>
 	<parent>
 		<artifactId>java-study</artifactId>
@@ -14,13 +14,13 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>max.lab</groupId>
-	<artifactId>reactive-programming</artifactId>
+	<artifactId>spring-cloud-learn</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>reactive-spring</name>
+	<name>spring-cloud-learn</name>
 	<description>The project for the reactive Spring tutorial</description>
 
 	<properties>
-		<java.version>13</java.version>
+		<java.version>8</java.version>
 		<spring-cloud.version>Hoxton.SR4</spring-cloud.version>
 	</properties>
 
