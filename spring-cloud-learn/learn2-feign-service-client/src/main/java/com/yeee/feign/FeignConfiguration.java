@@ -39,7 +39,7 @@ public class FeignConfiguration {
         var bodyInputStream = body != null ? body.asInputStream() : null;
         if (headers != null
                 && headers.getOrDefault("Content-Encoding", headers.getOrDefault("content-encoding", singletonList("")))
-                    .iterator().next().toLowerCase().equals("gzip")
+                    .iterator().next().equalsIgnoreCase("gzip")
                 && bodyInputStream != null
                 && !(bodyInputStream instanceof GZIPInputStream)) {
             theResponse = response.toBuilder().body(new GZIPInputStream(bodyInputStream), body.length()).build();
@@ -58,6 +58,11 @@ public class FeignConfiguration {
                 })
         );
     }
+
+//    @Bean
+//    public Decoder feignDecoder() {
+//        return new FeignResultDecoder();
+//    }
 
     @Bean
     public ErrorDecoder errorDecoder(ObjectMapper objectMapper) {

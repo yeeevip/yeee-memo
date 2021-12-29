@@ -1,12 +1,10 @@
-package max.lab.rst.s11;
+package max.lab.rst.s11ThreadModel;
 
 import reactor.core.publisher.Flux;
-import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
 
 import java.util.stream.Stream;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.IntStream;
 
 public class C01ThreadModel {
 
@@ -23,7 +21,7 @@ public class C01ThreadModel {
     				Thread.currentThread().getName());
     		return n.toUpperCase();
     	})
-//    	.publishOn(Schedulers.elastic())
+    	//.publishOn(Schedulers.elastic())
     	.map(n -> {
     		System.out.printf("#2 Mapping %s in thread %s%n", n,
     				Thread.currentThread().getName());
@@ -37,7 +35,7 @@ public class C01ThreadModel {
 //    	.subscribe();
     	
 //    	Flux.fromStream(() -> {
-//    		System.out.printf("Producing stream in thread %s%n", 
+//    		System.out.printf("Producing stream in thread %s%n",
 //    				Thread.currentThread().getName());
 //    		return Stream.of(1,2,3,4,5);
 //    	}).doOnNext(n -> {

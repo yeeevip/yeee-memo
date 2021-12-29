@@ -61,13 +61,27 @@ ___
 
 > 所属模块 pat-coding
 
-# spring-cloud相关
+## spring-cloud相关
 
 > 所属模块 spring-cloud-learn
 
-## 响应式reactive编程
+### 响应式reactive编程
 
 > 所属模块 learn1-reactive-programming
+
+### openfeign
+
+> 服务端 learn2-feign-service-server / 客户端 learn2-feign-service-client
+
+1. openfeign.FallbackFactory中处理异常，防止普通的业务异常促使客户端服务降级
+
+> com.yeee.feign.BookService.FallbackImpl
+
+2. 自定义Decoder解码器，可以将响应压缩gzip、解析服务端封装的Result中的data实体
+
+> com.yeee.feign.FeignConfiguration.feignDecoder/decoder
+
+> com.yeee.feign.FeignResultDecoder
 
 ## 自己的简单工具类
 
