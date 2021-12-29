@@ -73,15 +73,21 @@ ___
 
 > 服务端 learn2-feign-service-server / 客户端 learn2-feign-service-client
 
+___
+
 1. openfeign.FallbackFactory中处理异常，防止普通的业务异常促使客户端服务降级
 
 > com.yeee.feign.BookService.FallbackImpl
+
+___
 
 2. 自定义Decoder解码器，可以将响应压缩gzip、解析服务端封装的Result中的data实体
 
 > com.yeee.feign.FeignConfiguration.feignDecoder/decoder
 
 > com.yeee.feign.FeignResultDecoder
+
+___
 
 ## 自己的简单工具类
 
