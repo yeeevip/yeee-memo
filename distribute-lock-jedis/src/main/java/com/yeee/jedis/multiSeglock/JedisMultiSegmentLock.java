@@ -5,6 +5,7 @@ import com.yeee.jedis.lua.impl_juc_lock.JedisLock;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import redis.clients.jedis.Jedis;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
@@ -42,13 +43,13 @@ public class JedisMultiSegmentLock implements Lock {
     long expire = 2000L;
     int segmentIndex = 0;
 
-    public JedisMultiSegmentLock(String lockKey, String requestId, int segAmount) {
+    public JedisMultiSegmentLock(String lockKey, String requestId, int segAmount, Jedis jedis) {
         this.segAmount = segAmount;
         innerLocks = new JedisLock[segAmount];
         for (int i = 0; i < this.segAmount; i++) {
             // 每一个分段，加上一个编号
             String innerLockKey = lockKey + ":" + i;
-            innerLocks[i] = new JedisLock(innerLockKey, requestId);
+            innerLocks[i] = new JedisLock(jedis, innerLockKey, requestId);
         }
         segmentIndex = RandomUtil.randomInt(this.segAmount);
     }
@@ -59,7 +60,7 @@ public class JedisMultiSegmentLock implements Lock {
     }
 
     /**
-     * 获取一个分布式锁 , 超时则返回失败
+     * 获取一个分布式锁 , 超时则返回失败 | 有问题！！！
      *
      * @return 获锁成功 - true | 获锁失败 - false
      */

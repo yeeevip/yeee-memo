@@ -53,11 +53,6 @@ public class JedisLock implements Lock {
         this.requestId = requestId;
     }
 
-    public JedisLock(String lockKey, String requestId) {
-        this.lockKey = lockKey;
-        this.requestId = requestId;
-    }
-
     @Override
     public void lock() {
         // @see com.yeee.jedis.lua.simp.JedisLock
