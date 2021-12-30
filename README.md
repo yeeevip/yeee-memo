@@ -26,6 +26,19 @@ ___
 
 + lock.unlock()
 
+
+## 基于zookeeper的分布式锁
+
+> 所属模块 distribute-lock-zookeeper
+
+1.lock
+
++ com.yeee.zookeeper.lock.simple.ZkLock
+
+2.com.101tec.zkclient api demo
+
++ com.yeee.zookeeper.zkClientApi.ZkClientApiDemo
+
 ## JDK基础
 
 > 所属模块 jdk-base-learn

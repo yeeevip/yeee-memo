@@ -16,7 +16,8 @@
         <module>distribute-lock-jedis</module>
 		<module>distribute-lock-redisson</module>
 		<module>simple-tools-execLinuxSSH</module>
-	</modules>
+        <module>distribute-lock-zookeeper</module>
+    </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
