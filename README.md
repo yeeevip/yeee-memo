@@ -39,6 +39,10 @@ ___
 
 + com.yeee.zookeeper.zkClientApi.ZkClientApiDemo
 
+3.使用轮子 org.apache.curator.framework.recipes.locks.InterProcessMutex
+
++ com.yeee.zookeeper.lock.curator.InterProcessMutexLock
+
 ## JDK基础
 
 > 所属模块 jdk-base-learn
