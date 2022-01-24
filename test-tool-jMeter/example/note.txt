@@ -1,0 +1,16 @@
+
+
+一、jMeter 操作
+
+1.File -> new
+2.Add -> Threads -> Thread Group    /* 线程组 */
+2.1.Add -> Config Elements -> User defined Variables    /* 用户定义的变量 */
+2.1.Add -> PreProcessor -> JSR223 PreProcessor    /* 脚本 */
+2.2.Add -> Config Elements -> HTTP Header Manager /* 配置请求头 */
+2.3.Add -> Config Elements -> HTTP Request Defaults /* 配置请求参数 */
+2.4.Add -> Listener -> View Results Tree  /* 看接口请求 */
+2.5.Add -> Listener -> Summary Report  /* 分析 */
+
+
+
+example： mytools/yeah-toolkit/jMeter/ibd-channel
