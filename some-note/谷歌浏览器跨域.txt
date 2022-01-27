@@ -1,0 +1,7 @@
+
+1.chrome://flags/#block-insecure-private-network-requests
+
+输入：insecure
+2.找到 Block insecure private network requests. 并且禁用
+
+3.重启
