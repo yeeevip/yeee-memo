@@ -112,6 +112,14 @@ ___
 > + Java线程的创建、销毁、和线程切换比较耗费计算机资源
 > + 1>降低系统资源消耗 >2提高系统响应速度 >3提高线程的可管理性 >4更强大的功能，延时定时线程池
 
+### 并发辅助类
+
+1.CountDownLatch
+
+2.CyclicBarrier
+
+3.Semaphore
+
 ## 基于Netty的SimpleHttpWebServer
 
 > 所属模块 nio-learn-ImplWebServerByNetty
