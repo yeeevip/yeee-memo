@@ -120,6 +120,14 @@ ___
 
 3.Semaphore
 
+### 原子类
+
+1.AtomicInteger
+
+2.LongAdder
+
+3.AtomicReference<Object> // compareAndSet(V expect, V update)
+
 ## 基于Netty的SimpleHttpWebServer
 
 > 所属模块 nio-learn-ImplWebServerByNetty
