@@ -14,7 +14,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.study.tools</groupId>
     <artifactId>simple-tools</artifactId>
 
     <properties>

@@ -12,6 +12,7 @@
 		<module>jdk-base-learn</module>
 		<module>distribute-lock</module>
 		<module>simple-tools</module>
+		<module>rocketmq-learn</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>

@@ -15,11 +15,7 @@
 		<groupId>com.yeee.study</groupId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>max.lab</groupId>
 	<artifactId>spring-cloud-learn</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-cloud-learn</name>
-	<description>The project for the reactive Spring tutorial</description>
 
 	<properties>
 		<java.version>8</java.version>
