@@ -5,19 +5,14 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>spring-cloud-learn</module>
-		<module>nio-learn-jdk</module>
+		<module>nio-learn</module>
 		<module>test-tool-gatling-scripts</module>
 		<module>webservice-demo</module>
 		<module>websocket-spring</module>
-		<module>simple-tools-my</module>
-		<module>nio-learn-ImplWebServerByNetty</module>
-        <module>nio-learn-netty</module>
 		<module>jdk-base-learn</module>
-        <module>distribute-lock-jedis</module>
-		<module>distribute-lock-redisson</module>
-		<module>simple-tools-execLinuxSSH</module>
-        <module>distribute-lock-zookeeper</module>
-    </modules>
+		<module>distribute-lock</module>
+		<module>simple-tools</module>
+	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
