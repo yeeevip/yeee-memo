@@ -1,0 +1,9 @@
+server:
+  port: 10013
+
+spring:
+  elasticsearch:
+    rest:
+      uris: http://127.0.0.1:9200
+      username: admin
+      password: admin

@@ -13,6 +13,7 @@
 		<module>distribute-lock</module>
 		<module>simple-tools</module>
 		<module>rocketmq-learn</module>
+		<module>elasticsearch-learn</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
