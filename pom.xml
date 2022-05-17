@@ -14,6 +14,7 @@
 		<module>simple-tools</module>
 		<module>rocketmq-learn</module>
 		<module>elasticsearch-learn</module>
+        <module>blockchain</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>

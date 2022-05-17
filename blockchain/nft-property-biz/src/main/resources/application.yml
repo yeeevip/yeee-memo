@@ -1,0 +1,5 @@
+yeeee:
+  chain:
+    default-url: 192.168.23.111:8081
+    contract-address: 0x2b4f4f88ac518e964d2e880147c3e27a2axxxxxx
+    deploy-account-json: string:{"address":"3c219494caf1cad1f50f6fca592e29edc416cxxx","publicKey":"xxxx79d9a01311ae4fb59abf6a29575386ccb308f2a2edca9d58deaa77f8b3fd1f4090a3c4614dea29290943b153d27cc9e58d509826c936c574b58daf21ddxxxx","privateKey":"xxxxx735251405b7ddcd98b03af415cc45129ddec00bfb41434f289e282xxxxx","version":"V4","algo":"0x13"}
