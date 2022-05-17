@@ -1,5 +1,6 @@
 package com.learn.elasticsearch.demo.service;
 
+import com.learn.elasticsearch.demo.mapping.BaseIndex;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.index.query.QueryBuilder;
 
@@ -38,6 +39,6 @@ public interface ElasticsearchTemplate {
     /**
      * 批量保存
      */
-    BulkResponse bulk(List<Map<String, Object>> list, String index, String type) throws IOException;
+    BulkResponse bulk(List<? extends BaseIndex> list, String index, String type) throws IOException;
 
 }

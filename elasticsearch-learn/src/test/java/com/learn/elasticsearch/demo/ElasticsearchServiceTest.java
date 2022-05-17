@@ -28,13 +28,20 @@ public class ElasticsearchServiceTest {
 
     @Test
     public void testCreateIndex() throws IOException {
-        elasticsearchService.createIndex("aaaaa", "aa_type","");
+        boolean create = elasticsearchService.createIndex("aaaaa", "aa_type", "{}");
+        log.error("-----------------create = {}---------------------", create);
+    }
+
+    @Test
+    public void testDelIndex() throws Exception {
+        elasticsearchService.delete("aaaaa");
+        log.error("-----------------del---------------------");
     }
 
     @Test
     public void testCount() throws Exception {
         long count = elasticsearchService.count(QueryBuilders.matchAllQuery(), "event");
-        log.error("count = {}", count);
+        log.error("-----------------count = {}---------------------", count);
     }
 
 }
