@@ -6,12 +6,11 @@ package com.learn.elasticsearch.demo.mapping;
  * @author yeeee
  * @since 2022/4/25 23:05
  */
-public interface MyIndexField {
+public interface TProjectIndexField {
 
     String ID = "id";
+    String CATEGORY_ID = "categoryId";
     String TITLE = "title";
-    String CONTENT = "content";
+    String CONTENT = "blurb";
     String CREATE_TIME = "createTime";
-    String UPDATE_TIME = "updateTime";
-
 }

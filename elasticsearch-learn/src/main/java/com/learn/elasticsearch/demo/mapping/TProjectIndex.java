@@ -9,27 +9,25 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import java.util.Date;
+
 /**
  * description......
  *
  * @author yeeee
  * @since 2022/4/25 23:03
  */
-@Document(indexName = "my_index")
+@Document(indexName = "cf_project_2")
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class MyIndex extends BaseIndex implements MyIndexField {
+public class TProjectIndex extends BaseIndex implements TProjectIndexField {
 
-    private String overdueTime;
-    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_max_word")
+    @Field(type = FieldType.Keyword, name = CATEGORY_ID)
+    private Integer categoryId;
+    @Field(type = FieldType.Text, analyzer = "standard", searchAnalyzer = "standard")
     private String title;
-    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_max_word")
+    @Field(type = FieldType.Text, analyzer = "standard", searchAnalyzer = "standard", name = CONTENT)
     private String content;
     @Field(type = FieldType.Date, format = DateFormat.custom, pattern = "yyyy-MM-dd HH:mm:ss", name = CREATE_TIME)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private String createTime;
-    @Field(type = FieldType.Date, format = DateFormat.custom, pattern = "yyyy-MM-dd HH:mm:ss", name = UPDATE_TIME)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private String updateTime;
-
+    private Date createTime;
 }

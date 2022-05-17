@@ -1,5 +1,6 @@
-package com.learn.elasticsearch.demo;
+package com.learn;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author yeeee
  * @since 2022/4/25 22:38
  */
+@MapperScan("com.learn.db.opr.mapper")
 @SpringBootApplication
 public class ElasticsearchApplication {
 

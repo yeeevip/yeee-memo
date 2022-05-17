@@ -39,7 +39,7 @@ public class ElasticsearchServiceImpl implements ElasticsearchService {
     private final RestHighLevelClient restClient;
 
     @Override
-    public boolean createIndex(String indexName, String typeName, String mapping) throws IOException {
+    public boolean createIndex(String indexName, String mapping) throws IOException {
 
         // 创建索引
         CreateIndexRequest indexRequest = new CreateIndexRequest(indexName);
@@ -79,15 +79,11 @@ public class ElasticsearchServiceImpl implements ElasticsearchService {
     }
 
     @Override
-    public BulkResponse bulk(List<Map<String, Object>> list, String index, String type) throws IOException {
+    public BulkResponse bulk(String index, List<Map<String, Object>> list) throws IOException {
         BulkRequest bulkRequest = new BulkRequest();
-        for (int i = 0; i < list.size(); i++) {
-            Map<String, Object> map = list.get(i);
-            // 字段类型处理
-            //convertFieldType(map, index);
-            // TODO 简单处理日期字段
+        for (Map<String, Object> map : list) {
             String jsonStr = JSONUtil.toJsonStr(map);
-            bulkRequest.add(new IndexRequest(index, type, map.get("id").toString()).source(JSONObject.parseObject(jsonStr)));
+            bulkRequest.add(new IndexRequest(index).id(map.get("id").toString()).source(JSONObject.parseObject(jsonStr)));
         }
         return restClient.bulk(bulkRequest, RequestOptions.DEFAULT);
     }

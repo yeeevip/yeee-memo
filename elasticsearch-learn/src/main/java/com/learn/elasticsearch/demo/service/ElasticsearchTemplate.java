@@ -39,6 +39,6 @@ public interface ElasticsearchTemplate {
     /**
      * 批量保存
      */
-    BulkResponse bulk(List<? extends BaseIndex> list, String index, String type) throws IOException;
+    List<String> bulk(List<? extends BaseIndex> list, String indexName) throws IOException;
 
 }

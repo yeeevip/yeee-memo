@@ -1,10 +1,11 @@
 package com.learn.elasticsearch.demo;
 
-import com.learn.elasticsearch.demo.mapping.MyIndex;
-import com.learn.elasticsearch.demo.service.ElasticsearchService;
+import com.learn.ElasticsearchApplication;
+import com.learn.db.opr.ITProjectService;
+import com.learn.db.opr.TProject;
+import com.learn.elasticsearch.demo.mapping.TProjectIndex;
 import com.learn.elasticsearch.demo.service.ElasticsearchTemplate;
 import lombok.extern.slf4j.Slf4j;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * description......
@@ -28,48 +31,47 @@ public class ElasticsearchTemplateServiceTest {
 
     @Autowired
     private ElasticsearchTemplate elasticsearchTemplate;
+    @Autowired
+    private ITProjectService iTProjectService;
 
     @Test
-    public void testCreateIndex() throws IOException {
-        boolean res = elasticsearchTemplate.createIndex(MyIndex.class);
-        log.error("---------------res = {}----------------", res);
-    }
-
-    @Test
-    public void testDelIndex() throws Exception {
-        elasticsearchTemplate.delete(MyIndex.class);
-        log.error("---------------del----------------");
-    }
-
-    @Test
-    public void testExists() throws Exception {
-        boolean exists = elasticsearchTemplate.exists(MyIndex.class);
-        log.error("---------------exists = {}----------------", exists);
+    public void testCreateIndex() throws Exception {
+        boolean exists = elasticsearchTemplate.exists(TProjectIndex.class);
+        log.info("-----------------exists = {}---------------------", exists);
+        if (!exists) {
+            boolean create = elasticsearchTemplate.createIndex(TProjectIndex.class);
+            log.info("-----------------create = {}---------------------", create);
+        }
     }
 
     @Test
     public void testBulk() throws IOException {
-        List<MyIndex> myIndexList = new ArrayList<>();
+        List<TProject> list = iTProjectService.list();
+        List<TProjectIndex> myIndexList = list.stream()
+                .map(item -> {
+                    TProjectIndex projectIndex = new TProjectIndex();
+                    projectIndex.setId(item.getId().toString());
+                    projectIndex.setCategoryId(item.getCategoryId());
+                    projectIndex.setTitle(item.getTitle());
+                    projectIndex.setContent(item.getBlurb());
+                    projectIndex.setCreateTime(Date.from(item.getLaunchDateRaising().atZone(ZoneId.systemDefault()).toInstant()));
+                    return projectIndex;
+                })
+                .collect(Collectors.toList());
+        List<String> res = elasticsearchTemplate.bulk(myIndexList, "cf_project_2");
+        log.info("-------------bulk res = {}------------------", res);
+    }
 
-        MyIndex myIndex1 = new MyIndex();
-        myIndex1.setId("1");
-        myIndex1.setTitle("好的送你发生了发撒的积分撒地方撒多了几分按时了解到复联三加多少分");
-        myIndex1.setContent("萨迪克广东省考姐夫撒娇发射基地加多少分看见打上来看附件ADSL附件阿斯利康加上费德里科加多少就");
-        myIndexList.add(myIndex1);
+    @Test
+    public void testExists() throws Exception {
+        boolean exists = elasticsearchTemplate.exists(TProjectIndex.class);
+        log.info("---------------exists = {}----------------", exists);
+    }
 
-        MyIndex myIndex2 = new MyIndex();
-        myIndex2.setId("2");
-        myIndex2.setTitle("好的送你发生了发撒的积分撒地方撒多了几分按时了解到复联三加多少分");
-        myIndex2.setContent("萨迪克广东省考姐夫撒娇发射基地加多少分看见打上来看附件ADSL附件阿斯利康加上费德里科加多少就");
-        myIndexList.add(myIndex2);
-
-        MyIndex myIndex3 = new MyIndex();
-        myIndex3.setId("3");
-        myIndex3.setTitle("好的送你发生了发撒的积分撒地方撒多了几分按时了解到复联三加多少分");
-        myIndex3.setContent("萨迪克广东省考姐夫撒娇发射基地加多少分看见打上来看附件ADSL附件阿斯利康加上费德里科加多少就");
-        myIndexList.add(myIndex3);
-
-        elasticsearchTemplate.bulk(myIndexList, "my_index", "");
+    @Test
+    public void testDelIndex() throws Exception {
+        elasticsearchTemplate.delete(TProjectIndex.class);
+        log.info("---------------del----------------");
     }
 
 }

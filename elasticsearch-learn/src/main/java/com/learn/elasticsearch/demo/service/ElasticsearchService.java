@@ -18,7 +18,7 @@ public interface ElasticsearchService {
     /**
      * 创建索引
      */
-    boolean createIndex(String indexName, String typeName, String mapping) throws IOException;
+    boolean createIndex(String indexName, String mapping) throws IOException;
 
     /**
      * 判断索引是否存在
@@ -38,6 +38,6 @@ public interface ElasticsearchService {
     /**
      * 批量保存
      */
-    BulkResponse bulk(List<Map<String, Object>> list, String index, String type) throws IOException;
+    BulkResponse bulk(String index, List<Map<String, Object>> list) throws IOException;
 
 }
