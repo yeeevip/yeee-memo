@@ -8,13 +8,12 @@ import com.learn.elasticsearch.demo.service.ElasticsearchTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.IOException;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,11 +49,9 @@ public class ElasticsearchTemplateServiceTest {
         List<TProjectIndex> myIndexList = list.stream()
                 .map(item -> {
                     TProjectIndex projectIndex = new TProjectIndex();
-                    projectIndex.setId(item.getId().toString());
-                    projectIndex.setCategoryId(item.getCategoryId());
-                    projectIndex.setTitle(item.getTitle());
-                    projectIndex.setContent(item.getBlurb());
-                    projectIndex.setCreateTime(Date.from(item.getLaunchDateRaising().atZone(ZoneId.systemDefault()).toInstant()));
+                    BeanUtils.copyProperties(item, projectIndex);
+                    projectIndex.setId(item.getId());
+                    projectIndex.setCreateTime(item.getLaunchDateRaising());
                     return projectIndex;
                 })
                 .collect(Collectors.toList());

@@ -11,6 +11,6 @@ public interface TProjectIndexField {
     String ID = "id";
     String CATEGORY_ID = "categoryId";
     String TITLE = "title";
-    String CONTENT = "blurb";
+    String CONTENT = "content";
     String CREATE_TIME = "createTime";
 }

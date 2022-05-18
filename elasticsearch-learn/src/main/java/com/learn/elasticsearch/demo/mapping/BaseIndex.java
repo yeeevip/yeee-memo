@@ -12,5 +12,5 @@ import org.springframework.data.annotation.Id;
 @Data
 public class BaseIndex {
     @Id
-    private String id;
+    private Integer id;
 }

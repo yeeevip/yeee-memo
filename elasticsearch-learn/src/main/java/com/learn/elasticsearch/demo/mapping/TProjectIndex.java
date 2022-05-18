@@ -1,14 +1,13 @@
 package com.learn.elasticsearch.demo.mapping;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -27,7 +26,7 @@ public class TProjectIndex extends BaseIndex implements TProjectIndexField {
     @Field(type = FieldType.Text, analyzer = "standard", searchAnalyzer = "standard")
     private String title;
     @Field(type = FieldType.Text, analyzer = "standard", searchAnalyzer = "standard", name = CONTENT)
-    private String content;
+    private String blurb;
     @Field(type = FieldType.Date, format = DateFormat.custom, pattern = "yyyy-MM-dd HH:mm:ss", name = CREATE_TIME)
-    private Date createTime;
+    private LocalDateTime createTime;
 }
