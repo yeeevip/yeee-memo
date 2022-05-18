@@ -1,12 +1,13 @@
 package com.learn.elasticsearch.demo.service;
 
 import com.learn.elasticsearch.demo.mapping.BaseIndex;
-import org.elasticsearch.action.bulk.BulkResponse;
+import com.learn.model.vo.PageVO;
 import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.search.aggregations.Aggregations;
+import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 /**
  * description......
@@ -40,5 +41,15 @@ public interface ElasticsearchTemplate {
      * 批量保存
      */
     List<String> bulk(List<? extends BaseIndex> list, String indexName) throws IOException;
+
+    /**
+     * 分页条件搜索
+     */
+    <T> PageVO<T> pageSearch(Integer pageNum, Integer pageSize, QueryBuilder queryBuilder, Class<T> index);
+
+    /**
+     * 聚合查询
+     */
+    <T> Aggregations aggregationSearch(TermsAggregationBuilder aggregationBuilder, Class<T> index);
 
 }

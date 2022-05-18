@@ -1,7 +1,11 @@
 package com.learn.elasticsearch.demo.service;
 
+import com.learn.model.vo.PageVO;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
+import org.elasticsearch.search.aggregations.Aggregations;
 
 import java.io.IOException;
 import java.util.List;
@@ -39,5 +43,15 @@ public interface ElasticsearchService {
      * 批量保存
      */
     BulkResponse bulk(String index, List<Map<String, Object>> list) throws IOException;
+
+    /**
+     * 分页条件搜索
+     */
+    PageVO<SearchHit> pageSearch(Integer pageNum, Integer pageSize, QueryBuilder queryBuilder, String... index) throws IOException;
+
+    /**
+     * 聚合查询
+     */
+    Aggregations aggregationSearch(AggregationBuilder aggregationBuilder, String... index) throws IOException;
 
 }
