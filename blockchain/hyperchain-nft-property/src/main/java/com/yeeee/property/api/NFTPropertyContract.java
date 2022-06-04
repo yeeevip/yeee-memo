@@ -17,6 +17,9 @@ public class NFTPropertyContract extends BaseContract implements HPC721Metadata,
 
     @Override
     public boolean issue(String ownerAddr, String id, String metaData) {
+        if (!this.getOrigin().equals(this.getDeployer())) {
+            throw new RuntimeException("the account has no permission");
+        }
         if (StringUtil.checkEmpty(ownerAddr) || StringUtil.checkEmpty(metaData)) {
             throw new RuntimeException("the ownerAddr or metaData is not allow empty");
         }
@@ -27,7 +30,24 @@ public class NFTPropertyContract extends BaseContract implements HPC721Metadata,
         if (!String.valueOf(id).equals(metaInfo.getId())) {
             throw new RuntimeException("the id and metaData's id not match");
         }
-        this.emitProperty(id, ownerAddr, metaData);
+        PropertyV1 property = getProperty0(id.getBytes());
+        if (property != null && ownerAddr.equals(property.getOwner())) {
+            return true;
+        }
+        emitProperty(id, ownerAddr, metaData);
+        return true;
+    }
+
+    @Override
+    public boolean issue(String ownerAddr, String id) {
+        if (!this.getOrigin().equals(this.getDeployer())) {
+            throw new RuntimeException("the account has no permission");
+        }
+        PropertyV1 property = getProperty0(id.getBytes());
+        if (property != null && ownerAddr.equals(property.getOwner())) {
+            return true;
+        }
+        emitProperty(id, ownerAddr, "{}");
         return true;
     }
 
@@ -43,9 +63,35 @@ public class NFTPropertyContract extends BaseContract implements HPC721Metadata,
         if (property == null) {
             throw new RuntimeException("the property is not exist");
         }
+        if (toAddr.equals(property.getOwner())) {
+            return true;
+        }
         if (!fromAddr.equals(property.getOwner())) {
             throw new RuntimeException("the property owner is not belong to from");
         }
+        property.setOwner(toAddr);
+        return true;
+    }
+
+    @Override
+    public boolean transfer(String id, String fromAddr, String toAddr, String metaData) {
+        if (StringUtil.checkEmpty(fromAddr) || StringUtil.checkEmpty(toAddr) || StringUtil.checkEmpty(metaData)) {
+            throw new RuntimeException("the fromAddr or toAddr or metaData is not allow empty");
+        }
+        if (!this.getOrigin().equals(this.getDeployer())) {
+            throw new RuntimeException("the account has no permission");
+        }
+        PropertyV1 property = getProperty0(id.getBytes());
+        if (property == null) {
+            throw new RuntimeException("the property is not exist");
+        }
+        if (toAddr.equals(property.getOwner())) {
+            return true;
+        }
+        if (!fromAddr.equals(property.getOwner())) {
+            throw new RuntimeException("the property owner is not belong to from");
+        }
+        property.setMetaData(metaData);
         property.setOwner(toAddr);
         return true;
     }
@@ -99,14 +145,7 @@ public class NFTPropertyContract extends BaseContract implements HPC721Metadata,
      * @param meta 资产的自定义meta信息，不可为null
      */
     public void emitProperty(String id, String owner, String meta) {
-        if (!this.getOrigin().equals(this.getDeployer())) {
-            throw new RuntimeException("the account has no permission");
-        }
-        if (StringUtil.checkEmpty(owner) || meta == null) {
-            throw new RuntimeException("the emit param is illegal");
-        }
-        byte[] identity = id.getBytes();
-        emit0(identity, owner, meta.getBytes());
+        emit0(id.getBytes(), owner, meta.getBytes());
     }
 
     /**

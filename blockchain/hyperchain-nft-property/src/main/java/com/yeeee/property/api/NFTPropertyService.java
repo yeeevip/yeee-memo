@@ -15,9 +15,13 @@ public interface NFTPropertyService extends BaseContractInterface {
      */
     boolean issue(String ownerAddr, String id, String metaData);
 
+    boolean issue(String ownerAddr, String id);
+
     /**
      * 转移数字藏品
      */
     boolean transfer(String id, String fromAddr, String toAddr);
+
+    boolean transfer(String id, String fromAddr, String toAddr, String metaData);
 
 }

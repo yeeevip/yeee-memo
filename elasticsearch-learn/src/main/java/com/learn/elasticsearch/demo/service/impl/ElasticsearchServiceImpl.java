@@ -1,9 +1,9 @@
 package com.learn.elasticsearch.demo.service.impl;
 
-import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.learn.elasticsearch.demo.service.ElasticsearchService;
 import com.learn.model.vo.PageVO;
+import com.yeeee.common.JacksonUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
@@ -90,10 +90,10 @@ public class ElasticsearchServiceImpl implements ElasticsearchService {
     }
 
     @Override
-    public BulkResponse bulk(String index, List<Map<String, Object>> list) throws IOException {
+    public BulkResponse bulk(String index, List<Map<String, Object>> list) throws Exception {
         BulkRequest bulkRequest = new BulkRequest();
         for (Map<String, Object> map : list) {
-            String jsonStr = JSONUtil.toJsonStr(map);
+            String jsonStr = JacksonUtils.toJsonString(map);
             bulkRequest.add(new IndexRequest(index).id(map.get("id").toString()).source(JSONObject.parseObject(jsonStr)));
         }
         return restClient.bulk(bulkRequest, RequestOptions.DEFAULT);

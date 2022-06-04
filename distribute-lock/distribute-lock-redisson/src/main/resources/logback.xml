@@ -8,7 +8,7 @@
 
 <!--	脱敏处理
 	<conversionRule conversionWord="msg"
-		converterClass="com.ibeidiao.channel.api.log.LogMessageConverter" />-->
+		converterClass="com.yeee.channel.api.log.LogMessageConverter" />-->
 
 	<!-- 控制台彩色打印 -->
 	<conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
@@ -96,7 +96,7 @@
 	</appender>
 
 	<!-- 系统模块日志级别控制 -->
-	<logger name="com.ibeidiao" level="info" />
+	<logger name="com.yeee" level="info" />
 	<!-- Spring日志级别控制 -->
 	<logger name="org.springframework" level="warn" />
 

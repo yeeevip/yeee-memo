@@ -13,6 +13,7 @@ import lombok.Data;
 //@Component
 //@ConfigurationProperties(prefix = "yeeee.chain")
 public class ChainProperties {
+
     /**
      * 默认节点
      */
@@ -25,6 +26,10 @@ public class ChainProperties {
      * 部署账号信息
      */
     private String deployAccountJson;
+
+    public void setContractAddress(String contractAddress) {
+        this.contractAddress = StrUtil.removePrefix(contractAddress, "string:");
+    }
 
     public void setDeployAccountJson(String deployAccountJson) {
         this.deployAccountJson = StrUtil.removePrefix(deployAccountJson, "string:");

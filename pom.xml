@@ -15,6 +15,7 @@
 		<module>rocketmq-learn</module>
 		<module>elasticsearch-learn</module>
         <module>blockchain</module>
+        <module>yeeee-base</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -24,18 +25,39 @@
 	</parent>
 	<groupId>com.yeee.study</groupId>
 	<artifactId>java-study</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<name>java-study</name>
 	<description>The project for the study java</description>
 
 	<properties>
+		<yeee-sdk.version>1.0.1-SNAPSHOT</yeee-sdk.version>
 		<java.version>1.8</java.version>
 		<hutool.version>5.6.2</hutool.version>
 		<fastjson.version>1.2.73</fastjson.version>
+		<jackson.version>2.13.0</jackson.version>
+<!--		<netty.version>4.1.5.Final</netty.version>-->
+		<jedis.version>2.9.0</jedis.version>
+		<redisson.version>3.15.1</redisson.version>
+		<elasticsearch.version>7.6.2</elasticsearch.version>
+		<mysql-connector.version>8.0.15</mysql-connector.version>
+		<mybatis-plus.version>3.4.3.3</mybatis-plus.version>
+		<javassist.version>3.21.0-GA</javassist.version>
+		<logback.version>1.2.3</logback.version>
+		<okhttp.version>4.9.3</okhttp.version>
+		<jetcache-starter-redis-lettuce.version>2.6.2</jetcache-starter-redis-lettuce.version>
+		<java-jwt.version>3.19.1</java-jwt.version>
+		<easyexcel.version>3.0.5</easyexcel.version>
+		<ons-client.version>1.8.8.3.Final</ons-client.version>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>com.yeee.study</groupId>
+				<artifactId>base-common</artifactId>
+				<version>${yeee-sdk.version}</version>
+			</dependency>
+			<!-- log -->
 			<dependency>
 				<groupId>log4j</groupId>
 				<artifactId>log4j</artifactId>
@@ -51,6 +73,102 @@
 				<artifactId>slf4j-api</artifactId>
 				<version>1.7.30</version>
 			</dependency>
+			<!-- hutool -->
+			<dependency>
+				<groupId>cn.hutool</groupId>
+				<artifactId>hutool-all</artifactId>
+				<version>${hutool.version}</version>
+			</dependency>
+			<!-- fastjson -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>fastjson</artifactId>
+				<version>${fastjson.version}</version>
+			</dependency>
+			<!-- jackson -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+			<!-- netty -->
+<!--			<dependency>-->
+<!--				<groupId>io.netty</groupId>-->
+<!--				<artifactId>netty-all</artifactId>-->
+<!--				<version>${netty.version}</version>-->
+<!--			</dependency>-->
+			<!-- jedis -->
+			<dependency>
+				<groupId>redis.clients</groupId>
+				<artifactId>jedis</artifactId>
+				<version>${jedis.version}</version>
+			</dependency>
+			<!-- redisson-->
+			<dependency>
+				<groupId>org.redisson</groupId>
+				<artifactId>redisson-spring-boot-starter</artifactId>
+				<version>${redisson.version}</version>
+			</dependency>
+			<!-- elasticsearch-->
+			<dependency>
+				<groupId>org.elasticsearch.client</groupId>
+				<artifactId>elasticsearch-rest-high-level-client</artifactId>
+				<version>${elasticsearch.version}</version>
+			</dependency>
+			<!-- mysql -->
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql-connector.version}</version>
+			</dependency>
+			<!-- mybatis-plus -->
+			<dependency>
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatis-plus-boot-starter</artifactId>
+				<version>${mybatis-plus.version}</version>
+			</dependency>
+			<!-- javassist -->
+			<dependency>
+				<groupId>org.javassist</groupId>
+				<artifactId>javassist</artifactId>
+				<version>${javassist.version}</version>
+			</dependency>
+			<!-- LogBack -->
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+				<version>${logback.version}</version>
+			</dependency>
+			<!-- okhttp3 -->
+			<dependency>
+				<groupId>com.squareup.okhttp3</groupId>
+				<artifactId>okhttp</artifactId>
+				<version>${okhttp.version}</version>
+			</dependency>
+			<!-- jetcache -->
+			<dependency>
+				<groupId>com.alicp.jetcache</groupId>
+				<artifactId>jetcache-starter-redis-lettuce</artifactId>
+				<version>${jetcache-starter-redis-lettuce.version}</version>
+			</dependency>
+			<!-- jwt -->
+			<dependency>
+				<groupId>com.auth0</groupId>
+				<artifactId>java-jwt</artifactId>
+				<version>${java-jwt.version}</version>
+			</dependency>
+			<!-- easyexcel -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>easyexcel</artifactId>
+				<version>${easyexcel.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.aliyun.openservices</groupId>
+				<artifactId>ons-client</artifactId>
+				<version>${ons-client.version}</version>
+				<!--<version>2.0.1.Final</version> 问题-->
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
@@ -60,22 +178,10 @@
 			<version>1.18.12</version>
 			<optional>true</optional>
 		</dependency>
-
-		<dependency>
-			<groupId>cn.hutool</groupId>
-			<artifactId>hutool-all</artifactId>
-			<version>${hutool.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-			<version>${fastjson.version}</version>
-		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -85,8 +191,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
-
 	</build>
-
 
 </project>

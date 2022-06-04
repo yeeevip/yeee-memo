@@ -2,6 +2,7 @@ package com.yeeee.chain.biz.service;
 
 import com.yeeee.chain.biz.bo.BlockchainAccountBO;
 import com.yeeee.chain.biz.bo.NFTPropertyMetaDataBO;
+import com.yeeee.chain.biz.bo.NftIssueBO;
 
 /**
  * 数字藏品区块链-sdk
@@ -20,11 +21,16 @@ public interface NFTPropertyService {
     /**
      * 发行数字藏品 -> 发行方
      */
-    void issue(NFTPropertyMetaDataBO metaDataBO) throws Exception;
+    NftIssueBO issue(NFTPropertyMetaDataBO metaDataBO) throws Exception;
 
     /**
      * 数字藏品转移，from（发行方） -> to（user）
      */
-    BlockchainAccountBO transfer(String nftId) throws Exception;
+    void transfer(String target, String nftId, NFTPropertyMetaDataBO metaDataBO) throws Exception;
+
+    /**
+     * 数字藏品转移，from（发行方） -> to（user）
+     */
+    BlockchainAccountBO transfer(String nftId, NFTPropertyMetaDataBO metaDataBO) throws Exception;
 
 }

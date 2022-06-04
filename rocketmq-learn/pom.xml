@@ -5,11 +5,13 @@
     <parent>
         <artifactId>java-study</artifactId>
         <groupId>com.yeee.study</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>rocketmq-learn</artifactId>
+    <version>1.0.1-SNAPSHOT</version>
+
     <packaging>pom</packaging>
     <modules>
         <module>producer-demo</module>
@@ -23,14 +25,16 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.yeee.study</groupId>
+            <artifactId>base-common</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>com.aliyun.openservices</groupId>
             <artifactId>ons-client</artifactId>
-            <version>1.8.8.3.Final</version>
-            <!--<version>2.0.1.Final</version> 问题-->
         </dependency>
     </dependencies>
 

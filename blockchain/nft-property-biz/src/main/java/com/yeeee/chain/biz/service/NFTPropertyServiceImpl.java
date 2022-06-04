@@ -14,10 +14,11 @@ import cn.hyperchain.sdk.service.AccountService;
 import cn.hyperchain.sdk.service.ContractService;
 import cn.hyperchain.sdk.service.ServiceManager;
 import cn.hyperchain.sdk.transaction.Transaction;
-import com.alibaba.fastjson.JSON;
 import com.yeeee.chain.biz.bo.BlockchainAccountBO;
 import com.yeeee.chain.biz.bo.NFTPropertyMetaDataBO;
+import com.yeeee.chain.biz.bo.NftIssueBO;
 import com.yeeee.chain.biz.config.ChainProperties;
+import com.yeeee.common.JacksonUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.PostConstruct;
@@ -33,10 +34,12 @@ import javax.annotation.Resource;
 //@Service
 public class NFTPropertyServiceImpl implements NFTPropertyService {
 
+
     @Resource
     private ChainProperties chainProperties;
     private static ContractService contractService = null;
     private static AccountService accountService = null;
+    private static Account deployAccount = null;
 
     @PostConstruct
     public void init() {
@@ -45,44 +48,63 @@ public class NFTPropertyServiceImpl implements NFTPropertyService {
         ProviderManager providerManager = ProviderManager.createManager(defaultHttpProvider);
         contractService = ServiceManager.getContractService(providerManager);
         accountService = ServiceManager.getAccountService(providerManager);
+        deployAccount = accountService.fromAccountJson(chainProperties.getDeployAccountJson());
     }
 
-    @Override
-    public void issue(NFTPropertyMetaDataBO metaDataBO) throws Exception {
-        if (StrUtil.hasBlank(metaDataBO.getId(), metaDataBO.getName(), metaDataBO.getIssuer(), metaDataBO.getUri())) {
-            throw new Exception("metaDataBO参数不全");
+    public NftIssueBO issue(NFTPropertyMetaDataBO metaDataBO) throws Exception {
+        if (StrUtil.isBlank(metaDataBO.getId())) {
+            throw new Exception("id不能为空");
         }
         try {
-            Account deployAccount = accountService.fromAccountJson(chainProperties.getDeployAccountJson());
             InvokeDirectlyParams invokeDirectlyParams = new InvokeDirectlyParams
-                    .ParamBuilder(CONTRACT_ISSUE)
+                    .ParamBuilder("issue")
                     .addString(deployAccount.getAddress())
                     .addString(metaDataBO.getId())
-                    .addString(JSON.toJSONString(metaDataBO))
+                    //.addString(JacksonUtils.toJsonString(metaDataBO))
                     .build();
-            boolean res = invokeContract(deployAccount, invokeDirectlyParams, Boolean.class, chainProperties.getContractAddress());
+            String res = invokeContract(deployAccount, invokeDirectlyParams, String.class, chainProperties.getContractAddress());
+            return new NftIssueBO().setTokenId(res).setAccountBO(new BlockchainAccountBO().setAddress(deployAccount.getAddress()));
+        } catch (Exception e) {
+            log.error("趣链区块链：藏品上链失败，metaData = {}", metaDataBO, e);
+            throw new Exception("藏品上链失败");
+        }
+    }
+
+    public void transfer(String target, String nftId, NFTPropertyMetaDataBO metaDataBO) throws Exception {
+        if (StrUtil.isBlank(target) || StrUtil.isBlank(nftId)) {
+            throw new Exception("target和nftId不能为空");
+        }
+        try {
+            Account fromAccount = deployAccount;
+            InvokeDirectlyParams invokeDirectlyParams = new InvokeDirectlyParams.ParamBuilder("transfer")
+                    .addString(nftId)
+                    .addString(fromAccount.getAddress())
+                    .addString(target)
+                    .addString(JacksonUtils.toJsonString(metaDataBO))
+                    .build();
+            boolean res = invokeContract(fromAccount, invokeDirectlyParams, Boolean.class, chainProperties.getContractAddress());
             if (!res) {
                 throw new Exception("smart contract return false");
             }
         } catch (Exception e) {
-            log.error("趣链区块链：发行藏品失败，metaData = {}", metaDataBO, e);
-            throw new Exception("发行藏品失败");
+            log.error("趣链区块链：藏品链上转移失败，nftId = {}， metaData = {}", nftId, metaDataBO, e);
+            throw new Exception("藏品链上转移失败");
         }
     }
 
-    @Override
-    public BlockchainAccountBO transfer(String nftId) throws Exception {
+    public BlockchainAccountBO transfer(String nftId, NFTPropertyMetaDataBO metaDataBO) throws Exception {
         if (StrUtil.isBlank(nftId)) {
             throw new Exception("nftId不能为空");
         }
         try {
-            Account fromAccount = accountService.fromAccountJson(chainProperties.getDeployAccountJson());
+            Account fromAccount = deployAccount;
             Account targetAccount = accountService.genAccount(Algo.SMRAW);
 
-            InvokeDirectlyParams invokeDirectlyParams = new InvokeDirectlyParams.ParamBuilder(CONTRACT_TRANSFER)
+            InvokeDirectlyParams invokeDirectlyParams = new InvokeDirectlyParams.ParamBuilder("transfer")
                     .addString(nftId)
                     .addString(fromAccount.getAddress())
                     .addString(targetAccount.getAddress())
+                    .addString(JacksonUtils.toJsonString(metaDataBO))
                     .build();
             boolean res = invokeContract(fromAccount, invokeDirectlyParams, Boolean.class, chainProperties.getContractAddress());
             if (!res) {
@@ -109,7 +131,7 @@ public class NFTPropertyServiceImpl implements NFTPropertyService {
         transaction.sign(from);
         TxHashResponse send = contractService.invoke(transaction).send();
         ReceiptResponse receipt = send.polling();
+        log.info("趣链区块链：交易返回信息 -> {}", receipt.toString());
         return Decoder.decodeHVM(receipt.getRet(), clazz);
     }
-
 }

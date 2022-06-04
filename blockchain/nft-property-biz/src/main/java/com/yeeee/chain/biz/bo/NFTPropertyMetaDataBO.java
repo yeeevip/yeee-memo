@@ -2,12 +2,6 @@ package com.yeeee.chain.biz.bo;
 
 import lombok.Data;
 
-/**
- * description......
- *
- * @author yeeee
- * @since 2022/5/16 16:52
- */
 @Data
 public class NFTPropertyMetaDataBO {
 
@@ -22,9 +16,9 @@ public class NFTPropertyMetaDataBO {
     private String name;
 
     /**
-     * 发行方
+     * 藏品HASH
      */
-    private String issuer;
+    private String entityHash;
 
     /**
      * oss地址

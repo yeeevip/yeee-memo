@@ -13,7 +13,7 @@
 	<parent>
 		<artifactId>java-study</artifactId>
 		<groupId>com.yeee.study</groupId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>spring-cloud-learn</artifactId>
 
@@ -24,7 +24,10 @@
 
 	<dependencies>
 
-
+		<dependency>
+			<groupId>com.yeee.study</groupId>
+			<artifactId>base-common</artifactId>
+		</dependency>
 
 		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>

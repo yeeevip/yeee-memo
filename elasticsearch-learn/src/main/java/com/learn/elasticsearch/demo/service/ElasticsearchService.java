@@ -42,7 +42,7 @@ public interface ElasticsearchService {
     /**
      * 批量保存
      */
-    BulkResponse bulk(String index, List<Map<String, Object>> list) throws IOException;
+    BulkResponse bulk(String index, List<Map<String, Object>> list) throws Exception;
 
     /**
      * 分页条件搜索
