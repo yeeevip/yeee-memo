@@ -1,0 +1,26 @@
+server:
+  servlet:
+    context-path: /
+jetcache:
+  statIntervalMinutes: 1
+  areaInCacheName: false
+  local:
+    default:
+      type: caffeine
+      limit: 10000
+      keyConvertor: fastjson
+      valueEncoder: kryo
+      valueDecoder: kryo
+      expireAfterWriteInMills: 86400000
+  remote:
+    default:
+      type: redis.lettuce
+      keyConvertor: fastjson
+      valueEncoder: kryo
+      valueDecoder: kryo
+      uri: redis://yeah@127.0.0.1:6379/7
+      expireAfterWriteInMills: 86400000
+      poolConfig:
+        minIdle: 5
+        maxIdle: 20
+        maxTotal: 50
