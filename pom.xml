@@ -16,6 +16,7 @@
 		<module>elasticsearch-learn</module>
         <module>blockchain</module>
         <module>yeeee-base</module>
+        <module>shardingsphere-learn</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -34,7 +35,7 @@
 		<java.version>1.8</java.version>
 		<hutool.version>5.6.2</hutool.version>
 		<fastjson.version>1.2.73</fastjson.version>
-		<jackson.version>2.13.0</jackson.version>
+		<jackson.version>2.11.2</jackson.version>
 <!--		<netty.version>4.1.5.Final</netty.version>-->
 		<jedis.version>2.9.0</jedis.version>
 		<redisson.version>3.15.1</redisson.version>
@@ -48,6 +49,7 @@
 		<java-jwt.version>3.19.1</java-jwt.version>
 		<easyexcel.version>3.0.5</easyexcel.version>
 		<ons-client.version>1.8.8.3.Final</ons-client.version>
+		<sharding-jdbc-spring-boot-starter.version>4.1.1</sharding-jdbc-spring-boot-starter.version>
 	</properties>
 
 	<dependencyManagement>
@@ -169,6 +171,11 @@
 				<version>${ons-client.version}</version>
 				<!--<version>2.0.1.Final</version> 问题-->
 			</dependency>
+			<dependency>
+				<groupId>org.apache.shardingsphere</groupId>
+				<artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+				<version>${sharding-jdbc-spring-boot-starter.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
@@ -177,6 +184,14 @@
 			<artifactId>lombok</artifactId>
 			<version>1.18.12</version>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-autoconfigure</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
 		</dependency>
 	</dependencies>
 
