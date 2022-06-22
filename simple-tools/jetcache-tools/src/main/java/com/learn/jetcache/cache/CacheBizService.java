@@ -18,6 +18,8 @@ import java.util.Map;
 @Component
 public class CacheBizService {
 
+    @CacheRefresh
+    @CachePenetrationProtect
     @Cached(cacheType = CacheType.BOTH, expire = 30, localExpire = 16, localLimit = 20)
     public Map<String, Object> getData() {
         log.info("-----------------查询数据-----------------");
