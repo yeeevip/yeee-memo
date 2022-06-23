@@ -1,5 +1,7 @@
 package com.learn.jetcache.cache;
 
+import com.alicp.jetcache.anno.CachePenetrationProtect;
+import com.alicp.jetcache.anno.CacheRefresh;
 import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.Cached;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +20,7 @@ import java.util.Map;
 @Component
 public class CacheBizService {
 
-    @CacheRefresh
+    @CacheRefresh(refresh = 30, stopRefreshAfterLastAccess = 3600)
     @CachePenetrationProtect
     @Cached(cacheType = CacheType.BOTH, expire = 30, localExpire = 16, localLimit = 20)
     public Map<String, Object> getData() {
