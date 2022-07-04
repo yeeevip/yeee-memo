@@ -177,7 +177,11 @@ public class AllTypeLockUseExample {
      * @since 2021/12/28 16:59
      */
     public void testSemaphore() {
-        RSemaphore semaphore = redissonClient1.getSemaphore("semaphore");
+        RSemaphore semaphore;
+        {
+            semaphore = redissonClient1.getSemaphore("semaphore");
+            semaphore.trySetPermits(100);
+        }
         try {
             semaphore.acquire();
             //或
@@ -204,7 +208,11 @@ public class AllTypeLockUseExample {
      * @since 2021/12/28 17:18
      */
     public void testPermitExpirableSemaphore() {
-        RPermitExpirableSemaphore semaphore = redissonClient1.getPermitExpirableSemaphore("mySemaphore");
+        RPermitExpirableSemaphore semaphore;
+        {
+            semaphore = redissonClient1.getPermitExpirableSemaphore("mySemaphore");
+            semaphore.trySetPermits(100);
+        }
         try {
             String permitId = semaphore.acquire();
             // 获取一个信号，有效期只有2秒钟。
