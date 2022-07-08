@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="boot.spring.mapper.LoginMapper">
-	<resultMap type="boot.spring.po.Staff" id="staffMap">
+<mapper namespace="vip.yeee.memo.integrate.websocket.mapper.LoginMapper">
+	<resultMap type="vip.yeee.memo.integrate.websocket.po.Staff" id="staffMap">
         <id column="staff_id" property="staff_id" ></id>
         <result column="username" property="username"/>
         <result column="password" property="password"/>

@@ -75,7 +75,7 @@ ___
 
 ## JDK基础
 
-> 所属模块 jdk-base-learn
+> 所属模块 jdk-base
 
 ### java基本类型
 
@@ -130,15 +130,15 @@ ___
 
 ## 基于Netty的SimpleHttpWebServer
 
-> 所属模块 nio-learn-ImplWebServerByNetty
+> 所属模块 nio-WebServerByNetty
 
 ## JDK自带的NIO
 
-> 所属模块 nio-learn-jdk
+> 所属模块 nio-jdk
 
 ## Netty基本使用
 
-> 所属模块 nio-learn-netty
+> 所属模块 nio-netty
 
 ## 算法学习PAT-Coding
 
@@ -146,15 +146,15 @@ ___
 
 ## spring-cloud相关
 
-> 所属模块 spring-cloud-learn
+> 所属模块 spring-cloud
 
 ### 响应式reactive编程
 
-> 所属模块 learn1-reactive-programming
+> 所属模块 reactive-programming
 
 ### openfeign
 
-> 服务端 learn2-feign-service-server / 客户端 learn2-feign-service-client
+> 服务端 feign-service-server / 客户端 feign-service-client
 
 ___
 
@@ -194,4 +194,4 @@ ___
 
 ## Elasticsearch
 
-> 所属模块 elasticsearch-learn
+> 所属模块 elasticsearch

@@ -4,19 +4,22 @@
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>pom</packaging>
 	<modules>
-		<module>spring-cloud-learn</module>
-		<module>nio-learn</module>
-		<module>test-tool-gatling-scripts</module>
+		<module>spring-cloud</module>
+		<module>nio</module>
 		<module>webservice-demo</module>
 		<module>websocket-spring</module>
-		<module>jdk-base-learn</module>
+		<module>jdk-base</module>
 		<module>distribute-lock</module>
 		<module>simple-tools</module>
-		<module>rocketmq-learn</module>
-		<module>elasticsearch-learn</module>
+		<module>mq</module>
+		<module>elasticsearch</module>
         <module>blockchain</module>
-        <module>yeeee-base</module>
-        <module>shardingsphere-learn</module>
+        <module>common</module>
+        <module>sub-database-table</module>
+		<module>cache</module>
+		<module>pat-coding</module>
+		<module>some-note</module>
+		<module>test-tool</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -24,11 +27,11 @@
 		<version>2.3.12.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.yeee.study</groupId>
-	<artifactId>java-study</artifactId>
+	<groupId>vip.yeee.memo</groupId>
+	<artifactId>java-integrate</artifactId>
 	<version>1.0.1-SNAPSHOT</version>
-	<name>java-study</name>
-	<description>The project for the study java</description>
+	<name>java-integrate</name>
+	<description>The project for the study java and record</description>
 
 	<properties>
 		<yeee-sdk.version>1.0.1-SNAPSHOT</yeee-sdk.version>
@@ -55,8 +58,8 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>com.yeee.study</groupId>
-				<artifactId>base-common</artifactId>
+				<groupId>vip.yeee.memo</groupId>
+				<artifactId>common-base</artifactId>
 				<version>${yeee-sdk.version}</version>
 			</dependency>
 			<!-- log -->

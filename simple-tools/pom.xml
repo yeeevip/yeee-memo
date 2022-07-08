@@ -6,11 +6,10 @@
     <modules>
         <module>simple-tools-execLinuxSSH</module>
         <module>simple-tools-my</module>
-        <module>jetcache-tools</module>
     </modules>
     <parent>
-        <artifactId>java-study</artifactId>
-        <groupId>com.yeee.study</groupId>
+        <artifactId>java-integrate</artifactId>
+        <groupId>vip.yeee.memo</groupId>
         <version>1.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -20,8 +19,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.yeee.study</groupId>
-            <artifactId>base-common</artifactId>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>common-base</artifactId>
         </dependency>
     </dependencies>
 
