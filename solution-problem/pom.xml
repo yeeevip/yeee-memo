@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <packaging>pom</packaging>
+    <parent>
+        <artifactId>java-integrate</artifactId>
+        <groupId>vip.yeee.memo</groupId>
+        <version>1.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>solution-problem</artifactId>
+
+    <modules>
+        <module>jetcache</module><!-- 二级缓存（redis + local） -->
+        <module>distribute-lock</module><!-- 分布式锁 -->
+        <module>sub-database-table</module><!-- 分库分表 -->
+        <module>nio</module><!-- 非阻塞IO -->
+        <module>webservice-demo</module><!-- webservice调用、发布 -->
+        <module>websocket-spring</module><!-- websocket -->
+    </modules>
+
+</project>

@@ -4,22 +4,16 @@
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>pom</packaging>
 	<modules>
-		<module>spring-cloud</module>
-		<module>nio</module>
-		<module>webservice-demo</module>
-		<module>websocket-spring</module>
-		<module>jdk-base</module>
-		<module>distribute-lock</module>
+		<module>spring-cloud</module><!-- 微服务 -->
+		<module>jdk-api</module><!-- JDK基础API -->
 		<module>simple-tools</module>
-		<module>mq</module>
-		<module>elasticsearch</module>
-        <module>blockchain</module>
         <module>common</module>
-        <module>sub-database-table</module>
-		<module>cache</module>
-		<module>pat-coding</module>
+		<module>pat-coding</module><!-- 浙大PAT算法coding -->
 		<module>some-note</module>
 		<module>test-tool</module>
+		<module>third-sdk</module><!-- 三方SDK -->
+		<module>middle-ware</module><!-- 中间件 -->
+		<module>solution-problem</module><!-- 解决方案 -->
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>

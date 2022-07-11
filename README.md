@@ -1,81 +1,7 @@
-## 基于jedis的redis分布式锁
-
-> 所属模块 distribute-lock-jedis
-
-## 基于redisson的redis分布式锁
-
-> 所属模块 distribute-lock-redisson
-
-### 分布式锁RLock
-
-1.初始化RLock
-
-+ RLock lock = redissonClient.getLock("redisson:test:lock；1")
-
-___
-
-2.获得锁
-
-+ lock.lock() // 不指定过期时间，通过watchdog实现自动续期
- 
-+ lock.tryLock(long waitTime, long leaseTime, TimeUnit unit) // 指定释放时间，到期释放不续期
-
-___
-
-3.释放锁
-
-+ lock.unlock()
-___
-
-4.性能、[集群高可用下]安全问题及存在的问题分析
-
-+ 集群高可用下安全问题：客户端1加锁后master宕机并未同步到新的master，客户端2会加锁成功
-    1. 引入Redlock，大部分节点(N/2+1)加锁成功，但是性能上有损耗 >问题> 节点奔溃重启、时间跳跃问题、计算获取锁的过程超时
-
-+ 性能：
-
-  1. 高并发下加锁性能很高
-  2. 基于事件selector的操作
-
-+ 问题：
-  1. GC时STW导致未能续期导致锁释放问题
-
-## 基于zookeeper的分布式锁
-
-> 所属模块 distribute-lock-zookeeper
-
-1.lock
-
-+ com.yeee.zookeeper.lock.simple.ZkLock
-
-2.com.101tec.zkclient api demo
-
-+ com.yeee.zookeeper.zkClientApi.ZkClientApiDemo
-
-3.使用轮子 org.apache.curator.framework.recipes.locks.InterProcessMutex
-
-+ com.yeee.zookeeper.lock.curator.InterProcessMutexLock
-
----
-
-4.性能、[集群高可用下]安全问题及存在的问题分析
-
-+ 集群高可用下安全问题：投票确认机制及同步写操作到follower节点，保证数据的一致性
-
-+ 性能：
-  
-  1. 高并发下加锁性能相对低效，与其本身【高可用】特点及节点的增删是在操作文件系统有很大关系
-  2. 【监听等待通知机制】，防止【羊群效应】，避免客户端无故轮询争夺锁造成的性能损耗
-  3. 串行化操作
-    
-+ 问题：
-    1. GC时STW导致临时节点释放问题
-
-总之，采用Zookeeper作为分布式锁，你要么就获取不到锁，一旦获取到了，必定节点的数据是一致的，不会出现redis那种异步同步导致数据丢失的问题。
 
 ## JDK基础
 
-> 所属模块 jdk-base
+> 所属模块 jdk-api
 
 ### java基本类型
 
@@ -128,21 +54,112 @@ ___
 
 3.AtomicReference<Object> // compareAndSet(V expect, V update)
 
-## 基于Netty的SimpleHttpWebServer
+## 中间件
 
-> 所属模块 nio-WebServerByNetty
+> 所属模块 middle-ware
 
-## JDK自带的NIO
+### 弹性搜索elasticsearch
 
-> 所属模块 nio-jdk
+### 消息队列mq
 
-## Netty基本使用
-
-> 所属模块 nio-netty
+#### 阿里rocketMQ
 
 ## 算法学习PAT-Coding
 
 > 所属模块 pat-coding
+
+## 常用解决方案
+
+> 所属模块 solution-problem
+
+### 分布式锁
+
+#### 基于jedis的redis分布式锁
+
+#### 基于redisson的redis分布式锁
+
+1.初始化RLock
+
++ RLock lock = redissonClient.getLock("redisson:test:lock；1")
+
+___
+
+2.获得锁
+
++ lock.lock() // 不指定过期时间，通过watchdog实现自动续期
+
++ lock.tryLock(long waitTime, long leaseTime, TimeUnit unit) // 指定释放时间，到期释放不续期
+
+___
+
+3.释放锁
+
++ lock.unlock()
+___
+
+4.性能、[集群高可用下]安全问题及存在的问题分析
+
++ 集群高可用下安全问题：客户端1加锁后master宕机并未同步到新的master，客户端2会加锁成功
+  1. 引入Redlock，大部分节点(N/2+1)加锁成功，但是性能上有损耗 >问题> 节点奔溃重启、时间跳跃问题、计算获取锁的过程超时
+
++ 性能：
+
+  1. 高并发下加锁性能很高
+  2. 基于事件selector的操作
+
++ 问题：
+  1. GC时STW导致未能续期导致锁释放问题
+
+#### 基于zookeeper的分布式锁
+
+1.lock
+
++ com.yeee.zookeeper.lock.simple.ZkLock
+
+2.com.101tec.zkclient api demo
+
++ com.yeee.zookeeper.zkClientApi.ZkClientApiDemo
+
+3.使用轮子 org.apache.curator.framework.recipes.locks.InterProcessMutex
+
++ com.yeee.zookeeper.lock.curator.InterProcessMutexLock
+
+---
+
+4.性能、[集群高可用下]安全问题及存在的问题分析
+
++ 集群高可用下安全问题：投票确认机制及同步写操作到follower节点，保证数据的一致性
+
++ 性能：
+
+  1. 高并发下加锁性能相对低效，与其本身【高可用】特点及节点的增删是在操作文件系统有很大关系
+  2. 【监听等待通知机制】，防止【羊群效应】，避免客户端无故轮询争夺锁造成的性能损耗
+  3. 串行化操作
+
++ 问题：
+  1. GC时STW导致临时节点释放问题
+
+总之，采用Zookeeper作为分布式锁，你要么就获取不到锁，一旦获取到了，必定节点的数据是一致的，不会出现redis那种异步同步导致数据丢失的问题。
+
+### 二级缓存jetcache
+
+### 非阻塞IO
+
+#### JDK自带的NIO
+
+#### Netty基本使用
+
+## 基于Netty的SimpleHttpWebServer
+
+### 分库分表
+
+> 所属模块 sub-database-table
+
+#### apache-shardingsphere
+
+### webservice-demo
+
+### webservice-demo
 
 ## spring-cloud相关
 
@@ -150,9 +167,13 @@ ___
 
 ### 响应式reactive编程
 
-> 所属模块 reactive-programming
+### 注册中心
 
-### openfeign
+#### eureka
+
+### 服务调用RPC
+
+#### openfeign
 
 > 服务端 feign-service-server / 客户端 feign-service-client
 
@@ -172,26 +193,18 @@ ___
 
 ___
 
-## 自己的简单工具类
+## 简单工具
 
-> 所属模块 simple-tools-my
+> 所属模块 simple-tools
 
-## gatling测试
+## 测试工具
 
-> 所属模块 test-tool-gatling-scripts
+> 所属模块 test-tool
 
-## webservice-demo
+## 三方SDK
 
-> 所属模块 webservice-demo
+> 所属模块 third-sdk
 
-## webservice-demo
-
-> 所属模块 websocket-spring
-
-## 区块链相关
+### 区块链相关
 
 > 所属模块 blockchain
-
-## Elasticsearch
-
-> 所属模块 elasticsearch
