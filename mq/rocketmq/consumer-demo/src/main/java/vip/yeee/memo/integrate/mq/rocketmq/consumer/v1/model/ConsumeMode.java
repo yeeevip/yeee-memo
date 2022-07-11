@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.mq.rocketmq.consumer.model;
+package vip.yeee.memo.integrate.mq.rocketmq.consumer.v1.model;
 
 /**
  * 消息模式

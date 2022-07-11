@@ -1,11 +1,11 @@
-package vip.yeee.memo.integrate.mq.rocketmq.consumer.listener;
+package vip.yeee.memo.integrate.mq.rocketmq.consumer.v1.listener;
 
 import com.aliyun.openservices.ons.api.Action;
 import com.aliyun.openservices.ons.api.ConsumeContext;
 import com.aliyun.openservices.ons.api.Message;
 import com.aliyun.openservices.ons.api.MessageListener;
-import vip.yeee.memo.integrate.mq.rocketmq.consumer.annotation.RocketMQMessageListener;
-import vip.yeee.memo.integrate.mq.rocketmq.consumer.model.MQConstant;
+import vip.yeee.memo.integrate.mq.rocketmq.consumer.v1.annotation.RocketMQMessageListener;
+import vip.yeee.memo.integrate.mq.rocketmq.consumer.v1.model.MQConstant;
 import lombok.extern.slf4j.Slf4j;
 
 

@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.mq.rocketmq.consumer.config;
+package vip.yeee.memo.integrate.mq.rocketmq.consumer.v1.config;
 
 import cn.hutool.core.util.StrUtil;
 import com.aliyun.openservices.ons.api.Admin;
@@ -11,9 +11,9 @@ import com.aliyun.openservices.ons.api.bean.ConsumerBean;
 import com.aliyun.openservices.ons.api.bean.OrderConsumerBean;
 import com.aliyun.openservices.ons.api.bean.Subscription;
 import com.aliyun.openservices.ons.api.order.MessageOrderListener;
-import vip.yeee.memo.integrate.mq.rocketmq.consumer.annotation.RocketMQMessageListener;
-import vip.yeee.memo.integrate.mq.rocketmq.consumer.model.ConsumeMode;
-import vip.yeee.memo.integrate.mq.rocketmq.consumer.model.MessageType;
+import vip.yeee.memo.integrate.mq.rocketmq.consumer.v1.annotation.RocketMQMessageListener;
+import vip.yeee.memo.integrate.mq.rocketmq.consumer.v1.model.ConsumeMode;
+import vip.yeee.memo.integrate.mq.rocketmq.consumer.v1.model.MessageType;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;

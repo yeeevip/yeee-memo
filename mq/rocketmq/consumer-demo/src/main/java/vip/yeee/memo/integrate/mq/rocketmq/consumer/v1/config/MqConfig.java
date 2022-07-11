@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.mq.rocketmq.consumer.config;
+package vip.yeee.memo.integrate.mq.rocketmq.consumer.v1.config;
 
 import com.aliyun.openservices.ons.api.PropertyKeyConst;
 import lombok.Getter;
@@ -20,18 +20,24 @@ public class MqConfig {
     @Value("${rocketmq.nameSrvAddr}")
     private String nameSrvAddr;
 
-    //@Value("${rocketmq.topic}")
-    private String topic;
-    //@Value("${rocketmq.groupId}")
-    private String groupId;
-    //@Value("${rocketmq.tag}")
-    private String tag;
-    //@Value("${rocketmq.orderTopic}")
-    private String orderTopic;
-    //@Value("${rocketmq.orderGroupId}")
-    private String orderGroupId;
-    //@Value("${rocketmq.orderTag}")
-    private String orderTag;
+    private Consumer consumer;
+
+    private Topic topic;
+
+    @Getter
+    @Setter
+    public static class Consumer {
+        private Boolean enabled = Boolean.FALSE;
+        private Integer consumeThreadNums = 20;
+        private String groupId = "default";
+    }
+
+    @Getter
+    @Setter
+    public static class Topic {
+        private String demoTopic1;
+        private String demoTopic2;
+    }
 
     public Properties getMqProperties() {
         Properties properties = new Properties();

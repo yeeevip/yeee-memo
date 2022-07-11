@@ -1,8 +1,13 @@
 server:
   port: 10011
-
-
 rocketmq:
+  nameSrvAddr: http://127.0.0.1:9876
   accessKey: RocketMQ
   secretKey: 12345678
-  nameSrvAddr: http://127.0.0.1:9876
+  consumer:
+    enabled: true
+    group-id: GID_demo1
+    consume-thread-nums: 20
+  topic:
+    demo-topic1: demoTopic1
+    demo-topic2: demoTopic2

@@ -1,7 +1,7 @@
-package vip.yeee.memo.integrate.mq.rocketmq.consumer.annotation;
+package vip.yeee.memo.integrate.mq.rocketmq.consumer.v1.annotation;
 
-import vip.yeee.memo.integrate.mq.rocketmq.consumer.model.ConsumeMode;
-import vip.yeee.memo.integrate.mq.rocketmq.consumer.model.MessageType;
+import vip.yeee.memo.integrate.mq.rocketmq.consumer.v1.model.ConsumeMode;
+import vip.yeee.memo.integrate.mq.rocketmq.consumer.v1.model.MessageType;
 import org.springframework.stereotype.Component;
 
 import java.lang.annotation.*;
