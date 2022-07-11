@@ -1,0 +1,11 @@
+aliyun:
+  nls:
+    gen-audio:
+      access-key-id: XXXXXXXXXX
+      access-key-secret: XXXXXXXXXX
+      app-key: XXXXXXXXXX
+      concurrent-num: 2
+      isWav: 0
+      splitSize: 200
+      longMode: 0
+      voice: aida
