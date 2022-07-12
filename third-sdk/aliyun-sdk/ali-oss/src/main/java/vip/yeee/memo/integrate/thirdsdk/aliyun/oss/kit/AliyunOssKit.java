@@ -46,6 +46,14 @@ public class AliyunOssKit {
         return ossObj.getObjectContent();
     }
 
+    public void uploadObjectNoMetadata(InputStream inputStream, String ObjectName) {
+        oss.putObject(aliOssProperties.getBucketDefault(), ObjectName, inputStream);
+    }
+
+    public void uploadObjectNoMetadata(InputStream inputStream, String bucketName, String ObjectName) {
+        oss.putObject(bucketName, ObjectName, inputStream);
+    }
+
     public void uploadObject(InputStream inputStream, String ObjectName) throws IOException {
         this.uploadObject(inputStream, aliOssProperties.getBucketDefault(), ObjectName);
     }
@@ -79,7 +87,7 @@ public class AliyunOssKit {
         metadata.setContentType(contentType(fileName.substring(fileName.lastIndexOf("."))));
         metadata.setContentDisposition("filename/filesize=" + fileName + "/" + file.length() + "Byte.");
         //上传文件
-        oss.putObject(bucketName, ObjectName, file, metadata);
+        oss.putObject(bucketName, ObjectName, file);
     }
 
     private String contentType(String fileType) {

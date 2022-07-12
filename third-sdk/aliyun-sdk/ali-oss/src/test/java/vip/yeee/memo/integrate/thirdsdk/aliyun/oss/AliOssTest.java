@@ -45,6 +45,14 @@ public class AliOssTest {
     }
 
     @Test
+    public void testUploadNoMetadata() {
+        LocalDate date = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        String datePath = StrUtil.format("{}/{}/{}", date.getYear(), date.getMonthValue(), date.getDayOfMonth());
+        String objectName = "yeee/test/upload/mp3/" + datePath + "/9976014 (2).mp3";
+        aliyunOssKit.uploadObjectNoMetadata(FileUtil.getInputStream("C:\\Users\\yeeee\\Desktop\\9976014 (1).mp3"), objectName);
+    }
+
+    @Test
     public void testDownload() {
         LocalDate date = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         String datePath = StrUtil.format("{}/{}/{}", date.getYear(), date.getMonthValue(), date.getDayOfMonth());
