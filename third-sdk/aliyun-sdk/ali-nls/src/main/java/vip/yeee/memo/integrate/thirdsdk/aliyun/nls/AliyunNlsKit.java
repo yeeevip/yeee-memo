@@ -45,14 +45,19 @@ public class AliyunNlsKit implements InitializingBean, DisposableBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        token = new AccessToken(genAudioConfig.getAccessKeyId(), genAudioConfig.getAccessKeySecret());
-        token.apply();
-        if (StrUtil.isBlank(token.getToken())) {
-            throw new RuntimeException("Token is blank");
+        try {
+            token = new AccessToken(genAudioConfig.getAccessKeyId(), genAudioConfig.getAccessKeySecret());
+            token.apply();
+            if (StrUtil.isBlank(token.getToken())) {
+                throw new RuntimeException("Token is blank");
+            }
+            log.info("INIT -> accessToken = {}, expireTime = {}", token.getToken(), Date.from(Instant.ofEpochSecond(token.getExpireTime())));
+            client = new NlsClient(token.getToken());
+            this.setSpeechSynthesizerSemaphore();
+        } catch (Exception e) {
+            log.info("ali nls init error!!!", e);
+            // throw e;
         }
-        log.info("INIT -> accessToken = {}, expireTime = {}", token.getToken(), Date.from(Instant.ofEpochSecond(token.getExpireTime())));
-        client = new NlsClient(token.getToken());
-        this.setSpeechSynthesizerSemaphore();
     }
 
     @Override

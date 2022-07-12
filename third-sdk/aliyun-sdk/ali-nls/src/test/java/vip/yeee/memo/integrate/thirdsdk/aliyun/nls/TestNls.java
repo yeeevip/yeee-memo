@@ -1,0 +1,43 @@
+package vip.yeee.memo.integrate.thirdsdk.aliyun.nls;
+
+import cn.hutool.system.SystemUtil;
+import com.google.common.base.Stopwatch;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import vip.yeee.memo.integrate.common.base.utils.TextUtils;
+
+import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * description......
+ *
+ * @author yeeee
+ * @since 2022/7/12 9:14
+ */
+@Slf4j
+@SpringBootTest
+@RunWith(SpringRunner.class)
+public class TestNls {
+
+    @Resource
+    private AliyunNlsKit aliyunNlsKit;
+
+    @Test
+    public void testGenAudio() throws Exception {
+        String content = "测试文本测试文本测试文本测试文本测试文本测试文本测试文本测试文本" +
+                "，测试文本测试文本测试文本测试文本测试文本测试文本测试文本测试文本" +
+                "，测试文本测试文本测试文本测试文本测试文本测试文本测试文本测试文本" +
+                "，测试文本测试文本测试文本测试文本测试文本测试文本测试文本测试文本";
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        String fileName = "genAudio/1111111.mp3";
+        String localPath = System.getProperties().getProperty(SystemUtil.TMPDIR) + fileName;
+        AudioGenBo audioGenBo = new AudioGenBo(1111111, "content", TextUtils.cleanHtmlTag(content), fileName);
+        aliyunNlsKit.text2LocalWavFile(localPath, audioGenBo);
+        log.info("【文本转录音】 完成 - 耗时：{}, localPath = {}", stopwatch.elapsed(TimeUnit.MILLISECONDS), localPath);
+    }
+
+}
