@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>nacos</artifactId>
+    <packaging>pom</packaging>
 
     <properties>
         <nacos.version>2.1.0</nacos.version>

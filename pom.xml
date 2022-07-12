@@ -2,7 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>vip.yeee.memo</groupId>
+	<artifactId>java-integrate</artifactId>
+	<version>1.0.1-SNAPSHOT</version>
+	<name>java-integrate</name>
+	<description>The project for the study java and record</description>
 	<packaging>pom</packaging>
+
 	<modules>
 		<module>spring-cloud</module><!-- 微服务 -->
 		<module>jdk-api</module><!-- JDK基础API -->
@@ -15,179 +22,46 @@
 		<module>middle-ware</module><!-- 中间件 -->
 		<module>solution-problem</module><!-- 解决方案 -->
 	</modules>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.12.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-	<groupId>vip.yeee.memo</groupId>
-	<artifactId>java-integrate</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
-	<name>java-integrate</name>
-	<description>The project for the study java and record</description>
 
 	<properties>
-		<yeee-sdk.version>1.0.1-SNAPSHOT</yeee-sdk.version>
-		<java.version>1.8</java.version>
-		<hutool.version>5.6.2</hutool.version>
-		<fastjson.version>1.2.73</fastjson.version>
-		<jackson.version>2.11.2</jackson.version>
-<!--		<netty.version>4.1.5.Final</netty.version>-->
-		<jedis.version>3.3.0</jedis.version>
-		<redisson.version>3.15.1</redisson.version>
-		<elasticsearch.version>7.6.2</elasticsearch.version>
-		<mysql-connector.version>8.0.15</mysql-connector.version>
-		<mybatis-plus.version>3.4.3.3</mybatis-plus.version>
-		<javassist.version>3.21.0-GA</javassist.version>
-		<logback.version>1.2.3</logback.version>
-		<okhttp.version>4.9.3</okhttp.version>
-		<jetcache-starter-redis-lettuce.version>2.6.2</jetcache-starter-redis-lettuce.version>
-		<java-jwt.version>3.19.1</java-jwt.version>
-		<easyexcel.version>3.0.5</easyexcel.version>
-		<ons-client.version>1.8.8.3.Final</ons-client.version>
-		<sharding-jdbc-spring-boot-starter.version>4.1.1</sharding-jdbc-spring-boot-starter.version>
-		<guava.version>23.0</guava.version>
+		<spring-boot.version>2.3.12.RELEASE</spring-boot.version>
+		<spring-cloud.version>Hoxton.SR11</spring-cloud.version>
+		<spring-cloud-alibaba.version>2021.0.1.0</spring-cloud-alibaba.version>
+		<skipTests>true</skipTests>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>vip.yeee.memo</groupId>
-				<artifactId>common-util</artifactId>
-				<version>${yeee-sdk.version}</version>
+				<artifactId>common-dependencies</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
 			</dependency>
+			<!-- spring boot 依赖 -->
 			<dependency>
-				<groupId>vip.yeee.memo</groupId>
-				<artifactId>common-service</artifactId>
-				<version>${yeee-sdk.version}</version>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring-boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
 			</dependency>
+			<!-- spring cloud 依赖 -->
 			<dependency>
-				<groupId>vip.yeee.memo</groupId>
-				<artifactId>common-web</artifactId>
-				<version>${yeee-sdk.version}</version>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
 			</dependency>
-			<!-- log -->
+			<!-- spring cloud alibaba 依赖 -->
 			<dependency>
-				<groupId>log4j</groupId>
-				<artifactId>log4j</artifactId>
-				<version>1.2.17</version>
-			</dependency>
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-log4j12</artifactId>
-				<version>1.7.30</version>
-			</dependency>
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-api</artifactId>
-				<version>1.7.30</version>
-			</dependency>
-			<!-- hutool -->
-			<dependency>
-				<groupId>cn.hutool</groupId>
-				<artifactId>hutool-all</artifactId>
-				<version>${hutool.version}</version>
-			</dependency>
-			<!-- fastjson -->
-			<dependency>
-				<groupId>com.alibaba</groupId>
-				<artifactId>fastjson</artifactId>
-				<version>${fastjson.version}</version>
-			</dependency>
-			<!-- jackson -->
-			<dependency>
-				<groupId>com.fasterxml.jackson.core</groupId>
-				<artifactId>jackson-databind</artifactId>
-				<version>${jackson.version}</version>
-			</dependency>
-			<!-- netty -->
-<!--			<dependency>-->
-<!--				<groupId>io.netty</groupId>-->
-<!--				<artifactId>netty-all</artifactId>-->
-<!--				<version>${netty.version}</version>-->
-<!--			</dependency>-->
-			<!-- jedis -->
-			<dependency>
-				<groupId>redis.clients</groupId>
-				<artifactId>jedis</artifactId>
-				<version>${jedis.version}</version>
-			</dependency>
-			<!-- redisson-->
-			<dependency>
-				<groupId>org.redisson</groupId>
-				<artifactId>redisson-spring-boot-starter</artifactId>
-				<version>${redisson.version}</version>
-			</dependency>
-			<!-- elasticsearch-->
-			<dependency>
-				<groupId>org.elasticsearch.client</groupId>
-				<artifactId>elasticsearch-rest-high-level-client</artifactId>
-				<version>${elasticsearch.version}</version>
-			</dependency>
-			<!-- mysql -->
-			<dependency>
-				<groupId>mysql</groupId>
-				<artifactId>mysql-connector-java</artifactId>
-				<version>${mysql-connector.version}</version>
-			</dependency>
-			<!-- mybatis-plus -->
-			<dependency>
-				<groupId>com.baomidou</groupId>
-				<artifactId>mybatis-plus-boot-starter</artifactId>
-				<version>${mybatis-plus.version}</version>
-			</dependency>
-			<!-- javassist -->
-			<dependency>
-				<groupId>org.javassist</groupId>
-				<artifactId>javassist</artifactId>
-				<version>${javassist.version}</version>
-			</dependency>
-			<!-- LogBack -->
-			<dependency>
-				<groupId>ch.qos.logback</groupId>
-				<artifactId>logback-classic</artifactId>
-				<version>${logback.version}</version>
-			</dependency>
-			<!-- okhttp3 -->
-			<dependency>
-				<groupId>com.squareup.okhttp3</groupId>
-				<artifactId>okhttp</artifactId>
-				<version>${okhttp.version}</version>
-			</dependency>
-			<!-- jetcache -->
-			<dependency>
-				<groupId>com.alicp.jetcache</groupId>
-				<artifactId>jetcache-starter-redis-lettuce</artifactId>
-				<version>${jetcache-starter-redis-lettuce.version}</version>
-			</dependency>
-			<!-- jwt -->
-			<dependency>
-				<groupId>com.auth0</groupId>
-				<artifactId>java-jwt</artifactId>
-				<version>${java-jwt.version}</version>
-			</dependency>
-			<!-- easyexcel -->
-			<dependency>
-				<groupId>com.alibaba</groupId>
-				<artifactId>easyexcel</artifactId>
-				<version>${easyexcel.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.aliyun.openservices</groupId>
-				<artifactId>ons-client</artifactId>
-				<version>${ons-client.version}</version>
-				<!--<version>2.0.1.Final</version> 问题-->
-			</dependency>
-			<dependency>
-				<groupId>org.apache.shardingsphere</groupId>
-				<artifactId>sharding-jdbc-spring-boot-starter</artifactId>
-				<version>${sharding-jdbc-spring-boot-starter.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.google.guava</groupId>
-				<artifactId>guava</artifactId>
-				<version>${guava.version}</version>
+				<groupId>com.alibaba.cloud</groupId>
+				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
+				<version>${spring-cloud-alibaba.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -195,8 +69,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.12</version>
-			<optional>true</optional>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -205,20 +78,59 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.22.2</version>
-				<configuration>
-					<skipTests>true</skipTests>
-				</configuration>
-			</plugin>
-		</plugins>
+		<finalName>${project.name}</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<version>${spring-boot.version}</version>
+					<configuration>
+						<finalName>${project.build.finalName}</finalName>
+						<layers>
+							<enabled>true</enabled>
+						</layers>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>repackage</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<!-- 环境标识，需要与配置文件的名称相对应 -->
+				<profiles.active>dev</profiles.active>
+			</properties>
+			<activation>
+				<!-- 默认环境 -->
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+	</profiles>
 
 </project>

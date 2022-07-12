@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: springcloud-gateway
+  profiles:
+    active: test
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: e69ceae8-160c-4d52-b512-ad0e919ad86b
+        group: ${spring.profiles.active}
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        namespace: ${spring.cloud.nacos.discovery.namespace}
+        group: ${spring.profiles.active}
+        file-extension: yml
+        share-configs:
+          - data-id: application.${spring.cloud.nacos.config.file-extension}
+            group: ${spring.profiles.active}
+            refresh: true

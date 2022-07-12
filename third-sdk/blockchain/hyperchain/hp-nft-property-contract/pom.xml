@@ -6,9 +6,8 @@
 
     <groupId>vip.yeee.memo</groupId>
     <artifactId>hp-nft-property-contract</artifactId>
-
-    <packaging>jar</packaging>
     <version>1.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
