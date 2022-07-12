@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.thirdsdk.aliyun.nls;
+package vip.yeee.memo.integrate.thirdsdk.aliyun.nls.kit;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
@@ -16,6 +16,8 @@ import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
+import vip.yeee.memo.integrate.thirdsdk.aliyun.nls.bo.AudioGenBo;
+import vip.yeee.memo.integrate.thirdsdk.aliyun.nls.properties.GenAudioProperties;
 
 import javax.annotation.Resource;
 import java.io.*;
@@ -38,7 +40,7 @@ public class AliyunNlsKit implements InitializingBean, DisposableBean {
     @Resource
     private RedissonClient redissonClient;
     @Resource
-    private GenAudioConfig genAudioConfig;
+    private GenAudioProperties genAudioConfig;
     private NlsClient client = null;
     private AccessToken token = null;
     private RPermitExpirableSemaphore semaphore = null;
@@ -65,7 +67,7 @@ public class AliyunNlsKit implements InitializingBean, DisposableBean {
         shutdown();
     }
 
-    public void speechSynthesizer(GenAudioConfig config, AudioGenBo audioGenBo, final OutputStream out) throws RuntimeException {
+    public void speechSynthesizer(GenAudioProperties config, AudioGenBo audioGenBo, final OutputStream out) throws RuntimeException {
         if (Integer.valueOf(1).equals(config.getLongMode())) {
             this.longTestSpeechSynthesizer(config, audioGenBo, out);
         } else {
@@ -76,7 +78,7 @@ public class AliyunNlsKit implements InitializingBean, DisposableBean {
     /**
      * 语音合成
      */
-    private void splitSpeechSynthesizer(GenAudioConfig config, AudioGenBo audioGenBo, final OutputStream out) throws RuntimeException {
+    private void splitSpeechSynthesizer(GenAudioProperties config, AudioGenBo audioGenBo, final OutputStream out) throws RuntimeException {
         List<String> textArr = splitLongText(audioGenBo.getContent(), Optional.ofNullable(config.getSplitSize()).orElse(100));
         SpeechSynthesizer synthesizer = null;
         String id;
@@ -123,7 +125,7 @@ public class AliyunNlsKit implements InitializingBean, DisposableBean {
     /**
      * 语音合成
      */
-    private void longTestSpeechSynthesizer(GenAudioConfig config, AudioGenBo audioGenBo, final OutputStream out) throws RuntimeException {
+    private void longTestSpeechSynthesizer(GenAudioProperties config, AudioGenBo audioGenBo, final OutputStream out) throws RuntimeException {
         SpeechSynthesizer synthesizer = null;
         try {
             // 刷新token

@@ -8,6 +8,8 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import vip.yeee.memo.integrate.common.base.utils.TextUtils;
+import vip.yeee.memo.integrate.thirdsdk.aliyun.nls.bo.AudioGenBo;
+import vip.yeee.memo.integrate.thirdsdk.aliyun.nls.kit.AliyunNlsKit;
 
 import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;

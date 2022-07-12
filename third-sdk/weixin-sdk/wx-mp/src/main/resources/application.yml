@@ -1,0 +1,24 @@
+spring:
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: yeah
+    database: 6
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/yeeee_crowdfunding?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+wx:
+  mp:
+    use-redis: true
+    redis-config:
+      host: ${spring.redis.host}
+      port: ${spring.redis.port}
+      password: ${spring.redis.password}
+      timeout: 10000
+    configs:
+      - appId: wxc84b896c35f157b1
+      - secret: c93ddae2c45d3d5a6a514c03e1dfd73f
+      - token: yeeee-token
+      - app-type: 10

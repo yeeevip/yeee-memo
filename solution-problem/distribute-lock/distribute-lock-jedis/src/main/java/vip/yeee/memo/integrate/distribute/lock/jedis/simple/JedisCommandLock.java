@@ -24,8 +24,9 @@ public class JedisCommandLock {
 
     // requestId：持有此id的才可以unlock；expireTime：防止死锁
     public static boolean tryGetLock(Jedis jedis, String lockKey, String requestId, long expireTime) {
-        String result = jedis.set(lockKey, requestId, SET_IF_NOT_EXISTS, SET_WITH_EXPIRE_TIME, expireTime);
-        return LOCK_SUCCESS.equals(result);
+//        String result = jedis.setex(lockKey, requestId, SET_IF_NOT_EXISTS, SET_WITH_EXPIRE_TIME, expireTime);
+//        return LOCK_SUCCESS.equals(result);
+        return false;
     }
 
     public static boolean releaseLock(Jedis jedis, String lockKey, String requestId) {

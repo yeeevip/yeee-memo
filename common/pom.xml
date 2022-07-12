@@ -14,7 +14,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>common-base</module>
+        <module>common-util</module>
+        <module>common-service</module>
+        <module>common-web</module>
     </modules>
 
 </project>

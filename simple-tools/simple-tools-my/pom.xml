@@ -11,15 +11,10 @@
 
     <artifactId>simple-tools-my</artifactId>
 
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
-
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>common-web</artifactId>
         </dependency>
     </dependencies>
 

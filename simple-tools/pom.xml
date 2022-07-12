@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-base</artifactId>
+            <artifactId>common-util</artifactId>
         </dependency>
     </dependencies>
 

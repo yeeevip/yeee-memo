@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.thirdsdk.aliyun.nls;
+package vip.yeee.memo.integrate.thirdsdk.aliyun.nls.bo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
