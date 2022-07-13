@@ -29,6 +29,7 @@
         <ons-client.version>1.8.8.3.Final</ons-client.version>
         <sharding-starter.version>4.1.1</sharding-starter.version>
         <guava.version>23.0</guava.version>
+        <commons-io.version>2.7</commons-io.version>
     </properties>
 
     <dependencyManagement>
@@ -169,6 +170,11 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
