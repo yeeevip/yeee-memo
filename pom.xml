@@ -48,6 +48,7 @@
 		<ons-client.version>1.8.8.3.Final</ons-client.version>
 		<sharding-jdbc-spring-boot-starter.version>4.1.1</sharding-jdbc-spring-boot-starter.version>
 		<guava.version>23.0</guava.version>
+		<commons-io.version>2.7</commons-io.version>
 	</properties>
 
 	<dependencyManagement>
@@ -66,6 +67,11 @@
 				<groupId>vip.yeee.memo</groupId>
 				<artifactId>common-web</artifactId>
 				<version>${yeee-sdk.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons-io.version}</version>
 			</dependency>
 			<!-- log -->
 			<dependency>

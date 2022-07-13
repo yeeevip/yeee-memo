@@ -12,7 +12,10 @@
     <artifactId>nio-jdk</artifactId>
 
     <dependencies>
-
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

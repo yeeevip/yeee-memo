@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.nio.jdk.test;
+package vip.yeee.memo.integrate.nio.jdk.file;
 
 import java.io.FileInputStream;
 import java.io.IOException;
