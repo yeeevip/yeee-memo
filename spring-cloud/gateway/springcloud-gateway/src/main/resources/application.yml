@@ -1,6 +1,4 @@
-server:
-  port: 9999
-
-
-
-
+yeee:
+  common:
+    name: 一页
+    version: 1.0.1.0

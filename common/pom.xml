@@ -15,6 +15,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>common-config</module>
         <module>common-util</module>
         <module>common-service</module>
         <module>common-web</module>

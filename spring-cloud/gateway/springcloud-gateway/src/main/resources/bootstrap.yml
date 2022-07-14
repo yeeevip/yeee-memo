@@ -1,3 +1,5 @@
+server:
+  port: 9201
 spring:
   application:
     name: springcloud-gateway
@@ -14,7 +16,35 @@ spring:
         namespace: ${spring.cloud.nacos.discovery.namespace}
         group: ${spring.profiles.active}
         file-extension: yml
-        share-configs:
+        shared-configs:
           - data-id: application.${spring.cloud.nacos.config.file-extension}
             group: ${spring.profiles.active}
             refresh: true
+    gateway:
+      discovery:
+        locator:
+          # 表明gateway开启服务注册和发现的功能
+          #，并且spring cloud gateway自动根据服务发现为每一个服务创建了一个router
+          #，这个router将以服务名开头的请求路径转发到对应的服务
+          enabled: true
+          #开启小写验证，默认feign根据服务名查找都是用的全大写
+          lowerCaseServiceId: true
+      routes:
+        - id: feign-service-client
+          # lb：需引入spring-cloud-starter-loadbalancer
+          # 由于springcloud2020弃用了Ribbon，因此Alibaba在2021版本nacos中删除了Ribbon的jar包
+          # ，因此无法通过lb路由到指定微服务，出现了503情况。
+          # 所以只需要引入springcloud loadbalancer包即可
+          uri: lb://feign-service-client
+          predicates:
+            - Path=/fsc/**
+#          filters:
+#            - StripPrefix=1
+            # 限流配置
+#            - name: RequestRateLimiter
+#              args:
+#                key-resolver: '#{@remoteAddrKeyResolver}'
+#                # 允许用户每秒处理多少个请求
+#                redis-rate-limiter.replenishRate: 10
+#                # 令牌桶的容量,允许在一秒钟内完成的最大请求
+#                redis-rate-limiter.burstCapacity: 20

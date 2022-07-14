@@ -24,8 +24,8 @@
 	</modules>
 
 	<properties>
-		<spring-boot.version>2.3.12.RELEASE</spring-boot.version>
-		<spring-cloud.version>Hoxton.SR11</spring-cloud.version>
+		<spring-boot.version>2.4.2</spring-boot.version>
+		<spring-cloud.version>2020.0.1</spring-cloud.version>
 		<spring-cloud-alibaba.version>2021.0.1.0</spring-cloud-alibaba.version>
 		<skipTests>true</skipTests>
 	</properties>
@@ -66,20 +66,24 @@
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
+		<!--Lombok-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<!--监控-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-autoconfigure</artifactId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
+		<!--配置文件处理器-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<!--测试依赖-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

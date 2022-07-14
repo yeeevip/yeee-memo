@@ -30,10 +30,16 @@
         <sharding-starter.version>4.1.1</sharding-starter.version>
         <guava.version>23.0</guava.version>
         <commons-io.version>2.7</commons-io.version>
+        <dynamic-config.version>0.1.1.RELEASE</dynamic-config.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>vip.yeee.memo</groupId>
+                <artifactId>common-config</artifactId>
+                <version>${yeee-sdk.version}</version>
+            </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>common-util</artifactId>
@@ -175,6 +181,11 @@
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${commons-io.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.purgeteam</groupId>
+                <artifactId>dynamic-config-spring-boot-starter</artifactId>
+                <version>${dynamic-config.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -1,0 +1,21 @@
+server:
+  port: 8081
+  compression:
+    enabled: true
+    mime-types: application/json
+    min-response-size: 1B
+spring:
+  application:
+    name: feign-service-server
+  profiles:
+    active: test
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: e69ceae8-160c-4d52-b512-ad0e919ad86b
+        group: ${spring.profiles.active}

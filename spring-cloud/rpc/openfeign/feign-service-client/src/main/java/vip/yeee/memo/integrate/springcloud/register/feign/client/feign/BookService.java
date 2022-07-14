@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "bookService", url = "http://localhost:8081", fallbackFactory = BookService.FallbackImpl.class)
+@FeignClient(name = "feign-service-server", path = "/fcs", fallbackFactory = BookService.FallbackImpl.class)
 public interface BookService {
     Book FALLBACK_BOOK = new Book(); // ==
 
@@ -21,7 +21,7 @@ public interface BookService {
     Book createBook(@RequestBody Book book);
 
     @GetMapping("/book/{isbn}")
-    Book findBook(@PathVariable String isbn);
+    Book findBook(@PathVariable(value = "isbn") String isbn);
 
     @Slf4j
     @Component

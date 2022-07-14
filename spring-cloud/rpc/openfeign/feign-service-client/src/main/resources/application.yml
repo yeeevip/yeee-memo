@@ -1,11 +1,8 @@
-server:
-  port: 8083
-
 feign:
-  compression:
-    response:
-      enabled: true
-      useGzipDecoder: true
+#  compression:
+#    response:
+#      enabled: true
+#      useGzipDecoder: true
   circuitbreaker:
     enabled: true
   client:
