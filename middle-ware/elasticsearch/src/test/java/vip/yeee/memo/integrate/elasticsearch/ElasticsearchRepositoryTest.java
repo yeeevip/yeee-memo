@@ -1,5 +1,6 @@
 package vip.yeee.memo.integrate.elasticsearch;
 
+import org.junit.jupiter.api.Test;
 import vip.yeee.memo.integrate.elasticsearch.opr.ITProjectService;
 import vip.yeee.memo.integrate.elasticsearch.opr.TProject;
 import vip.yeee.memo.integrate.elasticsearch.mapping.TProjectIndex;
@@ -8,14 +9,11 @@ import vip.yeee.memo.integrate.elasticsearch.vo.PageVO;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +25,6 @@ import java.util.stream.Collectors;
  * @since 2022/4/25 22:41
  */
 @Slf4j
-@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = ElasticsearchApplication.class)
 public class ElasticsearchRepositoryTest {
 

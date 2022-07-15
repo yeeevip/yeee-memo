@@ -1,5 +1,6 @@
 package vip.yeee.memo.integrate.elasticsearch;
 
+import org.junit.jupiter.api.Test;
 import vip.yeee.memo.integrate.elasticsearch.opr.ITProjectService;
 import vip.yeee.memo.integrate.elasticsearch.opr.TProject;
 import vip.yeee.memo.integrate.elasticsearch.service.ElasticsearchService;
@@ -14,11 +15,8 @@ import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramInterval;
 import org.elasticsearch.search.aggregations.bucket.terms.ParsedLongTerms;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -33,7 +31,6 @@ import java.util.stream.Collectors;
  * @since 2022/4/25 22:41
  */
 @Slf4j
-@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = ElasticsearchApplication.class)
 public class ElasticsearchServiceTest {
 

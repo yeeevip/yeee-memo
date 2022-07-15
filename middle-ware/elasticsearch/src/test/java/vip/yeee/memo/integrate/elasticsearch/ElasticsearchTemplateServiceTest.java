@@ -1,5 +1,7 @@
 package vip.yeee.memo.integrate.elasticsearch;
 
+import org.junit.jupiter.api.Test;
+import org.springframework.data.elasticsearch.core.IndexedObjectInformation;
 import vip.yeee.memo.integrate.elasticsearch.opr.ITProjectService;
 import vip.yeee.memo.integrate.elasticsearch.opr.TProject;
 import vip.yeee.memo.integrate.elasticsearch.mapping.TProjectIndex;
@@ -14,12 +16,9 @@ import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramInter
 import org.elasticsearch.search.aggregations.bucket.terms.ParsedStringTerms;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,7 +31,6 @@ import java.util.stream.Collectors;
  * @since 2022/4/25 22:41
  */
 @Slf4j
-@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = ElasticsearchApplication.class)
 public class ElasticsearchTemplateServiceTest {
 
@@ -63,7 +61,7 @@ public class ElasticsearchTemplateServiceTest {
                     return projectIndex;
                 })
                 .collect(Collectors.toList());
-        List<String> res = elasticsearchTemplate.bulk(myIndexList, "cf_project_2");
+        List<IndexedObjectInformation> res = elasticsearchTemplate.bulk(myIndexList, "cf_project_2");
         log.info("-------------bulk res = {}------------------", res);
     }
 

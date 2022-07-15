@@ -3,10 +3,8 @@ package vip.yeee.memo.integrate.thirdsdk.aliyun.nls;
 import cn.hutool.system.SystemUtil;
 import com.google.common.base.Stopwatch;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import vip.yeee.memo.integrate.common.base.utils.TextUtils;
 import vip.yeee.memo.integrate.thirdsdk.aliyun.nls.bo.AudioGenBo;
 import vip.yeee.memo.integrate.thirdsdk.aliyun.nls.kit.AliyunNlsKit;
@@ -22,7 +20,6 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @SpringBootTest
-@RunWith(SpringRunner.class)
 public class TestNls {
 
     @Resource

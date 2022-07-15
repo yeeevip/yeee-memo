@@ -15,11 +15,12 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>common-dependencies</module>
         <module>common-config</module>
         <module>common-util</module>
         <module>common-service</module>
         <module>common-web</module>
-        <module>common-dependencies</module>
+        <module>common-springcloud</module>
     </modules>
 
 </project>

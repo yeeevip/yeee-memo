@@ -1,5 +1,6 @@
 package vip.yeee.memo.integrate.elasticsearch.service;
 
+import org.springframework.data.elasticsearch.core.IndexedObjectInformation;
 import vip.yeee.memo.integrate.elasticsearch.mapping.BaseIndex;
 import vip.yeee.memo.integrate.elasticsearch.vo.PageVO;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -37,10 +38,15 @@ public interface ElasticsearchTemplate {
      */
     void delete(Class<?> clazz) throws Exception;
 
+//    /**
+//     * 批量保存
+//     */
+//    List<String> bulk(List<? extends BaseIndex> list, String indexName) throws IOException;
+
     /**
      * 批量保存
      */
-    List<String> bulk(List<? extends BaseIndex> list, String indexName) throws IOException;
+    List<IndexedObjectInformation> bulk(List<? extends BaseIndex> list, String indexName) throws IOException;
 
     /**
      * 分页条件搜索

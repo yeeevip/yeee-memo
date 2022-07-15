@@ -4,10 +4,8 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import vip.yeee.memo.integrate.thirdsdk.aliyun.oss.kit.AliyunOssKit;
 
 import javax.annotation.Resource;
@@ -26,7 +24,6 @@ import java.util.Date;
  */
 @Slf4j
 @SpringBootTest
-@RunWith(SpringRunner.class)
 public class AliOssTest {
 
     @Resource

@@ -1,5 +1,6 @@
 package vip.yeee.memo.integrate.elasticsearch.service.impl;
 
+import org.springframework.data.elasticsearch.core.IndexedObjectInformation;
 import vip.yeee.memo.integrate.elasticsearch.mapping.BaseIndex;
 import vip.yeee.memo.integrate.elasticsearch.service.ElasticsearchTemplate;
 import vip.yeee.memo.integrate.elasticsearch.vo.PageVO;
@@ -54,8 +55,14 @@ public class ElasticsearchTemplateImpl implements ElasticsearchTemplate {
         restTemplate.indexOps(clazz).delete();
     }
 
+//    @Override
+//    public List<String> bulk(List<? extends BaseIndex> list, String indexName) {
+//        List<IndexQuery> queries = list.stream().map(item -> new IndexQueryBuilder().withObject(item).build()).collect(Collectors.toList());
+//        return restTemplate.bulkIndex(queries, IndexCoordinates.of(indexName));
+//    }
+
     @Override
-    public List<String> bulk(List<? extends BaseIndex> list, String indexName) {
+    public List<IndexedObjectInformation> bulk(List<? extends BaseIndex> list, String indexName) {
         List<IndexQuery> queries = list.stream().map(item -> new IndexQueryBuilder().withObject(item).build()).collect(Collectors.toList());
         return restTemplate.bulkIndex(queries, IndexCoordinates.of(indexName));
     }

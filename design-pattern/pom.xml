@@ -5,18 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>distribute-lock</artifactId>
+        <artifactId>java-integrate</artifactId>
         <groupId>vip.yeee.memo</groupId>
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>distribute-lock-redisson</artifactId>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.redisson</groupId>
-            <artifactId>redisson-spring-boot-starter</artifactId>
-        </dependency>
-    </dependencies>
+    <artifactId>design-pattern</artifactId>
 
 </project>

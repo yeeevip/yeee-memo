@@ -73,7 +73,7 @@ public class C01WebClientShowcases {
                 System.out.println(">>>>>>>> POST RESPONSE STATUS CODE: " + clientResponse.statusCode());
                 return Mono.just(clientResponse);
             })
-            .retryBackoff(3, Duration.ofSeconds(1))
+            //.retryBackoff(3, Duration.ofSeconds(1))
             .block();
 
         var httpClient = HttpClient.create()

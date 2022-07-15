@@ -3,14 +3,10 @@ package vip.yeee.memo.integrate.distribute.lock.redisson;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.redisson.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Collections;
 import java.util.concurrent.CountDownLatch;
@@ -26,10 +22,7 @@ import java.util.concurrent.atomic.LongAdder;
  * @since 2021/12/23 17:03
  */
 @Slf4j
-@RunWith(SpringRunner.class)
-@EnableAutoConfiguration
-@ComponentScan("com.yeee.redisson.config")
-@TestPropertySource("classpath:application.properties")
+@SpringBootTest
 public class RedissonTest {
 
     @Autowired

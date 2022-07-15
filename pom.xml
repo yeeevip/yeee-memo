@@ -21,6 +21,7 @@
 		<module>third-sdk</module><!-- 三方SDK -->
 		<module>middle-ware</module><!-- 中间件 -->
 		<module>solution-problem</module><!-- 解决方案 -->
+        <module>design-pattern</module><!-- 设计模式 -->
 	</modules>
 
 	<properties>
