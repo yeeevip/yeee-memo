@@ -5,21 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>java-integrate</artifactId>
+        <artifactId>protect</artifactId>
         <groupId>vip.yeee.memo</groupId>
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>third-sdk</artifactId>
+    <artifactId>sentinel</artifactId>
     <packaging>pom</packaging>
-
-    <modules>
-        <!-- 区块链 -->
-        <module>blockchain</module>
-        <!-- 阿里云 -->
-        <module>aliyun-sdk</module>
-        <!-- 微信 -->
-        <module>weixin-sdk</module>
-    </modules>
 
 </project>

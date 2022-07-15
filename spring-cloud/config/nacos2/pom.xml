@@ -5,17 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>spring-cloud</artifactId>
+        <artifactId>config</artifactId>
         <groupId>vip.yeee.memo</groupId>
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>register-center</artifactId>
+    <artifactId>nacos2</artifactId>
     <packaging>pom</packaging>
-
-    <modules>
-        <module>eureka</module>
-        <module>nacos</module>
-    </modules>
 
 </project>

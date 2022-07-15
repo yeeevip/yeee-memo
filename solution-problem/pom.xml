@@ -14,12 +14,18 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>jetcache</module><!-- 二级缓存（redis + local） -->
-        <module>distribute-lock</module><!-- 分布式锁 -->
-        <module>sub-database-table</module><!-- 分库分表 -->
-        <module>nio</module><!-- 非阻塞IO -->
-        <module>webservice-demo</module><!-- webservice调用、发布 -->
-        <module>websocket-spring</module><!-- websocket -->
+        <!-- 二级缓存（redis + local） -->
+        <module>jetcache</module>
+        <!-- 分布式锁 -->
+        <module>distribute-lock</module>
+        <!-- 分库分表 -->
+        <module>sub-database-table</module>
+        <!-- 非阻塞IO -->
+        <module>nio</module>
+        <!-- webservice调用、发布 -->
+        <module>webservice-demo</module>
+        <!-- websocket、web与服务端长连接 -->
+        <module>websocket-spring</module>
     </modules>
 
 </project>

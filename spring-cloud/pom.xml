@@ -13,10 +13,18 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>register-center</module>
+		<!-- 注册中心 -->
+		<module>register</module>
+		<!-- 服务调用 -->
 		<module>rpc</module>
+		<!-- 响应式编程 -->
 		<module>reactive-programming</module>
+		<!-- 网关 -->
 		<module>gateway</module>
+		<!-- 配置中心 -->
+		<module>config</module>
+		<!-- 流控、熔断降级 -->
+		<module>protect</module>
 	</modules>
 
 	<dependencies>

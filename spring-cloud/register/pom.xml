@@ -5,17 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>register-center</artifactId>
+        <artifactId>spring-cloud</artifactId>
         <groupId>vip.yeee.memo</groupId>
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>eureka</artifactId>
+    <artifactId>register</artifactId>
     <packaging>pom</packaging>
 
     <modules>
-        <module>eureka-client-app1</module>
-        <module>eureka-server</module>
+        <module>eureka</module>
+        <module>nacos</module>
     </modules>
 
 </project>
