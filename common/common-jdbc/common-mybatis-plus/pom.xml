@@ -14,8 +14,18 @@
 
     <dependencies>
         <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>common-util</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+        <!--security 依赖-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 

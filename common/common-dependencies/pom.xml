@@ -32,6 +32,7 @@
         <guava.version>23.0</guava.version>
         <commons-io.version>2.7</commons-io.version>
         <dynamic-config.version>0.1.1.RELEASE</dynamic-config.version>
+        <log4j.version>2.17.2</log4j.version>
     </properties>
 
     <dependencyManagement>
@@ -71,21 +72,21 @@
                 <artifactId>common-mybatis-plus</artifactId>
                 <version>${yeee-sdk.version}</version>
             </dependency>
-            <!-- log -->
+            <!-- log4j -->
             <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
-                <version>1.2.17</version>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>${log4j.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
-                <version>1.7.30</version>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-to-slf4j</artifactId>
+                <version>${log4j.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>1.7.30</version>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>${log4j.version}</version>
             </dependency>
             <!-- hutool -->
             <dependency>
@@ -124,6 +125,16 @@
                 <version>${redisson.version}</version>
             </dependency>
             <!-- elasticsearch-->
+            <dependency>
+                <groupId>org.elasticsearch</groupId>
+                <artifactId>elasticsearch</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-client</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.elasticsearch.client</groupId>
                 <artifactId>elasticsearch-rest-high-level-client</artifactId>

@@ -28,6 +28,7 @@
 		<spring-boot.version>2.4.2</spring-boot.version>
 		<spring-cloud.version>2020.0.1</spring-cloud.version>
 		<spring-cloud-alibaba.version>2021.0.1.0</spring-cloud-alibaba.version>
+		<spring.authorization.version>0.3.1</spring.authorization.version>
 		<skipTests>true</skipTests>
 	</properties>
 

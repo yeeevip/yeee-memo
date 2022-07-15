@@ -5,18 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>sub-database-table</artifactId>
+        <artifactId>common</artifactId>
         <groupId>vip.yeee.memo</groupId>
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>apache-shardingsphere</artifactId>
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>sharding-tables</module>
-        <module>sharding-database</module>
-    </modules>
+    <artifactId>common-security</artifactId>
 
     <dependencies>
         <dependency>
@@ -24,12 +18,13 @@
             <artifactId>common-util</artifactId>
         </dependency>
         <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-mybatis-plus</artifactId>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-jose</artifactId>
         </dependency>
         <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-web</artifactId>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-authorization-server</artifactId>
+            <version>${spring.authorization.version}</version>
         </dependency>
     </dependencies>
 

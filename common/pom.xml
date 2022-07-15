@@ -23,6 +23,7 @@
         <module>common-springcloud</module>
         <module>common-swagger</module>
         <module>common-jdbc</module>
+        <module>common-security</module>
     </modules>
 
 </project>

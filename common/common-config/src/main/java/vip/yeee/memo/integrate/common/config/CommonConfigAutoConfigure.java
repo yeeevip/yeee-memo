@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.common.config.config;
+package vip.yeee.memo.integrate.common.config;
 
 import org.springframework.context.annotation.ComponentScan;
 

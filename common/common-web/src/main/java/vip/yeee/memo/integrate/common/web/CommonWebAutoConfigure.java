@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.common.web.config;
+package vip.yeee.memo.integrate.common.web;
 
 import org.springframework.context.annotation.ComponentScan;
 
@@ -9,5 +9,5 @@ import org.springframework.context.annotation.ComponentScan;
  * @since 2022/7/12 14:21
  */
 @ComponentScan("vip.yeee.memo.integrate.common.web")
-public class CommonWebAutoConfig {
+public class CommonWebAutoConfigure {
 }

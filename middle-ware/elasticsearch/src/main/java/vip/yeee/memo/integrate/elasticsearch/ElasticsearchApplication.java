@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author yeeee
  * @since 2022/4/25 22:38
  */
-@MapperScan("com.learn.db.opr.mapper")
+@MapperScan("vip.yeee.memo.integrate.elasticsearch.opr.mapper")
 @SpringBootApplication
 public class ElasticsearchApplication {
 

@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.common.service.config;
+package vip.yeee.memo.integrate.common.service;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.ComponentScan;
@@ -11,5 +11,5 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @ComponentScan("vip.yeee.memo.integrate.common.service")
 @MapperScan("vip.yeee.memo.integrate.common.service.mapper")
-public class CommonServiceAutoConfigurer {
+public class CommonServiceAutoConfigure {
 }

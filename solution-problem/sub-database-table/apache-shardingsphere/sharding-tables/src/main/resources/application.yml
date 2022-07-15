@@ -31,3 +31,7 @@ spring:
             inline:
               sharding-column: type
               algorithm-expression: ds$->{type % 2 + 1}
+management:
+  health:
+    db:
+      enabled: false
