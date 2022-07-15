@@ -21,6 +21,8 @@
         <module>common-service</module>
         <module>common-web</module>
         <module>common-springcloud</module>
+        <module>common-swagger</module>
+        <module>common-jdbc</module>
     </modules>
 
 </project>

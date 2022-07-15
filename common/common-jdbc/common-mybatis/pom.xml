@@ -5,17 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>common</artifactId>
+        <artifactId>common-jdbc</artifactId>
         <groupId>vip.yeee.memo</groupId>
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>common-service</artifactId>
+    <artifactId>common-mybatis</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-mybatis-plus</artifactId>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
         </dependency>
     </dependencies>
 

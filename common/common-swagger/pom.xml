@@ -10,13 +10,6 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>common-service</artifactId>
-
-    <dependencies>
-        <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-mybatis-plus</artifactId>
-        </dependency>
-    </dependencies>
+    <artifactId>common-swagger</artifactId>
 
 </project>

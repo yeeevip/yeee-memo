@@ -10,12 +10,22 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>common-service</artifactId>
+    <artifactId>common-jdbc</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>common-mybatis</module>
+        <module>common-mybatis-plus</module>
+    </modules>
 
     <dependencies>
         <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-mybatis-plus</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
         </dependency>
     </dependencies>
 
