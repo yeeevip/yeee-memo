@@ -1,6 +1,8 @@
 server:
   port: 9201
 spring:
+  main:
+    allow-bean-definition-overriding: true
   application:
     name: springcloud-gateway
   profiles:
@@ -20,6 +22,23 @@ spring:
           - data-id: application.${spring.cloud.nacos.config.file-extension}
             group: ${spring.profiles.active}
             refresh: true
+    sentinel:
+      # sentinel看板相关配置
+      eager: true
+      transport:
+        dashboard: 127.0.0.1:8844
+      # 配置限流后的响应内容
+      scg:
+        fallback:
+          # 两种模式：一种是response返回文字提示信息，一种是redirect重定向跳转（需要同时配置跳转uri）
+          mode: response
+          # 响应的状态
+          response-status: 426
+          # 响应体
+          response-body: '{"code": 426,"message": "限流了，稍后重试！"}'
+#          mode: redirect
+#          # 跳转的rul
+#          redirect: https://www.baidu.com
     gateway:
       discovery:
         locator:

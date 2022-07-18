@@ -2,3 +2,11 @@ yeee:
   common:
     name: 一页
     version: 1.0.1.0
+ahas:
+  namespace: default
+  license: 0d698089f716486c8ae8d30de102a03e
+project:
+  name: ${spring.application.name}
+feign:
+  sentinel:
+    enabled: true

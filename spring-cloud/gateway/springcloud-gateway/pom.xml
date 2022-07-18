@@ -37,6 +37,28 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
+        <!-- 引入sentinel进行服务降级熔断 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
+        <!-- gateway网关整合sentinel进行限流降级 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-alibaba-sentinel-gateway</artifactId>
+        </dependency>
+        <!-- 接入云上版本的 AHAS Sentinel 控制台
+        sentinel ahas 依赖，包括了sentinel的使用依赖-->
+<!--        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>ahas-sentinel-client</artifactId>
+            <version>1.8.8</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>spring-cloud-gateway-starter-ahas-sentinel</artifactId>
+            <version>1.5.4</version>
+        </dependency>-->
     </dependencies>
 
 </project>
