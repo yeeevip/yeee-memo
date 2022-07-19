@@ -58,6 +58,7 @@
 				<artifactId>spring-boot-dependencies</artifactId>
 				<version>${spring-boot.version}</version>
 				<type>pom</type>
+				<!-- 将目标pom的dependencyManagement标签中的依赖，合并到当前pom的dependencyManagement标签内 -->
 				<scope>import</scope>
 			</dependency>
 			<!-- spring cloud 依赖 -->
@@ -83,7 +84,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<scope>provided</scope>
+			<scope>provided</scope><!-- 编译期、测试期classpath有效 -->
 		</dependency>
 		<!--监控-->
 		<dependency>
@@ -119,7 +120,7 @@
 					<artifactId>spring-boot-maven-plugin</artifactId>
 					<version>${spring-boot.version}</version>
 					<configuration>
-						<finalName>${project.build.finalName}</finalName>
+						<finalName>${project.build.finalName}-${project.version}</finalName>
 						<layers>
 							<enabled>true</enabled>
 						</layers>
