@@ -5,22 +5,26 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>hyperchain</artifactId>
+        <artifactId>java-integrate</artifactId>
         <groupId>vip.yeee.memo</groupId>
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>nft-property-biz</artifactId>
+    <artifactId>ac-call-smart-contract-demo</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-util</artifactId>
+            <groupId>com.alipay.mychainx</groupId>
+            <artifactId>mychainx-sdk</artifactId>
+            <version>0.10.2.12</version>
         </dependency>
         <dependency>
-            <groupId>cn.hyperchain</groupId>
-            <artifactId>litesdk</artifactId>
-            <version>1.3.0</version>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpkix-jdk15on</artifactId>
         </dependency>
     </dependencies>
 

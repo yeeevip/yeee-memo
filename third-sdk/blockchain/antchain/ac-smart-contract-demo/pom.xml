@@ -5,20 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>third-sdk</artifactId>
+        <artifactId>java-integrate</artifactId>
         <groupId>vip.yeee.memo</groupId>
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>blockchain</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <artifactId>ac-smart-contract-demo</artifactId>
     <packaging>pom</packaging>
-
-    <modules>
-        <!-- 趣链区块链 -->
-        <module>hyperchain</module>
-        <!-- 蚂蚁链 -->
-        <module>antchain</module>
-    </modules>
 
 </project>

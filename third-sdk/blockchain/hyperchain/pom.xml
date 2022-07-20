@@ -14,7 +14,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>nft-property-biz</module>
+        <module>hc-call-smart-contract-demo</module>
     </modules>
 
 </project>

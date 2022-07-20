@@ -33,6 +33,7 @@
         <commons-io.version>2.7</commons-io.version>
         <dynamic-config.version>0.1.1.RELEASE</dynamic-config.version>
         <log4j.version>2.17.2</log4j.version>
+        <bouncycastle.version>1.70</bouncycastle.version>
     </properties>
 
     <dependencyManagement>
@@ -219,6 +220,16 @@
                 <groupId>com.purgeteam</groupId>
                 <artifactId>dynamic-config-spring-boot-starter</artifactId>
                 <version>${dynamic-config.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk15on</artifactId>
+                <version>${bouncycastle.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcpkix-jdk15on</artifactId>
+                <version>${bouncycastle.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
