@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.design.pattern;
+package vip.yeee.memo.integrate.design.pattern.behavior;
 
 import cn.hutool.core.collection.CollectionUtil;
 import lombok.Getter;
@@ -9,13 +9,12 @@ import javax.annotation.Resource;
 import java.util.Map;
 
 /**
- * description......
+ * 策略模式
  *
  * @author yeeee
  * @since 2022/7/21 10:06
  */
 public class StrategyPattern {
-
 }
 
 @Component

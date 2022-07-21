@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.design.pattern;
+package vip.yeee.memo.integrate.design.pattern.behavior;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
