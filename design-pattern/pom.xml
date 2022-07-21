@@ -12,4 +12,11 @@
 
     <artifactId>design-pattern</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>common-util</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>
