@@ -12,7 +12,7 @@
 
 	<modules>
 		<!-- 通用基础集成 -->
-		<module>common</module>
+		<module>memo-base</module>
 		<!-- JDK基础API -->
 		<module>jdk-api</module>
 		<!-- 常用解决方案 -->
@@ -34,121 +34,5 @@
 		<!-- 设计模式 -->
         <module>design-pattern</module>
 	</modules>
-
-	<properties>
-		<spring-boot.version>2.4.2</spring-boot.version>
-		<spring-cloud.version>2020.0.1</spring-cloud.version>
-		<spring-cloud-alibaba.version>2021.0.1.0</spring-cloud-alibaba.version>
-		<spring.authorization.version>0.3.1</spring.authorization.version>
-		<skipTests>true</skipTests>
-	</properties>
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>vip.yeee.memo</groupId>
-				<artifactId>common-dependencies</artifactId>
-				<version>${project.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<!-- spring boot 依赖 -->
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-dependencies</artifactId>
-				<version>${spring-boot.version}</version>
-				<type>pom</type>
-				<!-- 将目标pom的dependencyManagement标签中的依赖，合并到当前pom的dependencyManagement标签内 -->
-				<scope>import</scope>
-			</dependency>
-			<!-- spring cloud 依赖 -->
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<!-- spring cloud alibaba 依赖 -->
-			<dependency>
-				<groupId>com.alibaba.cloud</groupId>
-				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
-				<version>${spring-cloud-alibaba.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-	<dependencies>
-		<!--Lombok-->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<scope>provided</scope><!-- 编译期、测试期classpath有效 -->
-		</dependency>
-		<!--监控-->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-		<!--配置文件处理器-->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<!--测试依赖-->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
-
-	<build>
-		<finalName>${project.name}</finalName>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
-		</resources>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-maven-plugin</artifactId>
-					<version>${spring-boot.version}</version>
-					<configuration>
-						<finalName>${project.build.finalName}-${project.version}</finalName>
-						<layers>
-							<enabled>true</enabled>
-						</layers>
-					</configuration>
-					<executions>
-						<execution>
-							<goals>
-								<goal>repackage</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
-
-	<profiles>
-		<profile>
-			<id>dev</id>
-			<properties>
-				<!-- 环境标识，需要与配置文件的名称相对应 -->
-				<profiles.active>dev</profiles.active>
-			</properties>
-			<activation>
-				<!-- 默认环境 -->
-				<activeByDefault>true</activeByDefault>
-			</activation>
-		</profile>
-	</profiles>
 
 </project>

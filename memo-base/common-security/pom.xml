@@ -12,12 +12,21 @@
         <relativePath/>
     </parent>
 
-    <artifactId>jdk-api</artifactId>
+    <artifactId>common-security</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
             <artifactId>common-util</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-jose</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-authorization-server</artifactId>
+            <version>${spring.authorization.version}</version>
         </dependency>
     </dependencies>
 

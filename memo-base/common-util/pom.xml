@@ -5,9 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>common</artifactId>
+        <artifactId>memo-parent</artifactId>
         <groupId>vip.yeee.memo</groupId>
         <version>1.0.1-SNAPSHOT</version>
+        <!-- 设定一个空值将始终从仓库中获取，不从本地路径获取. -->
+        <relativePath/>
     </parent>
 
     <artifactId>common-util</artifactId>
