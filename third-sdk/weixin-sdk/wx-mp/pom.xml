@@ -19,6 +19,10 @@
         </dependency>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
+            <artifactId>common-mybatis-plus</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
             <artifactId>common-service</artifactId>
         </dependency>
         <dependency>

@@ -18,6 +18,7 @@
         <dependency>
             <groupId>vip.yeee.memo</groupId>
             <artifactId>common-mybatis-plus</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 

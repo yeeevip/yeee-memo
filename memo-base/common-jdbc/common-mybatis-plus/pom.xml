@@ -16,6 +16,7 @@
         <dependency>
             <groupId>vip.yeee.memo</groupId>
             <artifactId>common-util</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
