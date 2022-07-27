@@ -49,6 +49,11 @@ public interface ElasticsearchTemplate {
     List<IndexedObjectInformation> bulk(List<? extends BaseIndex> list, String indexName) throws IOException;
 
     /**
+     * 批量保存
+     */
+    Iterable<? extends BaseIndex> saveBatch(List<? extends BaseIndex> list) throws IOException;
+
+    /**
      * 分页条件搜索
      */
     <T> PageVO<T> pageSearch(Integer pageNum, Integer pageSize, QueryBuilder queryBuilder, Class<T> index);

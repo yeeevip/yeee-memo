@@ -19,6 +19,7 @@ import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.data.elasticsearch.core.query.*;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -65,6 +66,11 @@ public class ElasticsearchTemplateImpl implements ElasticsearchTemplate {
     public List<IndexedObjectInformation> bulk(List<? extends BaseIndex> list, String indexName) {
         List<IndexQuery> queries = list.stream().map(item -> new IndexQueryBuilder().withObject(item).build()).collect(Collectors.toList());
         return restTemplate.bulkIndex(queries, IndexCoordinates.of(indexName));
+    }
+
+    @Override
+    public Iterable<? extends BaseIndex> saveBatch(List<? extends BaseIndex> list) throws IOException {
+        return restTemplate.save(list);
     }
 
     @Override

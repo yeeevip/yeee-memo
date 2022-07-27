@@ -2,6 +2,7 @@ package vip.yeee.memo.integrate.elasticsearch;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.data.elasticsearch.core.IndexedObjectInformation;
+import vip.yeee.memo.integrate.elasticsearch.mapping.BaseIndex;
 import vip.yeee.memo.integrate.elasticsearch.opr.ITProjectService;
 import vip.yeee.memo.integrate.elasticsearch.opr.TProject;
 import vip.yeee.memo.integrate.elasticsearch.mapping.TProjectIndex;
@@ -62,6 +63,22 @@ public class ElasticsearchTemplateServiceTest {
                 })
                 .collect(Collectors.toList());
         List<IndexedObjectInformation> res = elasticsearchTemplate.bulk(myIndexList, "cf_project_2");
+        log.info("-------------bulk res = {}------------------", res);
+    }
+
+    @Test
+    public void testSaveBatch() throws IOException {
+        List<TProject> list = iTProjectService.list();
+        List<TProjectIndex> myIndexList = list.stream()
+                .map(item -> {
+                    TProjectIndex projectIndex = new TProjectIndex();
+                    BeanUtils.copyProperties(item, projectIndex);
+                    projectIndex.setId(item.getId());
+                    projectIndex.setCreateTime(item.getLaunchDateRaising());
+                    return projectIndex;
+                })
+                .collect(Collectors.toList());
+        Iterable<? extends BaseIndex> res = elasticsearchTemplate.saveBatch(myIndexList);
         log.info("-------------bulk res = {}------------------", res);
     }
 
