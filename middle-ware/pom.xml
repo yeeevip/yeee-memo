@@ -20,6 +20,10 @@
         <module>mq</module>
         <!-- 搜索 -->
         <module>elasticsearch</module>
+        <!-- 基于Mysql的binlog的增量订阅&消费组件 -->
+        <module>canal</module>
+        <!-- 流数据和批数据的分布式处理引擎 -->
+        <module>flink</module>
     </modules>
 
 </project>
