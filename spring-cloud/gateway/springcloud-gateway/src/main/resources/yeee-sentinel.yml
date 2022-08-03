@@ -1,0 +1,33 @@
+spring:
+  cloud:
+    sentinel:
+      # 服务启动时就注册到控制面板；否则有请求后才注册
+      # eager: true
+      transport:
+        # sentinel 控制台地址, 控制台配置方式会随微服务启动而重置清空。
+        dashboard: 127.0.0.1:8844
+      datasource:
+        # 限流规则的文件数据源配置
+        ds1:
+          file:
+            file: classpath:sentinel-rule/flowrule.json
+            data-type: json
+            rule-type: flow
+        # 熔断规则的文件数据源配置
+        ds2:
+          file:
+            file: classpath:sentinel-rule/degraderule.json
+            data-type: json
+            rule-type: degrade
+      # 配置限流后的响应内容
+      scg:
+        fallback:
+          # 两种模式：一种是response返回文字提示信息，一种是redirect重定向跳转（需要同时配置跳转uri）
+          mode: response
+          # 响应的状态
+          response-status: 426
+          # 响应体
+          response-body: '{"code": 426,"message": "限流了，稍后重试！"}'
+    #          mode: redirect
+    #          # 跳转的rul
+    #          redirect: https://www.baidu.com

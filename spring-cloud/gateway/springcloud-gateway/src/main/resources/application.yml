@@ -7,6 +7,3 @@ ahas:
   license: 0d698089f716486c8ae8d30de102a03e
 project:
   name: ${spring.application.name}
-feign:
-  sentinel:
-    enabled: true

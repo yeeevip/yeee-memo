@@ -16,6 +16,8 @@
     <modules>
         <module>feign-service-server</module>
         <module>feign-service-client</module>
+        <!-- 整合阿里sentinel实现[熔断降级] -->
+        <module>feign-call-fallback-sentinel</module>
     </modules>
 
 </project>

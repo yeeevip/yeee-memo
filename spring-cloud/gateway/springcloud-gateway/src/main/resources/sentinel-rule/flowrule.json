@@ -1,0 +1,8 @@
+[
+  {
+    "resource": "GET:http://zmg-gds/goods/getGoodsById",
+    "count": 1,
+    "grade": 2,
+    "timeWindow": 5
+  }
+]
