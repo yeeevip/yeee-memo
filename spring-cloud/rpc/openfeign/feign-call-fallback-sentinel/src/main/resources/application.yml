@@ -1,6 +1,7 @@
 server:
   servlet:
     context-path: /ffs
+  port: 9080
 spring:
   profiles:
     active: test
