@@ -34,6 +34,7 @@ public class AccessEventProcessWindowFunction extends ProcessWindowFunction<Acce
         HashMap<Long, AccessStatsVO.Subject> subjectMap = Maps.newHashMap();
         AccessStatsVO accessStatsVO = new AccessStatsVO();
         accessStatsVO.setProcessTime(DateUtil.format(new Date(context.currentProcessingTime()), DatePattern.UTC_SIMPLE_PATTERN));
+        accessStatsVO.setTag(s);
         int uv = 0, pv = 0;
         for (AccessLogBO bo : elements) {
             AccessStatsVO.Visitor existsVisitor = visitorMap.get(bo.getIp());
