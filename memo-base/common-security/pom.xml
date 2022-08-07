@@ -26,8 +26,8 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>common-web</artifactId>
             <optional>true</optional>
         </dependency>
         <dependency>

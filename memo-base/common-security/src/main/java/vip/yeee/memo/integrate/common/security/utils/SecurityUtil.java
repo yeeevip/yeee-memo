@@ -8,9 +8,9 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import vip.yeee.memo.integrate.common.base.utils.SpringContextUtils;
 import vip.yeee.memo.integrate.common.security.constant.AuthConstant;
 import vip.yeee.memo.integrate.common.security.model.SecurityUser;
+import vip.yeee.memo.integrate.common.web.utils.SpringContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,7 +54,7 @@ public class SecurityUtil {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         String token = request.getHeader(AuthConstant.JWT_TOKEN_HEADER);
         String t = token.replace(AuthConstant.JWT_TOKEN_PREFIX, "");
-        return ((TokenStore)SpringContextUtils.getBean(TokenStore.class)).readAccessToken(t);
+        return ((TokenStore) SpringContextUtils.getBean(TokenStore.class)).readAccessToken(t);
     }
 
 }

@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.common.base.utils;
+package vip.yeee.memo.integrate.common.web.utils;
 
 import lombok.NonNull;
 import org.springframework.beans.BeansException;
