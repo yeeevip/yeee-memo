@@ -21,6 +21,7 @@
         <mysql-connector.version>8.0.15</mysql-connector.version>
         <mybatis-starter.version>2.1.0</mybatis-starter.version>
         <mybatis-plus.version>3.4.3.3</mybatis-plus.version>
+        <druid.version>1.2.9</druid.version>
         <javassist.version>3.21.0-GA</javassist.version>
         <logback.version>1.2.3</logback.version>
         <okhttp.version>4.9.3</okhttp.version>
@@ -35,6 +36,8 @@
         <log4j.version>2.17.2</log4j.version>
         <slf4j.version>1.7.30</slf4j.version>
         <bouncycastle.version>1.70</bouncycastle.version>
+        <mapstruct.version>1.4.1.Final</mapstruct.version>
+        <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
     </properties>
 
     <dependencyManagement>
@@ -61,6 +64,11 @@
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
+                <artifactId>common-security</artifactId>
+                <version>${yeee-sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>vip.yeee.memo</groupId>
                 <artifactId>common-swagger</artifactId>
                 <version>${yeee-sdk.version}</version>
             </dependency>
@@ -72,6 +80,16 @@
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>common-mybatis-plus</artifactId>
+                <version>${yeee-sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>vip.yeee.memo</groupId>
+                <artifactId>common-model</artifactId>
+                <version>${yeee-sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>vip.yeee.memo</groupId>
+                <artifactId>common-swagger</artifactId>
                 <version>${yeee-sdk.version}</version>
             </dependency>
             <!-- log4j -->
@@ -170,6 +188,12 @@
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
+            <!--阿里数据库连接池 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
             <!-- javassist -->
             <dependency>
                 <groupId>org.javassist</groupId>
@@ -241,6 +265,24 @@
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcpkix-jdk15on</artifactId>
                 <version>${bouncycastle.version}</version>
+            </dependency>
+            <!--mapStruct依赖-->
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${mapstruct.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok-mapstruct-binding</artifactId>
+                <version>${lombok-mapstruct-binding.version}</version>
+                <optional>true</optional>
             </dependency>
         </dependencies>
     </dependencyManagement>
