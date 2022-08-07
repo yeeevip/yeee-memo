@@ -40,13 +40,21 @@ public class NginxLogComputeJob {
         DataStream<AccessLogBO> dataStreamSource = env.addSource(kafkaSource)
                 .map(LogDataConvert::nginxLog2AccessBO)
                 .filter(Objects::nonNull)
+                // 格式转换
                 .returns(TypeInformation.of(AccessLogBO.class));
         dataStreamSource
+                // 分流
                 .keyBy(bo -> bo.getEvent() + ":" + DateUtil.format(bo.getTimestamp(), "yyyyMMddHHmm"))
-                // 滚动窗口有一个固定的大小且元素不重叠
+                // 使用【滚动窗口】滚动窗口：有一个固定的大小且元素[不重叠]
                 .window(TumblingProcessingTimeWindows.of(Time.days(1), Time.hours(-8)))
-                // 60s触发一次计算，更新统计结果
+                // 【窗口触发器】
+                // 窗口默认只会在创建结束的时候触发一次计算，然后输出结果
+                // 如果长时间的窗口，比如：一天的窗口，要是等到一天结束在输出结果，那还不如跑批。
+                // 所以大窗口会添加trigger，以一定的频率输出中间结果。60s触发一次计算，更新统计结果
                 .trigger(ContinuousProcessingTimeTrigger.of(Time.seconds(60)))
+                // 【窗口剔除器】
+                // 每次trigger，触发计算是，窗口中的所有数据都会参与，所以数据会触发很多次，比较浪费，
+                // 加evictor 驱逐已经计算过的数据，就不会重复计算了
                 .evictor(TimeEvictor.of(Time.seconds(0), true))
                 .process(new AccessEventProcessWindowFunction())
                 .addSink(new NginxLogComputeSink());
