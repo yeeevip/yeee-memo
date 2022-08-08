@@ -2,7 +2,9 @@ package vip.yeee.memo.integrate.common.swagger.config;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
+import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 import javax.annotation.Resource;
@@ -14,6 +16,7 @@ import javax.annotation.Resource;
 @EnableSwagger2WebMvc
 @Profile({"dev", "test"})
 @EnableConfigurationProperties({SwaggerProperties.class})
+@Import(BeanValidatorPluginsConfiguration.class)
 public class SwaggerConfig extends BaseSwaggerConfig {
 
     @Resource

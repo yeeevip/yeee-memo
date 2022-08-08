@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <!-- 日志存放路径 -->
-    <property name="log.path" value="${logback.home}" />
+    <!-- 日志文件路径 -->
+    <property name="LOG_PATH" value="logs"/>
     <!-- 日志输出格式 -->
-    <property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n" />
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n" />
     <!--脱敏处理 -->
     <conversionRule conversionWord="msg" converterClass="vip.yeee.memo.integrate.common.base.utils.LogMessageConverter" />
     <!-- 彩色日志格式 -->
@@ -14,25 +14,25 @@
     <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
     <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
     <!-- 控制台日志输出 -->
-    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="REF-CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>${CONSOLE_LOG_PATTERN}</pattern>
             <charset>utf8</charset>
         </encoder>
     </appender>
     <!-- 系统日志输出 -->
-    <appender name="info" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.path}/springcloud-gateway-info.log</file>
+    <appender name="REF-INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/log_info.log</file>
         <!-- 循环政策：基于时间创建日志文件 -->
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!-- 日志文件名格式 -->
-            <fileNamePattern>${log.path}/springcloud-gateway-info.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_PATH}/log_info.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
             <!-- 日志最大的历史 60天 -->
             <maxHistory>60</maxHistory>
+            <maxFileSize>100MB</maxFileSize>
         </rollingPolicy>
-        <encoder>
-            <pattern>${log.pattern}</pattern>
-            <charset>GBK</charset>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
         </encoder>
 <!--        <filter class="ch.qos.logback.classic.filter.LevelFilter">
             &lt;!&ndash; 过滤的级别 &ndash;&gt;
@@ -43,24 +43,32 @@
             <onMismatch>DENY</onMismatch>
         </filter>-->
     </appender>
-    <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.path}/springcloud-gateway-error.log</file>
+    <appender name="REF-ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/log_error.log</file>
         <!-- 循环政策：基于时间创建日志文件 -->
         <rollingPolicy
-                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!-- 日志文件名格式 -->
-            <fileNamePattern>${log.path}/springcloud-gateway-error.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_PATH}/log_error.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
             <!-- 日志最大的历史 60天 -->
             <maxHistory>60</maxHistory>
+            <maxFileSize>100MB</maxFileSize>
         </rollingPolicy>
-        <encoder>
-            <pattern>${log.pattern}</pattern>
-            <charset>GBK</charset>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
         </encoder>
     </appender>
-    <root level="INFO">
-        <appender-ref ref="console"/>
-        <appender-ref ref="info"/>
-        <appender-ref ref="error"/>
-    </root>
+    <springProfile name="dev">
+        <root level="INFO">
+            <appender-ref ref="REF-CONSOLE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="stage, prod">
+        <root level="INFO">
+            <appender-ref ref="REF-CONSOLE"/>
+            <appender-ref ref="REF-INFO"/>
+            <appender-ref ref="REF-ERROR"/>
+        </root>
+    </springProfile>
 </configuration>
