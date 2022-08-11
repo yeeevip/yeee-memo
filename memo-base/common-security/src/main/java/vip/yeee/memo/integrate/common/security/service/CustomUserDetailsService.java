@@ -17,4 +17,6 @@ public interface CustomUserDetailsService extends UserDetailsService{
 
     Oauth2TokenDTO oauthToken(String username, String password, String userType);
 
+    Object logout();
+
 }
