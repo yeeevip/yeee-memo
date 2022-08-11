@@ -92,6 +92,11 @@
                 <artifactId>common-swagger</artifactId>
                 <version>${yeee-sdk.version}</version>
             </dependency>
+            <dependency>
+                <groupId>vip.yeee.memo</groupId>
+                <artifactId>common-redis</artifactId>
+                <version>${yeee-sdk.version}</version>
+            </dependency>
             <!-- log4j -->
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>

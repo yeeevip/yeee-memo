@@ -21,6 +21,7 @@
         <module>common-jdbc</module>
         <module>common-security</module>
         <module>common-model</module>
+        <module>common-redis</module>
     </modules>
 
 </project>
