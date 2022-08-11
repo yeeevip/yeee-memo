@@ -16,6 +16,13 @@ import org.springframework.stereotype.Component;
 public class AliOssProperties {
     private String accessKeyId;
     private String accessKeySecret;
-    private String endpoint;
+    /**
+     * Region ID，默认：华东1（杭州）
+     */
+    private String region = "oss-cn-hangzhou";
+    /**
+     * Endpoint，默认：华东1（杭州）接入点
+     */
+    private String endpoint = "oss-cn-hangzhou-internal.aliyuncs.com";
     private String bucketDefault;
 }

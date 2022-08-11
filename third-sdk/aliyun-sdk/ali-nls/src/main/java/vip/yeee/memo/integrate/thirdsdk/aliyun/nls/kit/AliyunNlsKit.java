@@ -11,22 +11,17 @@ import com.alibaba.nls.client.protocol.tts.SpeechSynthesizer;
 import com.alibaba.nls.client.protocol.tts.SpeechSynthesizerListener;
 import com.alibaba.nls.client.protocol.tts.SpeechSynthesizerResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.redisson.api.RPermitExpirableSemaphore;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
-import vip.yeee.memo.integrate.thirdsdk.aliyun.nls.bo.AudioGenBo;
-import vip.yeee.memo.integrate.thirdsdk.aliyun.nls.properties.GenAudioProperties;
+import vip.yeee.memo.integrate.thirdsdk.aliyun.nls.properties.AliyunNlsProperties;
 
 import javax.annotation.Resource;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
@@ -38,24 +33,20 @@ import java.util.function.Consumer;
 public class AliyunNlsKit implements InitializingBean, DisposableBean {
 
     @Resource
-    private RedissonClient redissonClient;
-    @Resource
-    private GenAudioProperties genAudioConfig;
+    private AliyunNlsProperties nlsProperties;
     private NlsClient client = null;
     private AccessToken token = null;
-    private RPermitExpirableSemaphore semaphore = null;
 
     @Override
     public void afterPropertiesSet() throws Exception {
         try {
-            token = new AccessToken(genAudioConfig.getAccessKeyId(), genAudioConfig.getAccessKeySecret());
+            token = new AccessToken(nlsProperties.getAccessKeyId(), nlsProperties.getAccessKeySecret());
             token.apply();
             if (StrUtil.isBlank(token.getToken())) {
                 throw new RuntimeException("Token is blank");
             }
             log.info("INIT -> accessToken = {}, expireTime = {}", token.getToken(), Date.from(Instant.ofEpochSecond(token.getExpireTime())));
             client = new NlsClient(token.getToken());
-            this.setSpeechSynthesizerSemaphore();
         } catch (Exception e) {
             log.info("ali nls init error!!!", e);
             // throw e;
@@ -67,37 +58,53 @@ public class AliyunNlsKit implements InitializingBean, DisposableBean {
         shutdown();
     }
 
-    public void speechSynthesizer(GenAudioProperties config, AudioGenBo audioGenBo, final OutputStream out) throws RuntimeException {
-        if (Integer.valueOf(1).equals(config.getLongMode())) {
-            this.longTestSpeechSynthesizer(config, audioGenBo, out);
-        } else {
-            this.splitSpeechSynthesizer(config, audioGenBo, out);
+    public void shutdown() {
+        if (client != null) {
+            client.shutdown();
         }
+    }
+
+    /**
+     * 将文本转成音频文件
+     * @param localPath 本地保存音频文件地址
+     * @param textArr 文本按大小分割后的数组
+     * @param objectId 标识
+     * @param isWav
+     * @param voice
+     * @throws IOException
+     */
+    public void text2LocalWavFile(String localPath, List<String> textArr, Object objectId, Integer isWav, String voice) throws IOException {
+        this.text2LocalWavFile(localPath, Integer.valueOf(1).equals(isWav),
+                out -> this.splitSpeechSynthesizer(textArr, objectId, isWav, voice, out));
+    }
+
+    /**
+     * 长文本转成音频文件
+     * @param localPath 本地保存音频文件地址
+     * @param content 文本按大小分割后的数组
+     * @param objectId 标识
+     * @param isWav
+     * @param voice
+     * @throws IOException
+     */
+    public void longText2LocalWavFile(String localPath, String content, Object objectId, Integer isWav, String voice) throws IOException {
+        this.text2LocalWavFile(localPath, Integer.valueOf(1).equals(isWav),
+                out -> this.longTestSpeechSynthesizer(content, objectId, isWav, voice, out));
     }
 
     /**
      * 语音合成
      */
-    private void splitSpeechSynthesizer(GenAudioProperties config, AudioGenBo audioGenBo, final OutputStream out) throws RuntimeException {
-        List<String> textArr = splitLongText(audioGenBo.getContent(), Optional.ofNullable(config.getSplitSize()).orElse(100));
+    public void splitSpeechSynthesizer(List<String> textArr, Object objectId, Integer isWav, String voice, final OutputStream out) throws RuntimeException {
         SpeechSynthesizer synthesizer = null;
-        String id;
-        try {
-            id = semaphore.acquire(20, TimeUnit.MINUTES);
-            if (id == null) {
-                throw new Exception("permitId is null");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
         try {
             // 刷新token
             this.checkAndRefreshToken();
             //创建实例,建立连接
-            synthesizer = new SpeechSynthesizer(client, getSynthesizerListener(audioGenBo.getObjectId(), out));
-            synthesizer.setAppKey(genAudioConfig.getAppKey());
-            synthesizer.setFormat(Integer.valueOf(1).equals(config.getIsWav()) ? OutputFormatEnum.PCM : OutputFormatEnum.MP3);
-            synthesizer.setVoice(StrUtil.emptyToDefault(config.getVoice(), "aida"));
+            synthesizer = new SpeechSynthesizer(client, getSynthesizerListener(objectId, out));
+            synthesizer.setAppKey(nlsProperties.getAppKey());
+            synthesizer.setFormat(Integer.valueOf(1).equals(isWav) ? OutputFormatEnum.PCM : OutputFormatEnum.MP3);
+            synthesizer.setVoice(StrUtil.emptyToDefault(voice, "aida"));
             //设置返回音频的采样率
             synthesizer.setSampleRate(SampleRateEnum.SAMPLE_RATE_16K);
             for (String s : textArr) {
@@ -118,24 +125,23 @@ public class AliyunNlsKit implements InitializingBean, DisposableBean {
             if (null != synthesizer) {
                 synthesizer.close();
             }
-            semaphore.release(id);
         }
     }
 
     /**
      * 语音合成
      */
-    private void longTestSpeechSynthesizer(GenAudioProperties config, AudioGenBo audioGenBo, final OutputStream out) throws RuntimeException {
+    private void longTestSpeechSynthesizer(String content, Object objectId, Integer isWav, String voice, final OutputStream out) throws RuntimeException {
         SpeechSynthesizer synthesizer = null;
         try {
             // 刷新token
             this.checkAndRefreshToken();
-            synthesizer = new SpeechSynthesizer(client, getSynthesizerListener(audioGenBo.getObjectId(), out));
-            synthesizer.setAppKey(genAudioConfig.getAppKey());
-            synthesizer.setFormat(Integer.valueOf(1).equals(config.getIsWav()) ? OutputFormatEnum.PCM : OutputFormatEnum.MP3);
-            synthesizer.setVoice(StrUtil.emptyToDefault(config.getVoice(), "aida"));
+            synthesizer = new SpeechSynthesizer(client, getSynthesizerListener(objectId, out));
+            synthesizer.setAppKey(nlsProperties.getAppKey());
+            synthesizer.setFormat(Integer.valueOf(1).equals(isWav) ? OutputFormatEnum.PCM : OutputFormatEnum.MP3);
+            synthesizer.setVoice(StrUtil.emptyToDefault(voice, "aida"));
             synthesizer.setSampleRate(SampleRateEnum.SAMPLE_RATE_16K);
-            synthesizer.setLongText(audioGenBo.getContent());
+            synthesizer.setLongText(content);
             synthesizer.start();
             synthesizer.waitForComplete();
         } catch (Exception e) {
@@ -145,12 +151,6 @@ public class AliyunNlsKit implements InitializingBean, DisposableBean {
             if (null != synthesizer) {
                 synthesizer.close();
             }
-        }
-    }
-
-    public void shutdown() {
-        if (client != null) {
-            client.shutdown();
         }
     }
 
@@ -193,45 +193,9 @@ public class AliyunNlsKit implements InitializingBean, DisposableBean {
         };
     }
 
-    private void setSpeechSynthesizerSemaphore() {
-        semaphore = redissonClient.getPermitExpirableSemaphore("lock:yeeejob:speechSynthesizer");
-        semaphore.trySetPermits(genAudioConfig.getConcurrentNum());
-    }
-
     /**
-     * 将长文本切分为每句字数不大于size数目的短句
+     * 文本转音频文件
      */
-    private List<String> splitLongText(String text, int size) {
-        //先按标点符号切分
-        String[] texts = text.split("[、，。；？！,!?：:.;\"”'’/|`~&]");
-        StringBuilder textPart = new StringBuilder();
-        List<String> result = new ArrayList<>();
-        int len = 0;
-        //再按size merge,避免标点符号切分出来的太短
-        for (String s : texts) {
-            if (textPart.length() + s.length() + 1 > size) {
-                result.add(textPart.toString());
-                textPart.delete(0, textPart.length());
-            }
-            textPart.append(s);
-            len += s.length();
-            if (len < text.length()) {
-                //System.out.println("at " + text.charAt(len));
-                textPart.append(text.charAt(len));
-                len += 1;
-            }
-        }
-        if (textPart.length() > 0) {
-            result.add(textPart.toString());
-        }
-        return result;
-    }
-
-    public void text2LocalWavFile(String localPath, AudioGenBo audioGenBo) throws IOException {
-        this.text2LocalWavFile(localPath, Integer.valueOf(1).equals(genAudioConfig.getIsWav()),
-                out -> this.speechSynthesizer(genAudioConfig, audioGenBo, out));
-    }
-
     private void text2LocalWavFile(String path, boolean isWav, Consumer<OutputStream> consumer) throws IOException {
         try (BufferedOutputStream out = FileUtil.getOutputStream(path)) {
             WavHeader header = null;

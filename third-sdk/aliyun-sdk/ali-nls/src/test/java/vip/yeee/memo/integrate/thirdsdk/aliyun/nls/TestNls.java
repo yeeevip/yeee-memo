@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import vip.yeee.memo.integrate.common.base.utils.TextUtils;
 import vip.yeee.memo.integrate.thirdsdk.aliyun.nls.bo.AudioGenBo;
-import vip.yeee.memo.integrate.thirdsdk.aliyun.nls.kit.AliyunNlsKit;
+import vip.yeee.memo.integrate.thirdsdk.aliyun.nls.kit.AliyunNlsHelper;
 
 import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 public class TestNls {
 
     @Resource
-    private AliyunNlsKit aliyunNlsKit;
+    private AliyunNlsHelper aliyunNlsHelper;
 
     @Test
     public void testGenAudio() throws Exception {
@@ -35,7 +35,7 @@ public class TestNls {
         String fileName = "genAudio/1111111.mp3";
         String localPath = System.getProperties().getProperty(SystemUtil.TMPDIR) + fileName;
         AudioGenBo audioGenBo = new AudioGenBo(1111111, "content", TextUtils.cleanHtmlTag(content), fileName);
-        aliyunNlsKit.text2LocalWavFile(localPath, audioGenBo);
+        aliyunNlsHelper.text2LocalFile(localPath, audioGenBo);
         log.info("【文本转录音】 完成 - 耗时：{}, localPath = {}", stopwatch.elapsed(TimeUnit.MILLISECONDS), localPath);
     }
 

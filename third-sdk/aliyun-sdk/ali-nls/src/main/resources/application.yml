@@ -4,12 +4,14 @@ spring:
     port: 6379
     password: yeah
     database: 6
-aliyun:
-  nls:
-    gen-audio:
+yeee:
+  aliyun:
+    nls:
       access-key-id: XXXXXXXXXX
       access-key-secret: XXXXXXXXXX
       app-key: XXXXXXXXXX
+  biz:
+    gen-audio:
       concurrent-num: 2
       isWav: 0
       splitSize: 200

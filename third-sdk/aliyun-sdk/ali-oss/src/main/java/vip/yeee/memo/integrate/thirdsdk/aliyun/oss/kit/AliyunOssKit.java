@@ -4,6 +4,14 @@ import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.OSSObject;
 import com.aliyun.oss.model.ObjectMetadata;
+import com.aliyuncs.DefaultAcsClient;
+import com.aliyuncs.auth.sts.AssumeRoleRequest;
+import com.aliyuncs.auth.sts.AssumeRoleResponse;
+import com.aliyuncs.exceptions.ClientException;
+import com.aliyuncs.http.MethodType;
+import com.aliyuncs.http.ProtocolType;
+import com.aliyuncs.profile.DefaultProfile;
+import com.aliyuncs.profile.IClientProfile;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import vip.yeee.memo.integrate.thirdsdk.aliyun.oss.properties.AliOssProperties;
@@ -29,11 +37,14 @@ public class AliyunOssKit {
     private AliOssProperties aliOssProperties;
 
     private OSS oss;
+    private DefaultAcsClient acsClient;
 
     @PostConstruct
     public void init() {
         this.oss = new OSSClientBuilder()
                 .build(aliOssProperties.getEndpoint(), aliOssProperties.getAccessKeyId(), aliOssProperties.getAccessKeySecret());
+        IClientProfile profile = DefaultProfile.getProfile(aliOssProperties.getRegion(), aliOssProperties.getAccessKeyId(), aliOssProperties.getAccessKeySecret());
+        acsClient = new DefaultAcsClient(profile);
         log.info("OSS Client初始化成功：default-bucket = {}", aliOssProperties.getBucketDefault());
     }
 
@@ -88,6 +99,20 @@ public class AliyunOssKit {
         metadata.setContentDisposition("filename/filesize=" + fileName + "/" + file.length() + "Byte.");
         //上传文件
         oss.putObject(bucketName, ObjectName, file);
+    }
+
+    /**
+     * STS临时授权
+     */
+    public AssumeRoleResponse stsAuthorize(String roleRAM, String roleSessionName) throws ClientException {
+        AssumeRoleRequest request = new AssumeRoleRequest();
+        // 持续秒数 3600秒，即1小时
+        request.setDurationSeconds(3600L);
+        request.setMethod(MethodType.POST);
+        request.setProtocol(ProtocolType.HTTPS);
+        request.setRoleArn(roleRAM);
+        request.setRoleSessionName(roleSessionName);
+        return acsClient.getAcsResponse(request);
     }
 
     private String contentType(String fileType) {
