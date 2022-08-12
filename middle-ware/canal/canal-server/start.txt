@@ -1,0 +1,52 @@
+
+一、服务端部署
+
+服务端安装包: https://github.com/alibaba/canal/releases
+
+1、下载镜像
+docker pull canal/canal-server:v1.1.5
+
+2、将容器内部配置文件拷贝到外部
+docker cp [容器索引]:[内部路径] [外部路径]
+docker cp canal:/home/admin/canal-server/conf/canal.properties /home/canal/conf
+docker cp canal:/home/admin/canal-server/conf/example/instance.properties /home/canal/example
+docker cp canal:/home/admin/canal-server/bin /home/canal/bin
+
+4、instance.properties配置
+
+## mysql serverId
+# 目前最新的服务端版本已不需要配置serverId参数
+canal.instance.mysql.slaveId = canal_1
+#position info，需要改成自己的数据库信息
+canal.instance.master.address = yeee.vip.host:3306
+canal.instance.master.journal.name =
+canal.instance.master.position =
+canal.instance.master.timestamp =
+#canal.instance.standby.address =
+#canal.instance.standby.journal.name =
+#canal.instance.standby.position =
+#canal.instance.standby.timestamp =
+#username/password，需要改成自己的数据库信息
+canal.instance.dbUsername = canal
+canal.instance.dbPassword = canal
+canal.instance.defaultDatabaseName =
+canal.instance.connectionCharset = UTF-8
+# table regex
+# binlog解析的过滤规则，采用正则表达式
+canal.instance.filter.regex = .*\\..*
+
+5、启动服务
+
+docker run --name=canal -p 11111:11111 -d \
+-v /home/canal/conf/instance.properties:/home/admin/canal-server/conf/example/instance.properties \
+-v /home/canal/logs:/home/admin/canal-server/logs \
+canal/canal-server:v1.1.5
+
+# 进入宿主机
+docker exec -it canal /bin/bash
+/home/admin/canal-server/bin -> startup.sh 可设置内存大小
+修改完复制到容器
+docker cp /home/canal/bin/bin/startup.sh canal:/home/admin/canal-server/bin/startup.sh
+
+重启容器
+

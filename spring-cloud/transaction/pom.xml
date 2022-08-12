@@ -5,17 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>middle-ware</artifactId>
+        <artifactId>spring-cloud</artifactId>
         <groupId>vip.yeee.memo</groupId>
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>mq</artifactId>
+    <artifactId>transaction</artifactId>
     <packaging>pom</packaging>
-
-    <modules>
-        <module>rocketmq</module>
-        <module>kafka</module>
-    </modules>
 
 </project>

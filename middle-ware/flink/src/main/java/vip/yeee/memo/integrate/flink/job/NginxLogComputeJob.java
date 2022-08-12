@@ -34,7 +34,7 @@ public class NginxLogComputeJob {
 //        // 算子并行度
 //        env.setParallelism(1);
         Properties properties = new Properties();
-        properties.setProperty("bootstrap.servers","http://121.4.254.235:21661");
+        properties.setProperty("bootstrap.servers","http://yeee.vip.host:21661");
         properties.setProperty("group.id", "vip-yeee-memo");
         FlinkKafkaConsumer<String> kafkaSource = new FlinkKafkaConsumer<>("TP_www.yeee.vip", new SimpleStringSchema(), properties);
         DataStream<AccessLogBO> dataStreamSource = env.addSource(kafkaSource)
