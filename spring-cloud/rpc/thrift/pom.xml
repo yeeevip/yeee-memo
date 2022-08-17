@@ -5,20 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>spring-cloud</artifactId>
+        <artifactId>rpc</artifactId>
         <groupId>vip.yeee.memo</groupId>
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>rpc</artifactId>
-    <packaging>pom</packaging>
-
-    <modules>
-        <!-- spring cloud体系下的，http1. -->
-        <module>openfeign</module>
-        <!-- 高性能的rpc框架，http2.0 -->
-        <module>grpc</module>
-        <module>thrift</module>
-    </modules>
+    <artifactId>thrift</artifactId>
 
 </project>
