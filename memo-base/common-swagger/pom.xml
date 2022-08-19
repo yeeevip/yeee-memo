@@ -15,10 +15,15 @@
     <artifactId>common-swagger</artifactId>
 
     <properties>
-        <knife4j.version>2.0.8</knife4j.version>
+        <knife4j.version>3.0.3</knife4j.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <optional>true</optional>
+        </dependency>
         <!--Knife4j API文档生产工具-->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
