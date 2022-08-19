@@ -27,6 +27,8 @@
 		<module>config</module>
 		<!-- 流控、熔断降级 -->
 		<module>protect</module>
+		<!-- 分布式事务 -->
+		<module>transaction</module>
 	</modules>
 
 	<dependencies>

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>solution-problem</artifactId>
+        <artifactId>rpc</artifactId>
         <groupId>vip.yeee.memo</groupId>
         <version>1.0.1-SNAPSHOT</version>
     </parent>
@@ -13,10 +13,6 @@
     <artifactId>grpc</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-util</artifactId>
-        </dependency>
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-netty-shaded</artifactId>

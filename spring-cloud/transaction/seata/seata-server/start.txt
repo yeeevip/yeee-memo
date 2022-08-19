@@ -1,0 +1,141 @@
+
+
+2.seata的安装
+
+3.seata事务日志持久化
+    1.seata所在库的脚本(用于控制事务)
+    -- -------------------------------- The script used when storeMode is 'db' --------------------------------
+    -- the table to store GlobalSession data
+    CREATE TABLE IF NOT EXISTS `global_table`
+    (
+    `xid`                       VARCHAR(128) NOT NULL,
+    `transaction_id`            BIGINT,
+    `status`                    TINYINT      NOT NULL,
+    `application_id`            VARCHAR(32),
+    `transaction_service_group` VARCHAR(32),
+    `transaction_name`          VARCHAR(128),
+    `timeout`                   INT,
+    `begin_time`                BIGINT,
+    `application_data`          VARCHAR(2000),
+    `gmt_create`                DATETIME,
+    `gmt_modified`              DATETIME,
+    PRIMARY KEY (`xid`),
+    KEY `idx_gmt_modified_status` (`gmt_modified`, `status`),
+    KEY `idx_transaction_id` (`transaction_id`)
+    ) ENGINE = InnoDB
+    DEFAULT CHARSET = utf8;
+
+    -- the table to store BranchSession data
+    CREATE TABLE IF NOT EXISTS `branch_table`
+    (
+    `branch_id`         BIGINT       NOT NULL,
+    `xid`               VARCHAR(128) NOT NULL,
+    `transaction_id`    BIGINT,
+    `resource_group_id` VARCHAR(32),
+    `resource_id`       VARCHAR(256),
+    `branch_type`       VARCHAR(8),
+    `status`            TINYINT,
+    `client_id`         VARCHAR(64),
+    `application_data`  VARCHAR(2000),
+    `gmt_create`        DATETIME(6),
+    `gmt_modified`      DATETIME(6),
+    PRIMARY KEY (`branch_id`),
+    KEY `idx_xid` (`xid`)
+    ) ENGINE = InnoDB
+    DEFAULT CHARSET = utf8;
+
+    -- the table to store lock data
+    CREATE TABLE IF NOT EXISTS `lock_table`
+    (
+    `row_key`        VARCHAR(128) NOT NULL,
+    `xid`            VARCHAR(96),
+    `transaction_id` BIGINT,
+    `branch_id`      BIGINT       NOT NULL,
+    `resource_id`    VARCHAR(256),
+    `table_name`     VARCHAR(32),
+    `pk`             VARCHAR(36),
+    `gmt_create`     DATETIME,
+    `gmt_modified`   DATETIME,
+    PRIMARY KEY (`row_key`),
+    KEY `idx_branch_id` (`branch_id`)
+    ) ENGINE = InnoDB
+    DEFAULT CHARSET = utf8;
+
+
+    2.业务库脚本(回滚日志表)
+    -- for AT mode you must to init this sql for you business database. the seata server not need it.
+    CREATE TABLE IF NOT EXISTS `undo_log`
+    (
+    `branch_id`     BIGINT(20)   NOT NULL COMMENT 'branch transaction id',
+    `xid`           VARCHAR(100) NOT NULL COMMENT 'global transaction id',
+    `context`       VARCHAR(128) NOT NULL COMMENT 'undo_log context,such as serialization',
+    `rollback_info` LONGBLOB     NOT NULL COMMENT 'rollback info',
+    `log_status`    INT(11)      NOT NULL COMMENT '0:normal status,1:defense status',
+    `log_created`   DATETIME(6)  NOT NULL COMMENT 'create datetime',
+    `log_modified`  DATETIME(6)  NOT NULL COMMENT 'modify datetime',
+    UNIQUE KEY `ux_undo_log` (`xid`, `branch_id`)
+    ) ENGINE = InnoDB
+    AUTO_INCREMENT = 1
+    DEFAULT CHARSET = utf8 COMMENT ='AT transaction mode undo table';
+
+
+2.修改seata配置文件
+file.conf 在conf目录下
+
+    1.新增配置
+    #1.4.2没有service这个配置,可以自己添加上
+    service {
+    vgroupMapping.my_test_tx_group = "default" #指定分组
+    default.grouplist = "127.0.0.1:8091"
+    enableDegrade = false
+    disable = false
+    max.commit.retry.timeout = "-1"
+    max.rollback.retry.timeout = "-1"
+    }
+
+    2.修改事务日志存储方式
+    store {
+      ## store mode: file、db、redis 配置文件默认用file,这里修改为db数据库
+      mode = "db"
+      ## rsa decryption public key
+      publicKey = ""
+      ## file store property
+      ## database store property
+      db {
+        ## the implement of javax.sql.DataSource, such as DruidDataSource(druid)/BasicDataSource(dbcp)/HikariDataSource(hikari) etc.
+        datasource = "druid"
+        ## mysql/oracle/postgresql/h2/oceanbase etc.
+        dbType = "oracle"
+        ##mysql的驱动
+        driverClassName = "oracle.jdbc.OracleDriver"
+        ## 如果你用的mysql 在url后要加上rewriteBatchedStatements=true这个配置
+        url = "jdbc:oracle:thin:@127.0.0.1:1521/fztygl"
+        user = "username"
+        password = "password"
+        minConn = 5
+        maxConn = 100
+        globalTable = "global_table"
+        branchTable = "branch_table"
+        lockTable = "lock_table"
+        queryLimit = 100
+        maxWait = 5000
+      }
+    }
+
+
+4.seata配置nacos注册中心
+    1.修改seata配置文件 registry.conf在conf目录下
+    registry {
+      # file 、nacos 、eureka、redis、zk、consul、etcd3、sofa
+      type = "nacos" #默认为file 修改为nacos
+      nacos {
+        application = "seata-server" #随便写
+        serverAddr = "127.0.0.1:8848"
+        group = "dev" #随便写
+        namespace = "e69ceae8-160c-4d52-b512-ad0e919ad86b"
+        cluster = "default"
+        username = "nacos"
+        password = "nacos"
+      }
+    }
+
