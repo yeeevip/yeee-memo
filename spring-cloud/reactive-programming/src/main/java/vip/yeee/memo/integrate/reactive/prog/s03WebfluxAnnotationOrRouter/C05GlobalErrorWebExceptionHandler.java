@@ -4,8 +4,8 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
+import org.springframework.boot.autoconfigure.web.WebProperties;
 import vip.yeee.memo.integrate.reactive.prog.s03WebfluxAnnotationOrRouter.C04ReactiveControllerHelper.ValidationException;
-import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler;
 import org.springframework.boot.web.reactive.error.ErrorAttributes;
 import org.springframework.context.ApplicationContext;
@@ -32,10 +32,10 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 public class C05GlobalErrorWebExceptionHandler extends
         AbstractErrorWebExceptionHandler {
     public C05GlobalErrorWebExceptionHandler(ErrorAttributes errorAttributes,
-                                             ResourceProperties resourceProperties,
+                                             WebProperties.Resources resources,
                                              ApplicationContext applicationContext,
                                              ServerCodecConfigurer configurer) {
-        super(errorAttributes, resourceProperties, applicationContext);
+        super(errorAttributes, resources, applicationContext);
         this.setMessageWriters(configurer.getWriters());
     }
 

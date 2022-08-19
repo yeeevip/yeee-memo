@@ -10,6 +10,7 @@ import cn.hyperchain.sdk.provider.DefaultHttpProvider;
 import cn.hyperchain.sdk.provider.ProviderManager;
 import cn.hyperchain.sdk.response.ReceiptResponse;
 import cn.hyperchain.sdk.response.TxHashResponse;
+import cn.hyperchain.sdk.response.contract.StringResponse;
 import cn.hyperchain.sdk.service.AccountService;
 import cn.hyperchain.sdk.service.ContractService;
 import cn.hyperchain.sdk.service.ServiceManager;
@@ -134,4 +135,18 @@ public class NFTPropertyServiceImpl implements NFTPropertyService {
         log.info("趣链区块链：交易返回信息 -> {}", receipt.toString());
         return Decoder.decodeHVM(receipt.getRet(), clazz);
     }
+
+    public void checkChainNodeServer() throws Exception {
+        try {
+            StringResponse response = contractService.getStatus(chainProperties.getContractAddress()).send();
+            String res = response.getResult();
+            if (!"normal".equals(res)) {
+                log.error("趣链区块链节点状态异常，res = {}", res);
+                throw new Exception("节点状态异常");
+            }
+        } catch (Exception e) {
+            throw new Exception("区块链节点异常：" + e.getMessage());
+        }
+    }
+
 }
