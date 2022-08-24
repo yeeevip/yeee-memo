@@ -1,14 +1,14 @@
 server:
   port: 10013
-
 spring:
+  profiles:
+    active: test
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/yeeee_crowdfunding?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
     password: root
   elasticsearch:
-    rest:
-      uris: http://127.0.0.1:9200
-      username: admin
-      password: admin
+    uris: http://127.0.0.1:9200
+    username: admin
+    password: admin

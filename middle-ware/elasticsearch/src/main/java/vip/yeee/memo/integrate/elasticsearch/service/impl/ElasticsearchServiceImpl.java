@@ -47,6 +47,7 @@ import java.util.Map;
 @Service
 public class ElasticsearchServiceImpl implements ElasticsearchService {
 
+    // vip.yeee.memo.integrate.elasticsearch.config.ElasticsearchConfig 注入Bean容器
     private final RestHighLevelClient restClient;
 
     @Override

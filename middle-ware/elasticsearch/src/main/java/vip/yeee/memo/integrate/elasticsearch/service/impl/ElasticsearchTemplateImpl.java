@@ -80,7 +80,7 @@ public class ElasticsearchTemplateImpl implements ElasticsearchTemplate {
         NativeSearchQuery nativeSearchQuery = new NativeSearchQueryBuilder()
                 .withQuery(queryBuilder)
                 .withPageable(pageRequest)
-                .withSort(sortBuilder)
+                .withSorts(sortBuilder)
                 .build();
         List<SearchHit<T>> searchHits = restTemplate.search(nativeSearchQuery, index).getSearchHits();
         PageVO<T> pageVO = new PageVO<>(pageNum, pageSize);
@@ -91,9 +91,9 @@ public class ElasticsearchTemplateImpl implements ElasticsearchTemplate {
     @Override
     public <T> Aggregations aggregationSearch(TermsAggregationBuilder aggregationBuilder, Class<T> index) {
         NativeSearchQuery nativeSearchQuery = new NativeSearchQueryBuilder()
-                .addAggregation(aggregationBuilder)
+                .withAggregations(aggregationBuilder)
                 .build();
-        return restTemplate.search(nativeSearchQuery, index).getAggregations();
+        return (Aggregations) restTemplate.search(nativeSearchQuery, index).getAggregations();
     }
 
 }
