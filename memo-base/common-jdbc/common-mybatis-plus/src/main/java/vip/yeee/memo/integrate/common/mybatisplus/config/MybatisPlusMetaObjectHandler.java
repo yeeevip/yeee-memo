@@ -65,9 +65,13 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
 	 * @return 当前用户名
 	 */
 	private String getUserName() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (Optional.ofNullable(authentication).isPresent()) {
-			return authentication.getName();
+		try {
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			if (Optional.ofNullable(authentication).isPresent()) {
+				return authentication.getName();
+			}
+		} catch (Throwable ignored) {
+
 		}
 		return null;
 	}

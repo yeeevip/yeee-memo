@@ -24,6 +24,7 @@
         <druid.version>1.2.9</druid.version>
         <javassist.version>3.21.0-GA</javassist.version>
         <logback.version>1.2.3</logback.version>
+        <jodd.version>6.2.1</jodd.version>
         <okhttp.version>4.9.3</okhttp.version>
         <jetcache-starter.version>2.6.2</jetcache-starter.version>
         <java-jwt.version>3.19.1</java-jwt.version>
@@ -200,6 +201,12 @@
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
                 <version>${logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jodd</groupId>
+                <artifactId>jodd-http</artifactId>
+                <version>${jodd.version}</version>
+                <scope>provided</scope>
             </dependency>
             <!-- okhttp3 -->
             <dependency>

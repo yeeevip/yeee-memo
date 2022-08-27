@@ -1,0 +1,27 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /pay
+spring:
+  profiles:
+    active: test
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/yeeee_pay?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+yeee:
+  pay:
+    wx:
+      app-id: wxd930ea5d5a258f4f
+      mch-id: 10000100
+      # v2版本
+      mch-key: 192006250b4c09247ec02edce69f6a2d
+      key-path:
+      # v3版本 模式下所需配置
+      api-v3-key: 192006250b4c09247ec02edce69f6a2d
+      serial-no:
+      private-key-path: classpath:path
+      private-cert-path: classpath:path
+      api-version: V3
+      notify-url: http://127.0.0.1:8082/pay/wx/notify

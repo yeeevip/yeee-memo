@@ -22,6 +22,8 @@
         <module>aliyun-sdk</module>
         <!-- 微信 -->
         <module>weixin-sdk</module>
+        <!-- 集成三方支付 -->
+        <module>third-pay</module>
     </modules>
 
 </project>
