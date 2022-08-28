@@ -2,6 +2,8 @@ package vip.yeee.memo.integrate.thirdsdk.pay.model.unifiedOrder;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 /**
  * description......
  *
@@ -20,5 +22,7 @@ public class UnifiedOrderReqBO {
     private Integer payMoney;
 
     private String extraInfo;
+
+    private LocalDateTime expireTime;
 
 }

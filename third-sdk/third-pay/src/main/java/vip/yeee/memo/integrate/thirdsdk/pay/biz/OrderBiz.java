@@ -77,6 +77,7 @@ public class OrderBiz {
         }
         UnifiedOrderReqBO reqBO = this.buildUnifiedOrderReqBO(reqVO);
         reqBO.setTradeType(waySplit[1]);
+        reqBO.setExpireTime(order.getExpiredTime());
         PayChannelService payChannelService = this.getPayChannelService(waySplit[0]);
         UnifiedOrderRespBO respBO = payChannelService.unifiedOrder(reqBO);
         UnifiedOrderRespVO orderRespVO = new UnifiedOrderRespVO(JacksonUtils.toJsonString(respBO));
@@ -111,6 +112,7 @@ public class OrderBiz {
         } else if (payWay.startsWith(PayConstant.IF_CODE.ALIPAY)) {
             AlipayUnifiedOrderReqBO reqBO = new AlipayUnifiedOrderReqBO();
             BeanUtils.copyProperties(reqVO, reqBO);
+            reqBO.setPayMoney(reqVO.getAmount().intValue());
             return reqBO;
         } else {
             UnifiedOrderReqBO reqBO = new UnifiedOrderReqBO();
