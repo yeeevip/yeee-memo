@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -94,40 +95,45 @@ public class OrderBiz {
         return orderRespVO;
     }
 
-    public String handlePayNotify(HttpServletRequest request, String ifCode) throws Exception {
-        // 获取对应处理接口
-        PayChannelService payChannelService = this.getPayChannelService(ifCode);
-        // 解析请求参数并验签
-        Pair<String, ChannelRetMsg> keyValue = payChannelService.parseNoticeParamsAndCheck(request);
-        String orderCode = keyValue.getKey();
-        ChannelRetMsg retMsg = keyValue.getValue();
-        if (StrUtil.isBlank(orderCode)) {
-            throw new BizException("订单号为空");
+    public ResponseEntity<Object> handlePayNotify(HttpServletRequest request, String ifCode) throws Exception {
+        try {
+            // 获取对应处理接口
+            PayChannelService payChannelService = this.getPayChannelService(ifCode);
+            // 解析请求参数并验签
+            Pair<String, ChannelRetMsg> keyValue = payChannelService.parseNoticeParamsAndCheck(request);
+            String orderCode = keyValue.getKey();
+            ChannelRetMsg retMsg = keyValue.getValue();
+            if (StrUtil.isBlank(orderCode)) {
+                throw new BizException("订单号为空");
+            }
+            // 数据库中查询订单
+            LambdaQueryWrapper<Order> wrapper = Wrappers.<Order>lambdaQuery()
+                    .select(Order::getId, Order::getState)
+                    .eq(Order::getCode, orderCode);
+            Order order = orderMapper.selectOne(wrapper);
+            if (order == null) {
+                throw new BizException("订单不存在");
+            }
+            // 验证订单状态
+            if (!OrderEnum.State.STATE_SUCCESS.getCode().equals(order.getState())) {
+                throw new BizException("订单已支付");
+            }
+            LambdaUpdateWrapper<Order> updateWrapper = Wrappers.<Order>lambdaUpdate()
+                    .eq(Order::getId, order.getId())
+                    .eq(Order::getState, order.getState());
+            //明确成功
+            if (ChannelRetMsg.ChannelState.CONFIRM_SUCCESS.equals(retMsg.getChannelState())) {
+                updateWrapper.set(Order::getState, OrderEnum.State.STATE_SUCCESS.getCode());
+                orderMapper.update(null, updateWrapper);
+            } else if (ChannelRetMsg.ChannelState.CONFIRM_FAIL.equals(retMsg.getChannelState())) { //明确失败
+                updateWrapper.set(Order::getState, OrderEnum.State.STATE_FAIL.getCode());
+                orderMapper.update(null, updateWrapper);
+            }
+            return retMsg.getResponseEntity();
+        } catch (BizException e) {
+            log.warn("【支付回调通知】- 业务异常", e);
+            return this.getDefaultSuccessResp(ifCode);
         }
-        // 数据库中查询订单
-        LambdaQueryWrapper<Order> wrapper = Wrappers.<Order>lambdaQuery()
-                .select(Order::getId, Order::getState)
-                .eq(Order::getCode, orderCode);
-        Order order = orderMapper.selectOne(wrapper);
-        if (order == null) {
-            throw new BizException("订单不存在");
-        }
-        // 验证订单状态
-        if (!OrderEnum.State.STATE_SUCCESS.getCode().equals(order.getState())) {
-            throw new BizException("订单已支付");
-        }
-        LambdaUpdateWrapper<Order> updateWrapper = Wrappers.<Order>lambdaUpdate()
-                .eq(Order::getId, order.getId())
-                .eq(Order::getState, order.getState());
-        //明确成功
-        if (ChannelRetMsg.ChannelState.CONFIRM_SUCCESS.equals(retMsg.getChannelState())) {
-            updateWrapper.set(Order::getState, OrderEnum.State.STATE_SUCCESS.getCode());
-            orderMapper.update(null, updateWrapper);
-        } else if (ChannelRetMsg.ChannelState.CONFIRM_FAIL.equals(retMsg.getChannelState())) { //明确失败
-            updateWrapper.set(Order::getState, OrderEnum.State.STATE_FAIL.getCode());
-            orderMapper.update(null, updateWrapper);
-        }
-        return "success";
     }
 
     private PayChannelService getPayChannelService(String payChannel) {
@@ -159,6 +165,17 @@ public class OrderBiz {
             BeanUtils.copyProperties(reqVO, reqBO);
             return reqBO;
         }
+    }
+
+    private ResponseEntity<Object> getDefaultSuccessResp(String ifCode) {
+        if (PayConstant.IF_CODE.WXPAY.equalsIgnoreCase(ifCode)) {
+            return PayChannelService.getWxV2SuccessResp();
+        } else if ((PayConstant.IF_CODE.ALIPAY + PayConstant.PAY_IF_VERSION.WX_V3).equalsIgnoreCase(ifCode)) {
+            return PayChannelService.getWxV3SuccessResp();
+        } else if (PayConstant.IF_CODE.ALIPAY.equalsIgnoreCase(ifCode)) {
+            return PayChannelService.getAliSuccessResp();
+        }
+        return null;
     }
 
 }

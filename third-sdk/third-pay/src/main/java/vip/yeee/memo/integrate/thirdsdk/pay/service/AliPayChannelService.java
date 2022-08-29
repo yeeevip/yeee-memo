@@ -10,10 +10,6 @@ import com.alipay.api.domain.AlipayTradeAppPayModel;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.fasterxml.jackson.core.type.TypeReference;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import vip.yeee.memo.integrate.common.base.utils.JacksonUtils;
 import vip.yeee.memo.integrate.common.model.exception.BizException;
@@ -81,18 +77,15 @@ public class AliPayChannelService implements PayChannelService {
         if (!verifyResult) {
             throw new Exception("验签失败");
         }
-        //验签成功后判断上游订单状态
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.TEXT_HTML);
-        ResponseEntity<Object> okResponse = new ResponseEntity<>("SUCCESS", httpHeaders, HttpStatus.OK);
 
         ChannelRetMsg result = new ChannelRetMsg();
         result.setChannelOrderId(map.get("trade_no")); //渠道订单号
         result.setChannelUserId(map.get("buyer_id")); //支付用户ID
-        result.setResponseEntity(okResponse); //响应数据
+        result.setResponseEntity(PayChannelService.getAliSuccessResp()); //响应数据
 
         result.setChannelState(ChannelRetMsg.ChannelState.WAITING); // 默认支付中
 
+        //验签成功后判断上游订单状态
         if("TRADE_SUCCESS".equals(map.get("trade_status"))){
             result.setChannelState(ChannelRetMsg.ChannelState.CONFIRM_SUCCESS);
 

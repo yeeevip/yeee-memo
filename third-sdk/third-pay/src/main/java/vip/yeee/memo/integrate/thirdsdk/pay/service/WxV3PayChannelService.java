@@ -2,7 +2,6 @@ package vip.yeee.memo.integrate.thirdsdk.pay.service;
 
 import cn.hutool.core.lang.Pair;
 import cn.hutool.extra.servlet.ServletUtil;
-import com.alibaba.fastjson.JSONObject;
 import com.github.binarywang.wxpay.bean.notify.SignatureHeader;
 import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyV3Result;
 import com.github.binarywang.wxpay.bean.request.WxPayUnifiedOrderV3Request;
@@ -17,10 +16,6 @@ import com.github.binarywang.wxpay.v3.auth.WxPayCredentials;
 import com.github.binarywang.wxpay.v3.util.PemUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import vip.yeee.memo.integrate.common.model.exception.BizException;
 import vip.yeee.memo.integrate.thirdsdk.pay.constant.PayConstant;
@@ -119,12 +114,7 @@ public class WxV3PayChannelService implements PayChannelService {
         if (payer != null) {
             channelResult.setChannelUserId(payer.getOpenid()); //支付用户ID
         }
-        JSONObject resJSON = new JSONObject();
-        resJSON.put("code", "SUCCESS");
-        resJSON.put("message", "成功");
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        channelResult.setResponseEntity(new ResponseEntity<>(resJSON, httpHeaders, HttpStatus.OK)); //响应数据
+        channelResult.setResponseEntity(PayChannelService.getWxV3SuccessResp()); //响应数据
 
         return Pair.of(result.getOutTradeNo(), channelResult);
     }
