@@ -1,7 +1,11 @@
 package vip.yeee.memo.integrate.thirdsdk.pay.service;
 
+import cn.hutool.core.lang.Pair;
+import vip.yeee.memo.integrate.thirdsdk.pay.model.notice.ChannelRetMsg;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.unifiedOrder.UnifiedOrderReqBO;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.unifiedOrder.UnifiedOrderRespBO;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * description......
@@ -12,5 +16,7 @@ import vip.yeee.memo.integrate.thirdsdk.pay.model.unifiedOrder.UnifiedOrderRespB
 public interface PayChannelService {
 
     UnifiedOrderRespBO unifiedOrder(UnifiedOrderReqBO reqBO);
+
+    Pair<String, ChannelRetMsg> parseNoticeParamsAndCheck(HttpServletRequest request) throws Exception;
 
 }

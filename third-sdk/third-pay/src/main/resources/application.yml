@@ -12,6 +12,7 @@ spring:
     password: root
 yeee:
   pay:
+    notify-url: http://127.0.0.1:8082/pay/%s/notify
     wx:
       app-id: wxd930ea5d5a258f4f
       mch-id: 10000100
@@ -24,7 +25,6 @@ yeee:
       private-key-path: classpath:path
       private-cert-path: classpath:path
       api-version: V3
-      notify-url: http://127.0.0.1:8082/pay/wx/notify
     ali:
       pid: 2088102179382412
       app-id: 2016XXXXXXXXXXXXX
@@ -35,4 +35,3 @@ yeee:
       app-public-cert:
       alipay-public-cert:
       alipay-root-cert:
-      notify-url: http://127.0.0.1:8082/pay/ali/notify
