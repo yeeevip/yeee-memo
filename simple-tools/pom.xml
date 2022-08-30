@@ -19,6 +19,7 @@
     <modules>
         <module>simple-tools-execLinuxSSH</module>
         <module>simple-tools-my</module>
+        <module>jasypt</module>
     </modules>
 
     <dependencies>
