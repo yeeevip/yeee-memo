@@ -33,6 +33,7 @@
 		<module>test-tool</module>
 		<!-- 设计模式 -->
         <module>design-pattern</module>
+        <module>simple-tools/jasypt</module>
     </modules>
 
 </project>
