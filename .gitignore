@@ -3,3 +3,4 @@ logs
 out
 .idea
 *.iml
+/simple-tools/code-generate-mp/

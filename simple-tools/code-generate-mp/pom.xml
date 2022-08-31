@@ -14,6 +14,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>common-util</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
             <version>3.2.0</version>

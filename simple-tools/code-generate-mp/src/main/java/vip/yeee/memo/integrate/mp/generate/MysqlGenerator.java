@@ -1,5 +1,6 @@
 package vip.yeee.memo.integrate.mp.generate;
 
+import cn.hutool.core.io.resource.ResourceUtil;
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -48,7 +49,8 @@ public class MysqlGenerator {
     }
 
     public static void init() throws IOException {
-        properties = PropertiesLoaderUtils.loadAllProperties("generator.properties");
+        properties = new Properties();
+        properties.load(ResourceUtil.getStream("C:\\Users\\yeeee\\Desktop\\generator.properties"));
     }
 
     /**
