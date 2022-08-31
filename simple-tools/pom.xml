@@ -20,6 +20,8 @@
         <module>simple-tools-execLinuxSSH</module>
         <module>simple-tools-my</module>
         <module>jasypt</module>
+        <!-- mybatis-plus代码生成 -->
+        <module>code-generate-mp</module>
     </modules>
 
     <dependencies>

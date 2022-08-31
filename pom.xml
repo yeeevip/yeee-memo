@@ -33,6 +33,6 @@
 		<module>test-tool</module>
 		<!-- 设计模式 -->
         <module>design-pattern</module>
-    </modules>
+	</modules>
 
 </project>
