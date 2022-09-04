@@ -5,23 +5,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>memo-parent</artifactId>
+        <artifactId>simple-tools</artifactId>
         <groupId>vip.yeee.memo</groupId>
         <version>1.0.1-SNAPSHOT</version>
-        <!-- 设定一个空值将始终从仓库中获取，不从本地路径获取. -->
-        <relativePath/>
     </parent>
 
-    <artifactId>middle-ware</artifactId>
+    <artifactId>generator</artifactId>
     <packaging>pom</packaging>
 
     <modules>
-        <!-- 消息队列 -->
-        <module>mq</module>
-        <!-- 基于Mysql的binlog的增量订阅&消费组件 -->
-        <module>canal</module>
-        <!-- 流数据和批数据的分布式处理引擎 -->
-        <module>flink</module>
+        <!-- mybatis-plus代码生成 -->
+        <module>generate-mp</module>
+        <!-- 可自定义的代码生成 -->
+        <module>generate-custom</module>
     </modules>
 
 </project>

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>middle-ware</artifactId>
+        <artifactId>solution-problem</artifactId>
         <groupId>vip.yeee.memo</groupId>
         <version>1.0.1-SNAPSHOT</version>
     </parent>

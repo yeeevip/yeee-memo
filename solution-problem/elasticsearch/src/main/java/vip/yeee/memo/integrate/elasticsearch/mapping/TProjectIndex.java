@@ -1,7 +1,6 @@
 package vip.yeee.memo.integrate.elasticsearch.mapping;
 
 import cn.hutool.core.date.DatePattern;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.elasticsearch.annotations.Document;

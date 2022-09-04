@@ -20,6 +20,7 @@
         <yeee.elasticsearch.version>7.6.2</yeee.elasticsearch.version>
         <mysql-connector.version>8.0.15</mysql-connector.version>
         <mybatis-starter.version>2.1.0</mybatis-starter.version>
+        <mybatis.version>3.5.2</mybatis.version>
         <mybatis-plus.version>3.4.3.3</mybatis-plus.version>
         <druid.version>1.2.9</druid.version>
         <javassist.version>3.21.0-GA</javassist.version>
@@ -173,6 +174,11 @@
                 <version>${mysql-connector.version}</version>
             </dependency>
             <!-- mybatis -->
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>

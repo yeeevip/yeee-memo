@@ -19,9 +19,10 @@
     <modules>
         <module>simple-tools-execLinuxSSH</module>
         <module>simple-tools-my</module>
+        <!-- 配置文件加密 -->
         <module>jasypt</module>
-        <!-- mybatis-plus代码生成 -->
-        <module>code-generate-mp</module>
+        <!-- 代码生成 -->
+        <module>generator</module>
     </modules>
 
     <dependencies>
