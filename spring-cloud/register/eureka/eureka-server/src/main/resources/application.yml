@@ -2,9 +2,13 @@ server:
   port: 8761
 eureka:
   instance:
+    # Eureka服务端的实例名称
     hostname: localhost
   client:
+    # fetch-registry为false，则表示自己为注册中心
     register-with-eureka: false
+    # 表示是否向Eureka注册中心注册自己
     fetch-registry: false
     service-url:
+      # 监控页面
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/

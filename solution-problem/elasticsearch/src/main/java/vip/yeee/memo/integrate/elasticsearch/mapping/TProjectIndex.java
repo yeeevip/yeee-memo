@@ -24,9 +24,9 @@ public class TProjectIndex extends BaseIndex implements TProjectIndexField {
     // Keyword表示不使用分词
     @Field(type = FieldType.Keyword, name = CATEGORY_ID)
     private Integer categoryId;
-    @Field(type = FieldType.Text, analyzer = "standard", searchAnalyzer = "standard")
+    @Field(type = FieldType.Text, analyzer = "analyzer", searchAnalyzer = "ik_max_word")
     private String title;
-    @Field(type = FieldType.Text, analyzer = "standard", searchAnalyzer = "standard", name = CONTENT)
+    @Field(type = FieldType.Text, analyzer = "analyzer", searchAnalyzer = "ik_max_word", name = CONTENT)
     private String blurb;
 //    @JsonFormat(pattern ="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     @Field(type = FieldType.Date, format = {}, pattern = DatePattern.NORM_DATETIME_PATTERN)
