@@ -18,9 +18,17 @@ jetcache:
       keyConvertor: fastjson
       valueEncoder: kryo
       valueDecoder: kryo
-      uri: redis://yeah@127.0.0.1:6379/7
+      uri: redis://${spring.redis.password}@${spring.redis.host}:${spring.redis.port}/7
       expireAfterWriteInMills: 86400000
       poolConfig:
         minIdle: 5
         maxIdle: 20
         maxTotal: 50
+spring:
+  main:
+    allow-circular-references: true
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: yeah
+    database: 0

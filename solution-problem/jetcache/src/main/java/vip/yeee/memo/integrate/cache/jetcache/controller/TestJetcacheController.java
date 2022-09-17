@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2022/6/22 18:26
  */
 @RestController
-public class TestController {
+public class TestJetcacheController {
 
     @Autowired
     private CacheBizService cacheBizService;

@@ -10,28 +10,20 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jetcache</artifactId>
+    <artifactId>redisson-delay-queue</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-model</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-web</artifactId>
-        </dependency>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
             <artifactId>common-util</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.alicp.jetcache</groupId>
-            <artifactId>jetcache-starter-redis-lettuce</artifactId>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
     </dependencies>
 

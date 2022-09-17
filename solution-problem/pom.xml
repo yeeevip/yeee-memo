@@ -31,6 +31,7 @@
         <!-- websocket、web与服务端长连接 -->
         <module>websocket-spring</module>
         <module>mongo</module>
+        <module>redisson-delay-queue</module>
     </modules>
 
 </project>
