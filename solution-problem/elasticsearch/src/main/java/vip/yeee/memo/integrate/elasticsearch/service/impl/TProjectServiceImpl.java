@@ -1,8 +1,10 @@
-package vip.yeee.memo.integrate.elasticsearch.opr;
+package vip.yeee.memo.integrate.elasticsearch.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import vip.yeee.memo.integrate.elasticsearch.opr.mapper.TProjectMapper;
+import vip.yeee.memo.integrate.elasticsearch.domain.mysql.entity.TProject;
+import vip.yeee.memo.integrate.elasticsearch.domain.mysql.mapper.TProjectMapper;
 import org.springframework.stereotype.Service;
+import vip.yeee.memo.integrate.elasticsearch.service.ITProjectService;
 
 /**
  * <p>

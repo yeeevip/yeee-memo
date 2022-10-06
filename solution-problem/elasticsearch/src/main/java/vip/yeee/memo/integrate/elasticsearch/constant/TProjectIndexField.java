@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.elasticsearch.mapping;
+package vip.yeee.memo.integrate.elasticsearch.constant;
 
 /**
  * description......

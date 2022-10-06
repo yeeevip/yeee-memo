@@ -1,8 +1,7 @@
-package vip.yeee.memo.integrate.elasticsearch.service.impl;
+package vip.yeee.memo.integrate.elasticsearch.domain.es.repository;
 
 import com.alibaba.fastjson.JSONObject;
 import vip.yeee.memo.integrate.common.base.utils.JacksonUtils;
-import vip.yeee.memo.integrate.elasticsearch.service.ElasticsearchService;
 import vip.yeee.memo.integrate.elasticsearch.vo.PageVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,12 +44,11 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class ElasticsearchServiceImpl implements ElasticsearchService {
+public class EsRestClientRepository {
 
     // vip.yeee.memo.integrate.elasticsearch.config.ElasticsearchConfig 注入Bean容器
     private final RestHighLevelClient restClient;
 
-    @Override
     public boolean createIndex(String indexName, String mapping) throws IOException {
 
         // 创建索引
@@ -70,13 +68,11 @@ public class ElasticsearchServiceImpl implements ElasticsearchService {
         return true;
     }
 
-    @Override
     public boolean exists(String indexName) throws Exception {
         GetIndexRequest request = new GetIndexRequest(indexName);
         return restClient.indices().exists(request, RequestOptions.DEFAULT);
     }
 
-    @Override
     public long count(QueryBuilder queryBuilder, String... indices) throws Exception {
         CountRequest countRequest = new CountRequest(indices);
         countRequest.query(queryBuilder);
@@ -84,13 +80,11 @@ public class ElasticsearchServiceImpl implements ElasticsearchService {
         return countResponse.getCount();
     }
 
-    @Override
     public void delete(String indexName) throws Exception {
         DeleteIndexRequest request = new DeleteIndexRequest(indexName);
         restClient.indices().delete(request, RequestOptions.DEFAULT);
     }
 
-    @Override
     public BulkResponse bulk(String index, List<Map<String, Object>> list) throws Exception {
         BulkRequest bulkRequest = new BulkRequest();
         for (Map<String, Object> map : list) {
@@ -100,7 +94,6 @@ public class ElasticsearchServiceImpl implements ElasticsearchService {
         return restClient.bulk(bulkRequest, RequestOptions.DEFAULT);
     }
 
-    @Override
     public PageVO<SearchHit> pageSearch(Integer pageNum, Integer pageSize, QueryBuilder queryBuilder, String... index) throws IOException {
 
         PageVO<SearchHit> pageVO = new PageVO<>(pageNum, pageSize);
@@ -126,10 +119,10 @@ public class ElasticsearchServiceImpl implements ElasticsearchService {
         return pageVO;
     }
 
-    @Override
     public Aggregations aggregationSearch(AggregationBuilder aggregationBuilder, String... index) throws IOException {
         // 构造条件查询对象
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.size(0);
         // 查询条件
         searchSourceBuilder.aggregation(aggregationBuilder);
         // 构造搜索请求对象

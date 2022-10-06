@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.elasticsearch.opr;
+package vip.yeee.memo.integrate.elasticsearch.domain.mysql.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

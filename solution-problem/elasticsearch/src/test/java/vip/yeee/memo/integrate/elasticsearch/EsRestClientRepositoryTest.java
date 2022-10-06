@@ -1,9 +1,9 @@
 package vip.yeee.memo.integrate.elasticsearch;
 
 import org.junit.jupiter.api.Test;
-import vip.yeee.memo.integrate.elasticsearch.opr.ITProjectService;
-import vip.yeee.memo.integrate.elasticsearch.opr.TProject;
-import vip.yeee.memo.integrate.elasticsearch.service.ElasticsearchService;
+import vip.yeee.memo.integrate.elasticsearch.domain.es.repository.EsRestClientRepository;
+import vip.yeee.memo.integrate.elasticsearch.service.ITProjectService;
+import vip.yeee.memo.integrate.elasticsearch.domain.mysql.entity.TProject;
 import vip.yeee.memo.integrate.elasticsearch.vo.PageVO;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -32,10 +32,10 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @SpringBootTest(classes = ElasticsearchApplication.class)
-public class ElasticsearchServiceTest {
+public class EsRestClientRepositoryTest {
 
     @Autowired
-    private ElasticsearchService elasticsearchService;
+    private EsRestClientRepository esRestClientRepository;
     @Autowired
     private ITProjectService iTProjectService;
 
@@ -84,10 +84,10 @@ public class ElasticsearchServiceTest {
                 "\t}\n" +
                 "}";
         log.info("-------------------index = {}，mapping = {}-------------------", indexName, mappingSource);
-        boolean exists = elasticsearchService.exists(indexName);
+        boolean exists = esRestClientRepository.exists(indexName);
         log.info("-----------------exists = {}---------------------", exists);
         if (!exists) {
-            boolean create = elasticsearchService.createIndex(indexName, mappingSource);
+            boolean create = esRestClientRepository.createIndex(indexName, mappingSource);
             log.info("-----------------create = {}---------------------", create);
         }
     }
@@ -106,7 +106,7 @@ public class ElasticsearchServiceTest {
                     return map;
                 })
                 .collect(Collectors.toList());
-        BulkResponse response = elasticsearchService.bulk("cf_project", mapList);
+        BulkResponse response = esRestClientRepository.bulk("cf_project", mapList);
         log.info("-----------------response.hasFailures = {}---------------------", response.buildFailureMessage());
     }
 
@@ -119,7 +119,7 @@ public class ElasticsearchServiceTest {
         queryBuilder.must(QueryBuilders.boolQuery()
                 .should(QueryBuilders.matchPhraseQuery("title", keyword))
                 .should(QueryBuilders.matchPhraseQuery("blurb", keyword)));
-        PageVO<SearchHit> pageVO = elasticsearchService.pageSearch(pageNum, pageSize, queryBuilder, "cf_project");
+        PageVO<SearchHit> pageVO = esRestClientRepository.pageSearch(pageNum, pageSize, queryBuilder, "cf_project");
         log.info("---------pageVO = {}-----------", pageVO);
     }
 
@@ -128,19 +128,19 @@ public class ElasticsearchServiceTest {
         AggregationBuilder aggregationBuilder = AggregationBuilders.terms("category").field("categoryId")
                 .subAggregation(AggregationBuilders.dateHistogram("createDate").field("createTime").calendarInterval(DateHistogramInterval.MONTH).minDocCount(1))
                 .size(500);
-        Aggregations aggregations = elasticsearchService.aggregationSearch(aggregationBuilder, "cf_project");
+        Aggregations aggregations = esRestClientRepository.aggregationSearch(aggregationBuilder, "cf_project");
         log.info("---------aggregations = {}-----------", ((ParsedLongTerms)aggregations.asMap().get("category")).getBuckets().get(0).getDocCount());
     }
 
     @Test
     public void testCount() throws Exception {
-        long count = elasticsearchService.count(QueryBuilders.matchAllQuery(), "cf_project");
+        long count = esRestClientRepository.count(QueryBuilders.matchAllQuery(), "cf_project");
         log.info("-----------------count = {}---------------------", count);
     }
 
     @Test
     public void testDelIndex() throws Exception {
-        elasticsearchService.delete("cf_project");
+        esRestClientRepository.delete("cf_project");
         log.info("-----------------del---------------------");
     }
 

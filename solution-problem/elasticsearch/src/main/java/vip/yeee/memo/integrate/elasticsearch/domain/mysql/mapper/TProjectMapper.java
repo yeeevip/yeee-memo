@@ -1,7 +1,7 @@
-package vip.yeee.memo.integrate.elasticsearch.opr.mapper;
+package vip.yeee.memo.integrate.elasticsearch.domain.mysql.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import vip.yeee.memo.integrate.elasticsearch.opr.TProject;
+import vip.yeee.memo.integrate.elasticsearch.domain.mysql.entity.TProject;
 
 /**
  * <p>

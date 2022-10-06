@@ -1,9 +1,9 @@
-package vip.yeee.memo.integrate.elasticsearch.repository;
+package vip.yeee.memo.integrate.elasticsearch.domain.es.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.annotations.Query;
-import vip.yeee.memo.integrate.elasticsearch.mapping.TProjectIndex;
+import vip.yeee.memo.integrate.elasticsearch.domain.es.entity.TProjectIndex;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Repository;
 

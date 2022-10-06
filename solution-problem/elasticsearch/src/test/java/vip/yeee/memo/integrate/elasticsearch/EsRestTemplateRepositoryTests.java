@@ -2,11 +2,11 @@ package vip.yeee.memo.integrate.elasticsearch;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.data.elasticsearch.core.IndexedObjectInformation;
-import vip.yeee.memo.integrate.elasticsearch.mapping.BaseIndex;
-import vip.yeee.memo.integrate.elasticsearch.opr.ITProjectService;
-import vip.yeee.memo.integrate.elasticsearch.opr.TProject;
-import vip.yeee.memo.integrate.elasticsearch.mapping.TProjectIndex;
-import vip.yeee.memo.integrate.elasticsearch.service.ElasticsearchTemplate;
+import vip.yeee.memo.integrate.elasticsearch.domain.es.entity.BaseIndex;
+import vip.yeee.memo.integrate.elasticsearch.domain.es.repository.EsRestTemplateRepository;
+import vip.yeee.memo.integrate.elasticsearch.service.ITProjectService;
+import vip.yeee.memo.integrate.elasticsearch.domain.mysql.entity.TProject;
+import vip.yeee.memo.integrate.elasticsearch.domain.es.entity.TProjectIndex;
 import vip.yeee.memo.integrate.elasticsearch.vo.PageVO;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -33,19 +33,19 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @SpringBootTest(classes = ElasticsearchApplication.class)
-public class ElasticsearchTemplateServiceTest {
+public class EsRestTemplateRepositoryTests {
 
     @Autowired
-    private ElasticsearchTemplate elasticsearchTemplate;
+    private EsRestTemplateRepository esRestTemplateRepository;
     @Autowired
     private ITProjectService iTProjectService;
 
     @Test
     public void testCreateIndex() throws Exception {
-        boolean exists = elasticsearchTemplate.exists(TProjectIndex.class);
+        boolean exists = esRestTemplateRepository.exists(TProjectIndex.class);
         log.info("-----------------exists = {}---------------------", exists);
         if (!exists) {
-            boolean create = elasticsearchTemplate.createIndex(TProjectIndex.class);
+            boolean create = esRestTemplateRepository.createIndex(TProjectIndex.class);
             log.info("-----------------create = {}---------------------", create);
         }
     }
@@ -62,7 +62,7 @@ public class ElasticsearchTemplateServiceTest {
                     return projectIndex;
                 })
                 .collect(Collectors.toList());
-        List<IndexedObjectInformation> res = elasticsearchTemplate.bulk(myIndexList, "cf_project_2");
+        List<IndexedObjectInformation> res = esRestTemplateRepository.bulk(myIndexList, "cf_project_2");
         log.info("-------------bulk res = {}------------------", res);
     }
 
@@ -78,7 +78,7 @@ public class ElasticsearchTemplateServiceTest {
                     return projectIndex;
                 })
                 .collect(Collectors.toList());
-        Iterable<? extends BaseIndex> res = elasticsearchTemplate.saveBatch(myIndexList);
+        Iterable<? extends BaseIndex> res = esRestTemplateRepository.saveBatch(myIndexList);
         log.info("-------------bulk res = {}------------------", res);
     }
 
@@ -119,7 +119,7 @@ public class ElasticsearchTemplateServiceTest {
         queryBuilder.must(QueryBuilders.boolQuery()
                 .should(QueryBuilders.matchPhraseQuery("title", keyword))
                 .should(QueryBuilders.matchPhraseQuery("content", keyword)));
-        PageVO<TProjectIndex> pageVO = elasticsearchTemplate.pageSearch(1, 20, queryBuilder, TProjectIndex.class);
+        PageVO<TProjectIndex> pageVO = esRestTemplateRepository.pageSearch(1, 20, queryBuilder, TProjectIndex.class);
         log.info("---------pageVO = {}-----------", pageVO);
     }
 
@@ -129,7 +129,7 @@ public class ElasticsearchTemplateServiceTest {
         TermsAggregationBuilder aggregationBuilder = AggregationBuilders.terms("category").field("categoryId")
                 .subAggregation(AggregationBuilders.dateHistogram("createDate").field("createTime").calendarInterval(DateHistogramInterval.MONTH).minDocCount(1))
                 .size(500);
-        Aggregations aggregations = elasticsearchTemplate.aggregationSearch(aggregationBuilder, TProjectIndex.class);
+        Aggregations aggregations = esRestTemplateRepository.aggregationSearch(aggregationBuilder, TProjectIndex.class);
 
         List<? extends Terms.Bucket> buckets = ((ParsedStringTerms)aggregations.get("category")).getBuckets();
         for (Terms.Bucket bucket : buckets) {
@@ -142,13 +142,13 @@ public class ElasticsearchTemplateServiceTest {
 
     @Test
     public void testExists() throws Exception {
-        boolean exists = elasticsearchTemplate.exists(TProjectIndex.class);
+        boolean exists = esRestTemplateRepository.exists(TProjectIndex.class);
         log.info("---------------exists = {}----------------", exists);
     }
 
     @Test
     public void testDelIndex() throws Exception {
-        elasticsearchTemplate.delete(TProjectIndex.class);
+        esRestTemplateRepository.delete(TProjectIndex.class);
         log.info("---------------del----------------");
     }
 

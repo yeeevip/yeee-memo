@@ -1,14 +1,13 @@
-package vip.yeee.memo.integrate.elasticsearch.service.impl;
+package vip.yeee.memo.integrate.elasticsearch.domain.es.repository;
 
+import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
 import org.springframework.data.elasticsearch.core.IndexedObjectInformation;
-import vip.yeee.memo.integrate.elasticsearch.mapping.BaseIndex;
-import vip.yeee.memo.integrate.elasticsearch.service.ElasticsearchTemplate;
+import vip.yeee.memo.integrate.elasticsearch.domain.es.entity.BaseIndex;
 import vip.yeee.memo.integrate.elasticsearch.vo.PageVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.aggregations.Aggregations;
-import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
@@ -32,26 +31,22 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class ElasticsearchTemplateImpl implements ElasticsearchTemplate {
+public class EsRestTemplateRepository {
 
     private final ElasticsearchRestTemplate restTemplate;
 
-    @Override
     public boolean createIndex(Class<?> clazz) {
         return restTemplate.indexOps(clazz).create();
     }
 
-    @Override
     public boolean exists(Class<?> clazz) {
         return restTemplate.indexOps(clazz).exists();
     }
 
-    @Override
     public long count(QueryBuilder queryBuilder, String... indices) {
         return 0;
     }
 
-    @Override
     public void delete(Class<?> clazz) {
         restTemplate.indexOps(clazz).delete();
     }
@@ -62,18 +57,15 @@ public class ElasticsearchTemplateImpl implements ElasticsearchTemplate {
 //        return restTemplate.bulkIndex(queries, IndexCoordinates.of(indexName));
 //    }
 
-    @Override
     public List<IndexedObjectInformation> bulk(List<? extends BaseIndex> list, String indexName) {
         List<IndexQuery> queries = list.stream().map(item -> new IndexQueryBuilder().withObject(item).build()).collect(Collectors.toList());
         return restTemplate.bulkIndex(queries, IndexCoordinates.of(indexName));
     }
 
-    @Override
     public Iterable<? extends BaseIndex> saveBatch(List<? extends BaseIndex> list) throws IOException {
         return restTemplate.save(list);
     }
 
-    @Override
     public <T> PageVO<T> pageSearch(Integer pageNum, Integer pageSize, QueryBuilder queryBuilder, Class<T> index) {
         PageRequest pageRequest = PageRequest.of(pageNum - 1, pageSize);
         FieldSortBuilder sortBuilder = SortBuilders.fieldSort("id").order(SortOrder.DESC);
@@ -88,8 +80,7 @@ public class ElasticsearchTemplateImpl implements ElasticsearchTemplate {
         return pageVO;
     }
 
-    @Override
-    public <T> Aggregations aggregationSearch(TermsAggregationBuilder aggregationBuilder, Class<T> index) {
+    public <T> Aggregations aggregationSearch(AbstractAggregationBuilder<?> aggregationBuilder, Class<T> index) {
         NativeSearchQuery nativeSearchQuery = new NativeSearchQueryBuilder()
                 .withAggregations(aggregationBuilder)
                 .build();

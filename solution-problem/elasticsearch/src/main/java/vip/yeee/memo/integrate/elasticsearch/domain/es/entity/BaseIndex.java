@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.elasticsearch.mapping;
+package vip.yeee.memo.integrate.elasticsearch.domain.es.entity;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

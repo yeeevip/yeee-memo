@@ -1,6 +1,7 @@
-package vip.yeee.memo.integrate.elasticsearch.opr;
+package vip.yeee.memo.integrate.elasticsearch.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import vip.yeee.memo.integrate.elasticsearch.domain.mysql.entity.TProject;
 
 /**
  * <p>

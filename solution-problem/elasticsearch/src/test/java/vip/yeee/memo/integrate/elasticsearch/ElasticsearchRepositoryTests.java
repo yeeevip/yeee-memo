@@ -18,10 +18,10 @@ import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import vip.yeee.memo.integrate.elasticsearch.opr.ITProjectService;
-import vip.yeee.memo.integrate.elasticsearch.opr.TProject;
-import vip.yeee.memo.integrate.elasticsearch.mapping.TProjectIndex;
-import vip.yeee.memo.integrate.elasticsearch.repository.TProjectIndexRepository;
+import vip.yeee.memo.integrate.elasticsearch.service.ITProjectService;
+import vip.yeee.memo.integrate.elasticsearch.domain.mysql.entity.TProject;
+import vip.yeee.memo.integrate.elasticsearch.domain.es.entity.TProjectIndex;
+import vip.yeee.memo.integrate.elasticsearch.domain.es.repository.TProjectIndexRepository;
 import vip.yeee.memo.integrate.elasticsearch.vo.PageVO;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -44,7 +44,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @SpringBootTest(classes = ElasticsearchApplication.class)
-public class ElasticsearchRepositoryTest {
+public class ElasticsearchRepositoryTests {
 
     @Autowired
     private ElasticsearchRestTemplate elasticsearchRestTemplate;
