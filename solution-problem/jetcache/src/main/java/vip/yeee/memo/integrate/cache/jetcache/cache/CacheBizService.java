@@ -21,7 +21,7 @@ import java.util.Map;
 public class CacheBizService {
 
     @CacheRefresh(refresh = 30, stopRefreshAfterLastAccess = 3600)
-    @CachePenetrationProtect
+    @CachePenetrationProtect(timeout = 3)
     @Cached(cacheType = CacheType.BOTH, expire = 30, localExpire = 16, localLimit = 20)
     public Map<String, Object> getData() {
         log.info("-----------------查询数据-----------------");

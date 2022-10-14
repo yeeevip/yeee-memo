@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.redisson.delay;
+package vip.yeee.memo.integrate.redisson;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,10 +10,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since 2022/9/17 17:32
  */
 @SpringBootApplication
-public class RedissonDelayQueueApplication {
+public class RedissonKitApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(RedissonDelayQueueApplication.class, args);
+        SpringApplication.run(RedissonKitApplication.class, args);
     }
 
 }

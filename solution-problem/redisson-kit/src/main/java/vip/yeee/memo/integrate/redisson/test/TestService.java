@@ -1,10 +1,10 @@
-package vip.yeee.memo.integrate.redisson.delay.test;
+package vip.yeee.memo.integrate.redisson.test;
 
 import cn.hutool.core.thread.ThreadUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBlockingDeque;
 import org.springframework.stereotype.Component;
-import vip.yeee.memo.integrate.redisson.delay.kit.DelayQueueKit;
+import vip.yeee.memo.integrate.redisson.kit.DelayQueueKit;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -40,9 +40,9 @@ public class TestService {
     private void gen() throws InterruptedException {
         long id = 10000L;
         while (true) {
-            delayQueueKit.addDelayQueue(id, 10, TimeUnit.SECONDS, QUEUE_CODE);
+            delayQueueKit.addDelayQueue(id, 100, TimeUnit.SECONDS, QUEUE_CODE);
             TimeUnit.SECONDS.sleep(10);
-            id = id + 1;
+//            id = id + 1;
         }
     }
 

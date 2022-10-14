@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.redisson.delay.kit;
+package vip.yeee.memo.integrate.redisson.kit;
 
 import org.redisson.api.RBlockingDeque;
 import org.redisson.api.RDelayedQueue;
@@ -31,11 +31,7 @@ public class DelayQueueKit {
     public <T> void addDelayQueue(T value, long delay, TimeUnit timeUnit, String queueCode) {
         RBlockingDeque<Object> blockingDeque = redissonClient.getBlockingDeque(queueCode);
         RDelayedQueue<Object> delayedQueue = redissonClient.getDelayedQueue(blockingDeque);
-        if (!delayedQueue.contains(value)) {
-            delayedQueue.offer(value, delay, timeUnit);
-        } else {
-            delayedQueue.remove(value);
-        }
+        delayedQueue.offer(value, delay, timeUnit);
     }
 
     /**

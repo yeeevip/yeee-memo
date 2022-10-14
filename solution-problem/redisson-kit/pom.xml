@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>redisson-delay-queue</artifactId>
+    <artifactId>redisson-kit</artifactId>
 
     <dependencies>
         <dependency>
