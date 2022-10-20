@@ -1,5 +1,6 @@
 package vip.yeee.memo.integrate.cache.jetcache;
 
+import com.google.common.collect.Lists;
 import lombok.Data;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,8 +27,12 @@ public class StringRedisTemplateTest {
 //        stringRedisTemplate.opsForHash().increment("test:1111", "num", 1);
 //
 //        stringRedisTemplate.opsForHash().put("test:11115", "cc", "2");
-
-        System.out.println("");
+        List<String> objects = Lists.newArrayList();
+        objects.add("aaaa");
+        objects.add("aaab");
+        objects.add("aaac");
+        List<String> strings = stringRedisTemplate.opsForValue().multiGet(objects);
+        System.out.println(strings);
 
     }
 
