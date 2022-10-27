@@ -1,10 +1,10 @@
 package vip.yeee.memo.integrate.mq.rocketmq.consumer.v2.listener;
 
-import com.aliyun.openservices.ons.api.Action;
-import com.aliyun.openservices.ons.api.ConsumeContext;
 import com.aliyun.openservices.ons.api.Message;
-import com.aliyun.openservices.ons.api.MessageListener;
-import com.aliyun.openservices.ons.api.bean.ConsumerBean;
+import com.aliyun.openservices.ons.api.bean.OrderConsumerBean;
+import com.aliyun.openservices.ons.api.order.ConsumeOrderContext;
+import com.aliyun.openservices.ons.api.order.MessageOrderListener;
+import com.aliyun.openservices.ons.api.order.OrderAction;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import vip.yeee.memo.integrate.mq.rocketmq.consumer.v1.config.MqConfig;
@@ -20,32 +20,31 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Component
-public class DemoMessageListener2 implements MessageListener {
+public class OrderMessageListener implements MessageOrderListener {
 
     @Resource
     private MqConfig mqConfig;
 
     @Resource
-    private ConsumerBean consumerBean;
+    private OrderConsumerBean orderConsumerBean;
 
     @PostConstruct
     public void subscribe() {
-        consumerBean.subscribe(mqConfig.getTopic().getDemoTopic1(), "*", this);
-        consumerBean.subscribe(mqConfig.getTopic().getDemoTopic2(), "*", this);
+        orderConsumerBean.subscribe(mqConfig.getTopic().getDemoTopic1(), "*", this);
+        orderConsumerBean.subscribe(mqConfig.getTopic().getDemoTopic2(), "*", this);
     }
 
     @Override
-    public Action consume(Message message, ConsumeContext context) {
+    public OrderAction consume(Message message, ConsumeOrderContext context) {
         log.info("\n \nDemo Receive: {} \n \n" , new String (message.getBody()));
         try {
             if ("topicName".equals(message.getTopic()) && "tagName".equals(message.getTag())) {
                 //do something..
             }
-            return Action.CommitMessage;
+            return OrderAction.Success;
         } catch (Exception e) {
             //消费失败
-            return Action.ReconsumeLater;
+            return OrderAction.Suspend;
         }
     }
-
 }

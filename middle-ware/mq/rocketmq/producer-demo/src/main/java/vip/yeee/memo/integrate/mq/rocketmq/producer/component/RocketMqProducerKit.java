@@ -1,21 +1,37 @@
-package vip.yeee.memo.integrate.mq.rocketmq.producer.config;
+package vip.yeee.memo.integrate.mq.rocketmq.producer.component;
 
 import com.aliyun.openservices.ons.api.Message;
 import com.aliyun.openservices.ons.api.SendCallback;
 import com.aliyun.openservices.ons.api.SendResult;
 import com.aliyun.openservices.ons.api.bean.ProducerBean;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
+import vip.yeee.memo.integrate.mq.rocketmq.producer.config.MqConfig;
 import vip.yeee.memo.integrate.mq.rocketmq.producer.model.MQConstant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+
 /**
  * RocketMQ Template
  */
+@Slf4j
 @RequiredArgsConstructor
 @Component
-public class RocketMQTemplate {
+public class RocketMqProducerKit {
+
+    @Resource
+    private MqConfig mqConfig;
 
     private final ProducerBean producer;
+
+    @Bean(initMethod = "start", destroyMethod = "shutdown")
+    public ProducerBean buildProducer() {
+        ProducerBean producer = new ProducerBean();
+        producer.setProperties(mqConfig.getMqProperties());
+        return producer;
+    }
 
     /**
      * 普通发送
@@ -45,6 +61,7 @@ public class RocketMQTemplate {
      * @return
      */
     public SendResult send(String topic, String tags, String message) {
+        log.info("RocketMq发送消息，topic = {}，tags = {}，message = {}", topic, tags, message);
         return this.producer.send(new Message(topic, tags, message.getBytes()));
     }
 
