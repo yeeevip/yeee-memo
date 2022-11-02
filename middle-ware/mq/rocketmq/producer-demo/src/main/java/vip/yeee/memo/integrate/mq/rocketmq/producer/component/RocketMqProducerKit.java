@@ -66,6 +66,20 @@ public class RocketMqProducerKit {
     }
 
     /**
+     * 发送延迟消息
+     * @param topic 消息主题
+     * @param tags 过滤标签
+     * @param message 消息内容
+     * @return
+     */
+    public SendResult sendDelayMsg(String topic, String tags, String message, long targetTime) {
+        log.info("RocketMq发送消息，topic = {}，tags = {}，message = {}", topic, tags, message);
+        Message msg = new Message(topic, tags, message.getBytes());
+        msg.setStartDeliverTime(targetTime);
+        return this.producer.send(msg);
+    }
+
+    /**
      * 普通发送
      * @param topic 消息主题
      * @param tags 过滤标签

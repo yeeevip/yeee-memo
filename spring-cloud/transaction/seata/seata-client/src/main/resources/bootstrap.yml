@@ -8,8 +8,8 @@ spring:
     active: test
   cloud:
     nacos:
+      server-addr: 127.0.0.1:8848
       discovery:
-        server-addr: 127.0.0.1:8848
         namespace: e69ceae8-160c-4d52-b512-ad0e919ad86b
         group: ${spring.profiles.active}
 seata:

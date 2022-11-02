@@ -4,7 +4,10 @@ spring:
     consumer:
       group-id: GID_yeee-memo
       enable-auto-commit: false
+      isolation-level: read_committed
     producer:
+      retries: 3
+      acks: 1
       transaction-id-prefix: tx_
     listener:
       ack-mode: manual

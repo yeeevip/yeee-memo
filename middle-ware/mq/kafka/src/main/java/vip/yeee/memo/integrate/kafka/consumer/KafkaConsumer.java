@@ -42,9 +42,10 @@ public class KafkaConsumer {
      * 发布订阅模式消费/groupId不同
      */
     @KafkaListener(topics = {"TP_memo-test"}, groupId = "22222222222222222222")
-    public void listener2(ConsumerRecord<?, ?> record) {
+    public void listener2(ConsumerRecord<?, ?> record, Acknowledgment ack) {
         log.info("【消费监听2】，topic = {}，partition = {}，offset = {}, value = {}"
                 , record.topic(), record.partition(), record.offset(), record.value());
+        ack.acknowledge();
     }
 
     @KafkaListener(topics = {"TP_canal-yeeevip"})
