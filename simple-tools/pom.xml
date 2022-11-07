@@ -23,6 +23,7 @@
         <module>jasypt</module>
         <!-- 代码生成 -->
         <module>generator</module>
+        <module>export</module>
     </modules>
 
     <dependencies>
