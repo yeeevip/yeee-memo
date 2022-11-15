@@ -32,6 +32,7 @@
         <module>websocket-spring</module>
         <module>mongo</module>
         <module>redisson-kit</module>
+        <module>third-auth</module>
     </modules>
 
 </project>

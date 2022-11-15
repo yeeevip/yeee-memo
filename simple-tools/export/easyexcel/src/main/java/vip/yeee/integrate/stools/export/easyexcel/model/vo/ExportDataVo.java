@@ -7,9 +7,7 @@ import com.alibaba.excel.enums.BooleanEnum;
 import com.alibaba.excel.enums.poi.BorderStyleEnum;
 import com.alibaba.excel.enums.poi.FillPatternTypeEnum;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
-@EqualsAndHashCode(callSuper = true)
 @HeadStyle(fillPatternType = FillPatternTypeEnum.NO_FILL,
         fillForegroundColor = 1,
         borderLeft = BorderStyleEnum.NONE,
@@ -18,7 +16,7 @@ import lombok.EqualsAndHashCode;
         borderBottom = BorderStyleEnum.NONE)
 @HeadFontStyle(fontHeightInPoints = 11, bold = BooleanEnum.FALSE)
 @Data
-public class ExportDataVo extends BaseExportDataVo {
+public class ExportDataVo {
 
     @ExcelProperty("订单编号")
     private String id;
