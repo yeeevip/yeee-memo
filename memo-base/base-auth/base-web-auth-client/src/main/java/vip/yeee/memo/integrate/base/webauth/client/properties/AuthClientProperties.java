@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @Getter
 @Configuration
-@ConfigurationProperties(prefix = "auth.resource")
+@ConfigurationProperties(prefix = "yeee.auth.resource")
 public class AuthClientProperties {
 
     private List<String> exclude = Lists.newArrayList();

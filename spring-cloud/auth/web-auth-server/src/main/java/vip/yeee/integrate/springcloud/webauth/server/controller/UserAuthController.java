@@ -1,5 +1,6 @@
 package vip.yeee.integrate.springcloud.webauth.server.controller;
 
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +19,7 @@ import javax.annotation.Resource;
  * @author yeeee
  * @since 2022/11/16 17:33
  */
+@Api("授权及认证")
 @RestController
 public class UserAuthController {
 
@@ -35,7 +37,7 @@ public class UserAuthController {
     }
 
     @GetMapping("system/logout")
-    public CommonResult<Void> login() {
+    public CommonResult<Void> userLogout() {
         return CommonResult.success(userAuthBiz.userLogout());
     }
 

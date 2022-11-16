@@ -58,9 +58,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         Map<RequestMappingInfo, HandlerMethod> handlerMethods = applicationContext.getBean(RequestMappingHandlerMapping.class).getHandlerMethods();
         handlerMethods.forEach((k, v) -> {
             AnonymousAccess anonymousAccess = v.getMethodAnnotation(AnonymousAccess.class);
-            if (k.getPathPatternsCondition() != null && anonymousAccess != null && anonymousAccess.valid()) {
-                anonymousUrls.addAll(k.getPathPatternsCondition().getPatterns().stream().map(PathPattern::getPatternString).collect(Collectors.toList()));
+            // spring.mvc.pathmatch.matching-strategy: ant_path_matcher
+            if (k.getPatternsCondition() != null && anonymousAccess != null && anonymousAccess.valid()) {
+                anonymousUrls.addAll(k.getPatternsCondition().getPatterns().stream().map(p -> p).collect(Collectors.toList()));
             }
+//            if (k.getPathPatternsCondition() != null && anonymousAccess != null && anonymousAccess.valid()) {
+//                anonymousUrls.addAll(k.getPathPatternsCondition().getPatterns().stream().map(PathPattern::getPatternString).collect(Collectors.toList()));
+//            }
         });
 
         http.csrf().disable()

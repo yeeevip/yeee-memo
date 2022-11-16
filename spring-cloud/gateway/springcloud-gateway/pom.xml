@@ -15,7 +15,15 @@
     <dependencies>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
+            <artifactId>common-model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
             <artifactId>base-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>base-swagger</artifactId>
         </dependency>
         <!--gateway 网关依赖,内置webflux 依赖-->
         <dependency>

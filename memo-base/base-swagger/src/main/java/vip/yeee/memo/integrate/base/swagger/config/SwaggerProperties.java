@@ -1,18 +1,17 @@
 package vip.yeee.memo.integrate.base.swagger.config;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 /**
  * Swagger自定义配置
  */
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Accessors(chain = true)
 @ConfigurationProperties(prefix = "yeee.swagger")
 public class SwaggerProperties {
+    private boolean enable = false;
     /**
      * API文档生成基础路径
      */
@@ -20,7 +19,7 @@ public class SwaggerProperties {
     /**
      * 是否要启用登录认证
      */
-    private boolean enableSecurity;
+    private boolean enableSecurity = true;
     /**
      * 文档标题
      */

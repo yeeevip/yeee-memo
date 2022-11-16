@@ -26,6 +26,9 @@ spring:
       discovery:
         namespace: e69ceae8-160c-4d52-b512-ad0e919ad86b
         group: ${spring.profiles.active}
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 security:
   oauth2:
     resource:
@@ -35,15 +38,34 @@ security:
       client-secret: 123456
 #      grant-type: password
       access-token-uri: http://${spring.application.name}/auth-server/oauth/token
-auth:
-  server:
-    jwt-secret: test_key
-  resource:
-    exclude:
-      - /error
-      - /actuator/info
-      - /front/register
-      - /system/register
-      - /front/login
-      - /system/login
-      - /anonymous/limit/api
+yeee:
+  swagger:
+    enable: true
+    title: 认证授权中心
+    description: 认证授权中心
+    contact-name: yeee
+    version: 1.0
+  auth:
+    server:
+      jwt-secret: test_key
+    resource:
+      exclude:
+        - "/"
+        - "/doc.html"
+        - "/swagger-resources/**"
+        - "/swagger/**"
+        - "/**/v2/api-docs"
+        - "/**/*.js"
+        - "/**/*.css"
+        - "/**/*.png"
+        - "/**/*.jpg"
+        - "/**/*.ico"
+        - "/**/*.html"
+        - "/webjars/springfox-swagger-ui/**"
+        - "/actuator/**"
+        - "/error"
+        - "/front/register"
+        - "/system/register"
+        - "/front/login"
+        - "/system/login"
+        - "/anonymous/limit/api"

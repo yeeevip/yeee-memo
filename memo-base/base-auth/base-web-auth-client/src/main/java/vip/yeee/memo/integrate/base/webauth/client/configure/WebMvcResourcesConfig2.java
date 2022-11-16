@@ -21,7 +21,7 @@ public class WebMvcResourcesConfig2 implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(securityTokenInterceptor).addPathPatterns("/front/**", "/system/**", "/user/**", "/resources/**");
+        registry.addInterceptor(securityTokenInterceptor).addPathPatterns("/general/**", "/front/**", "/system/**", "/admin/**", "/user/**", "/resources/**");
     }
 
 }

@@ -19,7 +19,6 @@ import vip.yeee.memo.integrate.common.websecurity.constant.AuthConstant;
 import vip.yeee.memo.integrate.base.webauth.server.constant.MessageConstant;
 import vip.yeee.memo.integrate.common.websecurity.constant.SecurityUserTypeEnum;
 import vip.yeee.memo.integrate.common.model.exception.BizException;
-import vip.yeee.memo.integrate.common.websecurity.context.SecurityContext;
 import vip.yeee.memo.integrate.common.websecurity.model.AuthUser;
 import vip.yeee.memo.integrate.common.websecurity.model.Oauth2TokenVo;
 import vip.yeee.memo.integrate.common.websecurity.model.SecurityUser;
@@ -66,7 +65,7 @@ public abstract class AbstractCustomUserDetailsService implements UserDetailsSer
                 AuthUser user = this.getFrontUserByUsername(realUsername);
                 Set<String> roles = Optional.ofNullable(user.getRoles()).orElseGet(Sets::newHashSet);
                 Set<String> permissions = Optional.ofNullable(user.getPermissions()).orElseGet(Sets::newHashSet);
-                roles.add(AuthConstant.ROLE_PREFIX + SecurityUserTypeEnum.SYSTEM_USER.getRole());
+                roles.add(AuthConstant.ROLE_PREFIX + SecurityUserTypeEnum.FRONT_USER.getRole());
                 roles.addAll(permissions);
                 // build security-user
                 securityUser = new SecurityUser(user.getUserId(), user.getUsername(), user.getPassword(), user.getState(), roles);
@@ -101,6 +100,10 @@ public abstract class AbstractCustomUserDetailsService implements UserDetailsSer
 
     public String decodePassword(String password) {
         return passwordEncoder.encode(password);
+    }
+
+    public boolean matchPassword(String rawPassword, String encodedPassword) {
+        return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 
     public Oauth2TokenVo getUserAccessToken(String username, String password, String userType) {

@@ -2,6 +2,7 @@ package vip.yeee.memo.integrate.base.swagger.config;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,9 +22,9 @@ import java.util.List;
 /**
  * Swagger API文档相关配置
  */
+@ConditionalOnProperty(value = "yeee.swagger.enable")
 @Configuration
 @EnableSwagger2
-@Profile({"dev", "test"})
 @EnableConfigurationProperties({SwaggerProperties.class})
 @Import(BeanValidatorPluginsConfiguration.class)
 public class SwaggerConfig extends BaseSwaggerConfig {
@@ -33,16 +34,20 @@ public class SwaggerConfig extends BaseSwaggerConfig {
 
     @Override
     public SwaggerProperties swaggerProperties() {
-        return SwaggerProperties.builder()
-                .apiBasePackage(swaggerProperties.getApiBasePackage())
-                .title(swaggerProperties.getTitle())
-                .description(swaggerProperties.getDescription())
-                .contactName(swaggerProperties.getContactName())
-                .version("1.0")
-                .enableSecurity(true)
-                .build();
+        return new SwaggerProperties()
+                .setEnable(swaggerProperties.isEnable())
+                .setApiBasePackage(swaggerProperties.getApiBasePackage())
+                .setTitle(swaggerProperties.getTitle())
+                .setDescription(swaggerProperties.getDescription())
+                .setContactName(swaggerProperties.getContactName())
+                .setVersion("1.0")
+                .setEnableSecurity(true);
     }
 
+    /**
+     * 2.6以上版本 集成 Knife4j
+     * spring.mvc.pathmatch.matching-strategy: ant_path_matcher
+     */
     @Bean
     public static BeanPostProcessor springfoxHandlerProviderBeanPostProcessor() {
         return new BeanPostProcessor() {
