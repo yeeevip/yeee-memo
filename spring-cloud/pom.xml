@@ -29,7 +29,9 @@
 		<module>protect</module>
 		<!-- 分布式事务 -->
 		<module>transaction</module>
-	</modules>
+		<!-- 安全 -->
+        <module>auth</module>
+    </modules>
 
 	<dependencies>
 		<dependency>

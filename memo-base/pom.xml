@@ -17,7 +17,7 @@
         <module>base-springcloud</module>
         <module>base-swagger</module>
         <module>base-jdbc</module>
-        <module>base-security</module>
+        <module>base-auth</module>
         <module>base-redis</module>
     </modules>
 

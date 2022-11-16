@@ -10,10 +10,11 @@
 //import org.elasticsearch.client.RestHighLevelClient;
 //import org.springframework.beans.factory.annotation.Value;
 //import org.springframework.context.annotation.Bean;
+//import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 //import org.springframework.stereotype.Component;
 //
 ///**
-// * 没有springboot的情况，构建配置类注入bean
+// * ###不使用springboot-starter的情况###，构建配置类注入bean，手动构建elasticsearchRestTemplate
 // *
 // * @author yeeee
 // * @since 2022/4/25 21:59
@@ -35,6 +36,11 @@
 //        RestClientBuilder builder = RestClient.builder(HttpHost.create(uris))
 //                .setHttpClientConfigCallback(httpClientBuilder -> httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider));
 //        return new RestHighLevelClient(builder);
+//    }
+//
+//    @Bean
+//    public ElasticsearchRestTemplate elasticsearchRestTemplate() {
+//        return new ElasticsearchRestTemplate(restHighLevelClient());
 //    }
 //
 //}

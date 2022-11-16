@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,8 +29,21 @@ public class EasyExcelUtil {
                     .sheet()
                     .doReadSync();
         } catch (IOException e) {
-            log.error("获取输入流异常", e);
-            throw new BizException("获取输入流异常");
+            log.error("读取文件异常", e);
+            throw new BizException("读取文件异常");
+        }
+    }
+
+    public static <T> List<T> syncReadExcel(InputStream inputStream, Class<T> clz){
+        try {
+            return EasyExcel.read(inputStream)
+                    .head(clz)
+                    .autoCloseStream(Boolean.TRUE)
+                    .sheet()
+                    .doReadSync();
+        } catch (Exception e) {
+            log.error("读取文件异常", e);
+            throw new BizException("读取文件异常");
         }
     }
 

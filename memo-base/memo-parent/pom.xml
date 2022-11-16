@@ -15,7 +15,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <!-- 版本说明 https://github.com/alibaba/spring-cloud-alibaba/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E -->
         <spring-boot.version>2.6.3</spring-boot.version>
-        <spring-cloud.version>2021.0.1</spring-cloud.version>
+        <spring-cloud.version>2021.0.5</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.0.1.0</spring-cloud-alibaba.version>
         <spring.authorization.version>0.3.1</spring.authorization.version>
         <skipTests>true</skipTests>

@@ -1,0 +1,42 @@
+server:
+  port: 8809
+  servlet:
+    context-path: /auth-resource1
+logging:
+  level:
+    org:
+      springframework:
+        security: debug
+spring:
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+  application:
+    name: cloud-web-auth-resource1
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      discovery:
+        namespace: e69ceae8-160c-4d52-b512-ad0e919ad86b
+        group: ${spring.profiles.active}
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://cloud-web-auth-server/auth-server/oauth/check_token
+    client:
+      client-id: ${spring.application.name}
+      client-secret: 123456
+auth:
+  server:
+    jwt-secret: test_key
+  resource:
+    exclude:
+      - /error
+      - /actuator/info
+      - /front/register
+      - /system/register
+      - /front/login
+      - /system/login
+      - /anonymous/limit/api

@@ -13,6 +13,7 @@
         <module>common-model</module>
         <module>common-domain</module>
         <module>common-util</module>
+        <module>common-websecurity</module>
     </modules>
 
 </project>

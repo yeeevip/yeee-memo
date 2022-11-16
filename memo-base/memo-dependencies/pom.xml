@@ -56,7 +56,22 @@
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
-                <artifactId>base-security</artifactId>
+                <artifactId>base-web-auth-server</artifactId>
+                <version>${yeee-sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>vip.yeee.memo</groupId>
+                <artifactId>base-web-auth-client</artifactId>
+                <version>${yeee-sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>vip.yeee.memo</groupId>
+                <artifactId>base-api-auth-server</artifactId>
+                <version>${yeee-sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>vip.yeee.memo</groupId>
+                <artifactId>base-web-auth-client</artifactId>
                 <version>${yeee-sdk.version}</version>
             </dependency>
             <dependency>
@@ -92,6 +107,11 @@
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>common-domain</artifactId>
+                <version>${yeee-sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>vip.yeee.memo</groupId>
+                <artifactId>common-websecurity</artifactId>
                 <version>${yeee-sdk.version}</version>
             </dependency>
             <!-- log4j -->
