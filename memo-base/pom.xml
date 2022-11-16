@@ -6,13 +6,13 @@
 
     <groupId>vip.yeee.memo</groupId>
     <artifactId>memo-base</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>2.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
         <module>memo-parent</module>
         <module>common-dependencies</module>
-        <module>common-config</module>
+        <module>base-config</module>
         <module>common-util</module>
         <module>common-service</module>
         <module>common-web</module>
@@ -20,7 +20,6 @@
         <module>common-swagger</module>
         <module>common-jdbc</module>
         <module>common-security</module>
-        <module>common-model</module>
         <module>common-redis</module>
     </modules>
 

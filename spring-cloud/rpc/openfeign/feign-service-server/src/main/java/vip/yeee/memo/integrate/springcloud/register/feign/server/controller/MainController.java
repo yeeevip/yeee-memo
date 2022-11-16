@@ -4,7 +4,6 @@ import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lombok.var;
 import org.springframework.web.bind.annotation.*;
 import vip.yeee.memo.integrate.common.model.rest.CommonResult;
 import vip.yeee.memo.integrate.springcloud.register.feign.server.domain.mysql.entity.TestEntity;

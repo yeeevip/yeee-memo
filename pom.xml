@@ -5,7 +5,7 @@
 
 	<groupId>vip.yeee.memo</groupId>
 	<artifactId>java-integrate</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>2.0.1-SNAPSHOT</version>
 	<name>java-integrate</name>
 	<description>The project for the study java and record</description>
 	<packaging>pom</packaging>
@@ -33,6 +33,7 @@
 		<module>test-tool</module>
 		<!-- 设计模式 -->
         <module>design-pattern</module>
+        <module>memo-common</module>
     </modules>
 
 </project>
