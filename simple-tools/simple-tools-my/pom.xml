@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-web</artifactId>
+            <artifactId>base-web</artifactId>
         </dependency>
     </dependencies>
 

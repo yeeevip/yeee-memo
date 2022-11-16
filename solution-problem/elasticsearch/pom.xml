@@ -19,7 +19,7 @@
         </dependency>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-mybatis-plus</artifactId>
+            <artifactId>base-mybatis-plus</artifactId>
         </dependency>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
@@ -27,7 +27,7 @@
         </dependency>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-web</artifactId>
+            <artifactId>base-web</artifactId>
         </dependency>
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.boot</groupId>-->

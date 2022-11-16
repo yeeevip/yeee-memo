@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-config</artifactId>
+            <artifactId>base-config</artifactId>
         </dependency>
         <!--gateway 网关依赖,内置webflux 依赖-->
         <dependency>

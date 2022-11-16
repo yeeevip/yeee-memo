@@ -25,7 +25,7 @@
         <dependencies>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
-                <artifactId>common-dependencies</artifactId>
+                <artifactId>memo-dependencies</artifactId>
                 <version>${project.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
@@ -172,5 +172,16 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
+
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <url>https://nexus3.yeee.vip/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>https://nexus3.yeee.vip/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>

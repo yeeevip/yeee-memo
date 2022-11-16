@@ -4,13 +4,10 @@ import com.google.common.collect.Lists;
 import lombok.Data;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cglib.beans.BeanMap;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import vip.yeee.memo.integrate.common.base.utils.JacksonUtils;
 
 import javax.annotation.Resource;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 @SpringBootTest
 public class StringRedisTemplateTest {

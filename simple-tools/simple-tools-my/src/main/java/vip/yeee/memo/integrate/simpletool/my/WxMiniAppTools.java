@@ -10,7 +10,7 @@ import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
-import vip.yeee.memo.integrate.common.web.utils.SpringContextUtils;
+import vip.yeee.memo.integrate.base.web.utils.SpringContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;

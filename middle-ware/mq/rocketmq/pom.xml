@@ -26,7 +26,7 @@
         </dependency>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-web</artifactId>
+            <artifactId>base-web</artifactId>
         </dependency>
         <dependency>
             <groupId>com.aliyun.openservices</groupId>

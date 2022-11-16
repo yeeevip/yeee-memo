@@ -2,7 +2,7 @@ package vip.yeee.memo.integrate.springcloud.gateway.cloudgateway.component;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import vip.yeee.memo.integrate.common.config.properties.YeeeCommonProperties;
+import vip.yeee.memo.integrate.base.config.properties.YeeeCommonProperties;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;

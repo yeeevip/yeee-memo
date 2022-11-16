@@ -11,16 +11,14 @@
 
     <modules>
         <module>memo-parent</module>
-        <module>common-dependencies</module>
+        <module>memo-dependencies</module>
         <module>base-config</module>
-        <module>common-util</module>
-        <module>common-service</module>
-        <module>common-web</module>
-        <module>common-springcloud</module>
-        <module>common-swagger</module>
-        <module>common-jdbc</module>
-        <module>common-security</module>
-        <module>common-redis</module>
+        <module>base-web</module>
+        <module>base-springcloud</module>
+        <module>base-swagger</module>
+        <module>base-jdbc</module>
+        <module>base-security</module>
+        <module>base-redis</module>
     </modules>
 
 </project>
