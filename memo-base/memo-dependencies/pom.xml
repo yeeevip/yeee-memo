@@ -91,7 +91,7 @@
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
-                <artifactId>common-service</artifactId>
+                <artifactId>common-domain</artifactId>
                 <version>${yeee-sdk.version}</version>
             </dependency>
             <!-- log4j -->

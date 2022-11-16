@@ -11,7 +11,7 @@
 
     <modules>
         <module>common-model</module>
-        <module>common-service</module>
+        <module>common-domain</module>
         <module>common-util</module>
     </modules>
 

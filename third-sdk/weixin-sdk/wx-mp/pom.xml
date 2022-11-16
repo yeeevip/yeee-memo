@@ -23,7 +23,7 @@
         </dependency>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-service</artifactId>
+            <artifactId>common-domain</artifactId>
         </dependency>
         <dependency>
             <groupId>vip.yeee.memo</groupId>

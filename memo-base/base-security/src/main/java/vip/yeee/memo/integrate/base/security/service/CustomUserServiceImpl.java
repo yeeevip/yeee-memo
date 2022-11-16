@@ -32,6 +32,7 @@
 //import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.userdetails.UsernameNotFoundException;
 //import org.springframework.stereotype.Service;
+//import vip.yeee.memo.integrate.base.security.service.CustomUserDetailsService;
 //
 //import java.util.HashMap;
 //import java.util.List;

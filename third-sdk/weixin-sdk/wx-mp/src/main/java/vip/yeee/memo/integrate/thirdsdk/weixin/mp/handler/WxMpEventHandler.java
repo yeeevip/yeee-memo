@@ -15,8 +15,8 @@ import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutTextMessage;
 import org.springframework.stereotype.Component;
-import vip.yeee.memo.integrate.common.service.entity.ApiUserIdentity;
-import vip.yeee.memo.integrate.common.service.service.IApiUserIdentityService;
+import vip.yeee.memo.integrate.common.domain.entity.api.ApiUserIdentity;
+import vip.yeee.memo.integrate.common.domain.service.api.ApiUserIdentityService;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -31,7 +31,7 @@ import java.util.Map;
 @Component
 public class WxMpEventHandler implements WxMpMessageHandler {
 
-    private final IApiUserIdentityService apiUserIdentityService;
+    private final ApiUserIdentityService apiUserIdentityService;
 
     private final static Integer OPENAPPTYPE_WX_AUTHAPP = 10;
 
