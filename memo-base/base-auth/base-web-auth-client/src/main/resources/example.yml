@@ -1,0 +1,30 @@
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://cloud-web-auth-server/auth-server/oauth/check_token
+    client:
+      client-id: ${spring.application.name}
+      client-secret: 123456
+yeee:
+  auth:
+    resource:
+      exclude:
+        - "/"
+        - "/doc.html"
+        - "/swagger-resources/**"
+        - "/swagger/**"
+        - "/**/v2/api-docs"
+        - "/**/*.js"
+        - "/**/*.css"
+        - "/**/*.png"
+        - "/**/*.jpg"
+        - "/**/*.ico"
+        - "/**/*.html"
+        - "/webjars/springfox-swagger-ui/**"
+        - "/actuator/**"
+        - "/error"
+        - "/front/register"
+        - "/system/register"
+        - "/front/login"
+        - "/system/login"
+        - "/anonymous/limit/api"

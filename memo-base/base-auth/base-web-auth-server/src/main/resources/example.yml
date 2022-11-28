@@ -1,0 +1,34 @@
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://${spring.application.name}/auth-server/oauth/check_token
+    client:
+      client-id: user-auth-center
+      client-secret: 123456
+      #      grant-type: password
+      access-token-uri: http://${spring.application.name}/auth-server/oauth/token
+yeee:
+  auth:
+    server:
+      jwt-secret: test_key
+    resource:
+      exclude:
+        - "/"
+        - "/doc.html"
+        - "/swagger-resources/**"
+        - "/swagger/**"
+        - "/**/v2/api-docs"
+        - "/**/*.js"
+        - "/**/*.css"
+        - "/**/*.png"
+        - "/**/*.jpg"
+        - "/**/*.ico"
+        - "/**/*.html"
+        - "/webjars/springfox-swagger-ui/**"
+        - "/actuator/**"
+        - "/error"
+        - "/front/register"
+        - "/system/register"
+        - "/front/login"
+        - "/system/login"
+        - "/anonymous/limit/api"

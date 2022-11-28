@@ -71,7 +71,7 @@
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
-                <artifactId>base-web-auth-client</artifactId>
+                <artifactId>base-api-auth-client</artifactId>
                 <version>${yeee-sdk.version}</version>
             </dependency>
             <dependency>

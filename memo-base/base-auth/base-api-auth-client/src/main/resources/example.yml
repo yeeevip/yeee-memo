@@ -1,0 +1,5 @@
+yeee:
+  apiauth:
+    jwt:
+      secret: 123456
+#      secret-url: http://api-auth-server/apiauth-server/jwt/secret

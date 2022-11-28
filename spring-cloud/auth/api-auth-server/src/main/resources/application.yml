@@ -1,0 +1,29 @@
+server:
+  port: 8810
+  servlet:
+    context-path: /apiauth-server
+spring:
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+  application:
+    name: cloud-api-auth-server
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/yeee_auth?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      discovery:
+        namespace: e69ceae8-160c-4d52-b512-ad0e919ad86b
+        group: ${spring.profiles.active}
+yeee:
+  apiauth:
+    jwt:
+      secret: 123456
+      expire: 60
+      secret-url: http://cloud-api-auth-server/apiauth-server/rsa/publicKey

@@ -1,0 +1,4 @@
+yeee:
+  apiauth:
+    jwt:
+      secret: 123456

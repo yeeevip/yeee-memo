@@ -1,0 +1,11 @@
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+yeee:
+  swagger:
+    enable: true
+    title: 认证授权中心
+    description: 认证授权中心
+    contact-name: yeee
+    version: 1.0

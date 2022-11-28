@@ -11,9 +11,13 @@ import org.springframework.context.annotation.Configuration;
 @Setter
 @Getter
 @Configuration
-@ConfigurationProperties(prefix = "secure.auth")
-public class AuthProperties {
+@ConfigurationProperties(prefix = "yeee.apiauth.jwt")
+public class ApiAuthClientProperties {
 
-    private String jwtSecret;
+    private String secret;
+
+    private Integer expire = 3600;
+
+    private String secretUrl;
 
 }
