@@ -18,16 +18,16 @@ spring:
           uri: lb://feign-service-client
           predicates:
             - Path=/fsc/**
-            #          filters:
-            #            - StripPrefix=1
-            # 限流配置
-    #            - name: RequestRateLimiter
-    #              args:
-    #                key-resolver: '#{@remoteAddrKeyResolver}'
-    #                # 允许用户每秒处理多少个请求
-    #                redis-rate-limiter.replenishRate: 10
-    #                # 令牌桶的容量,允许在一秒钟内完成的最大请求
-    #                redis-rate-limiter.burstCapacity: 20
+#          filters:
+#            - StripPrefix=1
+#            # 限流配置
+#            - name: RequestRateLimiter
+#              args:
+#                key-resolver: '#{@remoteAddrKeyResolver}'
+#                # 允许用户每秒处理多少个请求
+#                redis-rate-limiter.replenishRate: 10
+#                # 令牌桶的容量,允许在一秒钟内完成的最大请求
+#                redis-rate-limiter.burstCapacity: 20
         - id: feign-fallback-sentinel
           uri: lb://feign-fallback-sentinel
           predicates:

@@ -84,6 +84,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
                 .antMatchers(ArrayUtil.toArray(authClientProperties.getExclude(), String.class)).permitAll()
                 .antMatchers(ArrayUtil.toArray(anonymousUrls, String.class)).permitAll()
+                // 内部调用
+                .antMatchers("/server/**").permitAll()
 //                .antMatchers("/**/front/**").hasAnyAuthority(SecurityUserTypeEnum.SYSTEM_USER.getRole())
 //                .antMatchers("/**/system/**").hasAnyAuthority(SecurityUserTypeEnum.FRONT_USER.getRole())
                 .antMatchers("/**/front/**").hasRole(SecurityUserTypeEnum.FRONT_USER.getRole())
