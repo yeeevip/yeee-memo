@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import vip.yeee.integrate.stools.export.easyexcel.biz.DemoBiz;
 import vip.yeee.integrate.stools.export.easyexcel.model.vo.ImportDataVo;
-import vip.yeee.memo.integrate.common.model.rest.CommonResult;
+import vip.yeee.memo.integrate.base.model.rest.CommonResult;
 
 import javax.annotation.Resource;
 import java.util.List;

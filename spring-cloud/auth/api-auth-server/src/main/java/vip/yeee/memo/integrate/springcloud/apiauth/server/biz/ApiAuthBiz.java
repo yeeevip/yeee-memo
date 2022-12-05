@@ -14,10 +14,10 @@ import vip.yeee.memo.integrate.base.apiauth.client.model.dto.PayloadDto;
 import vip.yeee.memo.integrate.base.apiauth.server.kit.JwsServerKit;
 import vip.yeee.memo.integrate.base.apiauth.server.kit.JwtServerKit;
 import vip.yeee.memo.integrate.base.apiauth.server.model.vo.JTokenVo;
+import vip.yeee.memo.integrate.base.model.exception.BizException;
 import vip.yeee.memo.integrate.base.util.JacksonUtils;
 import vip.yeee.memo.integrate.common.domain.entity.front.User;
 import vip.yeee.memo.integrate.common.domain.mapper.front.UserMapper;
-import vip.yeee.memo.integrate.common.model.exception.BizException;
 import vip.yeee.memo.integrate.springcloud.apiauth.server.model.request.UserLoginRequest;
 
 import javax.annotation.Resource;

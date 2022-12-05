@@ -8,9 +8,9 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import vip.yeee.memo.integrate.common.model.exception.BizException;
-import vip.yeee.memo.integrate.common.model.rest.CommonResult;
-import vip.yeee.memo.integrate.common.model.rest.ResultCode;
+import vip.yeee.memo.integrate.base.model.exception.BizException;
+import vip.yeee.memo.integrate.base.model.rest.CommonResult;
+import vip.yeee.memo.integrate.base.model.rest.ResultCode;
 
 import java.lang.reflect.Field;
 

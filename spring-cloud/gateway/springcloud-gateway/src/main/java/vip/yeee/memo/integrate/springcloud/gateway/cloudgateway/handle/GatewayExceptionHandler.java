@@ -15,8 +15,8 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.handler.ResponseStatusExceptionHandler;
 import reactor.core.publisher.Mono;
-import vip.yeee.memo.integrate.common.model.rest.CommonResult;
-import vip.yeee.memo.integrate.common.model.rest.ResultCode;
+import vip.yeee.memo.integrate.base.model.rest.CommonResult;
+import vip.yeee.memo.integrate.base.model.rest.ResultCode;
 
 /**
  * 网关异常通用处理器，只作用在webflux 环境下 , 优先级低于 {@link ResponseStatusExceptionHandler} 执行

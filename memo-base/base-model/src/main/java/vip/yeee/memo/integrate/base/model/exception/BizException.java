@@ -1,9 +1,9 @@
-package vip.yeee.memo.integrate.common.model.exception;
+package vip.yeee.memo.integrate.base.model.exception;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import vip.yeee.memo.integrate.common.model.rest.IErrorCode;
-import vip.yeee.memo.integrate.common.model.rest.ResultCode;
+import vip.yeee.memo.integrate.base.model.rest.ResultCode;
+import vip.yeee.memo.integrate.base.model.rest.IErrorCode;
 
 /**
  * 业务异常类信息

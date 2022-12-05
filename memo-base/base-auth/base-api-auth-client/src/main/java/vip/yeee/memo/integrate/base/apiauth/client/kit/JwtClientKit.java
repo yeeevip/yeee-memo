@@ -6,7 +6,7 @@ import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import vip.yeee.memo.integrate.base.apiauth.client.properties.ApiAuthClientProperties;
-import vip.yeee.memo.integrate.common.model.exception.BizException;
+import vip.yeee.memo.integrate.base.model.exception.BizException;
 
 import javax.annotation.Resource;
 import java.util.Date;

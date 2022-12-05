@@ -6,7 +6,7 @@ import cn.hutool.core.io.IoUtil;
 import com.alibaba.excel.EasyExcel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
-import vip.yeee.memo.integrate.common.model.exception.BizException;
+import vip.yeee.memo.integrate.base.model.exception.BizException;
 import vip.yeee.memo.integrate.base.web.utils.SpringContextUtils;
 
 import javax.servlet.http.HttpServletResponse;

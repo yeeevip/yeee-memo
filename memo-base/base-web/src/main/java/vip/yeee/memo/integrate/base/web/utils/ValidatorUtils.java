@@ -1,7 +1,7 @@
 package vip.yeee.memo.integrate.base.web.utils;
 
 import cn.hutool.core.collection.CollectionUtil;
-import vip.yeee.memo.integrate.common.model.exception.BizException;
+import vip.yeee.memo.integrate.base.model.exception.BizException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;

@@ -17,7 +17,7 @@ import com.github.binarywang.wxpay.v3.util.PemUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
-import vip.yeee.memo.integrate.common.model.exception.BizException;
+import vip.yeee.memo.integrate.base.model.exception.BizException;
 import vip.yeee.memo.integrate.thirdsdk.pay.constant.PayConstant;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.notice.ChannelRetMsg;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.unifiedOrder.*;

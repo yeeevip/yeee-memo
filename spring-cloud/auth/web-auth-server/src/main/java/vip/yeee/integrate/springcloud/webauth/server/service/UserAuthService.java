@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import vip.yeee.integrate.springcloud.webauth.server.model.bo.FrontUserBo;
 import vip.yeee.integrate.springcloud.webauth.server.model.bo.SystemUserBo;
+import vip.yeee.memo.integrate.base.model.exception.BizException;
 import vip.yeee.memo.integrate.base.webauth.server.constant.MessageConstant;
 import vip.yeee.memo.integrate.base.webauth.server.service.AbstractCustomUserDetailsService;
 import vip.yeee.memo.integrate.common.domain.entity.front.User;
@@ -19,7 +20,6 @@ import vip.yeee.memo.integrate.common.domain.mapper.front.UserMapper;
 import vip.yeee.memo.integrate.common.domain.mapper.sys.SysRoleMapper;
 import vip.yeee.memo.integrate.common.domain.mapper.sys.SysUserMapper;
 import vip.yeee.memo.integrate.common.domain.mapper.sys.SysUserRoleMapper;
-import vip.yeee.memo.integrate.common.model.exception.BizException;
 import vip.yeee.memo.integrate.base.websecurity.model.AuthUser;
 
 import java.util.List;

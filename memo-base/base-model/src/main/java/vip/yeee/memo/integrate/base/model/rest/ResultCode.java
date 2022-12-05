@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.common.model.rest;
+package vip.yeee.memo.integrate.base.model.rest;
 
 /**
  * API操作码

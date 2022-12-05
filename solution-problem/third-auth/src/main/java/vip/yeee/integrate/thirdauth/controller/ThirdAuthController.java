@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import vip.yeee.memo.integrate.common.model.exception.BizException;
-import vip.yeee.memo.integrate.common.model.rest.CommonResult;
+import vip.yeee.memo.integrate.base.model.exception.BizException;
+import vip.yeee.memo.integrate.base.model.rest.CommonResult;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

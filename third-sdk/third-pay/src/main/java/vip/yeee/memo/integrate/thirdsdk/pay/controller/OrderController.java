@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import vip.yeee.memo.integrate.common.model.rest.CommonResult;
+import vip.yeee.memo.integrate.base.model.rest.CommonResult;
 import vip.yeee.memo.integrate.thirdsdk.pay.biz.OrderBiz;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bizOrder.SubmitOrderReqVO;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bizOrder.SubmitOrderRespVO;

@@ -6,11 +6,10 @@
 
     <artifactId>memo-common</artifactId>
     <groupId>vip.yeee.memo</groupId>
-    <version>2.0.1-SNAPSHOT</version>
+    <version>2.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
-        <module>common-model</module>
         <module>common-domain</module>
     </modules>
 

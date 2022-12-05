@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import vip.yeee.integrate.springcloud.webauth.server.biz.UserAuthBiz;
 import vip.yeee.integrate.springcloud.webauth.server.model.request.UserAuthRequest;
 import vip.yeee.integrate.springcloud.webauth.server.model.vo.UserAuthVo;
-import vip.yeee.memo.integrate.common.model.rest.CommonResult;
+import vip.yeee.memo.integrate.base.model.rest.CommonResult;
 import vip.yeee.memo.integrate.base.websecurity.annotation.AnonymousAccess;
 
 import javax.annotation.Resource;

@@ -2,7 +2,7 @@ package vip.yeee.memo.integrate.springcloud.register.feign.client.controller;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
-import vip.yeee.memo.integrate.common.model.rest.CommonResult;
+import vip.yeee.memo.integrate.base.model.rest.CommonResult;
 import vip.yeee.memo.integrate.springcloud.register.feign.client.model.Book;
 import vip.yeee.memo.integrate.springcloud.register.feign.client.feign.BookService;
 import lombok.RequiredArgsConstructor;

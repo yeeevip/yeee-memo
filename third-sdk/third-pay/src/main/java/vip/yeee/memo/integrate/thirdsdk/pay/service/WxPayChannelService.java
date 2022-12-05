@@ -10,7 +10,7 @@ import com.github.binarywang.wxpay.service.WxPayService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Component;
-import vip.yeee.memo.integrate.common.model.exception.BizException;
+import vip.yeee.memo.integrate.base.model.exception.BizException;
 import vip.yeee.memo.integrate.thirdsdk.pay.constant.PayConstant;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.notice.ChannelRetMsg;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.unifiedOrder.UnifiedOrderReqBO;

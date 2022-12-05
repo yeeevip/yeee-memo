@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.common.model.vo;
+package vip.yeee.memo.integrate.base.model.vo;
 
 import lombok.Data;
 
