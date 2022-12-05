@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.stools.kit;
+package vip.yeee.memo.integrate.stools.kit.kit;
 
 import cn.hutool.core.date.DateUtil;
 import org.springframework.data.redis.core.StringRedisTemplate;

@@ -10,7 +10,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
@@ -22,6 +24,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+import sun.net.www.http.HttpClient;
 import vip.yeee.memo.integrate.base.webauth.client.properties.AuthClientProperties;
 import vip.yeee.memo.integrate.base.websecurity.annotation.AnonymousAccess;
 import vip.yeee.memo.integrate.base.webauth.client.handle.AccessDeniedHandler;
@@ -107,6 +110,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Bean("remoteTokenLbRestTemplate")
     @LoadBalanced
     public RestTemplate remoteTokenLbRestTemplate() {
+//        RequestConfig config = RequestConfig.custom().setConnectionRequestTimeout(10000).setConnectTimeout(10000).setSocketTimeout(30000).build();
+//		HttpClientBuilder builder = HttpClientBuilder.create().setDefaultRequestConfig(config).setRetryHandler(new DefaultHttpRequestRetryHandler(3, false));
+//		HttpClient httpClient = builder.build();
+//		ClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(new DefaultResponseErrorHandler() {
             @Override
