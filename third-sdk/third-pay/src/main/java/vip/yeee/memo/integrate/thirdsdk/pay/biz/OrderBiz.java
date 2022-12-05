@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import vip.yeee.memo.integrate.common.base.utils.JacksonUtils;
+import vip.yeee.memo.integrate.base.util.JacksonUtils;
 import vip.yeee.memo.integrate.common.model.exception.BizException;
 import vip.yeee.memo.integrate.base.web.utils.HttpRequestUtils;
 import vip.yeee.memo.integrate.base.web.utils.SpringContextUtils;

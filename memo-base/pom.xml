@@ -12,6 +12,7 @@
     <modules>
         <module>memo-parent</module>
         <module>memo-dependencies</module>
+        <module>base-util</module>
         <module>base-config</module>
         <module>base-web</module>
         <module>base-springcloud</module>

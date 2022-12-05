@@ -101,7 +101,7 @@
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
-                <artifactId>common-util</artifactId>
+                <artifactId>base-util</artifactId>
                 <version>${yeee-sdk.version}</version>
             </dependency>
             <dependency>
@@ -111,7 +111,7 @@
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
-                <artifactId>common-websecurity</artifactId>
+                <artifactId>base-web-security</artifactId>
                 <version>${yeee-sdk.version}</version>
             </dependency>
             <!-- log4j -->

@@ -6,7 +6,6 @@ import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
-import com.nimbusds.jose.jwk.source.RemoteJWKSet;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -15,7 +14,7 @@ import vip.yeee.memo.integrate.base.apiauth.client.exception.JwtExpireException;
 import vip.yeee.memo.integrate.base.apiauth.client.exception.JwtInvalidException;
 import vip.yeee.memo.integrate.base.apiauth.client.model.dto.PayloadDto;
 import vip.yeee.memo.integrate.base.apiauth.client.properties.ApiAuthClientProperties;
-import vip.yeee.memo.integrate.common.base.utils.JacksonUtils;
+import vip.yeee.memo.integrate.base.util.JacksonUtils;
 
 import javax.annotation.Resource;
 import java.io.IOException;

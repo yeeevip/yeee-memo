@@ -22,12 +22,11 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
-import org.springframework.web.util.pattern.PathPattern;
 import vip.yeee.memo.integrate.base.webauth.client.properties.AuthClientProperties;
-import vip.yeee.memo.integrate.common.websecurity.annotation.AnonymousAccess;
+import vip.yeee.memo.integrate.base.websecurity.annotation.AnonymousAccess;
 import vip.yeee.memo.integrate.base.webauth.client.handle.AccessDeniedHandler;
 import vip.yeee.memo.integrate.base.webauth.client.handle.AuthenticationEntryPointHandler;
-import vip.yeee.memo.integrate.common.websecurity.constant.SecurityUserTypeEnum;
+import vip.yeee.memo.integrate.base.websecurity.constant.SecurityUserTypeEnum;
 
 import javax.annotation.Resource;
 import java.io.IOException;

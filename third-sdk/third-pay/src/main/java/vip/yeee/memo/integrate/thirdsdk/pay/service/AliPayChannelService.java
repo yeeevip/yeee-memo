@@ -11,7 +11,7 @@ import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.stereotype.Component;
-import vip.yeee.memo.integrate.common.base.utils.JacksonUtils;
+import vip.yeee.memo.integrate.base.util.JacksonUtils;
 import vip.yeee.memo.integrate.common.model.exception.BizException;
 import vip.yeee.memo.integrate.thirdsdk.pay.constant.PayConstant;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.notice.ChannelRetMsg;

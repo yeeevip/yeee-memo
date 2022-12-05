@@ -6,13 +6,11 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import vip.yeee.memo.integrate.base.webauth.server.constant.MessageConstant;
-import vip.yeee.memo.integrate.common.model.exception.BizException;
-import vip.yeee.memo.integrate.common.websecurity.model.SecurityUser;
+import vip.yeee.memo.integrate.base.websecurity.model.SecurityUser;
 
 import javax.annotation.Resource;
 

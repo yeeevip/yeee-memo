@@ -8,7 +8,7 @@ import com.google.common.collect.Maps;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import vip.yeee.memo.integrate.common.base.utils.JacksonUtils;
+import vip.yeee.memo.integrate.base.util.JacksonUtils;
 import vip.yeee.memo.integrate.flink.constant.OperateEventEnum;
 import vip.yeee.memo.integrate.flink.model.AccessLogBO;
 import vip.yeee.memo.integrate.flink.model.NginxAccessLog;

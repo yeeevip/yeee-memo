@@ -10,10 +10,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import vip.yeee.memo.integrate.common.base.utils.JacksonUtils;
-import vip.yeee.memo.integrate.common.websecurity.constant.AuthConstant;
-import vip.yeee.memo.integrate.common.websecurity.context.SecurityContext;
-import vip.yeee.memo.integrate.common.websecurity.model.AuthedUser;
+import vip.yeee.memo.integrate.base.util.JacksonUtils;
+import vip.yeee.memo.integrate.base.websecurity.constant.AuthConstant;
+import vip.yeee.memo.integrate.base.websecurity.context.SecurityContext;
+import vip.yeee.memo.integrate.base.websecurity.model.AuthedUser;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

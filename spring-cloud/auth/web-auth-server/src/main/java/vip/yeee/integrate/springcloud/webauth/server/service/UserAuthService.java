@@ -20,7 +20,7 @@ import vip.yeee.memo.integrate.common.domain.mapper.sys.SysRoleMapper;
 import vip.yeee.memo.integrate.common.domain.mapper.sys.SysUserMapper;
 import vip.yeee.memo.integrate.common.domain.mapper.sys.SysUserRoleMapper;
 import vip.yeee.memo.integrate.common.model.exception.BizException;
-import vip.yeee.memo.integrate.common.websecurity.model.AuthUser;
+import vip.yeee.memo.integrate.base.websecurity.model.AuthUser;
 
 import java.util.List;
 import java.util.Set;

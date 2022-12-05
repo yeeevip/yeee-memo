@@ -15,13 +15,13 @@ import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import vip.yeee.memo.integrate.common.websecurity.constant.AuthConstant;
+import vip.yeee.memo.integrate.base.websecurity.constant.AuthConstant;
 import vip.yeee.memo.integrate.base.webauth.server.constant.MessageConstant;
-import vip.yeee.memo.integrate.common.websecurity.constant.SecurityUserTypeEnum;
+import vip.yeee.memo.integrate.base.websecurity.constant.SecurityUserTypeEnum;
 import vip.yeee.memo.integrate.common.model.exception.BizException;
-import vip.yeee.memo.integrate.common.websecurity.model.AuthUser;
-import vip.yeee.memo.integrate.common.websecurity.model.Oauth2TokenVo;
-import vip.yeee.memo.integrate.common.websecurity.model.SecurityUser;
+import vip.yeee.memo.integrate.base.websecurity.model.AuthUser;
+import vip.yeee.memo.integrate.base.websecurity.model.Oauth2TokenVo;
+import vip.yeee.memo.integrate.base.websecurity.model.SecurityUser;
 
 import javax.annotation.Resource;
 import java.util.Optional;

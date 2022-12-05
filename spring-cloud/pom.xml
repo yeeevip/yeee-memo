@@ -36,7 +36,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>vip.yeee.memo</groupId>
-			<artifactId>common-util</artifactId>
+			<artifactId>base-util</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.projectreactor</groupId>

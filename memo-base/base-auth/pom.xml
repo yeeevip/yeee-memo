@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>base-web-security</module>
         <module>base-web-auth-server</module>
         <module>base-web-auth-client</module>
         <module>base-api-auth-server</module>

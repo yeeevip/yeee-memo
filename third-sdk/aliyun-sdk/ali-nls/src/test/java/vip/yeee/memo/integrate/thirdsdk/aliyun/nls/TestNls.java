@@ -5,7 +5,7 @@ import com.google.common.base.Stopwatch;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import vip.yeee.memo.integrate.common.base.utils.TextUtils;
+import vip.yeee.memo.integrate.base.util.TextUtils;
 import vip.yeee.memo.integrate.thirdsdk.aliyun.nls.bo.AudioGenBo;
 import vip.yeee.memo.integrate.thirdsdk.aliyun.nls.kit.AliyunNlsHelper;
 

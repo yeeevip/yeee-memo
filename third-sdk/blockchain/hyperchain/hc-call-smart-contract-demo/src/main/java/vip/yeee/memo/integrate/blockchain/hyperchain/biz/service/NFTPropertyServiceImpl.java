@@ -20,7 +20,7 @@ import vip.yeee.memo.integrate.blockchain.hyperchain.biz.bo.NFTPropertyMetaDataB
 import vip.yeee.memo.integrate.blockchain.hyperchain.biz.bo.NftIssueBO;
 import vip.yeee.memo.integrate.blockchain.hyperchain.biz.config.ChainProperties;
 import lombok.extern.slf4j.Slf4j;
-import vip.yeee.memo.integrate.common.base.utils.JacksonUtils;
+import vip.yeee.memo.integrate.base.util.JacksonUtils;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;

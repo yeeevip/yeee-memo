@@ -1,7 +1,7 @@
 package vip.yeee.memo.integrate.elasticsearch.domain.es.repository;
 
 import com.alibaba.fastjson.JSONObject;
-import vip.yeee.memo.integrate.common.base.utils.JacksonUtils;
+import vip.yeee.memo.integrate.base.util.JacksonUtils;
 import vip.yeee.memo.integrate.elasticsearch.vo.PageVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

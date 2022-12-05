@@ -10,8 +10,7 @@ import vip.yeee.memo.integrate.base.apiauth.client.context.ApiSecurityContext;
 import vip.yeee.memo.integrate.base.apiauth.client.kit.JwsClientKit;
 import vip.yeee.memo.integrate.base.apiauth.client.kit.JwtClientKit;
 import vip.yeee.memo.integrate.base.apiauth.client.model.ApiAuthedUser;
-import vip.yeee.memo.integrate.base.apiauth.client.model.dto.PayloadDto;
-import vip.yeee.memo.integrate.common.base.utils.JacksonUtils;
+import vip.yeee.memo.integrate.base.util.JacksonUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
