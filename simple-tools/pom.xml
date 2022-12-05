@@ -24,6 +24,7 @@
         <!-- 代码生成 -->
         <module>generator</module>
         <module>export</module>
+        <module>simple-kit</module>
     </modules>
 
     <dependencies>

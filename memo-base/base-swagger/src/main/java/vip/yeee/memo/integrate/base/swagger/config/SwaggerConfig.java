@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Swagger API文档相关配置
  */
-@ConditionalOnProperty(value = "yeee.swagger.enable")
+//@ConditionalOnProperty(value = "yeee.swagger.enable")
 @Configuration
 @EnableSwagger2
 @EnableConfigurationProperties({SwaggerProperties.class})
