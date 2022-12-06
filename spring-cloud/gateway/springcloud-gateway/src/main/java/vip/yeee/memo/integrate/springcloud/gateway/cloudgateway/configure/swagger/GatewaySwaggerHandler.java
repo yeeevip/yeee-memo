@@ -20,13 +20,13 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/swagger-resources")
-public class SwaggerHandler {
+public class GatewaySwaggerHandler {
     private final SecurityConfiguration securityConfiguration;
     private final UiConfiguration uiConfiguration;
     private final SwaggerResourcesProvider swaggerResources;
 
     @Autowired
-    public SwaggerHandler(SwaggerResourcesProvider swaggerResources, SecurityConfiguration securityConfiguration, UiConfiguration uiConfiguration) {
+    public GatewaySwaggerHandler(SwaggerResourcesProvider swaggerResources, SecurityConfiguration securityConfiguration, UiConfiguration uiConfiguration) {
         this.swaggerResources = swaggerResources;
         this.securityConfiguration = securityConfiguration;
         this.uiConfiguration = uiConfiguration;

@@ -1,11 +1,14 @@
 package vip.yeee.integrate.springcloud.webauth.server.biz;
 
 import cn.hutool.core.util.StrUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import vip.yeee.integrate.springcloud.webauth.server.feignclient.WebAuthResource1FeignClient;
 import vip.yeee.integrate.springcloud.webauth.server.model.request.UserAuthRequest;
 import vip.yeee.integrate.springcloud.webauth.server.model.vo.UserAuthVo;
 import vip.yeee.integrate.springcloud.webauth.server.service.UserAuthService;
 import vip.yeee.memo.integrate.base.model.exception.BizException;
+import vip.yeee.memo.integrate.base.model.rest.CommonResult;
 import vip.yeee.memo.integrate.base.websecurityoauth2.constant.SecurityUserTypeEnum;
 import vip.yeee.memo.integrate.common.domain.entity.sys.SysUser;
 import vip.yeee.memo.integrate.common.domain.mapper.sys.SysUserMapper;
@@ -21,6 +24,7 @@ import javax.annotation.Resource;
  * @author yeeee
  * @since 2022/11/17 13:18
  */
+@Slf4j
 @Component
 public class UserAuthBiz {
 
@@ -28,6 +32,8 @@ public class UserAuthBiz {
     private UserAuthService userAuthService;
     @Resource
     private SysUserMapper sysUserMapper;
+    @Resource
+    private WebAuthResource1FeignClient webAuthResource1FeignClient;
 
     public Void systemUserRegister(UserAuthRequest request) {
         if (!StrUtil.isAllNotBlank(request.getUsername(), request.getPassword())) {
@@ -61,6 +67,8 @@ public class UserAuthBiz {
     }
 
     public String anonymousApiByAnno() {
+        CommonResult<String> commonResult = webAuthResource1FeignClient.anonymousApiByAnno();
+        log.info("【调用resource1】res = {}", commonResult);
         return "访问【注解标记匿名】接口成功";
     }
 

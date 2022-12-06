@@ -25,6 +25,10 @@
             <groupId>vip.yeee.memo</groupId>
             <artifactId>base-swagger</artifactId>
         </dependency>
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>common-springcloud-gray-gateway</artifactId>
+        </dependency>
         <!--gateway 网关依赖,内置webflux 依赖-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

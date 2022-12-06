@@ -27,6 +27,9 @@ spring:
           - data-id: yeee-sentinel.${spring.cloud.nacos.config.file-extension}
             group: ${spring.profiles.active}
             refresh: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 csp:
   sentinel:
     app:

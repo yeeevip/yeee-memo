@@ -14,7 +14,7 @@ import springfox.documentation.swagger.web.UiConfigurationBuilder;
  * @since 2022/11/28 13:37
  */
 @Configuration
-public class SwaggerConfig {
+public class GatewaySwaggerConfig {
 
     @Bean
     public SecurityConfiguration securityConfiguration() {

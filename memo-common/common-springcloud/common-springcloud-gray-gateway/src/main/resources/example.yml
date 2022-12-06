@@ -1,0 +1,15 @@
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lowerCaseServiceId: true
+      routes:
+        - id: cloud-web-auth-server-gray
+          uri: lb://cloud-web-auth-server
+          predicates:
+            - Path=/gray/auth-server/**
+          filters:
+            - StripPrefix=1
+            - AddRequestHeader=gray-tag,true

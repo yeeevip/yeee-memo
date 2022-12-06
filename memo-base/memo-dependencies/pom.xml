@@ -114,6 +114,16 @@
                 <artifactId>common-api-auth-client</artifactId>
                 <version>${yeee-sdk.version}</version>
             </dependency>
+            <dependency>
+                <groupId>vip.yeee.memo</groupId>
+                <artifactId>common-springcloud-gray-gateway</artifactId>
+                <version>${yeee-sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>vip.yeee.memo</groupId>
+                <artifactId>common-springcloud-gray-inner</artifactId>
+                <version>${yeee-sdk.version}</version>
+            </dependency>
             <!-- log4j -->
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>

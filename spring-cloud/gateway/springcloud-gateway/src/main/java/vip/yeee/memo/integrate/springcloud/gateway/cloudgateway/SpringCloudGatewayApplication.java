@@ -4,8 +4,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClient;
+import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClients;
+import vip.yeee.memo.integrate.common.scloud.gray.gateway.configure.GrayGatewayLoadBalancerConfig;
 
 //@SpringCloudApplication
+//@LoadBalancerClient(name = "cloud-web-auth-server", configuration = GrayGatewayLoadBalancerConfig.class)
+@LoadBalancerClients(defaultConfiguration = GrayGatewayLoadBalancerConfig.class)
 @SpringBootApplication
 @EnableDiscoveryClient
 public class SpringCloudGatewayApplication {

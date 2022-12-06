@@ -3,7 +3,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <artifactId>memo-parent</artifactId>
         <groupId>vip.yeee.memo</groupId>
@@ -13,5 +12,10 @@
 
     <artifactId>common-springcloud</artifactId>
     <packaging>pom</packaging>
+
+    <modules>
+        <module>common-springcloud-gray-gateway</module>
+        <module>common-springcloud-gray-inner</module>
+    </modules>
 
 </project>

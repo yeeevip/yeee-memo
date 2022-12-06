@@ -41,6 +41,10 @@
             <artifactId>base-swagger</artifactId>
         </dependency>
         <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>common-springcloud-gray-inner</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
