@@ -2,8 +2,8 @@ package vip.yeee.memo.integrate.springcloud.webauth.resource.biz;
 
 import cn.hutool.core.util.StrUtil;
 import org.springframework.stereotype.Component;
-import vip.yeee.memo.integrate.base.websecurity.context.SecurityContext;
-import vip.yeee.memo.integrate.base.websecurity.model.AuthedUser;
+import vip.yeee.memo.integrate.base.websecurityoauth2.context.SecurityContext;
+import vip.yeee.memo.integrate.base.websecurityoauth2.model.AuthedUser;
 
 /**
  * description......

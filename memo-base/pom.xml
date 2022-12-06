@@ -6,7 +6,7 @@
 
     <groupId>vip.yeee.memo</groupId>
     <artifactId>memo-base</artifactId>
-    <version>2.0.2-SNAPSHOT</version>
+    <version>2.0.3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -16,11 +16,10 @@
         <module>base-config</module>
         <module>base-web</module>
         <module>base-model</module>
-        <module>base-springcloud</module>
         <module>base-swagger</module>
         <module>base-jdbc</module>
-        <module>base-auth</module>
         <module>base-redis</module>
+        <module>base-web-security-oauth2</module>
     </modules>
 
 </project>

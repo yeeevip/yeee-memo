@@ -6,12 +6,12 @@ import vip.yeee.integrate.springcloud.webauth.server.model.request.UserAuthReque
 import vip.yeee.integrate.springcloud.webauth.server.model.vo.UserAuthVo;
 import vip.yeee.integrate.springcloud.webauth.server.service.UserAuthService;
 import vip.yeee.memo.integrate.base.model.exception.BizException;
-import vip.yeee.memo.integrate.base.websecurity.constant.SecurityUserTypeEnum;
+import vip.yeee.memo.integrate.base.websecurityoauth2.constant.SecurityUserTypeEnum;
 import vip.yeee.memo.integrate.common.domain.entity.sys.SysUser;
 import vip.yeee.memo.integrate.common.domain.mapper.sys.SysUserMapper;
-import vip.yeee.memo.integrate.base.websecurity.context.SecurityContext;
-import vip.yeee.memo.integrate.base.websecurity.model.AuthedUser;
-import vip.yeee.memo.integrate.base.websecurity.model.Oauth2TokenVo;
+import vip.yeee.memo.integrate.base.websecurityoauth2.context.SecurityContext;
+import vip.yeee.memo.integrate.base.websecurityoauth2.model.AuthedUser;
+import vip.yeee.memo.integrate.base.websecurityoauth2.model.Oauth2TokenVo;
 
 import javax.annotation.Resource;
 

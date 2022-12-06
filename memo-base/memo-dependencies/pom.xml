@@ -6,7 +6,7 @@
 
     <groupId>vip.yeee.memo</groupId>
     <artifactId>memo-dependencies</artifactId>
-    <version>2.0.2-SNAPSHOT</version>
+    <version>2.0.3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -56,26 +56,6 @@
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
-                <artifactId>base-web-auth-server</artifactId>
-                <version>${yeee-sdk.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>vip.yeee.memo</groupId>
-                <artifactId>base-web-auth-client</artifactId>
-                <version>${yeee-sdk.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>vip.yeee.memo</groupId>
-                <artifactId>base-api-auth-server</artifactId>
-                <version>${yeee-sdk.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>vip.yeee.memo</groupId>
-                <artifactId>base-api-auth-client</artifactId>
-                <version>${yeee-sdk.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>vip.yeee.memo</groupId>
                 <artifactId>base-mybatis</artifactId>
                 <version>${yeee-sdk.version}</version>
             </dependency>
@@ -106,12 +86,32 @@
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
+                <artifactId>base-web-security-oauth2</artifactId>
+                <version>${yeee-sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>vip.yeee.memo</groupId>
                 <artifactId>common-domain</artifactId>
                 <version>${yeee-sdk.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
-                <artifactId>base-web-security</artifactId>
+                <artifactId>common-web-auth-server</artifactId>
+                <version>${yeee-sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>vip.yeee.memo</groupId>
+                <artifactId>common-web-auth-client</artifactId>
+                <version>${yeee-sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>vip.yeee.memo</groupId>
+                <artifactId>common-api-auth-server</artifactId>
+                <version>${yeee-sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>vip.yeee.memo</groupId>
+                <artifactId>common-api-auth-client</artifactId>
                 <version>${yeee-sdk.version}</version>
             </dependency>
             <!-- log4j -->

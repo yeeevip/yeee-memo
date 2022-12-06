@@ -2,7 +2,7 @@ package vip.yeee.integrate.springcloud.webauth.server.model.bo;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import vip.yeee.memo.integrate.base.websecurity.model.AuthUser;
+import vip.yeee.memo.integrate.base.websecurityoauth2.model.AuthUser;
 
 /**
  * description......

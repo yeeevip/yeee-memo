@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import vip.yeee.memo.integrate.base.apiauth.server.model.vo.JTokenVo;
+import vip.yeee.memo.integrate.common.apiauth.server.model.vo.JTokenVo;
 import vip.yeee.memo.integrate.base.model.rest.CommonResult;
 import vip.yeee.memo.integrate.springcloud.apiauth.server.biz.ApiAuthBiz;
 import vip.yeee.memo.integrate.springcloud.apiauth.server.model.request.UserLoginRequest;
