@@ -96,7 +96,9 @@ public class AllTypeLockUseExample {
     }
 
     /**
+     * 可以使用【多个redisson高可用master】实例
      * 联锁 / 将多个RLock对象关联为一个联锁 [所有的redis节点上都上锁成功才算成功]
+     * 比如说，在一个下单的业务场景中，同时需要锁定订单、库存、商品，基于这种需要锁多种资源的场景中
      * @author yeeeeee
      * @since 2021/12/28 16:43
      */
@@ -118,6 +120,7 @@ public class AllTypeLockUseExample {
     }
     
     /**
+     * 可以使用【多个redisson高可用master】实例
      * 红锁 / 将多个RLock对象关联为一个联锁 [大部分redis节点上加锁成功才算成功 （n / 2 + 1）]
      * @author yeeeeee
      * @since 2021/12/28 16:52
