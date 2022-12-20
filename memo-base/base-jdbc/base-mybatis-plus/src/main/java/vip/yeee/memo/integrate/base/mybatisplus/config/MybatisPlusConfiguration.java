@@ -1,5 +1,6 @@
 package vip.yeee.memo.integrate.base.mybatisplus.config;
 
+import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +22,7 @@ public class MybatisPlusConfiguration {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-        interceptor.addInnerInterceptor(new PigPaginationInnerInterceptor());
+        interceptor.addInnerInterceptor(new PigPaginationInnerInterceptor(DbType.MYSQL));
         return interceptor;
     }
 

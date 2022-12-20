@@ -19,7 +19,13 @@ public class PayProperties {
 
     private AlipayProperties ali;
 
+    private String siteUrl;
+
     private String notifyUrl;
+
+    private String refundNotifyUrl;
+
+    private String returnUrl;
 
     @Data
     public static class WxpayProperties {

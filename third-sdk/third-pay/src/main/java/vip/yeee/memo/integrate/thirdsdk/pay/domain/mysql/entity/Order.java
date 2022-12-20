@@ -66,6 +66,16 @@ public class Order {
     private Long refundAmount;
 
     /**
+     * 支付渠道
+     */
+    private String channel;
+
+    /**
+     * 支付方式
+     */
+    private String payway;
+
+    /**
      * 订单失效时间
      */
     private LocalDateTime expiredTime;

@@ -1,5 +1,6 @@
 package vip.yeee.memo.integrate.base.mybatisplus.plugins;
 
+import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.ParameterUtils;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
@@ -24,6 +25,10 @@ import java.sql.SQLException;
 @Data
 @NoArgsConstructor
 public class PigPaginationInnerInterceptor extends PaginationInnerInterceptor {
+
+	public PigPaginationInnerInterceptor(DbType dbType) {
+		super(dbType);
+	}
 
 	@Override
 	public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds,
