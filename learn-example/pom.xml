@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>java-integrate</artifactId>
+        <groupId>vip.yeee.memo</groupId>
+        <version>2.0.3-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>learn-example</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <!-- JDK基础API -->
+        <module>jdk-api</module>
+        <!-- 设计模式 -->
+        <module>design-pattern</module>
+        <!-- 浙大PAT算法coding -->
+        <module>pat-coding</module>
+        <!-- 笔记 -->
+        <module>some-note</module>
+        <module>spring-api</module>
+        <module>spring-boot-api</module>
+    </modules>
+
+</project>

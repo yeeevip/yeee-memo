@@ -13,8 +13,6 @@
 	<modules>
 		<!-- 通用基础集成 -->
 		<module>memo-base</module>
-		<!-- JDK基础API -->
-		<module>jdk-api</module>
 		<!-- 常用解决方案 -->
 		<module>solution-problem</module>
 		<!-- 中间件的使用 -->
@@ -25,15 +23,10 @@
 		<module>third-sdk</module>
 		<!-- 小工具 -->
 		<module>simple-tools</module>
-		<!-- 浙大PAT算法coding -->
-		<module>pat-coding</module>
-		<!-- 笔记 -->
-		<module>some-note</module>
 		<!-- 测试工具 -->
 		<module>test-tool</module>
-		<!-- 设计模式 -->
-        <module>design-pattern</module>
         <module>memo-common</module>
-    </modules>
+		<module>learn-example</module>
+	</modules>
 
 </project>
