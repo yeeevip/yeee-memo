@@ -6,6 +6,7 @@ import com.github.binarywang.wxpay.constant.WxPayConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import vip.yeee.memo.integrate.base.model.exception.BizException;
+import vip.yeee.memo.integrate.base.util.JacksonUtils;
 import vip.yeee.memo.integrate.thirdsdk.pay.constant.PayConstant;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.*;
 
@@ -34,7 +35,7 @@ public class WxJsapiPayKit extends AbstractWxPayKit {
             WxJsapiUnifiedOrderRespBO respBO = new WxJsapiUnifiedOrderRespBO();
             ChannelRetMsgBO retMsgBO = new ChannelRetMsgBO();
             respBO.setChannelRetMsg(retMsgBO);
-            respBO.setPayInfo(response.getPackageValue());
+            respBO.setPayInfo(JacksonUtils.toJsonString(response));
             // 支付中
             retMsgBO.setChannelState(ChannelRetMsgBO.ChannelState.WAITING);
             return respBO;

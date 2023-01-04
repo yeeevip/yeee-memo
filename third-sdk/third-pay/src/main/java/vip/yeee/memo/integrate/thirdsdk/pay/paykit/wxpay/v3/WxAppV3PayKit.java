@@ -3,11 +3,10 @@ package vip.yeee.memo.integrate.thirdsdk.pay.paykit.wxpay.v3;
 import com.github.binarywang.wxpay.bean.request.WxPayUnifiedOrderV3Request;
 import com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderV3Result;
 import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
-import com.github.binarywang.wxpay.exception.WxPayException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 import vip.yeee.memo.integrate.base.model.exception.BizException;
+import vip.yeee.memo.integrate.base.util.JacksonUtils;
 import vip.yeee.memo.integrate.thirdsdk.pay.constant.PayConstant;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.*;
 
@@ -35,11 +34,11 @@ public class WxAppV3PayKit extends AbstractWxV3PayKit {
             WxAppUnifiedOrderRespBO respBO = new WxAppUnifiedOrderRespBO();
             ChannelRetMsgBO retMsgBO = new ChannelRetMsgBO();
             respBO.setChannelRetMsg(retMsgBO);
-            respBO.setPayInfo(result.getPackageValue());
+            respBO.setPayInfo(JacksonUtils.toJsonString(result));
             // 支付中
             retMsgBO.setChannelState(ChannelRetMsgBO.ChannelState.WAITING);
             return respBO;
-        } catch (WxPayException e) {
+        } catch (Exception e) {
             log.info("【统一下单-微信APP支付V3】- 下单失败", e);
             throw new BizException(e.getMessage());
         }
