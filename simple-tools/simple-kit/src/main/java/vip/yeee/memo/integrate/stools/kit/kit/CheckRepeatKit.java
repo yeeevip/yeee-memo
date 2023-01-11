@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 @Component
-public class RedisKit {
+public class CheckRepeatKit {
 
     @Resource
     private StringRedisTemplate stringRedisTemplate;
@@ -18,7 +18,7 @@ public class RedisKit {
         try {
             Boolean res = stringRedisTemplate
                     .opsForValue()
-                    .setIfAbsent("CAN_REPEAT_OPR:" + redisKey, "1", expire, TimeUnit.SECONDS);
+                    .setIfAbsent("YEEE:CAN_REPEAT_OPR:" + redisKey, "1", expire, TimeUnit.SECONDS);
             return Boolean.TRUE.equals(res);
         } catch (Exception e) {
             return true;
