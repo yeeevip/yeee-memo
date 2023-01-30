@@ -10,6 +10,7 @@ import vip.yeee.memo.integrate.design.practice.statics.temp.TempService;
 import vip.yeee.memo.integrate.design.practice.statics.vo.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -29,6 +30,7 @@ public abstract class AbstractStaticHandler<T, RS> implements StaticHandler {
     private TempService.ConfigApiFeignAPI configApiFeignAPI;
     @Resource
     private TempService.RedissonClient redissonClient;
+    private final List<StaticPostProcessor<T, RS>> postProcessors = new ArrayList<>();
 
     @Override
     public void handle(StaticBo bo) {
@@ -47,7 +49,7 @@ public abstract class AbstractStaticHandler<T, RS> implements StaticHandler {
         log.info("【静态化】- 开始, site = {}", site.getId());
         String staticPath = this.getStaticPath(site);
         Stopwatch stopwatch = Stopwatch.createStarted();
-        RLock lock = redissonClient.getLock("ADVERT:STATIC:LOCK:" + bo.getSiteId());
+        RLock lock = redissonClient.getLock("LOCK:STATIC:" + staticPath);
         lock.lock();
         try {
             StaticDataVo<T> staticDataVo = ossKit.getStaticJson2Object(staticPath, new TypeReference<StaticDataVo<T>>() {});
@@ -74,7 +76,9 @@ public abstract class AbstractStaticHandler<T, RS> implements StaticHandler {
             }
             staticDataVo.setData(this.dataCollect(rs));
             ossKit.uploadObject2StaticJson(staticPath, staticDataVo);
-            this.postProcess(site, staticDataVo, rs);
+            for (StaticPostProcessor<T, RS> processor : postProcessors) {
+                processor.postProcess(site, staticDataVo, rs);
+            }
         } catch (Exception e) {
             log.info("【静态化】- 失败, site = {}", site.getId(), e);
             throw new StaticException("静态化失败");
@@ -92,8 +96,6 @@ public abstract class AbstractStaticHandler<T, RS> implements StaticHandler {
 
     protected abstract String getStaticPath(TCmsSite site);
 
-    protected abstract void postProcess(TCmsSite site, StaticDataVo<T> staticDataVo, RS rs);
-
     protected RS handleOpen(TCmsSite site, StaticBo bo, RS rs) throws Exception {
         return rs;
     }
@@ -108,6 +110,14 @@ public abstract class AbstractStaticHandler<T, RS> implements StaticHandler {
 
     protected RS handleUpdate(TCmsSite site, StaticBo bo, RS rs) throws Exception {
         return rs;
+    }
+
+    public void addPostProcessor(List<StaticPostProcessor<T, RS>> postProcessors) {
+        this.postProcessors.addAll(postProcessors);
+    }
+
+    public interface StaticPostProcessor<T, RS> {
+        void postProcess(TCmsSite site, StaticDataVo<T> staticDataVo, RS rs);
     }
 
 }
