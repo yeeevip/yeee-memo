@@ -13,6 +13,7 @@
         <module>common-domain</module>
         <module>common-auth</module>
         <module>common-springcloud</module>
+        <module>mybatis-encrypt-plugin</module>
     </modules>
 
 </project>
