@@ -24,6 +24,23 @@ jetcache:
         minIdle: 5
         maxIdle: 20
         maxTotal: 50
+#jetcache.statIntervalMinutes=1
+#jetcache.areaInCacheName=false
+#jetcache.local.default.type=caffeine
+#jetcache.local.default.limit=10000
+#jetcache.local.default.keyConvertor=fastjson
+#jetcache.local.default.valueEncoder=kryo
+#jetcache.local.default.valueDecoder=kryo
+#jetcache.local.default.expireAfterWriteInMills=86400000
+#jetcache.remote.default.type=redis.lettuce
+#jetcache.remote.default.keyConvertor=fastjson
+#jetcache.remote.default.valueEncoder=kryo
+#jetcache.remote.default.valueDecoder=kryo
+#jetcache.remote.default.uri=redis://${spring.redis.password}@${spring.redis.host}:${spring.redis.port}/${spring.redis.database}
+#jetcache.remote.default.expireAfterWriteInMills=86400000
+#jetcache.remote.default.poolConfig.minIdle=5
+#jetcache.remote.default.poolConfig.maxIdle=20
+#jetcache.remote.default.poolConfig.maxTotal=50
 spring:
   main:
     allow-circular-references: true
