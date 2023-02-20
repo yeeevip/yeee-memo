@@ -1,6 +1,6 @@
 package vip.yeee.memo.integrate.common.webauth.server.configure;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -9,6 +9,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import vip.yeee.memo.integrate.base.util.LogUtils;
 import vip.yeee.memo.integrate.common.webauth.server.constant.MessageConstant;
 import vip.yeee.memo.integrate.base.websecurityoauth2.model.SecurityUser;
 
@@ -20,7 +21,6 @@ import javax.annotation.Resource;
  * @author yeeee
  * @since 2022/11/24 14:53
  */
-@Slf4j
 @Component
 public class UserAuthenticationProvider  implements AuthenticationProvider {
 
@@ -28,6 +28,8 @@ public class UserAuthenticationProvider  implements AuthenticationProvider {
     private UserDetailsService userDetailsService;
     @Resource
     private PasswordEncoder passwordEncoder;
+
+    private final static Logger log = LogUtils.commonAuthLog();
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {

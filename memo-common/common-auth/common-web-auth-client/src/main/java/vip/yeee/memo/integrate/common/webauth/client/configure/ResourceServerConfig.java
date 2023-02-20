@@ -2,7 +2,7 @@ package vip.yeee.memo.integrate.common.webauth.client.configure;
 
 import cn.hutool.core.util.ArrayUtil;
 import com.google.common.collect.Sets;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -22,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+import vip.yeee.memo.integrate.base.util.LogUtils;
 import vip.yeee.memo.integrate.common.webauth.client.properties.AuthClientProperties;
 import vip.yeee.memo.integrate.base.websecurityoauth2.annotation.AnonymousAccess;
 import vip.yeee.memo.integrate.common.webauth.client.handle.AccessDeniedHandler;
@@ -40,11 +41,11 @@ import java.util.stream.Collectors;
  * @author yeeee
  * @since 2022/4/28 17:02
  */
-@Slf4j
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
+    private final static Logger log = LogUtils.commonAuthLog();
     @Resource
     private AuthClientProperties authClientProperties;
     @Resource

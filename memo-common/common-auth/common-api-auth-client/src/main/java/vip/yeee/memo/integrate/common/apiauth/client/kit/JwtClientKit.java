@@ -3,8 +3,9 @@ package vip.yeee.memo.integrate.common.apiauth.client.kit;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
+import vip.yeee.memo.integrate.base.util.LogUtils;
 import vip.yeee.memo.integrate.common.apiauth.client.properties.ApiAuthClientProperties;
 import vip.yeee.memo.integrate.base.model.exception.BizException;
 
@@ -17,10 +18,10 @@ import java.util.Date;
  * @author yeeee
  * @since 2022/11/28 15:08
  */
-@Slf4j
 @Component
 public class JwtClientKit {
 
+    private final static Logger log = LogUtils.commonAuthLog();
     @Resource
     private ApiAuthClientProperties apiAuthClientProperties;
 

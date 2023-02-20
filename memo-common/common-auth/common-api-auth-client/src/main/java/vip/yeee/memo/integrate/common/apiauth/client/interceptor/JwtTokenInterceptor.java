@@ -2,10 +2,11 @@ package vip.yeee.memo.integrate.common.apiauth.client.interceptor;
 
 import cn.hutool.core.util.StrUtil;
 import io.jsonwebtoken.Claims;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import vip.yeee.memo.integrate.base.util.LogUtils;
 import vip.yeee.memo.integrate.common.apiauth.client.context.ApiSecurityContext;
 import vip.yeee.memo.integrate.common.apiauth.client.kit.JwsClientKit;
 import vip.yeee.memo.integrate.common.apiauth.client.kit.JwtClientKit;
@@ -22,10 +23,10 @@ import javax.servlet.http.HttpServletResponse;
  * @author yeeee
  * @since 2022/11/16 14:38
  */
-@Slf4j
 @Component
 public class JwtTokenInterceptor implements HandlerInterceptor {
 
+    private final static Logger log = LogUtils.commonAuthLog();
     @Resource
     private JwtClientKit jwtClientKit;
     @Resource

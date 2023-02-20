@@ -3,7 +3,7 @@ package vip.yeee.memo.integrate.common.webauth.client.interceptor;
 import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import vip.yeee.memo.integrate.base.util.JacksonUtils;
+import vip.yeee.memo.integrate.base.util.LogUtils;
 import vip.yeee.memo.integrate.base.websecurityoauth2.constant.AuthConstant;
 import vip.yeee.memo.integrate.base.websecurityoauth2.context.SecurityContext;
 import vip.yeee.memo.integrate.base.websecurityoauth2.model.AuthedUser;
@@ -28,10 +29,10 @@ import java.util.stream.Collectors;
  * @author yeeee
  * @since 2022/11/16 14:38
  */
-@Slf4j
 @Component
 public class SecurityTokenInterceptor implements HandlerInterceptor {
 
+    private final static Logger log = LogUtils.commonAuthLog();
 //    @Resource
 //    private AuthProperties authProperties;
 

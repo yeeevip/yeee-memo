@@ -1,6 +1,6 @@
 package vip.yeee.memo.integrate.common.webauth.client.configure;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
@@ -17,14 +17,16 @@ import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
 import sun.net.www.http.HttpClient;
 import vip.yeee.memo.integrate.base.model.exception.BizException;
+import vip.yeee.memo.integrate.base.util.LogUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-@Slf4j
 @Configuration
 //@EnableOAuth2Client
 public class OAuth2ClientConfig {
+
+	private final static Logger log = LogUtils.commonAuthLog();
 
 	@ConfigurationProperties(prefix = "security.oauth2.client")
 	@Bean

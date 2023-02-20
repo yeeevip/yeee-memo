@@ -1,11 +1,12 @@
 package vip.yeee.memo.integrate.common.apiauth.client.context;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import vip.yeee.memo.integrate.base.util.LogUtils;
 import vip.yeee.memo.integrate.common.apiauth.client.model.ApiAuthedUser;
 
-@Slf4j
 public class ApiSecurityContext {
 
+    private final static Logger log = LogUtils.commonAuthLog();
     public static ThreadLocal<ApiAuthedUser> curUser = new ThreadLocal<>();
 
     /**

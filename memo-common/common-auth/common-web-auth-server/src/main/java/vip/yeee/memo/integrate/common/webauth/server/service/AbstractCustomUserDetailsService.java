@@ -2,7 +2,7 @@ package vip.yeee.memo.integrate.common.webauth.server.service;
 
 import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Sets;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.DisabledException;
@@ -16,6 +16,7 @@ import org.springframework.security.oauth2.client.token.grant.password.ResourceO
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import vip.yeee.memo.integrate.base.model.exception.BizException;
+import vip.yeee.memo.integrate.base.util.LogUtils;
 import vip.yeee.memo.integrate.base.websecurityoauth2.constant.AuthConstant;
 import vip.yeee.memo.integrate.common.webauth.server.constant.MessageConstant;
 import vip.yeee.memo.integrate.base.websecurityoauth2.constant.SecurityUserTypeEnum;
@@ -33,9 +34,9 @@ import java.util.Set;
  * @author yeeee
  * @since 2022/11/16 15:34
  */
-@Slf4j
 public abstract class AbstractCustomUserDetailsService implements UserDetailsService {
 
+    private final static Logger log = LogUtils.commonAuthLog();
     @Resource
     private PasswordEncoder passwordEncoder;
     @Resource

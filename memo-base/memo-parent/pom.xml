@@ -74,7 +74,8 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <!-- 是否传递依赖到子工程（子工程打包时不包含此jar，如果子需要则另外引入）；true-否，false-是 -->
-            <optional>true</optional>
+<!--            <optional>true</optional>-->
+            <scope>provided</scope>
         </dependency>
         <!--测试依赖-->
         <dependency>
