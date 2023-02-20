@@ -27,4 +27,9 @@ public class MainController {
         return CommonResult.success(null);
     }
 
+    @GetMapping("test/get/data")
+    public String getData() {
+        return "aaaaaaaaaaaaaaa";
+    }
+
 }

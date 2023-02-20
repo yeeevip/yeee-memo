@@ -19,3 +19,11 @@ spring:
 feign:
   sentinel:
     enabled: true
+  okhttp:
+    enabled: true
+  client:
+    config:
+      default:
+        ## 针对每个服务设置超时时间，这个配置可以覆盖掉ribbon的超时时间
+        connect-timeout: 2000
+        read-timeout: 60000

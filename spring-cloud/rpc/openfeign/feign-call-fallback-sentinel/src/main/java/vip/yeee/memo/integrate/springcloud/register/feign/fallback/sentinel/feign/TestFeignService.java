@@ -10,7 +10,7 @@ import vip.yeee.memo.integrate.springcloud.register.feign.fallback.sentinel.feig
  * @author yeeee
  * @since 2022/8/3 15:14
  */
-@FeignClient(name = "target-service", path = "/target", fallback = TestFeignFallback.class)
+@FeignClient(name = "feign-service-server", path = "/fss"/*, fallback = TestFeignFallback.class*/)
 public interface TestFeignService {
 
     @GetMapping("test/get/data")
