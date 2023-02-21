@@ -14,10 +14,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>feign-service-server</module>
-        <module>feign-service-client</module>
-        <!-- 整合阿里sentinel实现[熔断降级] -->
-        <module>feign-call-fallback-sentinel</module>
+        <module>feign-client-01</module>
+        <module>feign-client-02</module>
+        <module>feign-client-03</module>
     </modules>
 
 </project>

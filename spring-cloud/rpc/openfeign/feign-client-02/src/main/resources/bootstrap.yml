@@ -1,0 +1,15 @@
+server:
+  port: 8802
+  servlet:
+    context-path: /feign02
+spring:
+  application:
+    name: feign-client-02
+  profiles:
+    active: test
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      discovery:
+        namespace: e69ceae8-160c-4d52-b512-ad0e919ad86b
+        group: ${spring.profiles.active}
