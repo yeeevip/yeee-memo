@@ -14,7 +14,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>seata-client</module>
+        <module>seata-client-01</module>
+        <module>seata-client-02</module>
+        <module>seata-client-03</module>
         <module>seata-server</module>
     </modules>
 

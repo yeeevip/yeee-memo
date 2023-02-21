@@ -1,17 +1,24 @@
 server:
   port: 8801
-# seata 配置
+  servlet:
+    context-path: /client01
 spring:
   application:
-    name: seata-client-test
+    name: seata-client-01
   profiles:
     active: test
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/shardingdb2?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
   cloud:
     nacos:
       server-addr: 127.0.0.1:8848
       discovery:
         namespace: e69ceae8-160c-4d52-b512-ad0e919ad86b
         group: ${spring.profiles.active}
+# seata 配置
 seata:
   enabled: true
   # 默认AT模式

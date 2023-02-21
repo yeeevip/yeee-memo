@@ -10,16 +10,12 @@
         <version>2.0.3-SNAPSHOT</version>
     </parent>
 
-    <artifactId>seata-client</artifactId>
+    <artifactId>seata-client-03</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
             <artifactId>base-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>base-model</artifactId>
         </dependency>
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

@@ -1,9 +1,9 @@
-package vip.yeee.memo.integrate.seata;
+package vip.yeee.memo.integrate.scloud.tac.seata01;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * description......
@@ -11,13 +11,13 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @author yeeee
  * @since 2022/8/18 16:48
  */
+@MapperScan("vip.yeee.memo.integrate.scloud.tac.seata01.domain.mysql.mapper")
 @SpringBootApplication
-@EnableFeignClients
 @EnableDiscoveryClient
-public class SeataClientApplication {
+public class SeataClient01Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(SeataClientApplication.class, args);
+        SpringApplication.run(SeataClient01Application.class, args);
     }
 
 }

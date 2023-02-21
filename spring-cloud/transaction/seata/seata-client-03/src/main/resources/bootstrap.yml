@@ -1,0 +1,43 @@
+server:
+  port: 8803
+  servlet:
+    context-path: /client03
+spring:
+  application:
+    name: seata-client-03
+  profiles:
+    active: test
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      discovery:
+        namespace: e69ceae8-160c-4d52-b512-ad0e919ad86b
+        group: ${spring.profiles.active}
+feign:
+  sentinel:
+    enabled: true
+  okhttp:
+    enabled: true
+  client:
+    config:
+      default:
+        ## 针对每个服务设置超时时间，这个配置可以覆盖掉ribbon的超时时间
+        connect-timeout: 10000
+        read-timeout: 2000
+      compression:
+        request:
+          enabled: true
+        response:
+          enabled: true
+# seata 配置
+seata:
+  enabled: true
+  # 默认AT模式
+  data-source-proxy-mode: AT
+  # 使用哪个事务组
+  tx-service-group: my_test_tx_group
+  service:
+    # 事务组对应的集群名称
+    vgroup-mapping.my_test_tx_group: default
+    grouplist:
+      default: 127.0.0.1:8091

@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.seata.feign;
+package vip.yeee.memo.integrate.scloud.tac.seata03.feign;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,10 +10,10 @@ import vip.yeee.memo.integrate.base.model.rest.CommonResult;
  * @author yeeee
  * @since 2022/8/18 18:33
  */
-@FeignClient(name = "feign-service-client", path = "/fsc")
-public interface TestService1FeignClient {
+@FeignClient(name = "seata-client-01", path = "/client01")
+public interface SeataClient01FeignClient {
 
-    @GetMapping("test/seata/service1")
-    CommonResult<Void> testSeataService1();
+    @GetMapping("/seata/exec/opr")
+    CommonResult<Void> seataExecOpr();
 
 }
