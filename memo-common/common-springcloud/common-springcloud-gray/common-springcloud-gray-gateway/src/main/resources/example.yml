@@ -6,10 +6,10 @@ spring:
           enabled: true
           lowerCaseServiceId: true
       routes:
-        - id: cloud-web-auth-server-gray
+        - id: cloud-web-auth-server-2.0
           uri: lb://cloud-web-auth-server
           predicates:
-            - Path=/gray/auth-server/**
+            - Path=/v20/auth-server/**
           filters:
             - StripPrefix=1
-            - AddRequestHeader=gray-tag,true
+            - AddRequestHeader=api-version,2.0

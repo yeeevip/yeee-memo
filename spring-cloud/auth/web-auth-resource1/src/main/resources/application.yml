@@ -21,6 +21,8 @@ spring:
       discovery:
         namespace: e69ceae8-160c-4d52-b512-ad0e919ad86b
         group: ${spring.profiles.active}
+        metadata:
+          api-version: ${yeee.api-version}
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -32,6 +34,7 @@ security:
       client-id: ${spring.application.name}
       client-secret: 123456
 yeee:
+  api-version: 2.0
   swagger:
     enable: true
     title: 资源1服务中心

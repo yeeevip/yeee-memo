@@ -118,6 +118,11 @@
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
+                <artifactId>common-springcloud-gray-common</artifactId>
+                <version>${yeee-sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>vip.yeee.memo</groupId>
                 <artifactId>common-springcloud-gray-gateway</artifactId>
                 <version>${yeee-sdk.version}</version>
             </dependency>

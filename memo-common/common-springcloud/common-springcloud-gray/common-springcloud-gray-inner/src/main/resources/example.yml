@@ -1,0 +1,8 @@
+yeee:
+  api-version: 2.0
+spring:
+  cloud:
+    nacos:
+      discovery:
+        metadata:
+          api-version: ${yeee.api-version}

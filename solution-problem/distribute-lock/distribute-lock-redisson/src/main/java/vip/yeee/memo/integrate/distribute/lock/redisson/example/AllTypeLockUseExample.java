@@ -1,10 +1,11 @@
 package vip.yeee.memo.integrate.distribute.lock.redisson.example;
 
-import lombok.RequiredArgsConstructor;
 import org.redisson.RedissonMultiLock;
 import org.redisson.RedissonRedLock;
 import org.redisson.api.*;
+import org.springframework.beans.factory.annotation.Qualifier;
 
+import javax.annotation.Resource;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
@@ -14,14 +15,18 @@ import java.util.concurrent.TimeUnit;
  * @author yeeeee
  * @since 2021/12/28 16:25
  */
-@RequiredArgsConstructor
 public class AllTypeLockUseExample {
 
-    private final RedissonClient redissonClient1;
-
-    private final RedissonClient redissonClient2;
-
-    private final RedissonClient redissonClient3;
+    // 三个不同的【主节点Master】实例
+    @Resource
+    @Qualifier("redissonClient1")
+    private RedissonClient redissonClient1;
+    @Resource
+    @Qualifier("redissonClient2")
+    private RedissonClient redissonClient2;
+    @Resource
+    @Qualifier("redissonClient3")
+    private RedissonClient redissonClient3;
 
     /**
      * 可重入锁-sync
@@ -97,15 +102,18 @@ public class AllTypeLockUseExample {
 
     /**
      * 可以使用【多个redisson高可用master】实例
-     * 联锁 / 将多个RLock对象关联为一个联锁 [所有的redis节点上都上锁成功才算成功]
+     * 联锁 / 将多个RLock对象关联为一个联锁 [所有的RLock上锁成功才算成功]
+     *
+     * 一般场景就是某些业务需要同时锁住多个资源，使用【一个redisson实例】
+     * 也可以将多个不同master redisson实例加锁，性能比起redLock低很多
      * 比如说，在一个下单的业务场景中，同时需要锁定订单、库存、商品，基于这种需要锁多种资源的场景中
      * @author yeeeeee
      * @since 2021/12/28 16:43
      */
     public void testMultiLock() {
         RLock lock1 = redissonClient1.getLock("lock1");
-        RLock lock2 = redissonClient2.getLock("lock2");
-        RLock lock3 = redissonClient3.getLock("lock3");
+        RLock lock2 = redissonClient1.getLock("lock2");
+        RLock lock3 = redissonClient1.getLock("lock3");
         RedissonMultiLock multiLock = new RedissonMultiLock(lock1, lock2, lock3);
         try {
             // 同时加锁：lock1 lock2 lock3, 所有的锁都上锁成功才算成功。
@@ -118,17 +126,23 @@ public class AllTypeLockUseExample {
             multiLock.unlock();
         }
     }
-    
+
     /**
+     * #######【extends RedissonMultiLock，[扩展了一个master节点到多个master节点的redisson实例]，来解决主从架构锁失效问题】########
      * 可以使用【多个redisson高可用master】实例
+     * ---
+     * 解决主从架构锁失效问题：就是说在主从架构系统中，线程A从master中获取到分布式锁
+     * ，数据还未同步到slave中时master就挂掉了，slave成为新的master
+     * ，其它线程从新的master获取锁也成功了，就会出现并发安全问题
+     * ---
      * 红锁 / 将多个RLock对象关联为一个联锁 [大部分redis节点上加锁成功才算成功 （n / 2 + 1）]
      * @author yeeeeee
      * @since 2021/12/28 16:52
      */
     public void testRedLock(){
-        RLock lock1 = redissonClient1.getLock("lock1");
-        RLock lock2 = redissonClient2.getLock("lock2");
-        RLock lock3 = redissonClient3.getLock("lock3");
+        RLock lock1 = redissonClient1.getLock("LOCK:ID:KEY");
+        RLock lock2 = redissonClient2.getLock("LOCK:ID:KEY");
+        RLock lock3 = redissonClient3.getLock("LOCK:ID:KEY");
         RedissonRedLock lock = new RedissonRedLock(lock1, lock2, lock3);
         try {
             // 同时加锁：lock1 lock2 lock3, 红锁在大部分节点上加锁成功就算成功。

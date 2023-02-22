@@ -31,4 +31,25 @@ public class RedissonConfig {
         return Redisson.create(config);
     }
 
+    @Bean
+    public RedissonClient redissonClient1() {
+        Config config1 = new Config();
+        config1.useSingleServer().setAddress("redis://172.0.0.1:5378").setPassword("a123456").setDatabase(0);
+        return Redisson.create(config1);
+    }
+
+    @Bean
+    public RedissonClient redissonClient2() {
+        Config config1 = new Config();
+        config1.useSingleServer().setAddress("redis://172.0.0.1:5379").setPassword("a123456").setDatabase(0);
+        return Redisson.create(config1);
+    }
+
+    @Bean
+    public RedissonClient redissonClient3() {
+        Config config1 = new Config();
+        config1.useSingleServer().setAddress("redis://172.0.0.1:5380").setPassword("a123456").setDatabase(0);
+        return Redisson.create(config1);
+    }
+
 }

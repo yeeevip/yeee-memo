@@ -7,7 +7,7 @@ import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import vip.yeee.memo.integrate.common.scloud.gray.inner.handle.GrayLoadBalancer;
+import vip.yeee.memo.integrate.common.scloud.gray.common.handle.GrayLoadBalancer;
 
 /**
  * description......

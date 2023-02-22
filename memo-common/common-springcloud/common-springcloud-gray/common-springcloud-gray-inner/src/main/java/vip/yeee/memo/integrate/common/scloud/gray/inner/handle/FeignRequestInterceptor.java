@@ -1,13 +1,11 @@
 package vip.yeee.memo.integrate.common.scloud.gray.inner.handle;
 
-import cn.hutool.core.util.StrUtil;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import vip.yeee.memo.integrate.base.model.constant.CloudGrayConstant;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
@@ -44,10 +42,7 @@ public class FeignRequestInterceptor implements RequestInterceptor {
                 String key = enumeration.nextElement();
                 String value = request.getHeader(key);
                 //将灰度标记的请求头透传给下个服务
-                if (StrUtil.equals(CloudGrayConstant.GRAY_HEADER, key) && Boolean.TRUE.toString().equals(value)){
-                    //① 保存灰度发布的标记
-                    map.put(key, value);
-                }
+                map.put(key, value);
             }
         }
         return map;

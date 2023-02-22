@@ -16,6 +16,7 @@
     <modules>
         <module>common-springcloud-gray-gateway</module>
         <module>common-springcloud-gray-inner</module>
+        <module>common-springcloud-gray-common</module>
     </modules>
 
 </project>

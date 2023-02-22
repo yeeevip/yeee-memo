@@ -8,17 +8,17 @@ package vip.yeee.memo.integrate.common.scloud.gray.gateway.context;
  */
 public class GrayRequestContextHolder {
 
-    private final static ThreadLocal<Boolean> grayTag = new ThreadLocal<>();
+    private final static ThreadLocal<String> apiVersion = new ThreadLocal<>();
 
-    public static void setGrayTag(Boolean tag) {
-        grayTag.set(tag);
+    public static void setApiVersion(String version) {
+        apiVersion.set(version);
     }
 
-    public static Boolean getGrayTag() {
-        return grayTag.get();
+    public static String getApiVersion() {
+        return apiVersion.get();
     }
 
     public static void remove() {
-        grayTag.remove();
+        apiVersion.remove();
     }
 }
