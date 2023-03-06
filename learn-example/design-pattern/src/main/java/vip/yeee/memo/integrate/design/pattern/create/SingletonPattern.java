@@ -19,6 +19,9 @@ class InitSingleton {
 
     private final static InitSingleton INSTANCE = new InitSingleton();
 
+    private InitSingleton() {
+    }
+
     static {
         log.info("InitSingleton实例化时就初始化、线程安全；INSTANCE = {}", INSTANCE);
     }
@@ -35,7 +38,11 @@ class InitSingleton {
 @Slf4j
 class LazySingleton {
 
-    private static LazySingleton INSTANCE = null;
+    // volatile 防止指令重排序
+    private static volatile LazySingleton INSTANCE = null;
+
+    private LazySingleton() {
+    }
 
     public static LazySingleton getInstance() {
         if (INSTANCE != null) {
