@@ -1,11 +1,12 @@
-package vip.yeee.memo.integrate.redisson;
+package vip.yeee.memo.integrate.stools.redisson;
 
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.test.context.SpringBootTest;
-import vip.yeee.memo.integrate.redisson.kit.BloomFilterKit;
+import vip.yeee.memo.integrate.stools.redisson.RedissonKitApplication;
+import vip.yeee.memo.integrate.stools.redisson.kit.BloomFilterKit;
 
 import javax.annotation.Resource;
 import java.util.List;

@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.redisson;
+package vip.yeee.memo.integrate.stools.redisson;
 
 import com.google.common.collect.Maps;
 import lombok.AllArgsConstructor;
@@ -10,15 +10,13 @@ import org.junit.jupiter.api.Test;
 import org.redisson.api.RList;
 import org.redisson.api.RScoredSortedSet;
 import org.redisson.api.RSet;
-import org.redisson.api.RSortedSet;
 import org.springframework.boot.test.context.SpringBootTest;
-import vip.yeee.memo.integrate.redisson.kit.CacheModelKit;
+import vip.yeee.memo.integrate.stools.redisson.kit.CacheModelKit;
 
 import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * description......

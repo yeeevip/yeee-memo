@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.redisson.kit;
+package vip.yeee.memo.integrate.stools.redisson.kit;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;

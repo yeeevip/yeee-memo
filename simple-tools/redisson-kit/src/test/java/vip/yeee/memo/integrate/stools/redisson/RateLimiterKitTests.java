@@ -1,15 +1,14 @@
-package vip.yeee.memo.integrate.redisson;
+package vip.yeee.memo.integrate.stools.redisson;
 
 import cn.hutool.core.thread.ThreadUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.redisson.api.RRateLimiter;
 import org.springframework.boot.test.context.SpringBootTest;
-import vip.yeee.memo.integrate.redisson.kit.RateLimiterKit;
+import vip.yeee.memo.integrate.stools.redisson.kit.RateLimiterKit;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.util.concurrent.TimeUnit;
 
 /**
  * description......

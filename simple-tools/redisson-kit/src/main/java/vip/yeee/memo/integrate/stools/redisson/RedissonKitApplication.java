@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.redisson;
+package vip.yeee.memo.integrate.stools.redisson;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.redisson.kit;
+package vip.yeee.memo.integrate.stools.redisson.kit;
 
 import org.redisson.api.RRateLimiter;
 import org.redisson.api.RateIntervalUnit;
