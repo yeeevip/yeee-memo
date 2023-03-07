@@ -76,9 +76,7 @@ public abstract class AbstractStaticHandler<T, RS> implements StaticHandler {
             }
             staticDataVo.setData(this.dataCollect(rs));
             ossKit.uploadObject2StaticJson(staticPath, staticDataVo);
-            for (StaticPostProcessor<T, RS> processor : postProcessors) {
-                processor.postProcess(site, staticDataVo, rs);
-            }
+            this.invokePostProcessors(site, staticDataVo, rs);
         } catch (Exception e) {
             log.info("【静态化】- 失败, site = {}", site.getId(), e);
             throw new StaticException("静态化失败");
@@ -112,8 +110,14 @@ public abstract class AbstractStaticHandler<T, RS> implements StaticHandler {
         return rs;
     }
 
-    public void addPostProcessor(List<StaticPostProcessor<T, RS>> postProcessors) {
+    public void registerProcessor(List<StaticPostProcessor<T, RS>> postProcessors) {
         this.postProcessors.addAll(postProcessors);
+    }
+
+    private void invokePostProcessors(TCmsSite site, StaticDataVo<T> staticDataVo, RS rs) {
+        for (StaticPostProcessor<T, RS> processor : postProcessors) {
+            processor.postProcess(site, staticDataVo, rs);
+        }
     }
 
     public interface StaticPostProcessor<T, RS> {

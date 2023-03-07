@@ -9,6 +9,9 @@ import org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBal
 import org.springframework.cloud.loadbalancer.core.SelectedInstanceCallback;
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
 import org.springframework.http.HttpHeaders;
+import org.springframework.util.StringUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import reactor.core.publisher.Mono;
 import vip.yeee.memo.integrate.common.scloud.gray.common.constant.CloudGrayConstant;
 
@@ -55,6 +58,10 @@ public class GrayLoadBalancer implements ReactorServiceInstanceLoadBalancer {
     private Response<ServiceInstance> processInstanceResponse(ServiceInstanceListSupplier supplier,
                                                               List<ServiceInstance> serviceInstances, HttpHeaders headers) {
         String apiVersion = headers.getFirst(CloudGrayConstant.API_VERSION_HEADER);
+        if (!StringUtils.hasText(apiVersion)) {
+            javax.servlet.http.HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+            apiVersion = request.getHeader(CloudGrayConstant.API_VERSION_HEADER);
+        }
         Map<String,String> grayTagMap = new HashMap<>();
         grayTagMap.put(CloudGrayConstant.API_VERSION_HEADER, apiVersion);
         final Set<Map.Entry<String,String>> attributes = Collections.unmodifiableSet(grayTagMap.entrySet());

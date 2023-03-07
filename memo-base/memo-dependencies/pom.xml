@@ -42,6 +42,7 @@
         <mapstruct.version>1.4.1.Final</mapstruct.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <zxing.version>3.1.0</zxing.version>
+        <xstream.version>1.4.10</xstream.version>
     </properties>
 
     <dependencyManagement>
@@ -98,22 +99,22 @@
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
-                <artifactId>common-web-auth-server</artifactId>
+                <artifactId>common-platform-auth-server</artifactId>
                 <version>${yeee-sdk.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
-                <artifactId>common-web-auth-client</artifactId>
+                <artifactId>common-platform-auth-client</artifactId>
                 <version>${yeee-sdk.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
-                <artifactId>common-api-auth-server</artifactId>
+                <artifactId>common-app-auth-server</artifactId>
                 <version>${yeee-sdk.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
-                <artifactId>common-api-auth-client</artifactId>
+                <artifactId>common-app-auth-client</artifactId>
                 <version>${yeee-sdk.version}</version>
             </dependency>
             <dependency>
@@ -134,6 +135,11 @@
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>common-springcloud-openfeign</artifactId>
+                <version>${yeee-sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>vip.yeee.memo</groupId>
+                <artifactId>common-httpclient-okhttp</artifactId>
                 <version>${yeee-sdk.version}</version>
             </dependency>
             <!-- log4j -->
@@ -349,6 +355,11 @@
                 <groupId>com.google.zxing</groupId>
                 <artifactId>javase</artifactId>
                 <version>${zxing.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.thoughtworks.xstream</groupId>
+                <artifactId>xstream</artifactId>
+                <version>${xstream.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

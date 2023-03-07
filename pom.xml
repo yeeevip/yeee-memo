@@ -27,6 +27,6 @@
 		<module>test-tool</module>
         <module>memo-common</module>
 		<module>learn-example</module>
-	</modules>
+    </modules>
 
 </project>

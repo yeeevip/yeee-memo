@@ -1,0 +1,74 @@
+server:
+  port: 8809
+  servlet:
+    context-path: /resource-server1
+logging:
+  level:
+    org:
+      springframework:
+        security: debug
+spring:
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+  application:
+    name: cloud-web-resource-server1
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/yeee_auth?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      discovery:
+        namespace: e69ceae8-160c-4d52-b512-ad0e919ad86b
+        group: ${spring.profiles.active}
+        metadata:
+          api-version: ${yeee.api-version}
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://cloud-web-auth-server/auth-server/oauth/check_token
+    client:
+      client-id: ${spring.application.name}
+      client-secret: 123456
+      #      grant-type: password
+      access-token-uri: http://cloud-web-auth-server/auth-server/oauth/token
+feign:
+  sentinel:
+    enabled: true
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
+  client:
+    config:
+      default:
+        ## 针对每个服务设置超时时间，这个配置可以覆盖掉ribbon的超时时间
+        connect-timeout: 2000
+        read-timeout: 60000
+      compression:
+        request:
+          enabled: true
+        response:
+          enabled: true
+yeee:
+  api-version: 2.0
+  swagger:
+    enable: true
+    title: 资源1服务中心
+    description: 资源1服务中心
+    contact-name: yeee
+    version: 1.0
+  auth:
+    resource:
+      exclude:
+        - "/system/register"
+        - "/system/login"
+        - "/anonymous/limit/api"

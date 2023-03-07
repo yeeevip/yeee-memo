@@ -14,6 +14,8 @@
         <module>common-auth</module>
         <module>common-springcloud</module>
         <module>mybatis-encrypt-plugin</module>
+        <module>common-sso</module>
+        <module>common-httpclient</module>
     </modules>
 
 </project>

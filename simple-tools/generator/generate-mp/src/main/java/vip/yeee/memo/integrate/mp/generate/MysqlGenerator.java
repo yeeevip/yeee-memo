@@ -28,6 +28,13 @@ import java.util.Scanner;
  */
 public class MysqlGenerator {
 
+    /**
+     * RUN THIS
+     */
+    public static void main(String[] args) throws IOException {
+        execute();
+    }
+
     // 配置文件
     static Properties properties = null;
 
@@ -53,11 +60,7 @@ public class MysqlGenerator {
         properties.load(ResourceUtil.getStream("C:\\Users\\yeeee\\Desktop\\generator.properties"));
     }
 
-    /**
-     * RUN THIS
-     */
-    public static void main(String[] args) throws IOException {
-
+    private static void execute() throws IOException {
         // 初始化参数
         init();
 

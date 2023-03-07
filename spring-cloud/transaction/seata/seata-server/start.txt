@@ -1,9 +1,7 @@
 
 
-2.seata的安装
-
-3.seata事务日志持久化
-    1.seata所在库的脚本(用于控制事务)
+一、seata服务端的安装
+    1.seata服务端所在库的脚本(用于控制事务)TC
     -- -------------------------------- The script used when storeMode is 'db' --------------------------------
     -- the table to store GlobalSession data
     CREATE TABLE IF NOT EXISTS `global_table`
@@ -61,39 +59,23 @@
     ) ENGINE = InnoDB
     DEFAULT CHARSET = utf8;
 
+    2.修改seata配置文件
+    file.conf 在conf目录下
 
-    2.业务库脚本(回滚日志表)
-    -- for AT mode you must to init this sql for you business database. the seata server not need it.
-    CREATE TABLE IF NOT EXISTS `undo_log`
-    (
-    `branch_id`     BIGINT(20)   NOT NULL COMMENT 'branch transaction id',
-    `xid`           VARCHAR(100) NOT NULL COMMENT 'global transaction id',
-    `context`       VARCHAR(128) NOT NULL COMMENT 'undo_log context,such as serialization',
-    `rollback_info` LONGBLOB     NOT NULL COMMENT 'rollback info',
-    `log_status`    INT(11)      NOT NULL COMMENT '0:normal status,1:defense status',
-    `log_created`   DATETIME(6)  NOT NULL COMMENT 'create datetime',
-    `log_modified`  DATETIME(6)  NOT NULL COMMENT 'modify datetime',
-    UNIQUE KEY `ux_undo_log` (`xid`, `branch_id`)
-    ) ENGINE = InnoDB
-    AUTO_INCREMENT = 1
-    DEFAULT CHARSET = utf8 COMMENT ='AT transaction mode undo table';
+        1.新增配置
+        #1.4.2没有service这个配置,可以自己添加上
+        service {
+            vgroupMapping.seata-client-01 = "default" #指定分组
+            vgroupMapping.seata-client-02 = "default" #指定分组
+            vgroupMapping.seata-client-03 = "default" #指定分组
+            # default.grouplist = "127.0.0.1:8091"
+            enableDegrade = false
+            disable = false
+            max.commit.retry.timeout = "-1"
+            max.rollback.retry.timeout = "-1"
+        }
 
-
-2.修改seata配置文件
-file.conf 在conf目录下
-
-    1.新增配置
-    #1.4.2没有service这个配置,可以自己添加上
-    service {
-    vgroupMapping.my_test_tx_group = "default" #指定分组
-    default.grouplist = "127.0.0.1:8091"
-    enableDegrade = false
-    disable = false
-    max.commit.retry.timeout = "-1"
-    max.rollback.retry.timeout = "-1"
-    }
-
-    2.修改事务日志存储方式
+    3.修改事务日志存储方式
     store {
       ## store mode: file、db、redis 配置文件默认用file,这里修改为db数据库
       mode = "db"
@@ -123,19 +105,38 @@ file.conf 在conf目录下
     }
 
 
-4.seata配置nacos注册中心
-    1.修改seata配置文件 registry.conf在conf目录下
-    registry {
-      # file 、nacos 、eureka、redis、zk、consul、etcd3、sofa
-      type = "nacos" #默认为file 修改为nacos
-      nacos {
-        application = "seata-server" #随便写
-        serverAddr = "127.0.0.1:8848"
-        group = "dev" #随便写
-        namespace = "e69ceae8-160c-4d52-b512-ad0e919ad86b"
-        cluster = "default"
-        username = "nacos"
-        password = "nacos"
-      }
-    }
+    4.seata配置nacos注册中心
+        1.修改seata配置文件 registry.conf在conf目录下
+        registry {
+          # file 、nacos 、eureka、redis、zk、consul、etcd3、sofa
+          type = "nacos" #默认为file 修改为nacos
+          nacos {
+            application = "seata-server" #随便写
+            serverAddr = "127.0.0.1:8848"
+            group = "dev" #随便写
+            namespace = "e69ceae8-160c-4d52-b512-ad0e919ad86b"
+            cluster = "default"
+            username = "nacos"
+            password = "nacos"
+          }
+        }
+
+二、seata客户端
+
+    1.业务库脚本(回滚日志表)
+    -- for AT mode you must to init this sql for you business database. the seata server not need it.
+    CREATE TABLE IF NOT EXISTS `undo_log`
+    (
+    `branch_id`     BIGINT(20)   NOT NULL COMMENT 'branch transaction id',
+    `xid`           VARCHAR(100) NOT NULL COMMENT 'global transaction id',
+    `context`       VARCHAR(128) NOT NULL COMMENT 'undo_log context,such as serialization',
+    `rollback_info` LONGBLOB     NOT NULL COMMENT 'rollback info',
+    `log_status`    INT(11)      NOT NULL COMMENT '0:normal status,1:defense status',
+    `log_created`   DATETIME(6)  NOT NULL COMMENT 'create datetime',
+    `log_modified`  DATETIME(6)  NOT NULL COMMENT 'modify datetime',
+    UNIQUE KEY `ux_undo_log` (`xid`, `branch_id`)
+    ) ENGINE = InnoDB
+    AUTO_INCREMENT = 1
+    DEFAULT CHARSET = utf8 COMMENT ='AT transaction mode undo table';
+
 

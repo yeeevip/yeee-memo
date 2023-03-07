@@ -32,7 +32,7 @@ public abstract class AbstractAdStaticHandler extends AbstractStaticHandler<List
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        super.addPostProcessor(postProcessors);
+        super.registerProcessor(postProcessors);
     }
 
     @Override

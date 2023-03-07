@@ -10,7 +10,7 @@
         <version>2.0.3-SNAPSHOT</version>
     </parent>
 
-    <artifactId>seata-client</artifactId>
+    <artifactId>seata-client-01</artifactId>
 
     <dependencies>
         <dependency>

@@ -30,7 +30,7 @@
 		<!-- 分布式事务 -->
 		<module>transaction</module>
 		<!-- 安全 -->
-        <module>auth</module>
+        <module>auth-sso</module>
     </modules>
 
 	<dependencies>

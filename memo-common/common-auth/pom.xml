@@ -10,10 +10,10 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>common-web-auth-server</module>
-        <module>common-web-auth-client</module>
-        <module>common-api-auth-server</module>
-        <module>common-api-auth-client</module>
+        <module>common-platform-auth-server</module>
+        <module>common-platform-auth-client</module>
+        <module>common-app-auth-server</module>
+        <module>common-app-auth-client</module>
     </modules>
 
 </project>

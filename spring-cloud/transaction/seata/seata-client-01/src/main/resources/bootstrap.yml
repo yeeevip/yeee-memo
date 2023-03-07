@@ -24,9 +24,4 @@ seata:
   # 默认AT模式
   data-source-proxy-mode: AT
   # 使用哪个事务组
-  tx-service-group: my_test_tx_group
-  service:
-    # 事务组对应的集群名称
-    vgroup-mapping.my_test_tx_group: default
-    grouplist:
-      default: 127.0.0.1:8091
+  tx-service-group: ${spring.application.name}
