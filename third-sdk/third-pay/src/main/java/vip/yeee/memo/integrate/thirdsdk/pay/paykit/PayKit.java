@@ -9,7 +9,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import vip.yeee.memo.integrate.thirdsdk.pay.constant.PayConstant;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.*;
+import vip.yeee.memo.integrate.thirdsdk.pay.properties.WxPayConfig;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -34,27 +36,55 @@ public interface PayKit {
 
     ChannelRetMsgBO transfer(TransferReqBO reqBO);
 
-    Pair<String, ChannelRetMsgBO> checkAndParseNoticeParams(HttpServletRequest request) throws Exception;
+    Pair<String, ChannelRetMsgBO> checkAndParsePayNoticeParams(HttpServletRequest request) throws Exception;
+
+    Pair<String, ChannelRetMsgBO> checkAndParseRefundNoticeParams(HttpServletRequest request) throws Exception;
 
     AES aes = SecureUtil.aes("4ChT08phkz501wwD795X7w==".getBytes());
 
-    static ResponseEntity<Object> getWxV2SuccessResp() {
+    static ResponseEntity<Object> getWxV2SuccessResp(String text) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.TEXT_HTML);
-        return new ResponseEntity<>(WxPayNotifyResponse.successResp("OK"), httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(WxPayNotifyResponse.successResp(text), httpHeaders, HttpStatus.OK);
     }
 
-    static ResponseEntity<Object> getWxV3SuccessResp() {
-        Map<String, String> map = ImmutableMap.of("code", "SUCCESS", "message", "成功");
+    static ResponseEntity<Object> getWxV3SuccessResp(String text) {
+        Map<String, String> map = ImmutableMap.of("code", text, "message", "成功");
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         return new ResponseEntity<>(map, httpHeaders, HttpStatus.OK);
     }
 
-    static ResponseEntity<Object> getAliSuccessResp() {
+    static ResponseEntity<Object> getAliSuccessResp(String text) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.TEXT_HTML);
-        return new ResponseEntity<>("SUCCESS", httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(text, httpHeaders, HttpStatus.OK);
+    }
+
+    static ResponseEntity<Object> getDefaultSuccessResp(String ifCode) {
+        if (ifCode.startsWith(PayConstant.IF_CODE.WXPAY.toLowerCase())) {
+            WxPayConfig wxPayConfig = PayContext.getContext().getWxPayConfig();
+            if (PayConstant.PAY_IF_VERSION.WX_V3.equals(wxPayConfig.getApiVersion())) {
+                return PayKit.getWxV3SuccessResp("ERROR");
+            }
+            return PayKit.getWxV2SuccessResp("OK");
+        } else if (ifCode.startsWith(PayConstant.IF_CODE.ALIPAY.toLowerCase())) {
+            return PayKit.getAliSuccessResp("SUCCESS");
+        }
+        return null;
+    }
+
+    static ResponseEntity<Object> getDefaultErrorResp(String ifCode) {
+        if (ifCode.startsWith(PayConstant.IF_CODE.WXPAY.toLowerCase())) {
+            WxPayConfig wxPayConfig = PayContext.getContext().getWxPayConfig();
+            if (PayConstant.PAY_IF_VERSION.WX_V3.equals(wxPayConfig.getApiVersion())) {
+                return PayKit.getWxV3SuccessResp("ERROR");
+            }
+            return PayKit.getWxV2SuccessResp("ERROR");
+        } else if (ifCode.startsWith(PayConstant.IF_CODE.ALIPAY.toLowerCase())) {
+            return PayKit.getAliSuccessResp("ERROR");
+        }
+        return null;
     }
 
 }

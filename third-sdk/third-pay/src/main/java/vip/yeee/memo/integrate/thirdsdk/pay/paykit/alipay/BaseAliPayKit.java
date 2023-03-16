@@ -1,9 +1,9 @@
 package vip.yeee.memo.integrate.thirdsdk.pay.paykit.alipay;
 
 import cn.hutool.core.lang.Pair;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import com.alipay.api.AlipayApiException;
-import com.alipay.api.AlipayClient;
 import com.alipay.api.domain.*;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayFundTransUniTransferRequest;
@@ -15,15 +15,16 @@ import com.alipay.api.response.AlipayTradeCloseResponse;
 import com.alipay.api.response.AlipayTradeQueryResponse;
 import com.alipay.api.response.AlipayTradeRefundResponse;
 import com.fasterxml.jackson.core.type.TypeReference;
+import lombok.extern.slf4j.Slf4j;
 import vip.yeee.memo.integrate.base.model.exception.BizException;
 import vip.yeee.memo.integrate.base.util.JacksonUtils;
-import vip.yeee.memo.integrate.thirdsdk.pay.constant.PayConstant;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.*;
+import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayContext;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayKit;
+import vip.yeee.memo.integrate.thirdsdk.pay.properties.AliPayConfig;
 import vip.yeee.memo.integrate.thirdsdk.pay.properties.PayProperties;
 import vip.yeee.memo.integrate.thirdsdk.pay.utils.AmountUtil;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
@@ -33,19 +34,19 @@ import java.util.Map;
  * @author yeeee
  * @since 2022/8/26 10:53
  */
-public abstract class AbstractAliPayKit implements PayKit {
-
-    @Resource
-    protected PayProperties payProperties;
-    @Resource
-    protected AlipayClient alipayClient;
+@Slf4j
+public abstract class BaseAliPayKit implements PayKit {
 
     @Override
     public abstract UnifiedOrderRespBO unifiedOrder(UnifiedOrderReqBO reqBO);
 
     @Override
     public ChannelRetMsgBO queryOrder(QueryOrderReqBO reqBO) {
+        AliPayConfig aliPayConfig = PayContext.getContext().getAliPayConfig();
         AlipayTradeQueryRequest req = new AlipayTradeQueryRequest();
+        if (StrUtil.isNotBlank(aliPayConfig.getAuthToken())) {
+            req.putOtherTextParam("app_auth_token", aliPayConfig.getAuthToken());
+        }
         // 商户订单号，商户网站订单系统中唯一订单号，必填
         AlipayTradeQueryModel model = new AlipayTradeQueryModel();
         model.setOutTradeNo(reqBO.getOrderCode());
@@ -53,7 +54,11 @@ public abstract class AbstractAliPayKit implements PayKit {
 
         AlipayTradeQueryResponse alipayResp;
         try {
-            alipayResp = alipayClient.execute(req);
+            if (aliPayConfig.getUseCert()) {
+                alipayResp = PayContext.getContext().getAlipayClient().certificateExecute(req);
+            } else {
+                alipayResp = PayContext.getContext().getAlipayClient().execute(req);
+            }
         } catch (AlipayApiException e) {
             throw new BizException(e.getMessage());
         }
@@ -76,7 +81,7 @@ public abstract class AbstractAliPayKit implements PayKit {
         req.setBizModel(model);
         AlipayTradeCloseResponse alipayResp;
         try {
-            alipayResp = alipayClient.execute(req);
+            alipayResp = PayContext.getContext().getAlipayClient().execute(req);
         } catch (AlipayApiException e) {
             throw new BizException(e.getMessage());
         }
@@ -90,17 +95,26 @@ public abstract class AbstractAliPayKit implements PayKit {
 
     @Override
     public ChannelRetMsgBO refundOrder(RefundOrderReqBO reqBO) {
+        AliPayConfig aliPayConfig = PayContext.getContext().getAliPayConfig();
         AlipayTradeRefundRequest req = new AlipayTradeRefundRequest();
+        if (StrUtil.isNotBlank(aliPayConfig.getAuthToken())) {
+            req.putOtherTextParam("app_auth_token", aliPayConfig.getAuthToken());
+        }
         AlipayTradeRefundModel model = new AlipayTradeRefundModel();
         model.setOutTradeNo(reqBO.getPayOrderCode());
-        model.setTradeNo(reqBO.getPayOrderCode());
+        model.setTradeNo(reqBO.getRefundOrderId());
         model.setOutRequestNo(reqBO.getRefundOrderId());
         model.setRefundAmount(AmountUtil.convertCent2Dollar(reqBO.getRefundAmount().toString()));
         model.setRefundReason(reqBO.getRefundReason());
         req.setBizModel(model);
+        req.setNotifyUrl(getRefundNotifyUrl());
         AlipayTradeRefundResponse alipayResp;
         try {
-            alipayResp = alipayClient.execute(req);
+            if (aliPayConfig.getUseCert()) {
+                alipayResp = PayContext.getContext().getAlipayClient().certificateExecute(req);
+            } else {
+                alipayResp = PayContext.getContext().getAlipayClient().execute(req);
+            }
         } catch (AlipayApiException e) {
             throw new BizException(e.getMessage());
         }
@@ -108,6 +122,7 @@ public abstract class AbstractAliPayKit implements PayKit {
         retMsgBO.setChannelAttach(alipayResp.getBody());
         if (alipayResp.isSuccess()) {
             retMsgBO.setChannelState(ChannelRetMsgBO.ChannelState.CONFIRM_SUCCESS);
+            retMsgBO.setChannelOrderId(alipayResp.getTradeNo());
         } else {
             retMsgBO.setChannelState(ChannelRetMsgBO.ChannelState.CONFIRM_FAIL);
             retMsgBO.setChannelErrCode(alipayResp.getSubCode());
@@ -138,7 +153,7 @@ public abstract class AbstractAliPayKit implements PayKit {
 
         AlipayFundTransUniTransferResponse alipayResp;
         try {
-            alipayResp = alipayClient.execute(req);
+            alipayResp = PayContext.getContext().getAlipayClient().execute(req);
         } catch (AlipayApiException e) {
             throw new BizException(e.getMessage());
         }
@@ -159,9 +174,10 @@ public abstract class AbstractAliPayKit implements PayKit {
     }
 
     @Override
-    public Pair<String, ChannelRetMsgBO> checkAndParseNoticeParams(HttpServletRequest request) throws Exception {
-        Map<String, String> map = JacksonUtils.toJavaBean(ServletUtil.getBody(request), new TypeReference<Map<String, String>>() {});
-        PayProperties.AlipayProperties ali = payProperties.getAli();
+    public Pair<String, ChannelRetMsgBO> checkAndParsePayNoticeParams(HttpServletRequest request) throws Exception {
+        Map<String, String> map = ServletUtil.getParamMap(request);
+        log.info("checkAndParseNoticeParams map = {}", map);
+        AliPayConfig ali = PayContext.getContext().getAliPayConfig();
         boolean verifyResult;
         if (ali.getUseCert()) {  //证书方式
             verifyResult = AlipaySignature.rsaCertCheckV1(map, ali.getAlipayPublicCert(), "utf-8", ali.getSignType());
@@ -175,7 +191,7 @@ public abstract class AbstractAliPayKit implements PayKit {
         ChannelRetMsgBO result = new ChannelRetMsgBO();
         result.setChannelOrderId(map.get("trade_no")); //渠道订单号
         result.setChannelUserId(map.get("buyer_id")); //支付用户ID
-        result.setResponseEntity(PayKit.getAliSuccessResp()); //响应数据
+        result.setResponseEntity(PayKit.getAliSuccessResp("SUCCESS")); //响应数据
 
         result.setChannelState(ChannelRetMsgBO.ChannelState.WAITING); // 默认支付中
 
@@ -188,12 +204,21 @@ public abstract class AbstractAliPayKit implements PayKit {
         return Pair.of(map.get("out_trade_no"), result);
     }
 
-    protected String getPayNotifyUrl(String orderId) {
-        return String.format(payProperties.getNotifyUrl(), getPayway().toLowerCase(), orderId);
+    @Override
+    public Pair<String, ChannelRetMsgBO> checkAndParseRefundNoticeParams(HttpServletRequest request) throws Exception {
+        return checkAndParsePayNoticeParams(request);
     }
 
-    protected String getRefundNotifyUrl(String orderId) {
-        return String.format(payProperties.getRefundNotifyUrl(), getPayway().toLowerCase(), orderId);
+    protected String getPayNotifyUrl() {
+        PayContext payContext = PayContext.getContext();
+        PayProperties payProperties = payContext.getPayProperties();
+        return String.format(payProperties.getNotifyUrl(), getPayway().toLowerCase(), payContext.getLesseeId());
+    }
+
+    protected String getRefundNotifyUrl() {
+        PayContext payContext = PayContext.getContext();
+        PayProperties payProperties = payContext.getPayProperties();
+        return String.format(payProperties.getRefundNotifyUrl(), getPayway().toLowerCase(), payContext.getLesseeId());
     }
 
 }

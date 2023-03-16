@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.*;
 import vip.yeee.memo.integrate.base.model.rest.CommonResult;
 import vip.yeee.memo.integrate.base.util.CodeImgUtil;
 import vip.yeee.memo.integrate.thirdsdk.pay.biz.OrderBiz;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.vo.req.CheckPayStateReqVO;
+import vip.yeee.memo.integrate.thirdsdk.pay.model.vo.req.OrderQueryReqVO;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.vo.req.SubmitOrderReqVO;
+import vip.yeee.memo.integrate.thirdsdk.pay.model.vo.req.UnifiedOrderRefundReqVO;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.vo.resp.CheckPayStateResVO;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.vo.resp.SubmitOrderRespVO;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.vo.req.UnifiedOrderReqVO;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.vo.resp.UnifiedOrderRespVO;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayKit;
 
 import javax.annotation.Resource;
@@ -47,28 +47,36 @@ public class OrderController {
     }
 
     /**
+     * 统一下单/订单退款
+     */
+    @PostMapping("/unified/order/refund")
+    public CommonResult<Object> unifiedOrderRefund(@Validated @RequestBody UnifiedOrderRefundReqVO reqVO) {
+        return CommonResult.success(orderBiz.unifiedOrderRefund(reqVO));
+    }
+
+    /**
      * 同步查询支付结果
      * 支付完成后，返回商户页面可以调用
      */
-    @PostMapping({"/biz/order/check-pay-state"})
-    public CommonResult<CheckPayStateResVO> checkOrderPayState(@RequestBody CheckPayStateReqVO request) {
-        return CommonResult.success(orderBiz.checkOrderPayState(request));
+    @PostMapping({"/biz/order/query"})
+    public CommonResult<CheckPayStateResVO> checkOrderQuery(@RequestBody OrderQueryReqVO request) {
+        return CommonResult.success(orderBiz.checkOrderQuery(request));
     }
 
     /**
      * 三方支付回调处理
      */
-    @PostMapping({"/api/pay/notify/{ifCode}/{orderCode}"})
-    public ResponseEntity<Object> handlePayNotify(HttpServletRequest request, @PathVariable("ifCode") String ifCode, @PathVariable("orderCode") String orderCode) throws Exception {
-        return orderBiz.handlePayNotify(request, ifCode, orderCode);
+    @PostMapping({"/api/pay/notify/{ifCode}/{lesseeId}"})
+    public ResponseEntity<Object> handlePayNotify(HttpServletRequest request, @PathVariable("ifCode") String ifCode, @PathVariable("lesseeId") String lesseeId) throws Exception {
+        return orderBiz.handlePayNotify(request, ifCode, lesseeId);
     }
 
     /**
      * 三方退款回调处理
      */
-    @PostMapping({"/api/refund/notify/{ifCode}/{orderCode}"})
-    public ResponseEntity<Object> handleRefundNotify(HttpServletRequest request, @PathVariable("ifCode") String ifCode) throws Exception {
-        return orderBiz.handleRefundNotify(request, ifCode);
+    @PostMapping({"/api/refund/notify/{ifCode}/{lesseeId}"})
+    public ResponseEntity<Object> handleRefundNotify(HttpServletRequest request, @PathVariable("ifCode") String ifCode, @PathVariable("lesseeId") String lesseeId) throws Exception {
+        return orderBiz.handleRefundNotify(request, ifCode, lesseeId);
     }
 
     @RequestMapping("/general/img/qr/{aesStr}.png")

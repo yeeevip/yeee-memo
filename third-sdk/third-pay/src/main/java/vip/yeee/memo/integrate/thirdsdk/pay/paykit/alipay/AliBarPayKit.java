@@ -14,6 +14,8 @@ import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.ChannelRetMsgBO;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.CommonUnifiedOrderRespBO;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.UnifiedOrderReqBO;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.UnifiedOrderRespBO;
+import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayContext;
+import vip.yeee.memo.integrate.thirdsdk.pay.properties.AliPayConfig;
 import vip.yeee.memo.integrate.thirdsdk.pay.utils.AmountUtil;
 
 /**
@@ -24,7 +26,7 @@ import vip.yeee.memo.integrate.thirdsdk.pay.utils.AmountUtil;
  */
 @Slf4j
 @Component
-public class AliBarPayKit extends AbstractAliPayKit {
+public class AliBarPayKit extends BaseAliPayKit {
 
     @Override
     public String getPayway() {
@@ -34,7 +36,11 @@ public class AliBarPayKit extends AbstractAliPayKit {
     @Override
     public UnifiedOrderRespBO unifiedOrder(UnifiedOrderReqBO reqBO) {
         try {
+            AliPayConfig aliPayConfig = PayContext.getContext().getAliPayConfig();
             AlipayTradePayRequest req = new AlipayTradePayRequest();
+            if (StrUtil.isNotBlank(aliPayConfig.getAuthToken())) {
+                req.putOtherTextParam("app_auth_token", aliPayConfig.getAuthToken());
+            }
             AlipayTradePayModel model = new AlipayTradePayModel();
             model.setOutTradeNo(reqBO.getOrderCode());
             model.setScene("bar_code"); //条码支付 bar_code ; 声波支付 wave_code
@@ -50,15 +56,17 @@ public class AliBarPayKit extends AbstractAliPayKit {
             ChannelRetMsgBO retMsgBO = new ChannelRetMsgBO();
             respBO.setChannelRetMsg(retMsgBO);
 
-            AlipayTradePayResponse alipayResp = alipayClient.execute(req);
+            AlipayTradePayResponse alipayResp = PayContext.getContext().getAlipayClient().execute(req);
             retMsgBO.setChannelAttach(alipayResp.getBody());
             retMsgBO.setChannelOrderId(alipayResp.getTradeNo());
             retMsgBO.setChannelUserId(alipayResp.getBuyerUserId());
             // 当条码重复发起时，支付宝返回的code = 10003, subCode = null [等待用户支付], 此时需要特殊判断 = = 。
             if ("10000".equals(alipayResp.getCode()) && alipayResp.isSuccess()) {
                 retMsgBO.setChannelState(ChannelRetMsgBO.ChannelState.CONFIRM_SUCCESS);
+                retMsgBO.setChannelOrderId(alipayResp.getTradeNo());
             } else if ("10003".equals(alipayResp.getCode())) { //10003 表示为 处理中, 例如等待用户输入密码
                 retMsgBO.setChannelState(ChannelRetMsgBO.ChannelState.WAITING);
+                retMsgBO.setChannelOrderId(alipayResp.getTradeNo());
             } else { // 其他状态, 表示下单失败
                 retMsgBO.setChannelState(ChannelRetMsgBO.ChannelState.CONFIRM_FAIL);
                 retMsgBO.setChannelErrCode(StrUtil.emptyToDefault(alipayResp.getCode(), alipayResp.getSubCode()));

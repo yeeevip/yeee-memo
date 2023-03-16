@@ -9,6 +9,7 @@ import vip.yeee.memo.integrate.base.model.exception.BizException;
 import vip.yeee.memo.integrate.base.util.JacksonUtils;
 import vip.yeee.memo.integrate.thirdsdk.pay.constant.PayConstant;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.*;
+import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayContext;
 
 /**
  * description......
@@ -18,7 +19,7 @@ import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.*;
  */
 @Slf4j
 @Component
-public class WxAppPayKit extends AbstractWxPayKit {
+public class WxAppPayKit extends BaseWxPayKit {
 
     @Override
     public String getPayway() {
@@ -28,17 +29,21 @@ public class WxAppPayKit extends AbstractWxPayKit {
     @Override
     public UnifiedOrderRespBO unifiedOrder(UnifiedOrderReqBO reqBO) {
         try {
+            PayContext payContext = PayContext.getContext();
             WxPayUnifiedOrderRequest request = super.buildUnifiedOrderRequest(reqBO);
             request.setTradeType(WxPayConstants.TradeType.APP);
-            request.setNotifyUrl(getPayNotifyUrl(reqBO.getOrderCode()));
-            WxPayAppOrderResult response = wxPayService.createOrder(request);
+            request.setNotifyUrl(getPayNotifyUrl());
+            WxPayAppOrderResult response = payContext.getWxPayService().createOrder(request);
 
             WxAppUnifiedOrderRespBO respBO = new WxAppUnifiedOrderRespBO();
             ChannelRetMsgBO retMsgBO = new ChannelRetMsgBO();
             respBO.setChannelRetMsg(retMsgBO);
+            respBO.setMchId(payContext.getWxPayConfig().getSubMchId());
             respBO.setPayInfo(JacksonUtils.toJsonString(response));
+            retMsgBO.setChannelAttach(respBO.getPayInfo());
             // 支付中
             retMsgBO.setChannelState(ChannelRetMsgBO.ChannelState.WAITING);
+            retMsgBO.setChannelOrderId(response.getPrepayId());
             return respBO;
         } catch (Exception e) {
             log.info("【统一下单-微信APP支付】- 下单失败 reqBO = {}", reqBO, e);

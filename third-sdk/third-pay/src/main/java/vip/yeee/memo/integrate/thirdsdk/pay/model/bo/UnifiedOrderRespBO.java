@@ -15,6 +15,8 @@ public class UnifiedOrderRespBO {
     /** 支付订单号 **/
     private String payOrderId;
 
+    private String mchId;
+
     /** 商户订单号 **/
     private String mchOrderNo;
 

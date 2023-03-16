@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Component
-public class WxBarPayKit extends AbstractWxPayKit {
+public class WxBarPayKit extends BaseWxPayKit {
 
     @Resource
     private WxBarPayKit wxBarPayKit;

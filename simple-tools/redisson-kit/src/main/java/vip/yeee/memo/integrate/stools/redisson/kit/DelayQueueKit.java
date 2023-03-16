@@ -34,8 +34,8 @@ public class DelayQueueKit {
      * @param queueCode 队列键
      */
     public <T> void addDelayQueue(String queueCode, T msg, long delay, TimeUnit timeUnit) {
-        RBlockingDeque<Object> blockingDeque = redissonClient.getBlockingDeque(queueCode);
-        RDelayedQueue<Object> delayedQueue = redissonClient.getDelayedQueue(blockingDeque);
+        RBlockingDeque<T> blockingDeque = redissonClient.getBlockingDeque(queueCode);
+        RDelayedQueue<T> delayedQueue = redissonClient.getDelayedQueue(blockingDeque);
         delayedQueue.offer(msg, delay, timeUnit);
     }
 

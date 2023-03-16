@@ -4,6 +4,7 @@ import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.lang.Pair;
 import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
+import com.github.binarywang.wxpay.bean.notify.WxPayRefundNotifyResult;
 import com.github.binarywang.wxpay.bean.request.WxPayOrderCloseRequest;
 import com.github.binarywang.wxpay.bean.request.WxPayOrderQueryRequest;
 import com.github.binarywang.wxpay.bean.request.WxPayRefundRequest;
@@ -12,11 +13,11 @@ import com.github.binarywang.wxpay.bean.result.WxPayOrderCloseResult;
 import com.github.binarywang.wxpay.bean.result.WxPayOrderQueryResult;
 import com.github.binarywang.wxpay.bean.result.WxPayRefundResult;
 import com.github.binarywang.wxpay.constant.WxPayConstants;
-import com.github.binarywang.wxpay.service.WxPayService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import vip.yeee.memo.integrate.base.model.exception.BizException;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.*;
+import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayContext;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayKit;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.wxpay.v3.WxAppV3PayKit;
 import vip.yeee.memo.integrate.thirdsdk.pay.properties.PayProperties;
@@ -31,12 +32,8 @@ import javax.servlet.http.HttpServletRequest;
  * @since 2022/8/26 10:52
  */
 @Slf4j
-public abstract class AbstractWxPayKit implements PayKit {
+public abstract class BaseWxPayKit implements PayKit {
 
-    @Resource
-    protected WxPayService wxPayService;
-    @Resource
-    protected PayProperties payProperties;
     @Resource
     private WxAppV3PayKit wxAppV3PayKit;
 
@@ -48,7 +45,7 @@ public abstract class AbstractWxPayKit implements PayKit {
         try {
             WxPayOrderQueryRequest req = new WxPayOrderQueryRequest();
             req.setOutTradeNo(reqBO.getOrderCode());
-            WxPayOrderQueryResult result = wxPayService.queryOrder(req);
+            WxPayOrderQueryResult result = PayContext.getContext().getWxPayService().queryOrder(req);
             if ("SUCCESS".equals(result.getTradeState())) { //支付成功
                 return ChannelRetMsgBO.confirmSuccess(result.getTransactionId());
             } else if ("USERPAYING".equals(result.getTradeState())) { //支付中，等待用户输入密码
@@ -71,7 +68,7 @@ public abstract class AbstractWxPayKit implements PayKit {
         try {
             WxPayOrderCloseRequest req = new WxPayOrderCloseRequest();
             req.setOutTradeNo(reqBO.getOrderCode());
-            WxPayOrderCloseResult result = wxPayService.closeOrder(req);
+            WxPayOrderCloseResult result = PayContext.getContext().getWxPayService().closeOrder(req);
             if ("SUCCESS".equals(result.getResultCode())) { //关闭订单成功
                 return ChannelRetMsgBO.confirmSuccess(null);
             } else if ("FAIL".equals(result.getResultCode())) { //关闭订单失败
@@ -93,8 +90,8 @@ public abstract class AbstractWxPayKit implements PayKit {
             req.setOutRefundNo(reqBO.getRefundOrderId()); // 退款单号
             req.setTotalFee(reqBO.getAmount().intValue());   // 订单总金额
             req.setRefundFee(reqBO.getRefundAmount().intValue()); // 退款金额
-            req.setNotifyUrl(getRefundNotifyUrl(reqBO.getPayOrderCode()));   // 回调url
-            WxPayRefundResult result = wxPayService.refundV2(req);
+            req.setNotifyUrl(getRefundNotifyUrl());   // 回调url
+            WxPayRefundResult result = PayContext.getContext().getWxPayService().refundV2(req);
             ChannelRetMsgBO retMsgBO = new ChannelRetMsgBO();
             if ("SUCCESS".equals(result.getResultCode())) { // 退款发起成功,结果主动查询
                 retMsgBO.setChannelState(ChannelRetMsgBO.ChannelState.WAITING);
@@ -132,28 +129,51 @@ public abstract class AbstractWxPayKit implements PayKit {
     }
 
     @Override
-    public Pair<String, ChannelRetMsgBO> checkAndParseNoticeParams(HttpServletRequest request) throws Exception {
+    public Pair<String, ChannelRetMsgBO> checkAndParsePayNoticeParams(HttpServletRequest request) throws Exception {
         String xmlResult = IOUtils.toString(request.getInputStream(), request.getCharacterEncoding());
         WxPayOrderNotifyResult result = WxPayOrderNotifyResult.fromXML(xmlResult);
         String orderCode = result.getOutTradeNo();
         log.info("解析数据为：orderCode = {}, params = {}", orderCode, result);
         // 验签
-        result.checkResult(wxPayService, WxPayConstants.SignType.MD5, true);
+        result.checkResult(PayContext.getContext().getWxPayService(), WxPayConstants.SignType.MD5, true);
         ChannelRetMsgBO channelResult = new ChannelRetMsgBO();
         channelResult.setChannelState(ChannelRetMsgBO.ChannelState.WAITING); // 默认支付中
         channelResult.setChannelOrderId(result.getTransactionId()); //渠道订单号
         channelResult.setChannelUserId(result.getOpenid()); //支付用户ID
         channelResult.setChannelState(ChannelRetMsgBO.ChannelState.CONFIRM_SUCCESS);
-        channelResult.setResponseEntity(PayKit.getWxV2SuccessResp());
+        channelResult.setResponseEntity(PayKit.getWxV2SuccessResp("OK"));
         return Pair.of(orderCode, channelResult);
     }
 
-    protected String getPayNotifyUrl(String orderId) {
-        return String.format(payProperties.getNotifyUrl(), getPayway().toLowerCase(), orderId);
+    @Override
+    public Pair<String, ChannelRetMsgBO> checkAndParseRefundNoticeParams(HttpServletRequest request) throws Exception {
+        PayContext payContext = PayContext.getContext();
+        String xmlResult = IOUtils.toString(request.getInputStream(), request.getCharacterEncoding());
+        WxPayRefundNotifyResult result = WxPayRefundNotifyResult.fromXML(xmlResult, payContext.getWxPayConfig().getMchKey());
+        WxPayRefundNotifyResult.ReqInfo reqInfo = result.getReqInfo();
+        String orderCode = reqInfo.getOutTradeNo();
+        log.info("解析数据为：orderCode = {}, params = {}", orderCode, result);
+        reqInfo.getRefundStatus();
+        // 验签
+        result.checkResult(payContext.getWxPayService(), WxPayConstants.SignType.MD5, true);
+        ChannelRetMsgBO channelResult = new ChannelRetMsgBO();
+        channelResult.setChannelState(ChannelRetMsgBO.ChannelState.WAITING); // 默认支付中
+        channelResult.setChannelOrderId(reqInfo.getTransactionId()); //渠道订单号
+        channelResult.setChannelState(ChannelRetMsgBO.ChannelState.CONFIRM_SUCCESS);
+        channelResult.setResponseEntity(PayKit.getWxV2SuccessResp("OK"));
+        return Pair.of(orderCode, channelResult);
     }
 
-    protected String getRefundNotifyUrl(String orderId) {
-        return String.format(payProperties.getRefundNotifyUrl(), getPayway().toLowerCase(), orderId);
+    protected String getPayNotifyUrl() {
+        PayContext payContext = PayContext.getContext();
+        PayProperties payProperties = payContext.getPayProperties();
+        return String.format(payProperties.getNotifyUrl(), getPayway().toLowerCase(), payContext.getLesseeId());
+    }
+
+    protected String getRefundNotifyUrl() {
+        PayContext payContext = PayContext.getContext();
+        PayProperties payProperties = payContext.getPayProperties();
+        return String.format(payProperties.getRefundNotifyUrl(), getPayway().toLowerCase(), payContext.getLesseeId());
     }
 
 }

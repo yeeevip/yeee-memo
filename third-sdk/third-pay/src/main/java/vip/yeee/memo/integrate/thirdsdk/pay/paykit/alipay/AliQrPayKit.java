@@ -15,7 +15,10 @@ import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.ChannelRetMsgBO;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.CommonUnifiedOrderRespBO;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.UnifiedOrderReqBO;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.UnifiedOrderRespBO;
+import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayContext;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayKit;
+import vip.yeee.memo.integrate.thirdsdk.pay.properties.AliPayConfig;
+import vip.yeee.memo.integrate.thirdsdk.pay.properties.PayProperties;
 import vip.yeee.memo.integrate.thirdsdk.pay.utils.AmountUtil;
 
 /**
@@ -26,7 +29,7 @@ import vip.yeee.memo.integrate.thirdsdk.pay.utils.AmountUtil;
  */
 @Slf4j
 @Component
-public class AliQrPayKit extends AbstractAliPayKit {
+public class AliQrPayKit extends BaseAliPayKit {
 
     @Override
     public String getPayway() {
@@ -36,33 +39,43 @@ public class AliQrPayKit extends AbstractAliPayKit {
     @Override
     public UnifiedOrderRespBO unifiedOrder(UnifiedOrderReqBO reqBO) {
         try {
+            PayContext payContext = PayContext.getContext();
+            PayProperties payProperties = payContext.getPayProperties();
+            AliPayConfig aliPayConfig = payContext.getAliPayConfig();
             AlipayTradePrecreateRequest req = new AlipayTradePrecreateRequest();
+            if (StrUtil.isNotBlank(aliPayConfig.getAuthToken())) {
+                req.putOtherTextParam("app_auth_token", aliPayConfig.getAuthToken());
+            }
             AlipayTradePrecreateModel model = new AlipayTradePrecreateModel();
             model.setOutTradeNo(reqBO.getOrderCode());
             model.setSubject(reqBO.getOrderSubject());
             model.setBody(reqBO.getOrderDesc());
             model.setTotalAmount(AmountUtil.convertCent2Dollar(reqBO.getPayMoney().toString()));
             model.setTimeExpire(LocalDateTimeUtil.format(reqBO.getExpireTime(), DatePattern.NORM_DATETIME_PATTERN));
-            req.setNotifyUrl(getPayNotifyUrl(reqBO.getOrderCode()));
+            req.setNotifyUrl(getPayNotifyUrl());
             req.setBizModel(model);
 
             CommonUnifiedOrderRespBO respBO = new CommonUnifiedOrderRespBO();
             ChannelRetMsgBO retMsgBO = new ChannelRetMsgBO();
             respBO.setChannelRetMsg(retMsgBO);
+            respBO.setMchId(payContext.getAliPayConfig().getMchAppId());
 
-            AlipayTradePrecreateResponse alipayResp = alipayClient.execute(req);
+            AlipayTradePrecreateResponse alipayResp = payContext.getAlipayClient().execute(req);
             if (alipayResp.isSuccess()) {
                 if(PayConstant.PAY_DATA_TYPE.CODE_IMG_URL.equals(reqBO.getPayDataType())) {
                     respBO.setCodeImgUrl(payProperties.getSiteUrl() + "/general/img/qr/" + PayKit.aes.encryptHex(alipayResp.getQrCode()) + ".png");
+                    retMsgBO.setChannelAttach(respBO.getCodeImgUrl());
                 } else {
                     respBO.setCodeUrl(alipayResp.getQrCode());
+                    retMsgBO.setChannelAttach(respBO.getCodeUrl());
                 }
                 retMsgBO.setChannelState(ChannelRetMsgBO.ChannelState.WAITING);
             } else {
-                respBO.setOrderState(OrderEnum.State.STATE_FAIL.getCode());
+                respBO.setOrderState(OrderEnum.PayState.FAIL.getCode());
                 retMsgBO.setChannelErrCode(StrUtil.emptyToDefault(alipayResp.getCode(), alipayResp.getSubCode()));
                 retMsgBO.setChannelErrMsg(alipayResp.getMsg() + "##" + alipayResp.getSubMsg());
             }
+//            retMsgBO.setChannelOrderId(alipayResp.get());
             return respBO;
         } catch (Exception e) {
             log.info("【统一下单-支付宝QR支付】- 下单失败 reqBO = {}", reqBO, e);

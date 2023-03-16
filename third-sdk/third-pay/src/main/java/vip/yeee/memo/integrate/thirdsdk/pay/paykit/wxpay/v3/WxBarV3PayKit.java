@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import vip.yeee.memo.integrate.base.model.exception.BizException;
 import vip.yeee.memo.integrate.thirdsdk.pay.constant.PayConstant;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.*;
+import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayContext;
 
 /**
  * description......
@@ -17,7 +18,7 @@ import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.*;
  */
 @Slf4j
 @Component
-public class WxBarV3PayKit extends AbstractWxV3PayKit {
+public class WxBarV3PayKit extends WxV3PayKit {
 
     @Override
     public String getPayway() {
@@ -41,7 +42,7 @@ public class WxBarV3PayKit extends AbstractWxV3PayKit {
             ChannelRetMsgBO retMsgBO = new ChannelRetMsgBO();
             respBO.setChannelRetMsg(retMsgBO);
             try {
-                WxPayMicropayResult response = wxPayService.micropay(request);
+                WxPayMicropayResult response = PayContext.getContext().getWxPayService().micropay(request);
                 retMsgBO.setChannelOrderId(response.getTransactionId());
                 retMsgBO.setChannelUserId(response.getOpenid());
                 retMsgBO.setChannelState(ChannelRetMsgBO.ChannelState.CONFIRM_SUCCESS);

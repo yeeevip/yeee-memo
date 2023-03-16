@@ -46,6 +46,8 @@ public class TestService {
         }
     }
 
+    // new Thread(this::get).start();
+    // while内不可【return或者break】，用【continue】，否则就直接中断了不会循环阻塞获取元素
     private void get() {
         while (true) {
             RBlockingDeque<Object> delayQueue = delayQueueKit.getDelayQueue(QUEUE_CODE);

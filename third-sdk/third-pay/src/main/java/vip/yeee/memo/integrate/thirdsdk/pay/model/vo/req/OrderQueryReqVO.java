@@ -9,5 +9,8 @@ import lombok.Data;
  * @since 2022/12/21 15:20
  */
 @Data
-public class CheckPayStateReqVO {
+public class OrderQueryReqVO {
+
+    private String orderCode;
+    private String payway;
 }

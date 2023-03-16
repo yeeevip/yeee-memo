@@ -15,10 +15,6 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "yeee.pay")
 public class PayProperties {
 
-    private WxpayProperties wx;
-
-    private AlipayProperties ali;
-
     private String siteUrl;
 
     private String notifyUrl;
@@ -27,37 +23,67 @@ public class PayProperties {
 
     private String returnUrl;
 
+//    private Wx wx;
+
+//    private Ali ali;
+
     @Data
-    public static class WxpayProperties {
+    public static class Wx {
 
-        private String apiVersion;
-
-        private String mchId;
-
+        /**
+         * 服务商公众号id
+         */
         private String appId;
-
+        /**
+         * 服务商小程序id
+         */
+        private String miniAppId;
+        /**
+         * 服务商商户号.
+         */
+        private String mchId;
+        /**
+         * 服务商商户密钥V2.
+         */
         private String mchKey;
-
-        private String apiV3Key;
-
-        private String serialNo;
-
+        /**
+         * 签名方式.
+         * 有两种HMAC_SHA256 和MD5
+         *
+         * @see com.github.binarywang.wxpay.constant.WxPayConstants.SignType
+         */
+        private String signType;
+        /**
+         *
+         */
         private String keyPath;
-
-        private String privateCertPath;
-
+        /**
+         * 服务商 秘钥地址
+         */
         private String privateKeyPath;
+        /**
+         * 服务商 证书地址
+         */
+        private String privateCertPath;
+        /**
+         * 服务商 秘钥值. apiV3
+         */
+        private String apiV3Key;
+        /**
+         * 服务商 证书序列号值 apiV3
+         */
+        private String certSerialNo;
 
     }
 
     @Data
-    public static class AlipayProperties {
+    public static class Ali {
 
-        /** pid */
-        private String pid;
-
-        /** appId */
+        /** 服务商appId */
         private String appId;
+
+        /** 商户appId **/
+        private String mchAppId;
 
         /** privateKey */
         private String privateKey;
@@ -80,6 +106,10 @@ public class PayProperties {
         /** 支付宝根证书 **/
         private String alipayRootCert;
 
-    }
+        /** 商户授权token **/
+        private String authToken;
 
+        private String gatewayUrl = "https://openapi.alipay.com/gateway.do";
+
+    }
 }
