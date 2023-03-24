@@ -19,6 +19,8 @@ public class PayConstant {
         String ALI_QR = "ALI_QR";  //支付宝 用户扫描二维码付款
 
         String WX_JSAPI = "WX_JSAPI";  //微信jsapi支付
+        String WX_WP = "WX_WP";  //微信jsapi支付
+        String WX_MINI = "WX_MINI";  //微信jsapi支付
         String WX_H5 = "WX_H5";  //微信H5支付
         String WX_APP = "WX_APP";  //微信APP支付
         String WX_BAR = "WX_BAR";  //微信扫码枪

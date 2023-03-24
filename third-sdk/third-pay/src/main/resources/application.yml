@@ -16,3 +16,26 @@ yeee:
     notify-url: http://127.0.0.1:8082/pay/notify/%s
     return-url: http://127.0.0.1:8082/pay/return/%s
     refund-notify-url: http://127.0.0.1:8082/pay/return/%s
+    wx:
+      partner: 1
+      api-version: V3
+      app-id:
+      mini-app-id:
+      mch-id:
+      mch-key:
+      sign-type:
+      key-path:
+      private-key-path:
+      private-cert-path:
+      api-v3-key:
+      cert-serial-no:
+    ali:
+      app-id:
+      private-key:
+      alipay-public-key:
+      sign-type:
+      use-cert:
+      app-public-cert:
+      alipay-public-cert:
+      alipay-root-cert:
+      gateway-url:

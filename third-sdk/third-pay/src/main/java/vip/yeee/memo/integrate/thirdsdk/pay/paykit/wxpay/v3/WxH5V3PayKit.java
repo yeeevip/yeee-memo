@@ -7,10 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import vip.yeee.memo.integrate.base.model.exception.BizException;
 import vip.yeee.memo.integrate.thirdsdk.pay.constant.PayConstant;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.ChannelRetMsgBO;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.CommonUnifiedOrderRespBO;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.UnifiedOrderReqBO;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.UnifiedOrderRespBO;
+import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.*;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayContext;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayKit;
 import vip.yeee.memo.integrate.thirdsdk.pay.properties.PayProperties;
@@ -35,7 +32,12 @@ public class WxH5V3PayKit extends WxV3PayKit {
         try {
             PayContext payContext = PayContext.getContext();
             WxPayUnifiedOrderV3Request request = super.buildUnifiedOrderRequest(reqBO);
-            request.setNotifyUrl(getPayNotifyUrl());
+            WxPayUnifiedOrderV3Request.SceneInfo sceneInfo = new WxPayUnifiedOrderV3Request.SceneInfo();
+            sceneInfo.setPayerClientIp(((WxpayUnifiedOrderReqBO)reqBO).getClientIp());
+            WxPayUnifiedOrderV3Request.H5Info h5Info = new WxPayUnifiedOrderV3Request.H5Info();
+            h5Info.setType("Wap");
+            sceneInfo.setH5Info(h5Info);
+            request.setSceneInfo(sceneInfo);
             WxPayUnifiedOrderV3Result response = payContext.getWxPayService().unifiedOrderV3(TradeTypeEnum.H5, request);
             String payUrl = response.getH5Url();
 

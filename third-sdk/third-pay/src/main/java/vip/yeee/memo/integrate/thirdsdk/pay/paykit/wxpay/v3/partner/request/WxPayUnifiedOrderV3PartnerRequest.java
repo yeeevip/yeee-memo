@@ -20,32 +20,30 @@ import java.util.List;
 public class WxPayUnifiedOrderV3PartnerRequest implements Serializable {
     private static final long serialVersionUID = 1L;
     /**
-     * <pre>
-     * 字段名：应用ID
-     * 变量名：appid
-     * 是否必填：是
-     * 类型：string[1,32]
-     * 描述：
-     *  由微信生成的应用ID，全局唯一。请求统一下单接口时请注意APPID的应用属性，例如公众号场景下，需使用应用属性为公众号的APPID
-     *  示例值：wxd678efh567hg6787
-     * </pre>
+     * Y
+     * 服务商申请的公众号或移动应用appid。
      */
     @SerializedName(value = "sp_appid")
-    protected String appid;
+    protected String spAppid;
     /**
-     * <pre>
-     * 字段名：直连商户号
-     * 变量名：mchid
-     * 是否必填：是
-     * 类型：string[1,32]
-     * 描述：
-     *  直连商户的商户号，由微信支付生成并下发。
-     *  示例值：1230000109
-     * </pre>
+     * Y
+     * 服务商户号，由微信支付生成并下发
      */
     @SerializedName(value = "sp_mchid")
-    protected String mchid;
+    protected String spMchId;
 
+    /**
+     * N
+     * 二级商户申请的公众号或移动应用appid。
+     * 若sub_openid有传的情况下，sub_appid必填，且sub_appid需与sub_openid对应
+     */
+    @SerializedName(value = "sub_appid")
+    protected String subAppId;
+
+    /**
+     * Y
+     * 二级商户的商户号，由微信支付生成并下发。
+     */
     @SerializedName(value = "sub_mchid")
     protected String subMchId;
 
@@ -130,6 +128,17 @@ public class WxPayUnifiedOrderV3PartnerRequest implements Serializable {
     private String goodsTag;
     /**
      * <pre>
+     * 字段名：结算信息
+     * 变量名：settle_info
+     * 是否必填：否
+     * 类型：Object
+     * 描述：结算信息
+     * </pre>
+     */
+    @SerializedName(value = "settle_info")
+    private SettleInfo settleInfo;
+    /**
+     * <pre>
      * 字段名：订单金额
      * 变量名：amount
      * 是否必填：是
@@ -176,17 +185,6 @@ public class WxPayUnifiedOrderV3PartnerRequest implements Serializable {
      */
     @SerializedName(value = "scene_info")
     private SceneInfo sceneInfo;
-    /**
-     * <pre>
-     * 字段名：结算信息
-     * 变量名：settle_info
-     * 是否必填：否
-     * 类型：Object
-     * 描述：结算信息
-     * </pre>
-     */
-    @SerializedName(value = "settle_info")
-    private SettleInfo settleInfo;
 
     @Data
     @NoArgsConstructor
@@ -231,12 +229,18 @@ public class WxPayUnifiedOrderV3PartnerRequest implements Serializable {
          * 是否必填：是
          * 类型：string[1,128]
          * 描述：
-         *  用户在直连商户appid下的唯一标识。
+         *  用户在服务商appid下的唯一标识。
          *  示例值：oUpF8uMuAJO_M2pxb1Q9zNjWeS6o
          * </pre>
          */
         @SerializedName(value = "sp_openid")
-        private String openid;
+        private String spOpenid;
+        /**
+         * 与spOpenid二选一
+         * 用户在子商户appid下的唯一标识。若传sub_openid，那sub_appid必填
+         */
+        @SerializedName(value = "sub_openid")
+        private String subOpenid;
     }
 
     @Data

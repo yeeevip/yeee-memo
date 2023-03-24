@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.thirdsdk.pay.properties;
+package vip.yeee.memo.integrate.thirdsdk.pay.model.bo;
 
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import lombok.Data;
  * @since 2023/3/16 17:10
  */
 @Data
-public class AliPayConfig {
+public class AliPayConfigBO {
 
     /** 服务商appId */
     private String appId;
@@ -35,6 +35,21 @@ public class AliPayConfig {
     /** 支付宝根证书 **/
     private String alipayRootCert;
 
-    private String gatewayUrl = "https://openapi.alipay.com/gateway.do";
+    private String gatewayUrl;
+
+
+
+    /* ||||||||||||||||||||||||||||||||||||||||||||||| */
+
+    /** 二级商户appId **/
+    private String subAppId;
+    /** 二级商户授权token **/
+    private String authToken;
+//    /** 商户授权刷新token **/
+//    private String authRefreshToken;
+//    /** token过期时间 **/
+//    private Date expiresDate;
+//    /** refreshToken过期时间 **/
+//    private Date refreshExpiresDate;
 
 }

@@ -51,9 +51,6 @@ public abstract class WxV3PayKit extends BaseWxV3PayKit implements PayKit {
         WxPayUnifiedOrderV3Request request = new WxPayUnifiedOrderV3Request();
         request.setOutTradeNo(wxReqBO.getOrderCode());
         request.setDescription(wxReqBO.getOrderDesc());
-        WxPayUnifiedOrderV3Request.Payer payer = new WxPayUnifiedOrderV3Request.Payer();
-        payer.setOpenid("openid");
-        request.setPayer(payer);
         //构建金额信息
         WxPayUnifiedOrderV3Request.Amount amount = new WxPayUnifiedOrderV3Request.Amount();
         //设置币种信息
@@ -61,6 +58,7 @@ public abstract class WxV3PayKit extends BaseWxV3PayKit implements PayKit {
         //设置金额
         amount.setTotal(wxReqBO.getPayMoney());
         request.setAmount(amount);
+        request.setNotifyUrl(getPayNotifyUrl());
         return request;
     }
 

@@ -33,4 +33,6 @@ public class UnifiedOrderReqBO {
 
     private String payDataType;
 
+    private String openid;
+
 }

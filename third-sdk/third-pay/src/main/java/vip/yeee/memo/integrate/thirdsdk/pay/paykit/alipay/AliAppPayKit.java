@@ -10,10 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import vip.yeee.memo.integrate.base.model.exception.BizException;
 import vip.yeee.memo.integrate.thirdsdk.pay.constant.PayConstant;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.AliAppUnifiedOrderRespBO;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.ChannelRetMsgBO;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.UnifiedOrderReqBO;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.UnifiedOrderRespBO;
+import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.*;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayContext;
 import vip.yeee.memo.integrate.thirdsdk.pay.properties.AliPayConfig;
 import vip.yeee.memo.integrate.thirdsdk.pay.utils.AmountUtil;
@@ -37,7 +34,7 @@ public class AliAppPayKit extends BaseAliPayKit {
     public UnifiedOrderRespBO unifiedOrder(UnifiedOrderReqBO reqBO) {
         try {
             PayContext payContext = PayContext.getContext();
-            AliPayConfig aliPayConfig = PayContext.getContext().getAliPayConfig();
+            AliPayConfigBO aliPayConfig = PayContext.getContext().getAliPayConfig();
             AlipayTradeAppPayRequest req = new AlipayTradeAppPayRequest();
             if (StrUtil.isNotBlank(aliPayConfig.getAuthToken())) {
                 req.putOtherTextParam("app_auth_token", aliPayConfig.getAuthToken());
@@ -54,7 +51,7 @@ public class AliAppPayKit extends BaseAliPayKit {
             AliAppUnifiedOrderRespBO respBO = new AliAppUnifiedOrderRespBO();
             ChannelRetMsgBO retMsgBO = new ChannelRetMsgBO();
             respBO.setChannelRetMsg(retMsgBO);
-            respBO.setMchId(payContext.getAliPayConfig().getMchAppId());
+            respBO.setMchId(payContext.getAliPayConfig().getSubAppId());
             // 调用sdkExecute生成orderStr（未真正请求支付宝服务端）
             // 用于商户客户端将orderStr传给支付宝APP（SDK）调用支付宝服务端进行支付预下单唤起支付宝收银台
             AlipayTradeAppPayResponse response = payContext.getAlipayClient().sdkExecute(req);

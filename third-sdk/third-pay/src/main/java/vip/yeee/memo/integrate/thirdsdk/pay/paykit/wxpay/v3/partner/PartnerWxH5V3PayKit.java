@@ -11,7 +11,6 @@ import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayContext;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayKit;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.wxpay.v3.partner.request.WxPayUnifiedOrderV3PartnerRequest;
 import vip.yeee.memo.integrate.thirdsdk.pay.properties.PayProperties;
-import vip.yeee.memo.integrate.thirdsdk.pay.properties.WxPayConfig;
 
 /**
  * description......
@@ -33,7 +32,6 @@ public class PartnerWxH5V3PayKit extends PartnerWxV3PayKit {
         try {
             PayContext payContext = PayContext.getContext();
             WxPayService wxPayService = payContext.getWxPayService();
-            WxPayConfig wxPayConfig = payContext.getWxPayConfig();
             PayProperties payProperties = payContext.getPayProperties();
             WxPayUnifiedOrderV3PartnerRequest request = super.buildPartnerUnifiedOrderRequest(reqBO);
             WxPayUnifiedOrderV3PartnerRequest.SceneInfo sceneInfo = new WxPayUnifiedOrderV3PartnerRequest.SceneInfo();
@@ -42,11 +40,6 @@ public class PartnerWxH5V3PayKit extends PartnerWxV3PayKit {
             h5Info.setType("Wap");
             sceneInfo.setH5Info(h5Info);
             request.setSceneInfo(sceneInfo);
-            request.setAppid(wxPayConfig.getAppId());
-            request.setMchid(wxPayConfig.getMchId());
-            request.setSubMchId(wxPayConfig.getSubMchId());
-            request.setNotifyUrl(getPayNotifyUrl());
-            request.setPayer(null);
             String url = wxPayService.getPayBaseUrl() + "/v3/pay/partner/transactions/h5";
             String responseStr = wxPayService.postV3(url, GSON.toJson(request));
             WxPayUnifiedOrderV3Result response = GSON.fromJson(responseStr, WxPayUnifiedOrderV3Result.class);

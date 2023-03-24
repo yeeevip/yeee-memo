@@ -32,7 +32,7 @@ public abstract class PartnerWxV3PayKit extends BaseWxV3PayKit implements PayKit
         try {
             PayContext payContext = PayContext.getContext();
             WxPayService wxPayService = payContext.getWxPayService();
-            WxPayConfig wxPayConfig = payContext.getWxPayConfig();
+            WxPayConfigBO wxPayConfig = payContext.getWxPayConfig();
             String url = String.format("/v3/pay/partner/transactions/out-trade-no/%s?sp_mchid=%s&sub_mchid=%s"
                     , reqBO.getOrderCode(), wxPayConfig.getMchId(), wxPayConfig.getSubMchId());
             String response = wxPayService.getV3(wxPayService.getPayBaseUrl() + url);
@@ -56,14 +56,17 @@ public abstract class PartnerWxV3PayKit extends BaseWxV3PayKit implements PayKit
     }
 
     protected WxPayUnifiedOrderV3PartnerRequest buildPartnerUnifiedOrderRequest(UnifiedOrderReqBO reqBO) {
+        WxPayConfigBO wxPayConfig = PayContext.getContext().getWxPayConfig();
         // 微信统一下单请求对象
         WxpayUnifiedOrderReqBO wxReqBO = (WxpayUnifiedOrderReqBO)reqBO;
         WxPayUnifiedOrderV3PartnerRequest request = new WxPayUnifiedOrderV3PartnerRequest();
+        request.setSpMchId(wxPayConfig.getMchId());
+        request.setSpAppid(wxPayConfig.getAppId());
+        request.setSubMchId(wxPayConfig.getSubMchId());
+        request.setSubAppId(wxPayConfig.getSubAppId());
+        request.setNotifyUrl(getPayNotifyUrl());
         request.setOutTradeNo(wxReqBO.getOrderCode());
         request.setDescription(wxReqBO.getOrderDesc());
-        WxPayUnifiedOrderV3PartnerRequest.Payer payer = new WxPayUnifiedOrderV3PartnerRequest.Payer();
-        payer.setOpenid("openid");
-        request.setPayer(payer);
         //构建金额信息
         WxPayUnifiedOrderV3PartnerRequest.Amount amount = new WxPayUnifiedOrderV3PartnerRequest.Amount();
         //设置币种信息

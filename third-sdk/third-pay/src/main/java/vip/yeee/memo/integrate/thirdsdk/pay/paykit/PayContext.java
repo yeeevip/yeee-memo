@@ -24,6 +24,8 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import vip.yeee.memo.integrate.base.model.exception.BizException;
 import vip.yeee.memo.integrate.base.web.utils.SpringContextUtils;
 import vip.yeee.memo.integrate.thirdsdk.pay.constant.PayConstant;
+import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.AliPayConfigBO;
+import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.WxPayConfigBO;
 import vip.yeee.memo.integrate.thirdsdk.pay.properties.AliPayConfig;
 import vip.yeee.memo.integrate.thirdsdk.pay.properties.PayProperties;
 import vip.yeee.memo.integrate.thirdsdk.pay.properties.WxPayConfig;
@@ -55,14 +57,14 @@ public class PayContext {
 
     private final String lesseeId;;
     private final PayProperties payProperties;
-    private final WxPayConfig wxPayConfig;
-    private final AliPayConfig aliPayConfig;
+    private final WxPayConfigBO wxPayConfig;
+    private final AliPayConfigBO aliPayConfig;
     private final WxPayService wxPayService;
     private final AlipayClient alipayClient;
     private final static ThreadLocal<PayContext> PAY_CONTEXT_THREAD_LOCAL = new ThreadLocal<>();
     private final static ConcurrentHashMap<String, PayContext> PAY_CONTEXT_MAP = new ConcurrentHashMap<>();
 
-    public PayContext(String lesseeId, PayProperties payProperties, WxPayConfig wxPayConfig, AliPayConfig aliPayConfig, WxPayService wxPayService, AlipayClient alipayClient) {
+    public PayContext(String lesseeId, PayProperties payProperties, WxPayConfigBO wxPayConfig, AliPayConfigBO aliPayConfig, WxPayService wxPayService, AlipayClient alipayClient) {
         this.lesseeId = lesseeId;
         this.payProperties = payProperties;
         this.wxPayConfig = wxPayConfig;
@@ -77,36 +79,38 @@ public class PayContext {
             if (payContext == null) {
                 PayProperties payProperties = (PayProperties) SpringContextUtils.getBean(PayProperties.class);
                 PayChannelConfigService channelConfigService = (PayChannelConfigService) SpringContextUtils.getBean(PayChannelConfigService.class);
-                WxPayConfig wxPayChannelConfig = channelConfigService.getWxPayChannelConfig(lesseeId);
+                WxPayConfigBO wxPayConfigBO = channelConfigService.getWxPayChannelConfig(lesseeId);
                 WxPayService wxPayService = null;
-                if (wxPayChannelConfig != null) {
+                if (wxPayConfigBO != null) {
+                    BeanUtils.copyProperties(payProperties.getWx(), wxPayConfigBO);
                     wxPayService = new WxPayServiceImpl();
                     com.github.binarywang.wxpay.config.WxPayConfig wxPayConfig = new com.github.binarywang.wxpay.config.WxPayConfig();
-                    BeanUtils.copyProperties(wxPayChannelConfig, wxPayConfig);
-                    if (PayConstant.PAY_IF_VERSION.WX_V2.equals(wxPayChannelConfig.getApiVersion())) {
+                    BeanUtils.copyProperties(wxPayConfigBO, wxPayConfig);
+                    if (PayConstant.PAY_IF_VERSION.WX_V2.equals(wxPayConfigBO.getApiVersion())) {
                         wxPayConfig.setSignType(WxPayConstants.SignType.MD5);
                     }
-                    wxPayConfig.setPrivateKeyContent(FileUtil.readBytes(wxPayChannelConfig.getPrivateKeyPath()));
-                    byte[] wxPayCertInfo = getWxPayCertInfo(wxPayChannelConfig.getMchId(), wxPayChannelConfig.getCertSerialNo(), wxPayChannelConfig.getApiV3Key(), wxPayConfig.getPrivateKeyContent());
+                    wxPayConfig.setPrivateKeyContent(FileUtil.readBytes(wxPayConfigBO.getPrivateKeyPath()));
+                    byte[] wxPayCertInfo = getWxPayCertInfo(wxPayConfigBO.getMchId(), wxPayConfigBO.getCertSerialNo(), wxPayConfigBO.getApiV3Key(), wxPayConfig.getPrivateKeyContent());
                     wxPayConfig.setPrivateCertContent(wxPayCertInfo);
                     wxPayService.setConfig(wxPayConfig);
                 }
-                AliPayConfig aliPayChannelConfig = channelConfigService.getAliPayChannelConfig(lesseeId);
+                AliPayConfigBO aliPayConfigBO = channelConfigService.getAliPayChannelConfig(lesseeId);
                 AlipayClient alipayClient = null;
-                if (aliPayChannelConfig != null) {
+                if (aliPayConfigBO != null) {
+                    BeanUtils.copyProperties(payProperties.getAli(), aliPayConfigBO);
                     CertAlipayRequest certAlipayRequest = new CertAlipayRequest();
-                    certAlipayRequest.setServerUrl(aliPayChannelConfig.getGatewayUrl());
-                    certAlipayRequest.setAppId(aliPayChannelConfig.getAppId());
+                    certAlipayRequest.setServerUrl(aliPayConfigBO.getGatewayUrl());
+                    certAlipayRequest.setAppId(aliPayConfigBO.getAppId());
                     certAlipayRequest.setFormat(AlipayConstants.FORMAT_JSON);
-                    certAlipayRequest.setPrivateKey(getAliPayPrivateKey(aliPayChannelConfig.getPrivateKey()));
+                    certAlipayRequest.setPrivateKey(getAliPayPrivateKey(aliPayConfigBO.getPrivateKey()));
                     certAlipayRequest.setCharset(AlipayConstants.CHARSET_UTF8);
                     certAlipayRequest.setSignType(AlipayConstants.SIGN_TYPE_RSA2);
-                    certAlipayRequest.setCertPath(aliPayChannelConfig.getAppPublicCert());
-                    certAlipayRequest.setAlipayPublicCertPath(aliPayChannelConfig.getAlipayPublicCert());
-                    certAlipayRequest.setRootCertPath(aliPayChannelConfig.getAlipayRootCert());
+                    certAlipayRequest.setCertPath(aliPayConfigBO.getAppPublicCert());
+                    certAlipayRequest.setAlipayPublicCertPath(aliPayConfigBO.getAlipayPublicCert());
+                    certAlipayRequest.setRootCertPath(aliPayConfigBO.getAlipayRootCert());
                     alipayClient = new DefaultAlipayClient(certAlipayRequest);
                 }
-                payContext = new PayContext(lesseeId, payProperties, wxPayChannelConfig, aliPayChannelConfig, wxPayService, alipayClient);
+                payContext = new PayContext(lesseeId, payProperties, wxPayConfigBO, aliPayConfigBO, wxPayService, alipayClient);
                 PAY_CONTEXT_MAP.put(lesseeId, payContext);
             }
             PAY_CONTEXT_THREAD_LOCAL.set(payContext);
@@ -128,7 +132,7 @@ public class PayContext {
         PayContext context = PayContext.getContext();
         String beanName = null;
         if (payWay.startsWith(PayConstant.IF_CODE.WXPAY)) {
-            WxPayConfig wxPayConfig = context.getWxPayConfig();
+            WxPayConfigBO wxPayConfig = context.getWxPayConfig();
             if (wxPayConfig == null) {
                 throw new BizException("未开通微信商户");
             }
@@ -161,11 +165,11 @@ public class PayContext {
         return payProperties;
     }
 
-    public WxPayConfig getWxPayConfig() {
+    public WxPayConfigBO getWxPayConfig() {
         return wxPayConfig;
     }
 
-    public AliPayConfig getAliPayConfig() {
+    public AliPayConfigBO getAliPayConfig() {
         return aliPayConfig;
     }
 

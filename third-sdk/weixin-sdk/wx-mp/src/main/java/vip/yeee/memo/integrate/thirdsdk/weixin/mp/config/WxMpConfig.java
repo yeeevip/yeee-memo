@@ -5,6 +5,7 @@ import me.chanjar.weixin.common.redis.JedisWxRedisOps;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
+import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 import me.chanjar.weixin.mp.config.impl.WxMpRedisConfigImpl;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -16,6 +17,7 @@ import vip.yeee.memo.integrate.thirdsdk.weixin.mp.handler.WxMpEventHandler;
 import vip.yeee.memo.integrate.thirdsdk.weixin.mp.properties.WxMpProperties;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static me.chanjar.weixin.common.api.WxConsts.XmlMsgType.EVENT;
@@ -39,24 +41,25 @@ public class WxMpConfig {
             throw new RuntimeException("not find config：wx.mp");
         }
         WxMpService service = new WxMpServiceImpl();
-        service.setMultiConfigStorages(configs
-            .stream().map(a -> {
-                WxMpDefaultConfigImpl configStorage;
-                if (this.properties.isUseRedis()) {
-                    final WxMpProperties.RedisConfig redisConfig = this.properties.getRedisConfig();
-                    JedisPoolConfig poolConfig = new JedisPoolConfig();
-                    JedisPool jedisPool = new JedisPool(poolConfig, redisConfig.getHost(), redisConfig.getPort(),
-                        redisConfig.getTimeout(), redisConfig.getPassword());
-                    configStorage = new WxMpRedisConfigImpl(new JedisWxRedisOps(jedisPool), a.getAppId());
-                } else {
-                    configStorage = new WxMpDefaultConfigImpl();
-                }
-
-                configStorage.setAppId(a.getAppId());
-                configStorage.setSecret(a.getSecret());
-                configStorage.setToken(a.getToken());
-                return configStorage;
-            }).collect(Collectors.toMap(WxMpDefaultConfigImpl::getAppId, a -> a, (o, n) -> o)));
+        Map<String, WxMpConfigStorage> configStorages = configs.stream()
+                .map(a -> {
+                    WxMpDefaultConfigImpl configStorage;
+                    if (this.properties.isUseRedis()) {
+                        final WxMpProperties.RedisConfig redisConfig = this.properties.getRedisConfig();
+                        JedisPoolConfig poolConfig = new JedisPoolConfig();
+                        JedisPool jedisPool = new JedisPool(poolConfig, redisConfig.getHost(), redisConfig.getPort(),
+                                redisConfig.getTimeout(), redisConfig.getPassword());
+                        configStorage = new WxMpRedisConfigImpl(new JedisWxRedisOps(jedisPool), a.getAppId());
+                    } else {
+                        configStorage = new WxMpDefaultConfigImpl();
+                    }
+                    configStorage.setAppId(a.getAppId());
+                    configStorage.setSecret(a.getSecret());
+                    configStorage.setToken(a.getToken());
+                    return configStorage;
+                })
+                .collect(Collectors.toMap(WxMpConfigStorage::getAppId, a -> a, (o, n) -> o));
+        service.setMultiConfigStorages(configStorages);
         return service;
     }
 

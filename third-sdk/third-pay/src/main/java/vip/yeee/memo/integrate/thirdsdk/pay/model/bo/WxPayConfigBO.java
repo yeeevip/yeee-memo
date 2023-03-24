@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.thirdsdk.pay.properties;
+package vip.yeee.memo.integrate.thirdsdk.pay.model.bo;
 
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import lombok.Data;
  * @since 2023/3/16 17:10
  */
 @Data
-public class WxPayConfig {
+public class WxPayConfigBO {
 
     private Integer partner;
 
@@ -56,5 +56,20 @@ public class WxPayConfig {
      * apiV3 证书序列号值
      */
     private String certSerialNo;
+
+
+
+
+    /* ||||||||||||||||||||||||||||||||||||||||||||||| */
+
+
+    private String subAppId;
+
+    private String subMiniAppId;
+
+    /**
+     * 二级商户号.
+     */
+    private String subMchId;
 
 }

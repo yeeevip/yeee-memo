@@ -63,7 +63,7 @@ public interface PayKit {
 
     static ResponseEntity<Object> getDefaultSuccessResp(String ifCode) {
         if (ifCode.startsWith(PayConstant.IF_CODE.WXPAY.toLowerCase())) {
-            WxPayConfig wxPayConfig = PayContext.getContext().getWxPayConfig();
+            WxPayConfigBO wxPayConfig = PayContext.getContext().getWxPayConfig();
             if (PayConstant.PAY_IF_VERSION.WX_V3.equals(wxPayConfig.getApiVersion())) {
                 return PayKit.getWxV3SuccessResp("ERROR");
             }
@@ -76,7 +76,7 @@ public interface PayKit {
 
     static ResponseEntity<Object> getDefaultErrorResp(String ifCode) {
         if (ifCode.startsWith(PayConstant.IF_CODE.WXPAY.toLowerCase())) {
-            WxPayConfig wxPayConfig = PayContext.getContext().getWxPayConfig();
+            WxPayConfigBO wxPayConfig = PayContext.getContext().getWxPayConfig();
             if (PayConstant.PAY_IF_VERSION.WX_V3.equals(wxPayConfig.getApiVersion())) {
                 return PayKit.getWxV3SuccessResp("ERROR");
             }

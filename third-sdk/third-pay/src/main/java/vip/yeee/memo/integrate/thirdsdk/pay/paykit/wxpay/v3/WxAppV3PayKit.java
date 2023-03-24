@@ -31,7 +31,6 @@ public class WxAppV3PayKit extends WxV3PayKit {
         try {
             PayContext payContext = PayContext.getContext();
             WxPayUnifiedOrderV3Request request = super.buildUnifiedOrderRequest(reqBO);
-            request.setNotifyUrl(getPayNotifyUrl());
             WxPayUnifiedOrderV3Result.AppResult result = payContext.getWxPayService().createOrderV3(TradeTypeEnum.APP, request);
             WxAppUnifiedOrderRespBO respBO = new WxAppUnifiedOrderRespBO();
             ChannelRetMsgBO retMsgBO = new ChannelRetMsgBO();

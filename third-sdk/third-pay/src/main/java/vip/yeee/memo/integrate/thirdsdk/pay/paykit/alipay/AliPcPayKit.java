@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import vip.yeee.memo.integrate.base.model.exception.BizException;
 import vip.yeee.memo.integrate.thirdsdk.pay.constant.PayConstant;
+import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.AliPayConfigBO;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.ChannelRetMsgBO;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.CommonUnifiedOrderRespBO;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.UnifiedOrderReqBO;
@@ -38,7 +39,7 @@ public class AliPcPayKit extends BaseAliPayKit {
         try {
             PayContext payContext = PayContext.getContext();
             PayProperties payProperties = payContext.getPayProperties();
-            AliPayConfig aliPayConfig = payContext.getAliPayConfig();
+            AliPayConfigBO aliPayConfig = payContext.getAliPayConfig();
             AlipayTradePagePayRequest req = new AlipayTradePagePayRequest();
             if (StrUtil.isNotBlank(aliPayConfig.getAuthToken())) {
                 req.putOtherTextParam("app_auth_token", aliPayConfig.getAuthToken());
@@ -58,7 +59,7 @@ public class AliPcPayKit extends BaseAliPayKit {
             CommonUnifiedOrderRespBO respBO = new CommonUnifiedOrderRespBO();
             ChannelRetMsgBO channelRetMsg = new ChannelRetMsgBO();
             respBO.setChannelRetMsg(channelRetMsg);
-            respBO.setMchId(payContext.getAliPayConfig().getMchAppId());
+            respBO.setMchId(payContext.getAliPayConfig().getSubAppId());
             if(PayConstant.PAY_DATA_TYPE.FORM.equals(reqBO.getPayDataType())) {
                 AlipayTradePagePayResponse response = payContext.getAlipayClient().pageExecute(req);
                 respBO.setFormContent(response.getBody());

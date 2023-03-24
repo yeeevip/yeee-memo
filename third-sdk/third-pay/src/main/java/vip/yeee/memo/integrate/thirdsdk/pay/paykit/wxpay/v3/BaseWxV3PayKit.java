@@ -41,7 +41,7 @@ public abstract class BaseWxV3PayKit implements PayKit {
     public ChannelRetMsgBO refundOrder(RefundOrderReqBO reqBO) {
         try {
             PayContext payContext = PayContext.getContext();
-            WxPayConfig wxPayConfig = payContext.getWxPayConfig();
+            WxPayConfigBO wxPayConfig = payContext.getWxPayConfig();
             WxPayRefundV3Request req = new WxPayRefundV3Request();
             req.setSubMchid(StrUtil.emptyToDefault(wxPayConfig.getSubMchId(), wxPayConfig.getMchId()));
             req.setOutTradeNo(reqBO.getPayOrderCode());    // 商户订单号
@@ -87,7 +87,7 @@ public abstract class BaseWxV3PayKit implements PayKit {
     @Override
     public ChannelRetMsgBO transfer(TransferReqBO reqBO) {
         try {
-            WxPayConfig wxPayConfig = PayContext.getContext().getWxPayConfig();
+            WxPayConfigBO wxPayConfig = PayContext.getContext().getWxPayConfig();
             EntPayRequest request = new EntPayRequest();
             request.setMchAppid(wxPayConfig.getAppId());  // 商户账号appid
             request.setMchId(wxPayConfig.getMchId());  //商户号

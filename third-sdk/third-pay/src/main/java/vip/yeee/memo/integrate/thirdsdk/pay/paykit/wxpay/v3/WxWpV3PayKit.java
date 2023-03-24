@@ -9,10 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import vip.yeee.memo.integrate.base.model.exception.BizException;
 import vip.yeee.memo.integrate.thirdsdk.pay.constant.PayConstant;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.ChannelRetMsgBO;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.UnifiedOrderReqBO;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.UnifiedOrderRespBO;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.WxJsapiUnifiedOrderRespBO;
+import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.*;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayContext;
 import vip.yeee.memo.integrate.thirdsdk.pay.properties.WxPayConfig;
 
@@ -24,11 +21,11 @@ import vip.yeee.memo.integrate.thirdsdk.pay.properties.WxPayConfig;
  */
 @Slf4j
 @Component
-public class WxJsapiV3PayKit extends WxV3PayKit {
+public class WxWpV3PayKit extends WxV3PayKit {
 
     @Override
     public String getPayway() {
-        return PayConstant.PAY_WAY_CODE.WX_JSAPI;
+        return PayConstant.PAY_WAY_CODE.WX_WP;
     }
 
     @Override
@@ -36,9 +33,12 @@ public class WxJsapiV3PayKit extends WxV3PayKit {
         try {
             PayContext payContext = PayContext.getContext();
             WxPayService wxPayService = payContext.getWxPayService();
-            WxPayConfig wxPayConfig = payContext.getWxPayConfig();
+            WxPayConfigBO wxPayConfig = payContext.getWxPayConfig();
             WxPayUnifiedOrderV3Result response;
             WxPayUnifiedOrderV3Request request = super.buildUnifiedOrderRequest(reqBO);
+            WxPayUnifiedOrderV3Request.Payer payer = new WxPayUnifiedOrderV3Request.Payer();
+            payer.setOpenid(reqBO.getOpenid());
+            request.setPayer(payer);
             response = wxPayService.unifiedOrderV3(TradeTypeEnum.JSAPI, request);
             WxJsapiUnifiedOrderRespBO respBO = new WxJsapiUnifiedOrderRespBO();
             ChannelRetMsgBO retMsgBO = new ChannelRetMsgBO();

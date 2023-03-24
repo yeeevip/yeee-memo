@@ -10,10 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import vip.yeee.memo.integrate.base.model.exception.BizException;
 import vip.yeee.memo.integrate.thirdsdk.pay.constant.PayConstant;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.ChannelRetMsgBO;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.CommonUnifiedOrderRespBO;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.UnifiedOrderReqBO;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.UnifiedOrderRespBO;
+import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.*;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayContext;
 import vip.yeee.memo.integrate.thirdsdk.pay.properties.AliPayConfig;
 import vip.yeee.memo.integrate.thirdsdk.pay.utils.AmountUtil;
@@ -36,7 +33,7 @@ public class AliBarPayKit extends BaseAliPayKit {
     @Override
     public UnifiedOrderRespBO unifiedOrder(UnifiedOrderReqBO reqBO) {
         try {
-            AliPayConfig aliPayConfig = PayContext.getContext().getAliPayConfig();
+            AliPayConfigBO aliPayConfig = PayContext.getContext().getAliPayConfig();
             AlipayTradePayRequest req = new AlipayTradePayRequest();
             if (StrUtil.isNotBlank(aliPayConfig.getAuthToken())) {
                 req.putOtherTextParam("app_auth_token", aliPayConfig.getAuthToken());

@@ -42,7 +42,7 @@ public abstract class BaseAliPayKit implements PayKit {
 
     @Override
     public ChannelRetMsgBO queryOrder(QueryOrderReqBO reqBO) {
-        AliPayConfig aliPayConfig = PayContext.getContext().getAliPayConfig();
+        AliPayConfigBO aliPayConfig = PayContext.getContext().getAliPayConfig();
         AlipayTradeQueryRequest req = new AlipayTradeQueryRequest();
         if (StrUtil.isNotBlank(aliPayConfig.getAuthToken())) {
             req.putOtherTextParam("app_auth_token", aliPayConfig.getAuthToken());
@@ -95,7 +95,7 @@ public abstract class BaseAliPayKit implements PayKit {
 
     @Override
     public ChannelRetMsgBO refundOrder(RefundOrderReqBO reqBO) {
-        AliPayConfig aliPayConfig = PayContext.getContext().getAliPayConfig();
+        AliPayConfigBO aliPayConfig = PayContext.getContext().getAliPayConfig();
         AlipayTradeRefundRequest req = new AlipayTradeRefundRequest();
         if (StrUtil.isNotBlank(aliPayConfig.getAuthToken())) {
             req.putOtherTextParam("app_auth_token", aliPayConfig.getAuthToken());
@@ -177,7 +177,7 @@ public abstract class BaseAliPayKit implements PayKit {
     public Pair<String, ChannelRetMsgBO> checkAndParsePayNoticeParams(HttpServletRequest request) throws Exception {
         Map<String, String> map = ServletUtil.getParamMap(request);
         log.info("checkAndParseNoticeParams map = {}", map);
-        AliPayConfig ali = PayContext.getContext().getAliPayConfig();
+        AliPayConfigBO ali = PayContext.getContext().getAliPayConfig();
         boolean verifyResult;
         if (ali.getUseCert()) {  //证书方式
             verifyResult = AlipaySignature.rsaCertCheckV1(map, ali.getAlipayPublicCert(), "utf-8", ali.getSignType());

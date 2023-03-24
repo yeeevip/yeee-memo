@@ -11,10 +11,7 @@ import org.springframework.stereotype.Component;
 import vip.yeee.memo.integrate.base.model.exception.BizException;
 import vip.yeee.memo.integrate.thirdsdk.pay.constant.OrderEnum;
 import vip.yeee.memo.integrate.thirdsdk.pay.constant.PayConstant;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.ChannelRetMsgBO;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.CommonUnifiedOrderRespBO;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.UnifiedOrderReqBO;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.UnifiedOrderRespBO;
+import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.*;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayContext;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayKit;
 import vip.yeee.memo.integrate.thirdsdk.pay.properties.AliPayConfig;
@@ -41,7 +38,7 @@ public class AliQrPayKit extends BaseAliPayKit {
         try {
             PayContext payContext = PayContext.getContext();
             PayProperties payProperties = payContext.getPayProperties();
-            AliPayConfig aliPayConfig = payContext.getAliPayConfig();
+            AliPayConfigBO aliPayConfig = payContext.getAliPayConfig();
             AlipayTradePrecreateRequest req = new AlipayTradePrecreateRequest();
             if (StrUtil.isNotBlank(aliPayConfig.getAuthToken())) {
                 req.putOtherTextParam("app_auth_token", aliPayConfig.getAuthToken());
@@ -58,7 +55,7 @@ public class AliQrPayKit extends BaseAliPayKit {
             CommonUnifiedOrderRespBO respBO = new CommonUnifiedOrderRespBO();
             ChannelRetMsgBO retMsgBO = new ChannelRetMsgBO();
             respBO.setChannelRetMsg(retMsgBO);
-            respBO.setMchId(payContext.getAliPayConfig().getMchAppId());
+            respBO.setMchId(payContext.getAliPayConfig().getSubAppId());
 
             AlipayTradePrecreateResponse alipayResp = payContext.getAlipayClient().execute(req);
             if (alipayResp.isSuccess()) {
