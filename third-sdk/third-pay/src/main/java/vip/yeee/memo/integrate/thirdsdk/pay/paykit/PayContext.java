@@ -130,26 +130,24 @@ public class PayContext {
 
     public static PayKit getPayChannelKit(String payWay) {
         PayContext context = PayContext.getContext();
-        String beanName = null;
+        String beanName =  StrUtil.toCamelCase(payWay);
         if (payWay.startsWith(PayConstant.IF_CODE.WXPAY)) {
             WxPayConfigBO wxPayConfig = context.getWxPayConfig();
             if (wxPayConfig == null) {
                 throw new BizException("未开通微信商户");
             }
             if (Integer.valueOf(1).equals(wxPayConfig.getPartner())) {
-                beanName = "PARTNER_" + payWay;
+                beanName = beanName + "Partner";
             }
             if (PayConstant.PAY_IF_VERSION.WX_V3.equals(context.getWxPayConfig().getApiVersion())) {
-                beanName = beanName + StrUtil.toCamelCase(payWay) + "V3PayKit";
-            } else {
-                beanName = beanName + StrUtil.toCamelCase(payWay) + "PayKit";
+                beanName = beanName + "V3";
             }
         } else if (payWay.startsWith(PayConstant.IF_CODE.ALIPAY)) {
             if (context.getAliPayConfig() == null) {
                 throw new BizException("未开通支付宝商户");
             }
-            beanName = StrUtil.toCamelCase(payWay) + "PayKit";
         }
+        beanName = beanName + "PayKit";
         try {
             return (PayKit) SpringContextUtils.getBean(beanName);
         } catch (NoSuchBeanDefinitionException e) {

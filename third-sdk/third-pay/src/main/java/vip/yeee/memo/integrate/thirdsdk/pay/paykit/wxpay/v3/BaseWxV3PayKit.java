@@ -15,6 +15,7 @@ import com.github.binarywang.wxpay.service.WxPayService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import vip.yeee.memo.integrate.base.model.exception.BizException;
+import vip.yeee.memo.integrate.base.web.utils.SpringContextUtils;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.*;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayContext;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayKit;
@@ -116,8 +117,9 @@ public abstract class BaseWxV3PayKit implements PayKit {
     }
 
     @Override
-    public Pair<String, ChannelRetMsgBO> checkAndParsePayNoticeParams(HttpServletRequest request) throws Exception {
+    public Pair<String, ChannelRetMsgBO> checkAndParsePayNoticeParams() throws Exception {
 
+        HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
         SignatureHeader header = new SignatureHeader();
         header.setTimeStamp(request.getHeader("Wechatpay-Timestamp"));
         header.setNonce(request.getHeader("Wechatpay-Nonce"));
@@ -156,8 +158,9 @@ public abstract class BaseWxV3PayKit implements PayKit {
     }
 
     @Override
-    public Pair<String, ChannelRetMsgBO> checkAndParseRefundNoticeParams(HttpServletRequest request) throws Exception {
+    public Pair<String, ChannelRetMsgBO> checkAndParseRefundNoticeParams() throws Exception {
 
+        HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
         SignatureHeader header = new SignatureHeader();
         header.setTimeStamp(request.getHeader("Wechatpay-Timestamp"));
         header.setNonce(request.getHeader("Wechatpay-Nonce"));

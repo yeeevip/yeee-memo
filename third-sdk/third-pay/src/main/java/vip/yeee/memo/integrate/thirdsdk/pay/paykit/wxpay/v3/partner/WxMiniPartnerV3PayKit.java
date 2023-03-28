@@ -1,5 +1,6 @@
 package vip.yeee.memo.integrate.thirdsdk.pay.paykit.wxpay.v3.partner;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderV3Result;
 import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
@@ -11,7 +12,6 @@ import vip.yeee.memo.integrate.thirdsdk.pay.constant.PayConstant;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.*;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayContext;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.wxpay.v3.partner.request.WxPayUnifiedOrderV3PartnerRequest;
-import vip.yeee.memo.integrate.thirdsdk.pay.properties.WxPayConfig;
 
 /**
  * description......
@@ -21,11 +21,11 @@ import vip.yeee.memo.integrate.thirdsdk.pay.properties.WxPayConfig;
  */
 @Slf4j
 @Component
-public class PartnerWxWpV3PayKit extends PartnerWxV3PayKit {
+public class WxMiniPartnerV3PayKit extends WxPartnerV3PayKit {
 
     @Override
     public String getPayway() {
-        return PayConstant.PAY_WAY_CODE.WX_WP;
+        return PayConstant.PAY_WAY_CODE.WX_MINI;
     }
 
     @Override
@@ -36,9 +36,14 @@ public class PartnerWxWpV3PayKit extends PartnerWxV3PayKit {
             WxPayConfigBO wxPayConfig = payContext.getWxPayConfig();
             WxPayUnifiedOrderV3Result response;
             WxPayUnifiedOrderV3PartnerRequest request = super.buildPartnerUnifiedOrderRequest(reqBO);
+            request.setSpAppid(wxPayConfig.getMiniAppId());
+            request.setSubAppId(StrUtil.emptyToDefault(reqBO.getAppId(), wxPayConfig.getSubMiniAppId()));
             WxPayUnifiedOrderV3PartnerRequest.Payer payer = new WxPayUnifiedOrderV3PartnerRequest.Payer();
-            payer.setSpOpenid(reqBO.getOpenid());
-            payer.setSubOpenid(reqBO.getOpenid());
+            if (StrUtil.isNotBlank(wxPayConfig.getSubMiniAppId())) {
+                payer.setSubOpenid(reqBO.getOpenid());
+            } else {
+                payer.setSpOpenid(reqBO.getOpenid());
+            }
             request.setPayer(payer);
             String url = wxPayService.getPayBaseUrl() + TradeTypeEnum.JSAPI.getPartnerUrl();
             String responseStr = wxPayService.postV3(url, GSON.toJson(request));

@@ -9,13 +9,13 @@ import com.alibaba.excel.enums.poi.BorderStyleEnum;
 import com.alibaba.excel.enums.poi.FillPatternTypeEnum;
 import lombok.Data;
 
-@ExcelIgnoreUnannotated
-@HeadStyle(fillPatternType = FillPatternTypeEnum.NO_FILL,
-        fillForegroundColor = 1,
-        borderLeft = BorderStyleEnum.NONE,
-        borderRight = BorderStyleEnum.NONE,
-        borderTop = BorderStyleEnum.NONE,
-        borderBottom = BorderStyleEnum.NONE)
+//@ExcelIgnoreUnannotated
+//@HeadStyle(fillPatternType = FillPatternTypeEnum.NO_FILL,
+//        fillForegroundColor = 1,
+//        borderLeft = BorderStyleEnum.NONE,
+//        borderRight = BorderStyleEnum.NONE,
+//        borderTop = BorderStyleEnum.NONE,
+//        borderBottom = BorderStyleEnum.NONE)
 @HeadFontStyle(fontHeightInPoints = 11, bold = BooleanEnum.FALSE)
 @Data
 public class ExportDataVo {

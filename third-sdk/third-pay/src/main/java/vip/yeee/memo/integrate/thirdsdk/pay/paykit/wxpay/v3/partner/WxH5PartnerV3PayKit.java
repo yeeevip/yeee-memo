@@ -20,7 +20,7 @@ import vip.yeee.memo.integrate.thirdsdk.pay.properties.PayProperties;
  */
 @Slf4j
 @Component
-public class PartnerWxH5V3PayKit extends PartnerWxV3PayKit {
+public class WxH5PartnerV3PayKit extends WxPartnerV3PayKit {
 
     @Override
     public String getPayway() {

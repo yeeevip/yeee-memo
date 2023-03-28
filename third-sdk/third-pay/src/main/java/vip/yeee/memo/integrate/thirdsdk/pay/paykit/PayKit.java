@@ -13,7 +13,6 @@ import vip.yeee.memo.integrate.thirdsdk.pay.constant.PayConstant;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.*;
 import vip.yeee.memo.integrate.thirdsdk.pay.properties.WxPayConfig;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -36,9 +35,9 @@ public interface PayKit {
 
     ChannelRetMsgBO transfer(TransferReqBO reqBO);
 
-    Pair<String, ChannelRetMsgBO> checkAndParsePayNoticeParams(HttpServletRequest request) throws Exception;
+    Pair<String, ChannelRetMsgBO> checkAndParsePayNoticeParams() throws Exception;
 
-    Pair<String, ChannelRetMsgBO> checkAndParseRefundNoticeParams(HttpServletRequest request) throws Exception;
+    Pair<String, ChannelRetMsgBO> checkAndParseRefundNoticeParams() throws Exception;
 
     AES aes = SecureUtil.aes("4ChT08phkz501wwD795X7w==".getBytes());
 

@@ -33,6 +33,9 @@ public class UnifiedOrderReqBO {
 
     private String payDataType;
 
+    // 一般为二级商户下的小程序或公众号appId
+    private String appId;
+
     private String openid;
 
 }

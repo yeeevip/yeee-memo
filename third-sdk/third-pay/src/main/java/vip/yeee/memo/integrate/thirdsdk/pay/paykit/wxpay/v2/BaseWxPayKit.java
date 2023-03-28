@@ -16,6 +16,7 @@ import com.github.binarywang.wxpay.constant.WxPayConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import vip.yeee.memo.integrate.base.model.exception.BizException;
+import vip.yeee.memo.integrate.base.web.utils.SpringContextUtils;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.*;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayContext;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayKit;
@@ -129,7 +130,8 @@ public abstract class BaseWxPayKit implements PayKit {
     }
 
     @Override
-    public Pair<String, ChannelRetMsgBO> checkAndParsePayNoticeParams(HttpServletRequest request) throws Exception {
+    public Pair<String, ChannelRetMsgBO> checkAndParsePayNoticeParams() throws Exception {
+        HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
         String xmlResult = IOUtils.toString(request.getInputStream(), request.getCharacterEncoding());
         WxPayOrderNotifyResult result = WxPayOrderNotifyResult.fromXML(xmlResult);
         String orderCode = result.getOutTradeNo();
@@ -146,8 +148,9 @@ public abstract class BaseWxPayKit implements PayKit {
     }
 
     @Override
-    public Pair<String, ChannelRetMsgBO> checkAndParseRefundNoticeParams(HttpServletRequest request) throws Exception {
+    public Pair<String, ChannelRetMsgBO> checkAndParseRefundNoticeParams() throws Exception {
         PayContext payContext = PayContext.getContext();
+        HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
         String xmlResult = IOUtils.toString(request.getInputStream(), request.getCharacterEncoding());
         WxPayRefundNotifyResult result = WxPayRefundNotifyResult.fromXML(xmlResult, payContext.getWxPayConfig().getMchKey());
         WxPayRefundNotifyResult.ReqInfo reqInfo = result.getReqInfo();

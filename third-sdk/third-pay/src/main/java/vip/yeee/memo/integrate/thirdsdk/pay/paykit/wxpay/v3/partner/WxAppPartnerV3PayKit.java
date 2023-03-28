@@ -22,7 +22,7 @@ import vip.yeee.memo.integrate.thirdsdk.pay.paykit.wxpay.v3.partner.request.WxPa
  */
 @Slf4j
 @Component
-public class PartnerWxAppV3PayKit extends PartnerWxV3PayKit {
+public class WxAppPartnerV3PayKit extends WxPartnerV3PayKit {
 
     @Override
     public String getPayway() {

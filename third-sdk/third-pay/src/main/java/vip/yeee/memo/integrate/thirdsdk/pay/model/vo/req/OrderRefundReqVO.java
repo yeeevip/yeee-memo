@@ -8,11 +8,12 @@ import javax.validation.constraints.NotBlank;
  * description......
  *
  * @author yeeee
- * @since 2022/12/21 15:20
+ * @since 2023/3/16 11:55
  */
 @Data
-public class OrderQueryReqVO {
+public class OrderRefundReqVO {
 
     @NotBlank
     private String orderCode;
+
 }

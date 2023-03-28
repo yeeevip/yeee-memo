@@ -3,6 +3,7 @@ package vip.yeee.memo.integrate.thirdsdk.pay.model.vo.req;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 /**
  * description......
@@ -18,6 +19,6 @@ public class SubmitOrderReqVO {
 
     // 订单金额，单位-分
     @NotNull(message = "订单金额不能为空")
-    private Long amount;
+    private BigDecimal amount;
 
 }

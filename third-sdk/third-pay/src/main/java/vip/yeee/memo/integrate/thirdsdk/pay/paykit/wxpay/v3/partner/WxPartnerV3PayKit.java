@@ -11,7 +11,6 @@ import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayContext;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayKit;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.wxpay.v3.BaseWxV3PayKit;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.wxpay.v3.partner.request.WxPayUnifiedOrderV3PartnerRequest;
-import vip.yeee.memo.integrate.thirdsdk.pay.properties.WxPayConfig;
 
 /**
  * description......
@@ -20,7 +19,7 @@ import vip.yeee.memo.integrate.thirdsdk.pay.properties.WxPayConfig;
  * @since 2022/8/26 10:52
  */
 @Slf4j
-public abstract class PartnerWxV3PayKit extends BaseWxV3PayKit implements PayKit {
+public abstract class WxPartnerV3PayKit extends BaseWxV3PayKit implements PayKit {
 
     protected static final Gson GSON = new GsonBuilder().create();
 

@@ -18,6 +18,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.extern.slf4j.Slf4j;
 import vip.yeee.memo.integrate.base.model.exception.BizException;
 import vip.yeee.memo.integrate.base.util.JacksonUtils;
+import vip.yeee.memo.integrate.base.web.utils.SpringContextUtils;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.*;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayContext;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayKit;
@@ -174,8 +175,8 @@ public abstract class BaseAliPayKit implements PayKit {
     }
 
     @Override
-    public Pair<String, ChannelRetMsgBO> checkAndParsePayNoticeParams(HttpServletRequest request) throws Exception {
-        Map<String, String> map = ServletUtil.getParamMap(request);
+    public Pair<String, ChannelRetMsgBO> checkAndParsePayNoticeParams() throws Exception {
+        Map<String, String> map = ServletUtil.getParamMap(SpringContextUtils.getHttpServletRequest());
         log.info("checkAndParseNoticeParams map = {}", map);
         AliPayConfigBO ali = PayContext.getContext().getAliPayConfig();
         boolean verifyResult;
@@ -205,8 +206,8 @@ public abstract class BaseAliPayKit implements PayKit {
     }
 
     @Override
-    public Pair<String, ChannelRetMsgBO> checkAndParseRefundNoticeParams(HttpServletRequest request) throws Exception {
-        return checkAndParsePayNoticeParams(request);
+    public Pair<String, ChannelRetMsgBO> checkAndParseRefundNoticeParams() throws Exception {
+        return null;
     }
 
     protected String getPayNotifyUrl() {

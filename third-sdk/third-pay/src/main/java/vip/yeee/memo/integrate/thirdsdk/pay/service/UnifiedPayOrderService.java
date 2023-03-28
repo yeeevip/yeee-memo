@@ -11,13 +11,13 @@ import vip.yeee.memo.integrate.base.web.utils.HttpRequestUtils;
 import vip.yeee.memo.integrate.base.web.utils.SpringContextUtils;
 import vip.yeee.memo.integrate.thirdsdk.pay.constant.PayConstant;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.*;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.vo.req.OrderQueryReqVO;
+import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.OrderQueryReqBO;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.vo.req.UnifiedOrderRefundReqVO;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.vo.req.UnifiedOrderReqVO;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayContext;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayKit;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.function.Function;
 
 /**
  * description......
@@ -30,53 +30,84 @@ import javax.servlet.http.HttpServletRequest;
 public class UnifiedPayOrderService {
 
     public UnifiedOrderRespBO unifiedOrder(UnifiedOrderReqVO reqVO) throws Exception {
-        PayContext.setContext("1111");
-        log.info("【统一下单】- 请求参数：{}", reqVO);
-        PayKit payKit = this.getPayChannelKit(reqVO.getPayWay());
-        UnifiedOrderReqBO reqBO = this.buildUnifiedOrderReqBO(reqVO);
-        UnifiedOrderRespBO respBO = payKit.unifiedOrder(reqBO);
-        log.info("【统一下单】- 下单成功：{}", respBO);
-        PayContext.clearContext();
-        return respBO;
+        try {
+            PayContext.setContext(reqVO.getLesseeId());
+            log.info("【统一下单】- 请求参数：{}", reqVO);
+            PayKit payKit = this.getPayChannelKit(reqVO.getPayway());
+            UnifiedOrderReqBO reqBO = this.buildUnifiedOrderReqBO(reqVO);
+            UnifiedOrderRespBO respBO = payKit.unifiedOrder(reqBO);
+            log.info("【统一下单】- 下单成功：{}", respBO);
+            return respBO;
+        } finally {
+            PayContext.clearContext();
+        }
     }
 
     public ChannelRetMsgBO unifiedOrderRefund(UnifiedOrderRefundReqVO reqVO) {
-        PayContext.setContext("1111");
-        log.info("【统一退款】- 请求参数：{}", reqVO);
-        PayKit payKit = this.getPayChannelKit(reqVO.getPayway());
-        ChannelRetMsgBO retMsgBO = payKit.refundOrder(this.buildUnifiedOrderRefundReqBO(reqVO));
-        log.info("【统一退款】- 退款成功：{}", retMsgBO);
-        PayContext.clearContext();
-        return retMsgBO;
+        try {
+            PayContext.setContext(reqVO.getLesseeId());
+            log.info("【统一退款】- 请求参数：{}", reqVO);
+            PayKit payKit = this.getPayChannelKit(reqVO.getPayway());
+            ChannelRetMsgBO retMsgBO = payKit.refundOrder(this.buildUnifiedOrderRefundReqBO(reqVO));
+            log.info("【统一退款】- 退款成功：{}", retMsgBO);
+            return retMsgBO;
+        } finally {
+            PayContext.clearContext();
+        }
     }
 
-    public ChannelRetMsgBO queryOrder(OrderQueryReqVO request) {
-        PayContext.setContext("1111");
-        // 获取对应处理接口
-        PayKit payKit = this.getPayChannelKit(request.getPayway());
-        QueryOrderReqBO query = new QueryOrderReqBO();
-        query.setOrderCode(request.getOrderCode());
-        ChannelRetMsgBO retMsgBO = payKit.queryOrder(query);
-        PayContext.clearContext();
-        return retMsgBO;
+    public ChannelRetMsgBO queryOrder(OrderQueryReqBO request) {
+        try {
+            PayContext.setContext(request.getLesseeId());
+            // 获取对应处理接口
+            PayKit payKit = this.getPayChannelKit(request.getPayway());
+            QueryOrderReqBO query = new QueryOrderReqBO();
+            query.setOrderCode(request.getOrderCode());
+            ChannelRetMsgBO retMsgBO = payKit.queryOrder(query);
+            return retMsgBO;
+        } finally {
+            PayContext.clearContext();
+        }
     }
 
-    public Pair<String, ChannelRetMsgBO> parsePayNoticeParams(HttpServletRequest request, String ifCode, String lesseeId) throws Exception {
-        PayContext.setContext("1111");
-        // 获取对应处理接口
-        PayKit payKit = this.getPayChannelKit(ifCode.toUpperCase());
-        // 解析请求参数并验签
-        Pair<String, ChannelRetMsgBO> keyValue = payKit.checkAndParsePayNoticeParams(request);
-        return keyValue;
+    public ResponseEntity<Object> payNoticeHandle(String ifCode, String lesseeId, Function<Pair<String, ChannelRetMsgBO>, ResponseEntity<Object>> handler) {
+        try {
+            PayContext.setContext(lesseeId);
+            // 获取对应处理接口
+            PayKit payKit = this.getPayChannelKit(ifCode.toUpperCase());
+            // 解析请求参数并验签
+            Pair<String, ChannelRetMsgBO> keyValue = payKit.checkAndParsePayNoticeParams();
+            return handler.apply(keyValue);
+        } catch (Exception e) {
+            if (!(e instanceof BizException)) {
+                log.error("【支付回调通知】- 业务异常", e);
+                return PayKit.getDefaultErrorResp(ifCode);
+            }
+            log.warn("【支付回调通知】- 业务异常 - " + e.getMessage());
+            return PayKit.getDefaultSuccessResp(ifCode);
+        } finally {
+            PayContext.clearContext();
+        }
     }
 
-    public Pair<String, ChannelRetMsgBO> parseRefundNoticeParams(HttpServletRequest request, String ifCode, String lesseeId) throws Exception {
-        PayContext.setContext("1111");
-        // 获取对应处理接口
-        PayKit payKit = this.getPayChannelKit(ifCode.toUpperCase());
-        // 解析请求参数并验签
-        Pair<String, ChannelRetMsgBO> keyValue = payKit.checkAndParseRefundNoticeParams(request);
-        return keyValue;
+    public ResponseEntity<Object> refundNoticeHandle(String ifCode, String lesseeId, Function<Pair<String, ChannelRetMsgBO>, ResponseEntity<Object>> handler) {
+        try {
+            PayContext.setContext(lesseeId);
+            // 获取对应处理接口
+            PayKit payKit = this.getPayChannelKit(ifCode.toUpperCase());
+            // 解析请求参数并验签
+            Pair<String, ChannelRetMsgBO> keyValue = payKit.checkAndParseRefundNoticeParams();
+            return handler.apply(keyValue);
+        } catch (Exception e) {
+            if (!(e instanceof BizException)) {
+                log.error("【退款回调通知】- 业务异常", e);
+                return PayKit.getDefaultErrorResp(ifCode);
+            }
+            log.warn("【退款回调通知】- 业务异常 - " + e.getMessage());
+            return PayKit.getDefaultSuccessResp(ifCode);
+        } finally {
+            PayContext.clearContext();
+        }
     }
 
     private PayKit getPayChannelKit(String payWay) {
@@ -84,8 +115,8 @@ public class UnifiedPayOrderService {
     }
 
     private UnifiedOrderReqBO buildUnifiedOrderReqBO(UnifiedOrderReqVO reqVO) {
-        String payWay = reqVO.getPayWay();
-        if (PayConstant.PAY_WAY_CODE.ALI_BAR.equals(reqVO.getPayWay())
+        String payWay = reqVO.getPayway();
+        if (PayConstant.PAY_WAY_CODE.ALI_BAR.equals(reqVO.getPayway())
                 && StrUtil.isBlank(reqVO.getAuthCode())) {
             throw new BizException("用户支付条码不能为空");
         }

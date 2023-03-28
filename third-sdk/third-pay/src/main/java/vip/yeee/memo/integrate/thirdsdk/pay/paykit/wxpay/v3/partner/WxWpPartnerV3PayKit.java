@@ -1,7 +1,6 @@
-package vip.yeee.memo.integrate.thirdsdk.pay.paykit.wxpay.v3;
+package vip.yeee.memo.integrate.thirdsdk.pay.paykit.wxpay.v3.partner;
 
 import com.alibaba.fastjson.JSON;
-import com.github.binarywang.wxpay.bean.request.WxPayUnifiedOrderV3Request;
 import com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderV3Result;
 import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.service.WxPayService;
@@ -11,6 +10,7 @@ import vip.yeee.memo.integrate.base.model.exception.BizException;
 import vip.yeee.memo.integrate.thirdsdk.pay.constant.PayConstant;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.*;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayContext;
+import vip.yeee.memo.integrate.thirdsdk.pay.paykit.wxpay.v3.partner.request.WxPayUnifiedOrderV3PartnerRequest;
 
 /**
  * description......
@@ -20,11 +20,11 @@ import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayContext;
  */
 @Slf4j
 @Component
-public class WxMiniV3PayKit extends WxV3PayKit {
+public class WxWpPartnerV3PayKit extends WxPartnerV3PayKit {
 
     @Override
     public String getPayway() {
-        return PayConstant.PAY_WAY_CODE.WX_MINI;
+        return PayConstant.PAY_WAY_CODE.WX_WP;
     }
 
     @Override
@@ -34,12 +34,14 @@ public class WxMiniV3PayKit extends WxV3PayKit {
             WxPayService wxPayService = payContext.getWxPayService();
             WxPayConfigBO wxPayConfig = payContext.getWxPayConfig();
             WxPayUnifiedOrderV3Result response;
-            WxPayUnifiedOrderV3Request request = super.buildUnifiedOrderRequest(reqBO);
-            request.setAppid(wxPayConfig.getMiniAppId());
-            WxPayUnifiedOrderV3Request.Payer payer = new WxPayUnifiedOrderV3Request.Payer();
-            payer.setOpenid(reqBO.getOpenid());
+            WxPayUnifiedOrderV3PartnerRequest request = super.buildPartnerUnifiedOrderRequest(reqBO);
+            WxPayUnifiedOrderV3PartnerRequest.Payer payer = new WxPayUnifiedOrderV3PartnerRequest.Payer();
+            payer.setSpOpenid(reqBO.getOpenid());
+            payer.setSubOpenid(reqBO.getOpenid());
             request.setPayer(payer);
-            response = wxPayService.unifiedOrderV3(TradeTypeEnum.JSAPI, request);
+            String url = wxPayService.getPayBaseUrl() + TradeTypeEnum.JSAPI.getPartnerUrl();
+            String responseStr = wxPayService.postV3(url, GSON.toJson(request));
+            response = GSON.fromJson(responseStr, WxPayUnifiedOrderV3Result.class);
             WxJsapiUnifiedOrderRespBO respBO = new WxJsapiUnifiedOrderRespBO();
             ChannelRetMsgBO retMsgBO = new ChannelRetMsgBO();
             respBO.setChannelRetMsg(retMsgBO);
