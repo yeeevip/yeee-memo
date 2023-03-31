@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import okhttp3.ConnectionPool;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import vip.yeee.memo.integrate.stools.kit.kit.OkHttp3Kit;
+import vip.yeee.memo.integrate.common.httpclient.okhttp.kit.OkHttp3Kit;
 
 import javax.annotation.Resource;
 import java.util.concurrent.CountDownLatch;

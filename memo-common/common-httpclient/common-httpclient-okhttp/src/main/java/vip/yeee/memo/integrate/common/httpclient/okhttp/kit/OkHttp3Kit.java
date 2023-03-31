@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.stools.kit.kit;
+package vip.yeee.memo.integrate.common.httpclient.okhttp.kit;
 
 import cn.hutool.core.map.MapUtil;
 import com.google.common.base.Stopwatch;

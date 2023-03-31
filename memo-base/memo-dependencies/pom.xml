@@ -43,6 +43,9 @@
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <zxing.version>3.1.0</zxing.version>
         <xstream.version>1.4.10</xstream.version>
+        <openai.version>1.1.0</openai.version>
+        <forest.version>1.5.30</forest.version>
+        <okhttp-sse-version>3.14.9</okhttp-sse-version>
     </properties>
 
     <dependencyManagement>
@@ -360,6 +363,22 @@
                 <groupId>com.thoughtworks.xstream</groupId>
                 <artifactId>xstream</artifactId>
                 <version>${xstream.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ai.openai</groupId>
+                <artifactId>openai-java-sdk</artifactId>
+                <version>${openai.version}</version>
+            </dependency>
+            <!--http框架-->
+            <dependency>
+                <groupId>com.dtflys.forest</groupId>
+                <artifactId>forest-spring-boot-starter</artifactId>
+                <version>${forest.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp-sse</artifactId>
+                <version>${okhttp-sse-version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+
+    <title>Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/md.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mdbase.css}">
+    <style>
+        body {
+            background-color: #f4f7f6;
+            margin-top: 20px;
+        }
+        .card {
+            background: #fff;
+            transition: 0.5s;
+            border: 0;
+            margin-bottom: 30px;
+            border-radius: 0.55rem;
+            position: relative;
+            width: 100%;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+        }
+        .chat-app .people-list {
+            width: 280px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            padding: 20px;
+            z-index: 7;
+        }
+
+        .chat-app .chat {
+            margin-left: 280px;
+            border-left: 1px solid #eaeaea;
+        }
+
+        .people-list {
+            -moz-transition: 0.5s;
+            -o-transition: 0.5s;
+            -webkit-transition: 0.5s;
+            transition: 0.5s;
+        }
+
+        .people-list .chat-list li {
+            padding: 10px 15px;
+            list-style: none;
+            border-radius: 3px;
+        }
+
+        .people-list .chat-list li:hover {
+            background: #efefef;
+            cursor: pointer;
+        }
+
+        .people-list .chat-list li.active {
+            background: #efefef;
+        }
+
+        .people-list .chat-list li .name {
+            font-size: 15px;
+        }
+
+        .people-list .chat-list img {
+            width: 45px;
+            border-radius: 50%;
+        }
+
+        .people-list img {
+            float: left;
+            border-radius: 50%;
+        }
+
+        .people-list .about {
+            float: left;
+            padding-left: 8px;
+        }
+
+        .people-list .status {
+            color: #999;
+            font-size: 13px;
+        }
+
+        .chat .chat-header {
+            padding: 15px 20px;
+            border-bottom: 2px solid #f4f7f6;
+        }
+
+        .chat .chat-header img {
+            float: left;
+            border-radius: 40px;
+            width: 40px;
+        }
+
+        .chat .chat-header .chat-about {
+            float: left;
+            padding-left: 10px;
+        }
+
+        .chat .chat-history {
+            padding: 20px;
+            border-bottom: 2px solid #fff;
+        }
+
+        .chat .chat-history ul {
+            padding: 0;
+        }
+
+        .chat .chat-history ul li {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .chat .chat-history ul li:last-child {
+            margin-bottom: 0px;
+        }
+
+        .chat .chat-history .message-data {
+            margin-bottom: 15px;
+        }
+
+        .chat .chat-history .message-data img {
+            border-radius: 40px;
+            width: 40px;
+        }
+
+        .chat .chat-history .message-data-time {
+            color: #434651;
+            padding-left: 6px;
+        }
+
+        .chat .chat-history .message {
+            color: #444;
+            padding: 18px 20px;
+            line-height: 26px;
+            font-size: 16px;
+            border-radius: 7px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .chat .chat-history .message:after {
+            bottom: 100%;
+            left: 7%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+            border-bottom-color: #fff;
+            border-width: 10px;
+            margin-left: -10px;
+        }
+
+        .chat .chat-history .my-message {
+            background: #efefef;
+        }
+
+        .chat .chat-history .my-message:after {
+            bottom: 100%;
+            left: 30px;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+            border-bottom-color: #efefef;
+            border-width: 10px;
+            margin-left: -10px;
+        }
+
+        .chat .chat-history .other-message {
+            background: #e8f1f3;
+            text-align: right;
+        }
+
+        .chat .chat-history .other-message:after {
+            border-bottom-color: #e8f1f3;
+            left: 93%;
+        }
+
+        .chat .chat-message {
+            padding: 20px;
+        }
+
+        .online,
+        .offline,
+        .me {
+            margin-right: 2px;
+            font-size: 8px;
+            vertical-align: middle;
+        }
+
+        .online {
+            color: #86c541;
+        }
+
+        .offline {
+            color: #e47297;
+        }
+
+        .me {
+            color: #1d8ecd;
+        }
+
+        .float-right {
+            float: right;
+        }
+
+        .clearfix:after {
+            visibility: hidden;
+            display: block;
+            font-size: 0;
+            content: " ";
+            clear: both;
+            height: 0;
+        }
+
+        @media only screen and (max-width: 767px) {
+            .chat-app .people-list {
+                height: 465px;
+                width: 100%;
+                overflow-x: auto;
+                background: #fff;
+                left: -400px;
+                display: none;
+            }
+            .chat-app .people-list.open {
+                left: 0;
+            }
+            .chat-app .chat {
+                margin: 0;
+            }
+            .chat-app .chat .chat-header {
+                border-radius: 0.55rem 0.55rem 0 0;
+            }
+            .chat-app .chat-history {
+                height: 300px;
+                overflow-x: auto;
+            }
+        }
+
+        @media only screen and (min-width: 768px) and (max-width: 992px) {
+            .chat-app .chat-list {
+                height: 650px;
+                overflow-x: auto;
+            }
+            .chat-app .chat-history {
+                height: 600px;
+                overflow-x: auto;
+            }
+        }
+
+        @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
+            .chat-app .chat-list {
+                height: 480px;
+                overflow-x: auto;
+            }
+            .chat-app .chat-history {
+                height: calc(100vh - 350px);
+                overflow-x: auto;
+            }
+        }
+        .dot-loader {
+            display: inline-block;
+            position: relative;
+            width: 64px;
+            height: 64px;
+        }
+
+        .dot-loader .dot {
+            position: absolute;
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #999;
+            animation: dot 1.2s ease-in-out infinite;
+        }
+
+        .dot-loader .dot:nth-child(1) {
+            animation-delay: 0s;
+            left: 8px;
+            top: 8px;
+        }
+
+        .dot-loader .dot:nth-child(2) {
+            animation-delay: 0.3s;
+            left: 24px;
+            top: 8px;
+        }
+
+        .dot-loader .dot:nth-child(3) {
+            animation-delay: 0.6s;
+            left: 40px;
+            top: 8px;
+        }
+
+        @keyframes dot {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(0);
+            }
+        }
+
+        .hljs-tag, .hljs-name, .hljs-attribute {
+            color: #9de0f6 !important;
+        }
+        .hljs-number, .hljs-literal, .hljs-variable, .hljs-template-variable, .hljs-tag .hljs-attr {
+            color: #789a5e !important;
+        }
+        .hljs-keyword, .hljs-selector-tag, .hljs-subst {
+            color: #3b9cd4 !important;
+        }
+        .hljs-string, .hljs-doctag {
+            color: #79ca46 !important;
+        }
+        .hljs-title, .hljs-section, .hljs-selector-id {
+            color: #d6d191 !important;
+            font-weight: bold;
+        }.hljs-type, .hljs-class .hljs-title {
+             color: #e0e0e0 !important;
+             font-weight: bold;
+         }.hljs-type, .hljs-class .hljs-title {
+              color: #bc79d2 !important;
+              font-weight: bold;
+          }
+        .vditor-reset pre code {
+            color: #fff;
+            background-color: #282c34;
+        }
+
+        .header {
+            background-color: #fff;
+            box-shadow: rgba(0, 0, 0, 0.05) 0 1px 7px;
+            border-bottom: 1px solid #e1e4e8;
+        }
+
+        .wrapper {
+            margin: 0 auto;
+            max-width: 768px;
+        }
+
+        #outline {
+            display: none;
+            position: fixed;
+            width: 250px;
+            top: 117px;
+            right: 50px;
+            bottom: 86px;
+            overflow: auto;
+            font-size: 14px;
+            background-color: #fff;
+            line-height: 20px;
+        }
+
+        #outline ul {
+            margin-left: 16px;
+            list-style: none;
+        }
+
+        #outline > ul {
+            margin-left: 0;
+        }
+
+        #outline li > span {
+            cursor: pointer;
+            border-left: 1px solid transparent;
+            display: block;
+            padding-left: 8px;
+        }
+
+        #outline li > span.vditor-outline__item--current {
+            border-left: 1px solid #4285f4;
+            color: #4285f4;
+            background-color: #f6f8fa;
+        }
+
+        #outline li > span:hover {
+            color: #4285f4;
+            background-color: #f6f8fa;
+        }
+
+        @media (max-width: 768px) {
+            #outline {
+                display: none !important;
+            }
+        }
+        .vditor-reset--anchor {
+            padding-left: 0 !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-lg-12">
+            <div class="card chat-app">
+                <div id="plist" class="people-list">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-search"></i></span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Search..." />
+                    </div>
+                    <ul id="chats" class="list-unstyled chat-list mt-2 mb-0">
+
+                        <li class="clearfix active">
+                            <img th:src="${assistant.avatar}" alt="avatar" />
+                            <div class="about">
+                                <div class="name">[[${assistant.name}]]</div>
+                                <div class="status"><i class="fa fa-circle online"></i> online</div>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="chat"  style="position: relative;overflow: hidden;">
+                    <div class="chat-header clearfix" style="position: absolute;top:0;left: 0;width: 100%;height:100px;">
+                        <div class="row" >
+                            <div class="col-lg-6" >
+                                <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
+                                    <img th:src="${assistant.avatar}" alt="avatar" />
+                                </a>
+                                <div class="chat-about">
+                                    <h6 class="m-b-0">[[${assistant.name}]]</h6>
+                                    <small>[[${assistant.intro}]]</small>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 hidden-sm text-right">
+                                <a href="javascript:void(0);" class="btn btn-outline-secondary"><i class="fa fa-camera"></i></a>
+                                <a href="javascript:void(0);" class="btn btn-outline-primary"><i class="fa fa-image"></i></a>
+                                <a href="javascript:void(0);" class="btn btn-outline-info"><i class="fa fa-cogs"></i></a>
+                                <a href="javascript:void(0);" class="btn btn-outline-warning"><i class="fa fa-question"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div  style="width:100%;height:100px;"></div>
+                    <div id="msgBox" class="chat-history" style="position:inherit; height:500px;overflow: scroll;">
+                        <ul id="messages" class="m-b-0">
+
+                        </ul>
+                    </div>
+                    <div style="width:100%;height:80px;"></div>
+                    <div class="chat-message clearfix" style="position: absolute;bottom: 0;left: 0;width: 100%;height:80px;">
+                        <div class="input-group mb-0">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-send"></i></span>
+                            </div>
+                            <input id="inputMsg" type="text" class="form-control" placeholder="Enter text here..." />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/js/dayjs.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/axios.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/vditor.js}" defer></script>
+<script th:inline="javascript">
+    let chatId = "10086";
+    let userMsg = "<li class=\"clearfix\"><div class=\"message-data text-right\"><span class=\"message-data-time\">${date}</span></div><div class=\"message other-message float-right\">${message}</div></li>";
+    let assistantMsg = "<li class=\"clearfix \"><div class=\"message-data\"><span class=\"message-data-time\">${date}</span></div><div class=\"message my-message\">${message}</div></li>";
+    let loaderMsg = "<li id=\"msgLoader\" class=\"clearfix\"><div class=\"message-data\"><span class=\"message-data-time\">${date}</span></div><div class=\"dot-loader\"><span class=\"dot\"></span><span class=\"dot\"></span><span class=\"dot\"></span></div></li>"
+    // 聊天新增信息
+    function appendUserMsg(msg){
+        const nowDate = dayjs().format('YYYY-MM-DD HH:mm:ss');
+        let item = userMsg;
+        item = item.replace("${date}",nowDate);
+        item = item.replace("${message}",msg);
+        let appendMsg = $(item);
+        $('#messages').append(appendMsg);
+        reScroll();
+        appendSseLoaderMsg(msg);
+    }
+    // 新增准备信息
+    function appendLoaderMsg(question){
+        const nowDate = dayjs().format('YYYY-MM-DD HH:mm:ss');
+        let item = loaderMsg;
+        item = item.replace("${date}",nowDate);
+        let appendMsg =  $(item);
+        $('#messages').append(appendMsg);
+        reScroll();
+        axios({
+            url:'/openai/chat',
+            method:'post',
+            data:{
+                chatId:chatId,
+                content:question,
+                withContext:2
+            }
+        }).then(res=>{
+            console.log(res)
+            $('#msgLoader').remove()
+            appendAssistantMsg(res.data)
+        })
+    }
+
+    function appendSseLoaderMsg(question){
+        const nowDate = dayjs().format('YYYY-MM-DD HH:mm:ss');
+        let item = loaderMsg;
+        item = item.replace("${date}",nowDate);
+        let appendMsg =  $(item);
+        $('#messages').append(appendMsg);
+        reScroll();
+        var evtSource = new EventSource('/openai/sse/chat?id=' + chatId + "&withContext=2&content=" + question);
+        console.log(evtSource.withCredentials);
+        console.log(evtSource.readyState);
+        console.log(evtSource.url);
+        evtSource.onopen = function() {
+            console.log("Connection to server opened.");
+        };
+
+        evtSource.onmessage = function(msg) {
+            msg = msg.data
+            $('#msgLoader').remove()
+            const nowDate = dayjs().format('YYYY-MM-DD HH:mm:ss');
+            let item = assistantMsg;
+            msg = $.trim(msg);
+            item = item.replace("${date}",nowDate);
+            let markId = "md" + generateRandomString(8);
+            let markHtml = "<div id='${id}'></div>"
+            markHtml = markHtml.replace("${id}",markId)
+            item = item.replace("${message}",markHtml);
+            let appendMsg = $(item);
+            $('#messages').append(appendMsg);
+            Vditor.preview(document.getElementById(markId),
+                msg, {
+                    speech: {
+                        enable: true,
+                    },
+                    anchor: 1,
+                    after () {
+                        //reScroll();
+                    },
+                })
+            reScroll();
+        };
+
+        evtSource.onerror = function() {
+            console.log("EventSource failed.");
+        };
+    }
+    // 新增回复信息
+    function appendAssistantMsg(msg){
+        const nowDate = dayjs().format('YYYY-MM-DD HH:mm:ss');
+        let item = assistantMsg;
+        msg = $.trim(msg);
+        item = item.replace("${date}",nowDate);
+        let markId = "md" + generateRandomString(8);
+        let markHtml = "<div id='${id}'></div>"
+        markHtml = markHtml.replace("${id}",markId)
+        item = item.replace("${message}",markHtml);
+        let appendMsg = $(item);
+        $('#messages').append(appendMsg);
+        Vditor.preview(document.getElementById(markId),
+            msg, {
+                speech: {
+                    enable: true,
+                },
+                anchor: 1,
+                after () {
+                    //reScroll();
+                },
+            })
+        reScroll();
+    }
+    // 随机字符串
+    function generateRandomString(length) {
+        let result = '';
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const charactersLength = characters.length;
+        for (let i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+    }
+
+    function reScroll(){
+        // 获取容器元素
+        var msgBox = $('#msgBox');
+        msgBox.scrollTop(msgBox[0].scrollHeight);
+    }
+    $(document).ready(function() {
+        // 获取初始化内容
+        let initContent = [[${init.initContent}]]
+        chatId = [[${init.chatId}]]
+        appendAssistantMsg(initContent)
+        let inputDom = $('#inputMsg')
+        inputDom.on('keydown', function(e) {
+            if (e.keyCode === 13) { // 回车键的 keyCode 是 13
+                //console.log('按下了回车键');
+                // 这里添加回车键按下后的处理逻辑
+                var inputVal = inputDom.val();
+                console.log(inputVal)
+                inputDom.val('')
+                appendUserMsg(inputVal);
+            }
+        });
+    });
+    $('#chats').on('click', 'li', function() {
+        $('li').removeClass('active');
+        $(this).addClass('active');
+    });
+</script>
+</body>
+</html>
