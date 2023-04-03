@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 import vip.yeee.memo.integrate.ai.chatgpt.listener.SseStreamListener;
 import vip.yeee.memo.integrate.ai.chatgpt.listener.WsEventSourceListener;
 import vip.yeee.memo.integrate.ai.chatgpt.util.WebSocketUtil;
+import vip.yeee.memo.integrate.common.web.sse.util.SseEmitterUtil;
 
 import javax.annotation.Resource;
 import javax.websocket.Session;
@@ -110,7 +111,7 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public SseEmitter doSseChat(ChatParams params, String chatId) {
-        SseEmitter sseEmitter = new SseEmitter(-1L);
+        SseEmitter sseEmitter = SseEmitterUtil.connect(chatId);
         params.setUser(authService.getUserId());
         params.setStream(true);
         SseStreamListener listener = new SseStreamListener(sseEmitter);

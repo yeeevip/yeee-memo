@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.ai.chatgpt.config;
+package vip.yeee.memo.integrate.common.web.socket.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

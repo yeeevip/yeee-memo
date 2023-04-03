@@ -1,18 +1,13 @@
-package vip.yeee.memo.integrate.thirdsdk.weixin.mp.properties;
+package vip.yeee.memo.integrate.common.wxsdk.ma.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.List;
 
-/**
- * wechat mp properties
- *
- * @author Binary Wang(https://github.com/binarywang)
- */
 @Data
-@ConfigurationProperties(prefix = "wx.mp")
-public class WxMpProperties {
+@ConfigurationProperties(prefix = "yeee.wx.ma")
+public class WxMaProperties {
     /**
      * 是否使用redis存储access token
      */
@@ -49,29 +44,34 @@ public class WxMpProperties {
     /**
      * 多个公众号配置信息
      */
-    private List<MpConfig> configs;
+    private List<MaConfig> configs;
 
     @Data
-    public static class MpConfig {
+    public static class MaConfig {
         /**
-         * 设置微信公众号的appid
+         * 设置微信小程序的appid.
          */
         private String appId;
 
         /**
-         * 设置微信公众号的app secret
+         * 设置微信小程序的Secret.
          */
         private String secret;
 
         /**
-         * 设置微信公众号的token
+         * 设置微信小程序消息服务器配置的token.
          */
         private String token;
 
         /**
-         * 设置微信公众号的EncodingAESKey
+         * 设置微信小程序消息服务器配置的EncodingAESKey.
          */
         private String aesKey;
+
+        /**
+         * 消息格式，XML或者JSON.
+         */
+        private String msgDataFormat;
 
         private Integer appType;
     }

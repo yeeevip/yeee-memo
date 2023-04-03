@@ -41,7 +41,7 @@ public class SseStreamListener extends AbstractStreamListener {
 
     @Override
     public void onError(Throwable throwable, String response) {
-        sseEmitter.complete();
+//        sseEmitter.complete();
     }
 
     @Data

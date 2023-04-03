@@ -16,6 +16,9 @@
         <module>mybatis-encrypt-plugin</module>
         <module>common-sso</module>
         <module>common-httpclient</module>
+        <module>common-websse</module>
+        <module>common-websocket</module>
+        <module>common-wxsdk</module>
     </modules>
 
 </project>

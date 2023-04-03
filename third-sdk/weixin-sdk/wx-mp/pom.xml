@@ -30,18 +30,8 @@
             <artifactId>base-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.github.binarywang</groupId>
-            <artifactId>weixin-java-mp</artifactId>
-            <version>4.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.jedis-lock</groupId>
-            <artifactId>jedis-lock</artifactId>
-            <version>1.0.0</version>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>common-wx-mp</artifactId>
         </dependency>
     </dependencies>
 

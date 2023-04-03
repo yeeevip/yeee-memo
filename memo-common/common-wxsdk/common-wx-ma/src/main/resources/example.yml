@@ -1,0 +1,8 @@
+#wx:
+#  mp:
+#    use-redis: true
+#    redis-config:
+#      host: ${spring.redis.host}
+#      port: ${spring.redis.port}
+#      password: ${spring.redis.password}
+#      timeout: 10000

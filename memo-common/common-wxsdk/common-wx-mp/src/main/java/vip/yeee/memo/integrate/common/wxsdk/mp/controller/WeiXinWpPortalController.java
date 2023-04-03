@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.thirdsdk.weixin.mp.controller;
+package vip.yeee.memo.integrate.common.wxsdk.mp.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
@@ -24,7 +24,7 @@ public class WeiXinWpPortalController {
     @Resource
     private WxMpMessageRouter messageRouter;
 
-    @PostMapping(value = "wp/portal/{appid}", produces = "application/xml; charset=UTF-8")
+    @PostMapping(value = "/wp/portal/{appid}", produces = "application/xml; charset=UTF-8")
     public String post(@PathVariable String appid,
                        @RequestBody String requestBody,
                        @RequestParam("signature") String signature,

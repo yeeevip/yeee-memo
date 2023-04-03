@@ -18,7 +18,7 @@ jetcache:
       keyConvertor: fastjson
       valueEncoder: kryo
       valueDecoder: kryo
-      uri: redis://${spring.redis.password}@${spring.redis.host}:${spring.redis.port}/7
+      uri: redis://${spring.redis.password}@${spring.redis.host}:${spring.redis.port}/${spring.redis.database}
       expireAfterWriteInMills: 86400000
       poolConfig:
         minIdle: 5
