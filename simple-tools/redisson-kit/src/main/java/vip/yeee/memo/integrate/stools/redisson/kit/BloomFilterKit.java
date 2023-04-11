@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * description......
+ * 判断【不存在则一定不存在】，判断存在则可能误判(hash冲突)
  *
  * @author yeeee
  * @since 2022/9/17 18:28
@@ -23,15 +23,17 @@ public class BloomFilterKit {
     @Resource
     private RedissonClient redissonClient;
 
-    public void initBloomFilter(String name, List<String> elements) {
-        log.info("初始化布隆过滤器：name = {}, elements = {}", name, elements);
-        if (CollectionUtil.isEmpty(elements)) {
-            return;
-        }
+    public void initOrAddEle(String name, List<String> elements) {
         RBloomFilter<Object> bloomFilter = redissonClient.getBloomFilter(name);
-        bloomFilter.tryInit(elements.size(), 0.01);
-        elements.forEach(bloomFilter::add);
-        log.info("初始化布隆过滤器：完成！！！");
+        if (!bloomFilter.isExists()) {
+            log.info("【布隆过滤器】- 初始化 - name = {}", name);
+            bloomFilter.tryInit(elements.size(), 0.01);
+//        bloomFilter.expire(expired, TimeUnit.MINUTES);
+        }
+        if (CollectionUtil.isNotEmpty(elements)) {
+            log.info("【布隆过滤器】- 添加元素 - elementsSize = {}", elements.size());
+            elements.forEach(bloomFilter::add);
+        }
     }
 
     public boolean checkContainsEle(String name, String ele) {

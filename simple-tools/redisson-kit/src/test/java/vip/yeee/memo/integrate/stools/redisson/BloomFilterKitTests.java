@@ -5,10 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.test.context.SpringBootTest;
-import vip.yeee.memo.integrate.stools.redisson.RedissonKitApplication;
 import vip.yeee.memo.integrate.stools.redisson.kit.BloomFilterKit;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,13 +37,18 @@ public class BloomFilterKitTests implements InitializingBean {
 
     private void testInitBloomFilter() {
         String bloomName = "TEST_BLOOM_FILTER";
+//        for (int i = 0; i < 200; i++) {
+//            if (i % 2 == 0) {
+//                bloomFilterKit.initOrAddEle(bloomName, Collections.singletonList(elements.get(i)));
+//            }
+//        }
         List<String> existsElements = Lists.newArrayList();
         for (int i = 0; i < 200; i++) {
             if (i % 2 == 0) {
                 existsElements.add(elements.get(i));
             }
         }
-        bloomFilterKit.initBloomFilter(bloomName, existsElements);
+        bloomFilterKit.initOrAddEle(bloomName, existsElements);
     }
 
     @Test
