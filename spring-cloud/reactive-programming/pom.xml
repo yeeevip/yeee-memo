@@ -5,9 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>spring-cloud</artifactId>
+        <artifactId>common-springcloud-dependencies</artifactId>
         <groupId>vip.yeee.memo</groupId>
         <version>2.0.3-SNAPSHOT</version>
+        <relativePath/>
     </parent>
 
     <artifactId>reactive-programming</artifactId>
@@ -63,6 +64,11 @@
             <groupId>io.r2dbc</groupId>
             <artifactId>r2dbc-h2</artifactId>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

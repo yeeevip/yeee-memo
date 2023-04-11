@@ -5,9 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>openfeign</artifactId>
+        <artifactId>common-springcloud-dependencies</artifactId>
         <groupId>vip.yeee.memo</groupId>
         <version>2.0.3-SNAPSHOT</version>
+        <relativePath/>
     </parent>
 
     <artifactId>feign-client-02</artifactId>

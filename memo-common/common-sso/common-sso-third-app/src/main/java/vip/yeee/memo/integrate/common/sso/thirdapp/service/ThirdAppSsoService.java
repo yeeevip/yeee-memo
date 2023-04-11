@@ -21,6 +21,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -120,4 +121,14 @@ public class ThirdAppSsoService {
         return accessToken;
     }
 
+    public Object getUserInfoByTicket(HttpServletRequest request) {
+        String ticket = request.getParameter("ticket");
+        String sign = request.getParameter("sign");
+        // 验签
+//        checkInfoSign(request, sign);
+        HashMap<String, Object> res = Maps.newHashMap();
+        res.put("username", "用户名");
+        res.put("phone", "手机号");
+        return res;
+    }
 }

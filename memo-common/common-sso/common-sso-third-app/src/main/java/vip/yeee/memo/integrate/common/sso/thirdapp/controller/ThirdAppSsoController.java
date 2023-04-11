@@ -2,6 +2,7 @@ package vip.yeee.memo.integrate.common.sso.thirdapp.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import vip.yeee.memo.integrate.base.model.rest.CommonResult;
 import vip.yeee.memo.integrate.common.sso.thirdapp.service.ThirdAppSsoService;
 
 import javax.annotation.Resource;
@@ -37,6 +38,14 @@ public class ThirdAppSsoController {
     @RequestMapping("/third/v2/login")
     public void thirdLoginV2(HttpServletRequest request, HttpServletResponse response) throws IOException {
         thirdAppSsoService.thirdLoginV2(request, response);
+    }
+
+    /**
+     * 根据ticket获取三方应用的当前用户信息
+     */
+    @RequestMapping("/third/user/info")
+    public CommonResult<Object> getUserInfoByTicket(HttpServletRequest request) {
+        return CommonResult.success(thirdAppSsoService.getUserInfoByTicket(request));
     }
 
 

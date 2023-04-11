@@ -5,9 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>simple-tools</artifactId>
+        <artifactId>memo-parent</artifactId>
         <groupId>vip.yeee.memo</groupId>
         <version>2.0.3-SNAPSHOT</version>
+        <relativePath />
     </parent>
 
     <artifactId>generator</artifactId>
@@ -19,5 +20,12 @@
         <!-- 可自定义的代码生成 -->
         <module>generate-custom</module>
     </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>base-util</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
