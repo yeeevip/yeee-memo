@@ -1,201 +1,221 @@
 
-## JDK基础
+## 学习测试示例
+
+> 所属模块 learn-example
+
+### 设计模式
+
+> 所属模块 design-pattern
+
+### JDK相关
 
 > 所属模块 jdk-api
 
-### java基本类型
+### 刷题、算法
 
-```
-    byte b = 1;                             // byte b = 0;     一个字节 8位
-    byte[] shortByte = new byte[2];         // short s = 0;    二个字节 16位
-    byte[] intByte = new byte[4];           // int i = 0;      四个字节 32位
-    byte[] longByte = new byte[8];          // long l = 0l;    八个字节 64位
-    byte[] floatByte = new byte[4];         // float f = 0.0f; 四个字节 32位
-    byte[] doubleByte = new byte[8];        // double d = 0.0d;八个字节 64位
-    byte[] charByte = new byte[2];          // char c = '';    二个字节 16位
-    byte[] booleanByte = new byte[1];       // boolean b = false;  一个字节 8位
-```
+> 所属模块 pat-coding
 
-### 线程池
+### 笔记
 
-1.CompletableFuture
+### Spring相关
 
-> _com.yeee.threadPool.CompletableFutureTest_
-> + 使用Future获得异步执行结果时，要么调用阻塞方法get()，要么轮询看isDone()是否为true，这两种方法都不是很好，因为主线程也会被迫等待
-> 
-> + Jdk1.8新引入CompletableFuture，它针对Future做了改进，可以传入回调对象，当异步任务完成或者发生异常时，自动调用回调对象的回调方法
-> 
-> + thenAccept()、exceptionally()、thenApplyAsync()、anyOf()、allOf() 函数的基本用法，详见com.yeee.threadPool.CompletableFutureTest
+> 所属模块 spring-api
 
-2.ThreadPool 
+### SpringBoot相关
 
-> _com.yeee.threadPool.ThreadPoolTest_
-> + Executors
-> + ThreadPoolExecutor
-> + ScheduleThreadPoolExecutor
+> 所属模块 spring-boot-api
 
-> _com.yeee.threadPool.ThreadPoolTest_
-> + Java线程的创建、销毁、和线程切换比较耗费计算机资源
-> + 1>降低系统资源消耗 >2提高系统响应速度 >3提高线程的可管理性 >4更强大的功能，延时定时线程池
+## Memo框架基础依赖
 
-### 并发辅助类
+> 所属模块 memo-base
 
-1.CountDownLatch
+### 数据源
 
-2.CyclicBarrier
+> 所属模块 base-jdbc
 
-3.Semaphore
+### 模型
 
-### 原子类
+> 所属模块 base-model
 
-1.AtomicInteger
+### redis
 
-2.LongAdder
+> 所属模块 base-redis
 
-3.AtomicReference<Object> // compareAndSet(V expect, V update)
+### SpringCloud
+
+> 所属模块 base-springcloud
+
+### Swagger
+
+> 所属模块 base-swagger
+
+### 工具
+
+> 所属模块 base-util
+
+### web核心
+
+> 所属模块 base-web
+
+### web安全认证授权
+
+> 所属模块 base-web-secuity-oauth2
+
+### 仓库版本统一依赖
+
+> 所属模块 base-dependencies
+
+### 统一父模块
+
+> 所属模块 memo-parent
+
+## 通用模块
+
+> 所属模块 memo-common
+
+### 安全认证授权
+
+> 所属模块 common-auth
+
+### 领域数据层
+
+> 所属模块 common-domain
+
+### Http客户端
+
+> 所属模块 common-httpclient
+
+### SpringCloud
+
+> 所属模块 common-springcloud
+
+### 单点登录
+
+> 所属模块 common-sso
+
+### Websocket
+
+> 所属模块 common-websocket
+
+### WebSSE
+
+> 所属模块 common-websse
+
+### 微信SDK
+
+> 所属模块 common-wxsdk
+
+### Mybatis数据加密脱敏
+
+> 所属模块 mybatis-encrypt-plugin
 
 ## 中间件
 
 > 所属模块 middle-ware
 
-### 弹性搜索elasticsearch
+### 基于binlog数据同步cancel
 
-### 消息队列mq
+> 所属模块 canal
 
-#### 阿里rocketMQ
+### 实时计算Flink
 
-## 算法学习PAT-Coding
+> 所属模块 flink
 
-> 所属模块 pat-coding
+### 消息队列
 
-## 常用解决方案
+> 所属模块 mq
+
+## 简单工具
+
+> 所属模块 simple-tools
+
+### 导入导出
+
+> 所属模块 export
+
+### 逆向生成代码
+
+> 所属模块 generator
+
+### 配置文件加密
+
+> 所属模块 jasypt
+
+### Redisson
+
+> redisson-kit
+
+## 场景解决方案
 
 > 所属模块 solution-problem
 
 ### 分布式锁
 
-#### 基于jedis的redis分布式锁
+> 所属模块 distribute-lock
 
-#### 基于redisson的redis分布式锁
+### 弹性搜索
 
-1.初始化RLock
+> 所属模块 elasticsearch
 
-+ RLock lock = redissonClient.getLock("redisson:test:lock；1")
+### 二级缓存
 
-___
+> 所属模块 jetcache
 
-2.获得锁
+### MongoDB
 
-+ lock.lock() // 不指定过期时间，通过watchdog实现自动续期
+> 所属模块 mongodb
 
-+ lock.tryLock(long waitTime, long leaseTime, TimeUnit unit) // 指定释放时间，到期释放不续期
+### NIO
 
-___
-
-3.释放锁
-
-+ lock.unlock()
-___
-
-4.性能、[集群高可用下]安全问题及存在的问题分析
-
-+ 集群高可用下安全问题：客户端1加锁后master宕机并未同步到新的master，客户端2会加锁成功
-  1. 引入Redlock，大部分节点(N/2+1)加锁成功，但是性能上有损耗 >问题> 节点奔溃重启、时间跳跃问题、计算获取锁的过程超时
-
-+ 性能：
-
-  1. 高并发下加锁性能很高
-  2. 基于事件selector的操作
-
-+ 问题：
-  1. GC时STW导致未能续期导致锁释放问题
-
-#### 基于zookeeper的分布式锁
-
-1.lock
-
-+ com.yeee.zookeeper.lock.simple.ZkLock
-
-2.com.101tec.zkclient api demo
-
-+ com.yeee.zookeeper.zkClientApi.ZkClientApiDemo
-
-3.使用轮子 org.apache.curator.framework.recipes.locks.InterProcessMutex
-
-+ com.yeee.zookeeper.lock.curator.InterProcessMutexLock
-
----
-
-4.性能、[集群高可用下]安全问题及存在的问题分析
-
-+ 集群高可用下安全问题：投票确认机制及同步写操作到follower节点，保证数据的一致性
-
-+ 性能：
-
-  1. 高并发下加锁性能相对低效，与其本身【高可用】特点及节点的增删是在操作文件系统有很大关系
-  2. 【监听等待通知机制】，防止【羊群效应】，避免客户端无故轮询争夺锁造成的性能损耗
-  3. 串行化操作
-
-+ 问题：
-  1. GC时STW导致临时节点释放问题
-
-总之，采用Zookeeper作为分布式锁，你要么就获取不到锁，一旦获取到了，必定节点的数据是一致的，不会出现redis那种异步同步导致数据丢失的问题。
-
-### 二级缓存jetcache
-
-### 非阻塞IO
-
-#### JDK自带的NIO
-
-#### Netty基本使用
-
-## 基于Netty的SimpleHttpWebServer
+> 所属模块 nio
 
 ### 分库分表
 
 > 所属模块 sub-database-table
 
-#### apache-shardingsphere
+### Webservice-demo
 
-### webservice-demo
+> 所属模块 webservice-demo
 
-### webservice-demo
+### Websocket-demo
 
-## spring-cloud相关
+> 所属模块 websocket-demo
+
+## Spring-Cloud
 
 > 所属模块 spring-cloud
 
-### 响应式reactive编程
+### 认证鉴权单点
+
+> 所属模块 auth-sso
+
+### 配置中心
+
+> 所属模块 config
+
+### 服务网关
+
+> 所属模块 gateway
+
+### 服务保护
+
+> 所属模块 protect
+
+### 响应式编程
+
+> 所属模块 reactive-programming
 
 ### 注册中心
 
-#### eureka
+> 所属模块 register
 
-### 服务调用RPC
+### 远程服务调用
 
-#### openfeign
+> 所属模块 rpc
 
-> 服务端 feign-service-server / 客户端 feign-service-client
+### 分布式事务
 
-___
-
-1. openfeign.FallbackFactory中处理异常，防止普通的业务异常促使客户端服务降级
-
-> com.yeee.feign.BookService.FallbackImpl
-
-___
-
-2. 自定义Decoder解码器，可以将响应压缩gzip、解析服务端封装的Result中的data实体
-
-> com.yeee.feign.FeignConfiguration.feignDecoder/decoder
-
-> com.yeee.feign.FeignResultDecoder
-
-___
-
-## 简单工具
-
-> 所属模块 simple-tools
+> 所属模块 transaction
 
 ## 测试工具
 
@@ -205,6 +225,18 @@ ___
 
 > 所属模块 third-sdk
 
+### 阿里云SDK
+
+> 所属模块 aliyun-sdk
+
 ### 区块链相关
 
 > 所属模块 blockchain
+
+### 三方统一支付
+
+> 所属模块 third-pay
+
+### 微信SDK
+
+> 所属模块 weixin-sdk
