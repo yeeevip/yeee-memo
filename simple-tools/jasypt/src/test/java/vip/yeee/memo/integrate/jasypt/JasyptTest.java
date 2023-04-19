@@ -20,7 +20,7 @@ public class JasyptTest {
 
     @Test
     public void dencrypt() {
-        String de = stringEncryptor.decrypt("ZlIwxJ3sKdgpV2M1vIjhNmBJoGxSU6LL71EQBO5lG3k=");
+        String de = stringEncryptor.decrypt("coeWBAUYQfeWRGl96bPYUdE+BjP4qDueEKJ99nz6JQI=");
         System.out.println(de);
     }
 

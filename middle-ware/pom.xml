@@ -16,6 +16,9 @@
         <module>canal</module>
         <!-- 流数据和批数据的分布式处理引擎 -->
         <module>flink</module>
+        <module>mongodb</module>
+        <!-- 搜索 -->
+        <module>elasticsearch</module>
     </modules>
 
 </project>

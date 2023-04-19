@@ -25,41 +25,9 @@
 
 > 所属模块 spring-boot-api
 
-## Memo框架基础依赖
+## Memo框架
 
-> 所属模块 memo-base
-
-### 数据源
-
-> 所属模块 base-jdbc
-
-### 模型
-
-> 所属模块 base-model
-
-### redis
-
-> 所属模块 base-redis
-
-### SpringCloud
-
-> 所属模块 base-springcloud
-
-### Swagger
-
-> 所属模块 base-swagger
-
-### 工具
-
-> 所属模块 base-util
-
-### web核心
-
-> 所属模块 base-web
-
-### web安全认证授权
-
-> 所属模块 base-web-secuity-oauth2
+> 所属模块 memo
 
 ### 仓库版本统一依赖
 
@@ -69,49 +37,93 @@
 
 > 所属模块 memo-parent
 
-## 通用模块
+### Memo框架基础依赖
+
+> 所属模块 memo-base
+
+#### 数据源
+
+> 所属模块 base-jdbc
+
+#### 模型
+
+> 所属模块 base-model
+
+#### redis
+
+> 所属模块 base-redis
+
+#### SpringCloud
+
+> 所属模块 base-springcloud
+
+#### Swagger
+
+> 所属模块 base-swagger
+
+#### 工具
+
+> 所属模块 base-util
+
+#### web核心
+
+> 所属模块 base-web
+
+#### web安全认证授权
+
+> 所属模块 base-web-secuity-oauth2
+
+### 通用模块
 
 > 所属模块 memo-common
 
-### 安全认证授权
+#### 安全认证授权
 
 > 所属模块 common-auth
 
-### 领域数据层
+#### 领域数据层
 
 > 所属模块 common-domain
 
-### Http客户端
+#### Http客户端
 
 > 所属模块 common-httpclient
 
-### SpringCloud
+#### SpringCloud
 
 > 所属模块 common-springcloud
 
-### 单点登录
+#### 单点登录
 
 > 所属模块 common-sso
 
-### Websocket
+#### Websocket
 
 > 所属模块 common-websocket
 
-### WebSSE
+#### WebSSE
 
 > 所属模块 common-websse
 
-### 微信SDK
+#### 微信SDK
 
 > 所属模块 common-wxsdk
 
-### Mybatis数据加密脱敏
+#### Mybatis数据加密脱敏
 
 > 所属模块 mybatis-encrypt-plugin
 
 ## 中间件
 
 > 所属模块 middle-ware
+
+### 弹性搜索
+
+> 所属模块 elasticsearch
+
+### MongoDB
+
+> 所属模块 mongodb
 
 ### 基于binlog数据同步cancel
 
@@ -153,21 +165,13 @@
 
 > 所属模块 distribute-lock
 
-### 弹性搜索
-
-> 所属模块 elasticsearch
-
 ### 二级缓存
 
 > 所属模块 jetcache
 
-### MongoDB
+### Netty
 
-> 所属模块 mongodb
-
-### NIO
-
-> 所属模块 nio
+> 所属模块 netty
 
 ### 分库分表
 

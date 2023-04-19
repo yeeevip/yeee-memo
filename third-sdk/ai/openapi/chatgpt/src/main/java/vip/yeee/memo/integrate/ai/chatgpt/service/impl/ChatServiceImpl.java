@@ -34,9 +34,7 @@ import vip.yeee.memo.integrate.common.web.sse.util.SseEmitterUtil;
 import javax.annotation.Resource;
 import javax.websocket.Session;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * OpenAI相关服务实现

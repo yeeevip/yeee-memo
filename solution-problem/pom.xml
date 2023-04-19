@@ -14,17 +14,14 @@
         <module>jetcache</module>
         <!-- 分布式锁 -->
         <module>distribute-lock</module>
-        <!-- 搜索 -->
-        <module>elasticsearch</module>
         <!-- 分库分表 -->
         <module>sub-database-table</module>
-        <!-- 非阻塞IO -->
-        <module>nio</module>
+        <!-- netty -->
+        <module>netty</module>
         <!-- webservice调用、发布 -->
-        <module>webservice-demo</module>
+        <module>webservice-example</module>
         <!-- websocket、web与服务端长连接 -->
-        <module>websocket-demo</module>
-        <module>mongodb</module>
+        <module>websocket-example</module>
     </modules>
 
 </project>

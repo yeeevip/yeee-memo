@@ -14,15 +14,15 @@
 
     <modules>
         <!-- JDK基础API -->
-        <module>jdk-api</module>
+        <module>jdk-example</module>
         <!-- 设计模式 -->
         <module>design-pattern</module>
         <!-- 浙大PAT算法coding -->
         <module>pat-coding</module>
         <!-- 笔记 -->
         <module>some-note</module>
-        <module>spring-api</module>
-        <module>spring-boot-api</module>
+        <module>spring-example</module>
+        <module>spring-boot-example</module>
     </modules>
 
 </project>

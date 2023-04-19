@@ -11,8 +11,7 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<!-- 通用基础集成 -->
-		<module>memo-base</module>
+		<module>memo</module>
 		<!-- 常用解决方案 -->
 		<module>solution-problem</module>
 		<!-- 中间件的使用 -->
@@ -25,7 +24,6 @@
 		<module>simple-tools</module>
 		<!-- 测试工具 -->
 		<module>test-tool</module>
-        <module>memo-common</module>
 		<module>learn-example</module>
     </modules>
 

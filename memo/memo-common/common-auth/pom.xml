@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>vip.yeee.memo</groupId>
+    <version>3.0.1-SNAPSHOT</version>
+    <artifactId>common-auth</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>common-platform-auth-server</module>
+        <module>common-platform-auth-client</module>
+        <module>common-app-auth-server</module>
+        <module>common-app-auth-client</module>
+    </modules>
+
+</project>
