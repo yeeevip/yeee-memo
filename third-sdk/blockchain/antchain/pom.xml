@@ -15,7 +15,7 @@
 
     <modules>
         <module>ac-smart-contract-demo</module>
-        <module>ac-call-smart-contract-demo</module>
+        <!--<module>ac-call-smart-contract-demo</module>-->
     </modules>
 
 </project>
