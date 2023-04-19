@@ -1,30 +1,4 @@
 
-## 学习测试示例
-
-> 所属模块 learn-example
-
-### 设计模式
-
-> 所属模块 design-pattern
-
-### JDK相关
-
-> 所属模块 jdk-api
-
-### 刷题、算法
-
-> 所属模块 pat-coding
-
-### 笔记
-
-### Spring相关
-
-> 所属模块 spring-api
-
-### SpringBoot相关
-
-> 所属模块 spring-boot-api
-
 ## Memo框架
 
 > 所属模块 memo
@@ -112,6 +86,32 @@
 #### Mybatis数据加密脱敏
 
 > 所属模块 mybatis-encrypt-plugin
+
+## 学习测试示例
+
+> 所属模块 learn-example
+
+### 设计模式
+
+> 所属模块 design-pattern
+
+### JDK相关
+
+> 所属模块 jdk-api
+
+### 刷题、算法
+
+> 所属模块 pat-coding
+
+### 笔记
+
+### Spring相关
+
+> 所属模块 spring-api
+
+### SpringBoot相关
+
+> 所属模块 spring-boot-api
 
 ## 中间件
 
