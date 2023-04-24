@@ -1,7 +1,7 @@
 package vip.yeee.memo.integrate.nio.netty.longConnection;
 
-import vip.yeee.memo.integrate.nio.netty.decoder.LiveDecoder;
-import vip.yeee.memo.integrate.nio.netty.encoder.StringToByteEncoder;
+import vip.yeee.memo.integrate.nio.netty.longConnection.decoder.LiveDecoder;
+import vip.yeee.memo.integrate.nio.netty.longConnection.encoder.StringToByteEncoder;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -11,9 +11,9 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 /**
- * @Description:
- * @Author: yeeeeee
- * @Date: 2021/12/15 11:40
+ *
+ * @author yeeee
+ * @since 2021/12/15 11:40
  */
 public class LongConnServer {
 

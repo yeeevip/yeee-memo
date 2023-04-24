@@ -19,9 +19,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
- * @Description:
- * @Author: yeeeeee
- * @Date: 2021/12/6 14:37
+ *
+ * @author yeeee
+ * @since 2021/12/6 14:37
  */
 @Slf4j
 public class WxMiniAppTools {
@@ -44,8 +44,8 @@ public class WxMiniAppTools {
     }
 
     /**
-     * @Author: yeee
-     * @Date: 2021/6/28 15:37
+     * @author yeeee
+     * @since 2021/6/28 15:37
      */
     public static Object authCode2Session(String code) {
         JSONObject wxAppConfig = getWxAppConfig();
@@ -53,8 +53,8 @@ public class WxMiniAppTools {
     }
 
     /**
-     * @Author: yeee
-     * @Date: 2021/6/28 15:37
+     *@author yeeee
+     * @since 2021/6/28 15:37
      */
     public static String wxAppGetAccessToken() throws Exception {
         JSONObject wxAppConfig = getWxAppConfig();
@@ -72,8 +72,8 @@ public class WxMiniAppTools {
     }
 
     /**
-     * @Author: yeee
-     * @Date: 2021/6/28 15:37
+     * @author yeeee
+     * @since 2021/6/28 15:37
      */
     public static String wxAppGenerateUrlScheme(Integer linkType, Integer orderId, Integer taskId, Integer voucherId, String linkTicket) {
         String openlink = null;
@@ -96,8 +96,8 @@ public class WxMiniAppTools {
     }
 
     /**
-     * @Author: yeee
-     * @Date: 2021/6/28 15:37
+     * @author yeeee
+     * @since 2021/6/28 15:37
      */
     public static String wxAppGenerateUrlLink(JSONObject confObj, Integer linkId, Integer linkType) {
         String openlink = null;
@@ -114,9 +114,9 @@ public class WxMiniAppTools {
     }
 
     /**
-     * @Description: 匿名接口的安全措施
-     * @Author: yeee一页
-     * @Date: 2021/6/28 15:37
+     * 匿名接口的安全措施
+     * @author yeee一页
+     * @since 2021/6/28 15:37
      */
     public static String requestIdentity(Integer tt, HttpServletRequest request, Object... args) throws Exception {
         if(Integer.valueOf(1).equals(tt)) {

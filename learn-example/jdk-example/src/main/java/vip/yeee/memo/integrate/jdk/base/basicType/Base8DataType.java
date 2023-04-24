@@ -1,9 +1,9 @@
 package vip.yeee.memo.integrate.jdk.base.basicType;
 
 /**
- * @Description:
- * @Author: yeeeeee
- * @Date: 2021/12/15 15:02
+ *
+ * @author yeeee
+ * @since 2021/12/15 15:02
  */
 public class Base8DataType {
 

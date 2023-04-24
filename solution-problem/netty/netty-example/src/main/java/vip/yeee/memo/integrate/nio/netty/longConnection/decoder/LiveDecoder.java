@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.nio.netty.decoder;
+package vip.yeee.memo.integrate.nio.netty.longConnection.decoder;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -9,9 +9,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
- * @Description:
- * @Author: yeeeeee
- * @Date: 2021/12/14 18:07
+ *
+ * @author yeeee
+ * @since 2021/12/14 18:07
  */
 @Slf4j
 public class LiveDecoder extends ReplayingDecoder<LiveDecoder.LiveState> { // 继承ReplayingDecoder，泛型LiveState，用来表示当前读取的状态

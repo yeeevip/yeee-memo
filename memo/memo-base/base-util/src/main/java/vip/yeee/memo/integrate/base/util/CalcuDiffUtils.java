@@ -51,8 +51,8 @@ public class CalcuDiffUtils {
     }
 
     /**
-     * @Author: yeee
-     * @Date: 2021/6/28 15:37
+     * @author yeeee
+     * @since 2021/6/28 15:37
      */
     public static boolean judgeSalaryDiff(String salaryRange1, String salaryRange2, Integer gapGt, Integer gapLe) {
         if(StrUtil.isBlank(salaryRange1) || StrUtil.isBlank(salaryRange2)) {

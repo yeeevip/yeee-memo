@@ -1,9 +1,9 @@
 package vip.yeee.memo.integrate.simpletool.my;
 
 /**
- * @Description:
- * @Author: yeeeeee
- * @Date: 2020/12/4 13:35
+ *
+ * @author yeeee
+ * @since 2020/12/4 13:35
  */
 public class OnlineInterviewBizException extends Exception {
     public OnlineInterviewBizException() {
@@ -43,8 +43,8 @@ public class OnlineInterviewBizException extends Exception {
     }
 
     /**
-     * @Author: yeee一页
-     * @Date: 2021/7/8 16:46
+     * @author yeee一页
+     * @since 2021/7/8 16:46
      */
     public enum BizErrEnum {
         COMMON_ERR_MSG("201", "操作不成功"),

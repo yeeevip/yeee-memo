@@ -11,9 +11,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 /**
- * @Description:
- * @Author: yeeeeee
- * @Date: 2021/12/15 11:13
+ *
+ * @author yeeee
+ * @since 2021/12/15 11:13
  */
 public class LongConnClient {
 

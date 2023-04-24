@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.nio.netty.decoder;
+package vip.yeee.memo.integrate.nio.netty.longConnection.decoder;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -7,9 +7,9 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 import java.util.List;
 
 /**
- * @Description:
- * @Author: yeeeeee
- * @Date: 2021/12/14 18:05
+ *
+ * @author yeeee
+ * @since 2021/12/14 18:05
  */
 public class ToIntegerDecoder extends ByteToMessageDecoder {
     @Override

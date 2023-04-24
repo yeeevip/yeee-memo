@@ -6,9 +6,9 @@ import java.nio.channels.Pipe;
 import java.nio.charset.StandardCharsets;
 
 /**
- * @Description:
- * @Author: yeeeeee
- * @Date: 2021/11/29 9:48
+ *
+ * @author yeeee
+ * @since 2021/11/29 9:48
  */
 public class TestPipe {
 

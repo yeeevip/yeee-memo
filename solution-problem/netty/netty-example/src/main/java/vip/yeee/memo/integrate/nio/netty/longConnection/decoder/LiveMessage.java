@@ -1,9 +1,9 @@
-package vip.yeee.memo.integrate.nio.netty.decoder;
+package vip.yeee.memo.integrate.nio.netty.longConnection.decoder;
 
 /**
- * @Description:
- * @Author: yeeeeee
- * @Date: 2021/12/14 18:24
+ *
+ * @author yeeee
+ * @since 2021/12/14 18:24
  */
 public class LiveMessage {
 

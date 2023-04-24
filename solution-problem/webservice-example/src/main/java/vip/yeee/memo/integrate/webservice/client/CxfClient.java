@@ -6,13 +6,12 @@ import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
 
 import vip.yeee.memo.integrate.webservice.service.UserService;
 /**
- * @ClassName:CxfClient
- * @Description:webservice客户端：
+ * webservice客户端：
  * 			       该类提供两种不同的方式来调用webservice服务
  * 				1：代理工厂方式
  * 				2：动态调用webservice
  * @author Maple
- * @date:2018年4月10日下午4:14:07
+ * @since 2018年4月10日下午4:14:07
  */
 public class CxfClient {
 	

@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.nio.netty.use;
+package vip.yeee.memo.integrate.nio.netty.simple;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

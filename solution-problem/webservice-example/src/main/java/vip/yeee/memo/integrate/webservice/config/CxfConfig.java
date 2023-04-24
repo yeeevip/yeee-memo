@@ -12,10 +12,9 @@ import org.springframework.context.annotation.Configuration;
 
 import vip.yeee.memo.integrate.webservice.service.UserService;
 /**
- * @ClassName:CxfConfig
- * @Description:cxf发布webservice配置
+ * cxf发布webservice配置
  * @author Maple
- * @date:2018年4月10日下午4:12:24
+ * @since 2018年4月10日下午4:12:24
  */
 @Configuration
 public class CxfConfig {

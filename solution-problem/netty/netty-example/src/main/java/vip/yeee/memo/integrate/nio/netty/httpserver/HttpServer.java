@@ -11,9 +11,9 @@ import io.netty.handler.codec.http.HttpRequestDecoder;
 import io.netty.handler.codec.http.HttpResponseEncoder;
 
 /**
- * @Description: mvn compile、mvn exec:java -Dexec.mainClass="com.netty.learn.httpserver.HttpServer" -Dexec.args="arg0 arg1 arg2"
- * @Author: yeeeeee
- * @Date: 2021/12/14 16:31
+ * mvn compile、mvn exec:java -Dexec.mainClass="com.netty.learn.httpserver.HttpServer" -Dexec.args="arg0 arg1 arg2"
+ * @author yeeeeee
+ * @since 2021/12/14 16:31
  */
 public class HttpServer {
 

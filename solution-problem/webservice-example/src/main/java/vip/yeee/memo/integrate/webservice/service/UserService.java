@@ -8,11 +8,10 @@ import javax.jws.WebService;
 import vip.yeee.memo.integrate.webservice.entity.User;
 
 /**
- * @ClassName:UserService
- * @Description:测试服务接口类
+ * 测试服务接口类
  * 				include:两个测试方法
  * @author Maple
- * @date:2018年4月10日下午3:58:10
+ * @since 2018年4月10日下午3:58:10
  */
 @WebService
 public interface UserService {

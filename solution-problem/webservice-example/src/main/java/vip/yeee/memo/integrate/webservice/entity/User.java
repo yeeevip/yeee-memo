@@ -2,10 +2,9 @@ package vip.yeee.memo.integrate.webservice.entity;
 
 import java.io.Serializable;
 /**
- * @ClassName:User
- * @Description:测试实体
+ * 测试实体
  * @author Maple
- * @date:2018年4月10日下午3:57:38
+ * @since 2018年4月10日下午3:57:38
  */
 public class User implements Serializable{
 

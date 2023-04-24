@@ -1,6 +1,6 @@
 package vip.yeee.memo.integrate.nio.netty.longConnection;
 
-import vip.yeee.memo.integrate.nio.netty.decoder.LiveMessage;
+import vip.yeee.memo.integrate.nio.netty.longConnection.decoder.LiveMessage;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
@@ -15,13 +15,11 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Description:
- *
  * 1.客户端发送的是msg且10s内没有发送心跳，则过期关闭连接并清除缓存
  * 2.客户端在每个时间窗口5s内没有发送heart，则主动关闭连接
  *
- * @Author: yeeeeee
- * @Date: 2021/12/14 18:23
+ * @author yeeee
+ * @since 2021/12/14 18:23
  */
 public class LiveHandler extends SimpleChannelInboundHandler<LiveMessage> {
 

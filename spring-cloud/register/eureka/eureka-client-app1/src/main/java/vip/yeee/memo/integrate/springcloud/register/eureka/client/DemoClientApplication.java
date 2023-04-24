@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * @Description:
- * @Author: yeeeeee
- * @Date: 2021/12/3 18:24
+ *
+ * @author yeeee
+ * @since 2021/12/3 18:24
  */
 @SpringBootApplication
 //@EnableDiscoveryClient

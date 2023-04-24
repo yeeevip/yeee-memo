@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedHashMap;
 
 /**
- * @Description:
- * @Author: yeeeeee
- * @Date: 2021/12/6 14:22
+ *
+ * @author yeeee
+ * @since 2021/12/6 14:22
  */
 @Slf4j
 @RequestMapping("/onlineInterview")

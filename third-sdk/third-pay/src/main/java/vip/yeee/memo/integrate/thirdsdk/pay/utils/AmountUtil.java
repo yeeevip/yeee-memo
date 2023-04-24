@@ -5,7 +5,7 @@ import java.text.DecimalFormat;
 import java.text.FieldPosition;
 
 /**
- * @Description: 金额工具类
+ * 金额工具类
  */
 public class AmountUtil {
 

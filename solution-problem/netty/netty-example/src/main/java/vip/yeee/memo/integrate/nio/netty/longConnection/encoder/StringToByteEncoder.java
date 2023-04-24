@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.nio.netty.encoder;
+package vip.yeee.memo.integrate.nio.netty.longConnection.encoder;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -9,9 +9,9 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 /**
- * @Description:
- * @Author: yeeeeee
- * @Date: 2021/12/14 18:03
+ *
+ * @author yeeee
+ * @since 2021/12/14 18:03
  */
 @Slf4j
 public class StringToByteEncoder extends MessageToByteEncoder<String> {

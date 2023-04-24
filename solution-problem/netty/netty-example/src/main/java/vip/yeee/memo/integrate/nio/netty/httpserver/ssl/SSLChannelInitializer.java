@@ -17,9 +17,9 @@ import java.io.FileInputStream;
 import java.security.KeyStore;
 
 /**
- * @Description:
- * @Author: yeeeeee
- * @Date: 2021/12/13 18:28
+ *
+ * @author yeeee
+ * @since 2021/12/13 18:28
  */
 public class SSLChannelInitializer extends ChannelInitializer<SocketChannel> {
 

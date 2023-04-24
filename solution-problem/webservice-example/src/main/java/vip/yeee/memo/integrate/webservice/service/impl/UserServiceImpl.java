@@ -12,10 +12,9 @@ import vip.yeee.memo.integrate.webservice.entity.User;
 import vip.yeee.memo.integrate.webservice.service.UserService;
 
 /**
- * @ClassName:UserServiceImpl
- * @Description:测试服务接口实现类
+ * 测试服务接口实现类
  * @author Maple
- * @date:2018年4月10日下午3:58:58
+ * @since 2018年4月10日下午3:58:58
  */
 @WebService(serviceName="UserService",//对外发布的服务名
 			targetNamespace="http://service.demo.example.com",//指定你想要的名称空间，通常使用使用包名反转
