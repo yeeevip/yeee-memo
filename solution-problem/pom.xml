@@ -22,6 +22,7 @@
         <module>webservice-example</module>
         <!-- websocket、web与服务端长连接 -->
         <module>websocket-example</module>
+        <module>tokenizing</module>
     </modules>
 
 </project>
