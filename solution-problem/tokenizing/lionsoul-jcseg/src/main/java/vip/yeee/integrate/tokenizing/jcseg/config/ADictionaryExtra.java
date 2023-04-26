@@ -60,7 +60,7 @@ public class ADictionaryExtra {
 
             }
         }
-        engine = new JcsegEngine(ISegment.COMPLEX.factory.create(config, singletonDic));
+        engine = new JcsegEngine(ISegment.NLP.factory.create(config, singletonDic));
     }
 
     public static void loadClassPath(ADictionary singletonDic) throws IOException

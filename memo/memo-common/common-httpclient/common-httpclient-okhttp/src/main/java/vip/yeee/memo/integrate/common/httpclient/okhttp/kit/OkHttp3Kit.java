@@ -35,9 +35,17 @@ public class OkHttp3Kit {
     }
 
     public String get(String url) {
+        return get(url, null);
+    }
+
+    public String get(String url, Map<String, String> headers) {
         Stopwatch stopwatch = Stopwatch.createStarted();
         log.info("Get请求：{}", url);
-        Request request = new Request.Builder().url(url).get().build();
+        Request.Builder builder = new Request.Builder();
+        if (headers != null) {
+            builder.headers(Headers.of(headers));
+        }
+        Request request = builder.url(url).get().build();
         String body = execute(request);
         log.info("Get请求耗时：{}ms，结果：{}", stopwatch.elapsed(TimeUnit.MILLISECONDS), body);
         return body;
