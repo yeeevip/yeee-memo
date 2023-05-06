@@ -5,13 +5,13 @@
 
 	<groupId>vip.yeee.memo</groupId>
 	<artifactId>java-integrate</artifactId>
-	<version>3.0.1-SNAPSHOT</version>
+	<version>3.1.1-SNAPSHOT</version>
 	<name>java-integrate</name>
 	<description>The project for the study java and record</description>
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>memo</module>
+		<module>memo-parent</module>
 		<!-- 常用解决方案 -->
 		<module>solution-problem</module>
 		<!-- 中间件的使用 -->

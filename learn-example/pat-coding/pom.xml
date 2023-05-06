@@ -7,9 +7,9 @@
     <parent>
         <artifactId>memo-parent</artifactId>
         <groupId>vip.yeee.memo</groupId>
-        <version>3.0.1-SNAPSHOT</version>
+        <version>3.1.1-SNAPSHOT</version>
         <!-- 设定一个空值将始终从仓库中获取，不从本地路径获取. -->
-        <relativePath/>
+        <!--        <relativePath/>-->
     </parent>
 
     <artifactId>pat-coding</artifactId>

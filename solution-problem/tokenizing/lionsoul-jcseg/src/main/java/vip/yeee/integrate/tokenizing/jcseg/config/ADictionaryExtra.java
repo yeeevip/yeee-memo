@@ -6,6 +6,7 @@ import org.lionsoul.jcseg.IDictionary;
 import org.lionsoul.jcseg.ISegment;
 import org.lionsoul.jcseg.dic.ADictionary;
 import org.lionsoul.jcseg.segmenter.SegmenterConfig;
+import vip.yeee.integrate.tokenizing.jcseg.customize.CusNLPSeg;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,7 +61,8 @@ public class ADictionaryExtra {
 
             }
         }
-        engine = new JcsegEngine(ISegment.NLP.factory.create(config, singletonDic));
+//        engine = new JcsegEngine(ISegment.NLP.factory.create(config, singletonDic));
+        engine = new JcsegEngine(new CusNLPSeg(config, singletonDic));
     }
 
     public static void loadClassPath(ADictionary singletonDic) throws IOException

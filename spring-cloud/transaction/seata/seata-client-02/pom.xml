@@ -7,8 +7,8 @@
     <parent>
         <artifactId>common-springcloud-dependencies</artifactId>
         <groupId>vip.yeee.memo</groupId>
-        <version>3.0.1-SNAPSHOT</version>
-        <relativePath/>
+        <version>3.1.1-SNAPSHOT</version>
+        <!--        <relativePath/>-->
     </parent>
 
     <artifactId>seata-client-02</artifactId>
