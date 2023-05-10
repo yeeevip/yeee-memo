@@ -5,27 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>memo-parent</artifactId>
+        <artifactId>netty</artifactId>
         <groupId>vip.yeee.memo</groupId>
         <version>3.2.1-SNAPSHOT</version>
-        <relativePath/>
     </parent>
 
-    <artifactId>netty</artifactId>
-    <version>3.2.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>simple-example</module>
-        <module>webserver</module>
-        <module>heart-check</module>
-    </modules>
+    <artifactId>netty-example</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-        </dependency>
+
     </dependencies>
 
 </project>

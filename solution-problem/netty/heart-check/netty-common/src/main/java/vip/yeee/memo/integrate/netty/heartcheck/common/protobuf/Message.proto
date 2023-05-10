@@ -1,0 +1,11 @@
+syntax = "proto2";
+
+option java_package="cvip.yeee.memo.integrate.netty.heartcheck.common.protobuf";
+option java_outer_classname = "Message";
+import "vip/yeee/memo/integrate/netty/heartcheck/common/protobuf/Command.proto";
+
+message MessageBase {
+	required string clientId = 1;
+  	required CommandType cmd = 2;
+  	optional string data = 3;
+}

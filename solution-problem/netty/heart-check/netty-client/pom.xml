@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>heart-check</artifactId>
+        <groupId>vip.yeee.memo</groupId>
+        <version>3.2.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>netty-client</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>netty-common</artifactId>
+            <version>3.2.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>common-web-dependencies</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>vip.yeee.memo</groupId>
+                    <artifactId>base-mybatis-plus</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>vip.yeee.memo</groupId>
+                    <artifactId>common-domain</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+    </dependencies>
+</project>

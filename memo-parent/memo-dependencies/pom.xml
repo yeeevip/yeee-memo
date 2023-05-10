@@ -48,6 +48,7 @@
         <okhttp-sse-version>3.14.9</okhttp-sse-version>
         <pagehelper.version>4.1.6</pagehelper.version>
         <jcseg.version>2.6.2</jcseg.version>
+        <protobuf-java.version>3.6.1</protobuf-java.version>
     </properties>
 
     <dependencyManagement>
@@ -421,6 +422,11 @@
                 <groupId>org.lionsoul</groupId>
                 <artifactId>jcseg-core</artifactId>
                 <version>${jcseg.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-java</artifactId>
+                <version>${protobuf-java.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

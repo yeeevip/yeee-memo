@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html style="height: 50%" lang="zh" xmlns:th="http://www.thymeleaf.org">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+     <!--//  <div id="container" style="height: 100%"></div>-->
+       <script type="text/javascript"  th:src="@{/js/echarts.min.js}"></script>
+     <script type="text/javascript"  th:src="@{/js/jquery.min.js}"></script>
+
+
+
+ <script type="text/javascript">
+/*由于ping很多会是0，小于1ms，所以默认都把ping值 +1 当ping<1的时候,默认显示1*/
+$.get("http://127.0.0.1:10003/getData.do",function(data,status){
+    if($.isEmptyObject(data) ){
+        alert("客户端数据为空,请启动至少1个客户端!");
+        return;
+    }
+    if(status == "success"){
+        for(var key in data){
+            var dateList=[];
+            var valueList=[];
+            addDiv(key);//动态生成echarts的Div
+          var echarts_key =  echarts.init(document.getElementById(key));
+            $.each(data[key], function(index, content)
+            {
+                dateList.push(JSON.parse(content).dateList);
+                valueList.push(JSON.parse(content).valueList+1);
+                //valueList.push(JSON.parse(content).valueList ="0"?"1":parseInt(JSON.parse(content).valueList)+3);
+            });
+            var option_key = getOption(dateList,valueList,key);//获取当前对应数据配置
+            echarts_key.setOption(option_key, true);
+        }
+    }
+})
+
+setInterval(function () {
+    $.get("http://127.0.0.1:10003/getData.do",function(data,status){
+        if(status == "success"){
+            for(var key in data){
+                var dateList=[];
+                var valueList=[];
+                var echarts_key = echarts.init(document.getElementById(key));//动态初始化echarts
+                $.each(data[key], function(index, content)
+                {
+                    dateList.push(JSON.parse(content).dateList);
+                    valueList.push(JSON.parse(content).valueList+1);
+                   // valueList.push(JSON.parse(content).valueList ="0"?"1":parseInt(JSON.parse(content).valueList)+3);
+                });
+                var option_key = getOption(dateList,valueList,key);//获取当前echart图表数据配置
+                echarts_key.setOption(option_key, true);
+            }
+
+        }
+    })
+},5000)
+
+//动态生成div
+function addDiv(id){
+    var div = document.createElement('div');
+    div.id=id;
+    div.style = "height: 100%";
+    var bo = document.body;
+    bo.insertBefore(div,bo.lastChild);
+}
+
+function getOption(dateList,valueList,title) {
+    var option = {
+        visualMap: [{
+            show: false,
+            type: 'continuous',
+            seriesIndex: 0,
+            min: 0,
+            max: 400,
+            inRange: {
+                color:['#3eff2b', 'rgba(3,4,5,0.4)', 'red']
+            }
+        }],
+
+        title: [{
+            left: 'center',
+            text: '应用' + title,
+            textStyle: {
+                color: '#FF5959AB'
+            },
+            subtext: '心跳监测'
+        }],
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                borderColor: '#444',
+                label: {
+                    shadowColor: '#aaa'
+                }
+
+            },
+        },
+        xAxis: [{
+            name: 'Time',
+            data: dateList,
+            boundaryGap : false
+        }],
+        yAxis: [{
+            name: 'Ping',
+            splitLine: {show: true}
+        }],
+        series: [{
+            name: 'Ping',
+            type: 'line',
+            showSymbol: false,
+            data: valueList,
+            itemStyle:{
+                normal:{
+                    color:'black'
+                }
+            }
+        }]
+    };
+    return option;
+}
+       </script>
+   </body>
+</html>
