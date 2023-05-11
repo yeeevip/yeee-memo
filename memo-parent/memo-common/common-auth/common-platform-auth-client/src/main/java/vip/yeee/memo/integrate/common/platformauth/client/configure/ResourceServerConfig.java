@@ -19,22 +19,30 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import vip.yeee.memo.integrate.base.util.LogUtils;
+import vip.yeee.memo.integrate.base.websecurityoauth2.constant.AuthConstant;
 import vip.yeee.memo.integrate.common.platformauth.client.properties.AuthClientProperties;
 import vip.yeee.memo.integrate.base.websecurityoauth2.annotation.AnonymousAccess;
 import vip.yeee.memo.integrate.common.platformauth.client.handle.AccessDeniedHandler;
 import vip.yeee.memo.integrate.common.platformauth.client.handle.AuthenticationEntryPointHandler;
 import vip.yeee.memo.integrate.base.websecurityoauth2.constant.SecurityUserTypeEnum;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -54,11 +62,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     private ApplicationContext applicationContext;
     @Resource
     private OkHttpClient okHttpClient;
+    private static final Set<String> anonymousUrls = Sets.newHashSet();
 
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-
-        Set<String> anonymousUrls = Sets.newHashSet();
+    @PostConstruct
+    public void init() {
+        anonymousUrls.addAll(authClientProperties.getExclude());
         Map<RequestMappingInfo, HandlerMethod> handlerMethods = applicationContext.getBean(RequestMappingHandlerMapping.class).getHandlerMethods();
         handlerMethods.forEach((k, v) -> {
             AnonymousAccess anonymousAccess = v.getMethodAnnotation(AnonymousAccess.class);
@@ -70,6 +78,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 //                anonymousUrls.addAll(k.getPathPatternsCondition().getPatterns().stream().map(PathPattern::getPatternString).collect(Collectors.toList()));
 //            }
         });
+    }
+
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable()
                 .headers().frameOptions().disable()
@@ -86,7 +98,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
-                .antMatchers(ArrayUtil.toArray(authClientProperties.getExclude(), String.class)).permitAll()
                 .antMatchers(ArrayUtil.toArray(anonymousUrls, String.class)).permitAll()
                 // 内部调用
                 .antMatchers("/server/**").permitAll()
@@ -95,6 +106,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers("/**/front/**").hasRole(SecurityUserTypeEnum.FRONT_USER.getRole())
                 .antMatchers("/**/system/**").hasRole(SecurityUserTypeEnum.SYSTEM_USER.getRole())
                 .anyRequest().authenticated();
+
+        http.addFilterBefore(new AuthenticationBeforeFilter(), AbstractPreAuthenticatedProcessingFilter.class);
 
     }
 
@@ -134,6 +147,44 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         remoteTokenServices.setClientId(resourceServerProperties.getClientId());
         remoteTokenServices.setClientSecret(resourceServerProperties.getClientSecret());
         return remoteTokenServices;
+    }
+
+    private static class AuthenticationBeforeFilter extends OncePerRequestFilter {
+
+        @Override
+        public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+                throws IOException, ServletException {
+
+            if (anonymousUrls.contains(request.getRequestURI())) {
+                log.info("[YEEE认证] - 包含匿名请求，url = {}", request.getRequestURI());
+                // 在此处创建HttpServletRequestWrapper对象并包装原始请求
+                request = new HttpServletRequestWrapper(request) {
+                    @Override
+                    public String getHeader(String name) {
+                        if (AuthConstant.JWT_TOKEN_HEADER.equalsIgnoreCase(name)) {
+                            return null;
+                        }
+                        return super.getHeader(name);
+                    }
+
+                    @Override
+                    public Enumeration<String> getHeaders(String name) {
+                        if (AuthConstant.JWT_TOKEN_HEADER.equalsIgnoreCase(name)) {
+                            return Collections.emptyEnumeration();
+                        }
+                        return super.getHeaders(name);
+                    }
+
+                    @Override
+                    public Enumeration<String> getHeaderNames() {
+                        List<String> headerNames = Collections.list(super.getHeaderNames());
+                        headerNames.remove(AuthConstant.JWT_TOKEN_HEADER);
+                        return Collections.enumeration(headerNames);
+                    }
+                };
+            }
+            filterChain.doFilter(request, response);
+        }
     }
 
 }
