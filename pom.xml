@@ -5,7 +5,7 @@
 
 	<groupId>vip.yeee.memo</groupId>
 	<artifactId>java-integrate</artifactId>
-	<version>3.1.1-SNAPSHOT</version>
+	<version>3.2.1-SNAPSHOT</version>
 	<name>java-integrate</name>
 	<description>The project for the study java and record</description>
 	<packaging>pom</packaging>

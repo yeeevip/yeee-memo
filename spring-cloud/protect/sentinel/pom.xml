@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>common-springcloud-dependencies</artifactId>
+        <artifactId>memo-parent</artifactId>
         <groupId>vip.yeee.memo</groupId>
-        <version>3.1.1-SNAPSHOT</version>
-        <!--        <relativePath/>-->
+        <version>3.2.1-SNAPSHOT</version>
+        <relativePath/>
     </parent>
 
     <artifactId>sentinel</artifactId>

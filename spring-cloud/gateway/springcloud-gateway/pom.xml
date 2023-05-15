@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>common-springcloud-dependencies</artifactId>
+        <artifactId>memo-parent</artifactId>
         <groupId>vip.yeee.memo</groupId>
-        <version>3.1.1-SNAPSHOT</version>
-        <!--        <relativePath/>-->
+        <version>3.2.1-SNAPSHOT</version>
+        <relativePath/>
     </parent>
 
     <artifactId>springcloud-gateway</artifactId>
@@ -16,15 +16,17 @@
     <dependencies>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
-            <artifactId>base-model</artifactId>
+            <artifactId>common-web-dependencies</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
-            <artifactId>base-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>base-swagger</artifactId>
+            <artifactId>common-springcloud-dependencies</artifactId>
         </dependency>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
@@ -35,30 +37,10 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
-        <!--注册中心客户端-->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-        <!--配置中心客户端-->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-        </dependency>
-        <!-- LB 扩展 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
-        </dependency>
         <!--引入 redis，使用RateLimter-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
-        </dependency>
-        <!-- 引入sentinel进行服务降级熔断 -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
         </dependency>
         <!-- gateway网关整合sentinel进行限流降级 -->
         <dependency>

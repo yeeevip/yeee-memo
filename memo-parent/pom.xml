@@ -7,7 +7,7 @@
     <groupId>vip.yeee.memo</groupId>
     <artifactId>memo-parent</artifactId>
     <packaging>pom</packaging>
-    <version>3.1.1-SNAPSHOT</version>
+    <version>3.2.1-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

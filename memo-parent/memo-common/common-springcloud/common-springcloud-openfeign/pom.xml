@@ -7,7 +7,7 @@
     <parent>
         <artifactId>common-springcloud</artifactId>
         <groupId>vip.yeee.memo</groupId>
-        <version>3.1.1-SNAPSHOT</version>
+        <version>3.2.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>common-springcloud-openfeign</artifactId>
@@ -24,11 +24,13 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+            <optional>true</optional>
         </dependency>
         <!-- 整合阿里sentinel实现[熔断降级] -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+            <optional>true</optional>
         </dependency>
         <!--caffeine 替换LB 默认缓存实现-->
         <dependency>
