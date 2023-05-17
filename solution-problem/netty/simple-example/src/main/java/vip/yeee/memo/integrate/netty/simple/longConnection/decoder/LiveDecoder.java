@@ -4,7 +4,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ReplayingDecoder;
 import lombok.extern.slf4j.Slf4j;
-import vip.yeee.memo.integrate.nio.netty.longConnection.model.LiveMessage;
+import vip.yeee.memo.integrate.netty.simple.longConnection.model.LiveMessage;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;

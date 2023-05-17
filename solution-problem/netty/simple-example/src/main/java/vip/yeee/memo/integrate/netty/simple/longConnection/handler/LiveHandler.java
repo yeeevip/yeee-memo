@@ -1,7 +1,7 @@
 package vip.yeee.memo.integrate.netty.simple.longConnection.handler;
 
-import vip.yeee.memo.integrate.nio.netty.longConnection.kit.LiveChannelCache;
-import vip.yeee.memo.integrate.nio.netty.longConnection.model.LiveMessage;
+import vip.yeee.memo.integrate.netty.simple.longConnection.kit.LiveChannelCache;
+import vip.yeee.memo.integrate.netty.simple.longConnection.model.LiveMessage;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
