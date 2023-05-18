@@ -47,7 +47,7 @@
         <forest.version>1.5.30</forest.version>
         <okhttp-sse-version>3.14.9</okhttp-sse-version>
         <pagehelper.version>4.1.6</pagehelper.version>
-        <jcseg.version>2.6.2</jcseg.version>
+        <jcseg.version>2.6.3</jcseg.version>
         <protobuf-java.version>3.6.1</protobuf-java.version>
     </properties>
 

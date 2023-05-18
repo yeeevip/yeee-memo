@@ -299,7 +299,7 @@ public class CusNLPSeg extends NLPSeg {
         IStringBuffer ibuffer = new IStringBuffer(str);
         String tstr = null;
         int mc = 0, j = 0;        //the number of char that read from the stream.
-        ialist.clear();
+        iaList.clear();
         for ( ; j < dic.mixSuffixLength
                 && ibuffer.length() < config.MAX_LENGTH
                 && (ch = readNext()) != -1; j++ ) {
@@ -317,7 +317,7 @@ public class CusNLPSeg extends NLPSeg {
             }
 
             ibuffer.append((char)ch);
-            ialist.add(ch);
+            iaList.add(ch);
             tstr = ibuffer.toString();
             if ( dic.match(ILexicon.CJK_WORD, tstr) ) {
                 wd  = dic.get(ILexicon.CJK_WORD, tstr);
@@ -328,7 +328,7 @@ public class CusNLPSeg extends NLPSeg {
         ibuffer.clear();
         ibuffer = null;                 //Let gc do it's work.
         for ( int i = j - 1; i >= mc; i-- ) {
-            pushBack(ialist.get(i));    //push back the read chars.
+            pushBack(iaList.get(i));    //push back the read chars.
         }
 
         if ( wd != null ) {
@@ -345,7 +345,7 @@ public class CusNLPSeg extends NLPSeg {
          */
         boolean isDigit = StringUtil.isDigit(str);
         if ( isDigit || StringUtil.isDecimal(str) ) {
-            ialist.clear();
+            iaList.clear();
             IWord unitWord = null;
             IStringBuffer sb = new IStringBuffer();
             for ( j = 0; j < config.MAX_UNIT_LENGTH
@@ -356,7 +356,7 @@ public class CusNLPSeg extends NLPSeg {
                 }
 
                 sb.append((char)ch);
-                ialist.add(ch);
+                iaList.add(ch);
                 tstr = sb.toString();
                 if ( dic.match(ILexicon.CJK_UNIT, tstr) ) {
                     unitWord = dic.get(ILexicon.CJK_UNIT, tstr);
@@ -375,7 +375,7 @@ public class CusNLPSeg extends NLPSeg {
             }
 
             for ( int i = j - 1; i >= mc; i-- ) {
-                pushBack(ialist.get(i));
+                pushBack(iaList.get(i));
             }
         }
 
