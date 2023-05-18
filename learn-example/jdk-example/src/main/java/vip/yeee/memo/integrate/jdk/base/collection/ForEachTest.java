@@ -3,6 +3,7 @@ package vip.yeee.memo.integrate.jdk.base.collection;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Spliterator;
 import java.util.concurrent.ExecutorService;
@@ -51,6 +52,23 @@ public class ForEachTest {
         executorService.execute(() -> s1.forEachRemaining(s -> System.out.println(s + "->t2")));
         executorService.execute(() -> s2.forEachRemaining(s -> System.out.println(s + "->t3")));
         executorService.shutdown();
+
+        // 删除后size不变
+        for (int i = 0 ; i < list.size(); i++) {
+            list.remove(i);
+        }
+        System.out.println(list.size());
+
+        // 删除元素正确方式 【iterator.remove()】，删除后size为0
+        Iterator<String> iterator = list.iterator();
+        while(iterator.hasNext()) {
+            String s = (String)iterator.next();
+            iterator.remove();
+            // 错误的方式
+            list.remove(s);
+        }
+        //list.removeIf();
+        System.out.println(list.size());
 
         log.info("--------------> end <-----------------");
 

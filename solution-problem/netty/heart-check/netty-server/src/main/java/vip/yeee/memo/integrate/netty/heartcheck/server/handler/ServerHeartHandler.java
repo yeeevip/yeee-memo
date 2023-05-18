@@ -89,7 +89,7 @@ public class ServerHeartHandler extends ChannelInboundHandlerAdapter {
 			//处理ping消息
 			ctx.writeAndFlush(createData(clientId, Command.CommandType.PONG, "服务器响应客户端Id是" + clientId + "的心跳包").build());
 			unRecPingTimes = 0;
-		} else {
+		} else if (Command.CommandType.PUSH_DATA.equals(msgBase.getCmd())) {
 			if (ch.isOpen()) {
 				//触发下一个handler
 				ctx.fireChannelRead(msg);

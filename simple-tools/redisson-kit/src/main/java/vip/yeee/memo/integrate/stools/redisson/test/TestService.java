@@ -27,14 +27,15 @@ public class TestService {
 
     @PostConstruct
     public void init() throws Exception {
-        ThreadUtil.execAsync(() -> {
-            try {
-                this.gen();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-        ThreadUtil.execAsync(this::get);
+//        ThreadUtil.execAsync(() -> {
+//            try {
+//                this.gen();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        });
+//        ThreadUtil.execAsync(this::get);
+        new Thread(this::get).start();
     }
 
     private void gen() throws InterruptedException {
@@ -52,10 +53,11 @@ public class TestService {
         while (true) {
             RBlockingDeque<Object> delayQueue = delayQueueKit.getDelayQueue(QUEUE_CODE);
             try {
-                Long id = (Long) delayQueue.take();
-                log.error("获取元素成功 - id = {}", id);
-            } catch (InterruptedException e) {
-                log.error("获取元素失败");
+                Long ele = (Long) delayQueue.take();
+                // handle
+                log.info("【队列-TEST】- 处理元素成功 - ele = {}", ele);
+            } catch (Exception e) {
+                log.error("【队列-TEST】- 处理元素失败", e);
             }
         }
     }

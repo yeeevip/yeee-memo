@@ -30,8 +30,8 @@ public class CheckRepeatKit {
         return this.canRepeatOpr(key, s);
     }
 
-    public boolean canRepeatWishUpdate(Long wishId, int s) {
-        String key = "wishUpdate:" + wishId;
+    public boolean canRepeatOrderUpdate(Long wishId, int s) {
+        String key = "orderUpdate:" + wishId;
         return this.canRepeatOpr(key, s);
     }
 }

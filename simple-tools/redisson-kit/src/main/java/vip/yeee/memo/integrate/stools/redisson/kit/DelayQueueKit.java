@@ -33,10 +33,16 @@ public class DelayQueueKit {
      * @param timeUnit  时间单位
      * @param queueCode 队列键
      */
-    public <T> void addDelayQueue(String queueCode, T msg, long delay, TimeUnit timeUnit) {
+    public <T> void addDelayQueue(String queueCode, T msg, boolean removeOld, long delay, TimeUnit timeUnit) {
         RBlockingDeque<T> blockingDeque = redissonClient.getBlockingDeque(queueCode);
         RDelayedQueue<T> delayedQueue = redissonClient.getDelayedQueue(blockingDeque);
         delayedQueue.offer(msg, delay, timeUnit);
+        if (removeOld) {
+            delayedQueue.remove(msg);
+        }
+    }
+    public <T> void addDelayQueue(String queueCode, T msg, long delay, TimeUnit timeUnit) {
+        addDelayQueue(queueCode, msg, false, delay, timeUnit);
     }
 
     /**
@@ -50,9 +56,9 @@ public class DelayQueueKit {
         return this.getDelayQueue(DelayQueueKit.TEST_QUEUE);
     }
 
-    public void addTestQueue(Integer msg, long delayTime) {
-        this.addDelayQueue(DelayQueueKit.TEST_QUEUE, msg, Math.max(delayTime - System.currentTimeMillis(), 0), TimeUnit.MILLISECONDS);
-        log.info("【队列-TEST】- 发送消息，msg = {}", msg);
+    public void addTestQueue(Integer ele, long delayTime) {
+        log.info("【队列-TEST】- 添加元素，ele = {}", ele);
+        this.addDelayQueue(DelayQueueKit.TEST_QUEUE, ele, Math.max(delayTime - System.currentTimeMillis(), 0), TimeUnit.MILLISECONDS);
     }
 
 

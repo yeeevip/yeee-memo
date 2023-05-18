@@ -19,7 +19,7 @@ public class TestJetcacheController {
 
     @GetMapping("jetcache/test")
     public Object getData() {
-        return cacheBizService.getData();
+        return cacheBizService.getData(null, null);
     }
 
 }
