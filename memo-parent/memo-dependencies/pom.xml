@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <yeee-sdk.version>3.2.1-SNAPSHOT</yeee-sdk.version>
+        <yeee-memo.version>3.2.1-SNAPSHOT</yeee-memo.version>
         <hutool.version>5.6.2</hutool.version>
         <fastjson.version>1.2.73</fastjson.version>
         <jackson.version>2.13.1</jackson.version>
@@ -56,127 +56,127 @@
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>base-config</artifactId>
-                <version>${yeee-sdk.version}</version>
+                <version>${yeee-memo.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>base-web</artifactId>
-                <version>${yeee-sdk.version}</version>
+                <version>${yeee-memo.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>base-mybatis</artifactId>
-                <version>${yeee-sdk.version}</version>
+                <version>${yeee-memo.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>base-mybatis-plus</artifactId>
-                <version>${yeee-sdk.version}</version>
+                <version>${yeee-memo.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>base-swagger</artifactId>
-                <version>${yeee-sdk.version}</version>
+                <version>${yeee-memo.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>base-redis</artifactId>
-                <version>${yeee-sdk.version}</version>
+                <version>${yeee-memo.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>base-model</artifactId>
-                <version>${yeee-sdk.version}</version>
+                <version>${yeee-memo.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>base-util</artifactId>
-                <version>${yeee-sdk.version}</version>
+                <version>${yeee-memo.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>base-web-security-oauth2</artifactId>
-                <version>${yeee-sdk.version}</version>
+                <version>${yeee-memo.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>common-web-dependencies</artifactId>
-                <version>${yeee-sdk.version}</version>
+                <version>${yeee-memo.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>common-domain</artifactId>
-                <version>${yeee-sdk.version}</version>
+                <version>${yeee-memo.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>common-platform-auth-server</artifactId>
-                <version>${yeee-sdk.version}</version>
+                <version>${yeee-memo.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>common-platform-auth-client</artifactId>
-                <version>${yeee-sdk.version}</version>
+                <version>${yeee-memo.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>common-app-auth-server</artifactId>
-                <version>${yeee-sdk.version}</version>
+                <version>${yeee-memo.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>common-app-auth-client</artifactId>
-                <version>${yeee-sdk.version}</version>
+                <version>${yeee-memo.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>common-springcloud-gray-common</artifactId>
-                <version>${yeee-sdk.version}</version>
+                <version>${yeee-memo.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>common-springcloud-gray-gateway</artifactId>
-                <version>${yeee-sdk.version}</version>
+                <version>${yeee-memo.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>common-springcloud-gray-inner</artifactId>
-                <version>${yeee-sdk.version}</version>
+                <version>${yeee-memo.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>common-springcloud-openfeign</artifactId>
-                <version>${yeee-sdk.version}</version>
+                <version>${yeee-memo.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>common-httpclient-okhttp</artifactId>
-                <version>${yeee-sdk.version}</version>
+                <version>${yeee-memo.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>common-wx-mp</artifactId>
-                <version>${yeee-sdk.version}</version>
+                <version>${yeee-memo.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>common-wx-ma</artifactId>
-                <version>${yeee-sdk.version}</version>
+                <version>${yeee-memo.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>common-websse</artifactId>
-                <version>${yeee-sdk.version}</version>
+                <version>${yeee-memo.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>common-websocket</artifactId>
-                <version>${yeee-sdk.version}</version>
+                <version>${yeee-memo.version}</version>
             </dependency>
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>common-springcloud-dependencies</artifactId>
-                <version>${yeee-sdk.version}</version>
+                <version>${yeee-memo.version}</version>
             </dependency>
             <!-- log4j -->
             <dependency>
