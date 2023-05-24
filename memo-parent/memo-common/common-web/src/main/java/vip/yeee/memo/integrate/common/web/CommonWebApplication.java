@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.base.web;
+package vip.yeee.memo.integrate.common.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

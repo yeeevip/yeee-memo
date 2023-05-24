@@ -7,11 +7,11 @@
     <parent>
         <artifactId>third-sdk</artifactId>
         <groupId>vip.yeee.memo</groupId>
-        <version>3.2.1-SNAPSHOT</version>
+        <version>3.2.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>blockchain</artifactId>
-    <version>3.2.1-SNAPSHOT</version>
+    <version>3.2.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>

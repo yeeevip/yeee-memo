@@ -6,7 +6,7 @@
 
     <groupId>vip.yeee.memo</groupId>
     <artifactId>hc-smart-contract-demo</artifactId>
-    <version>3.2.1-SNAPSHOT</version>
+    <version>3.2.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <dependencies>

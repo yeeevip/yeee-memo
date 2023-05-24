@@ -9,5 +9,5 @@ import org.springframework.context.annotation.ComponentScan;
  * @since 2022/7/12 14:21
  */
 @ComponentScan("vip.yeee.memo.integrate.base.web")
-public class CommonWebAutoConfigure {
+public class BaseWebAutoConfigure {
 }

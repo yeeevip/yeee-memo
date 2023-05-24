@@ -5,7 +5,7 @@
     <parent>
         <artifactId>common-auth</artifactId>
         <groupId>vip.yeee.memo</groupId>
-        <version>3.2.1-SNAPSHOT</version>
+        <version>3.2.2-SNAPSHOT</version>
         <!--        <relativePath/>-->
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -28,7 +28,7 @@
         </dependency>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
-            <artifactId>base-web-security-oauth2</artifactId>
+            <artifactId>base-security-oauth2</artifactId>
         </dependency>
         <dependency>
             <groupId>vip.yeee.memo</groupId>

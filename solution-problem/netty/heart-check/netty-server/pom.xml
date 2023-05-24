@@ -5,7 +5,7 @@
     <parent>
         <artifactId>heart-check</artifactId>
         <groupId>vip.yeee.memo</groupId>
-        <version>3.2.1-SNAPSHOT</version>
+        <version>3.2.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -16,11 +16,11 @@
         <dependency>
             <groupId>vip.yeee.memo</groupId>
             <artifactId>netty-common</artifactId>
-            <version>3.2.1-SNAPSHOT</version>
+            <version>3.2.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-web-dependencies</artifactId>
+            <artifactId>common-web</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>vip.yeee.memo</groupId>

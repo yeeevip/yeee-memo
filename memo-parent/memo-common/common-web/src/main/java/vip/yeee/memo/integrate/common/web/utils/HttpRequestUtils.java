@@ -24,7 +24,7 @@ import java.util.Map;
  * @author yeah丶一页 (quhailong1995@gmail.com)
  */
 public class HttpRequestUtils {
-    private static Logger logger = LoggerFactory.getLogger(HttpRequestUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(HttpRequestUtils.class);
     
     private static final String LOCALHOST = "127.0.0.1";
     
