@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.base.web.interceptor;
+package vip.yeee.memo.integrate.common.web.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

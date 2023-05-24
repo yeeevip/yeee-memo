@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.base.web.filter;
+package vip.yeee.memo.integrate.common.web.filter;
 
 import lombok.extern.slf4j.Slf4j;
 

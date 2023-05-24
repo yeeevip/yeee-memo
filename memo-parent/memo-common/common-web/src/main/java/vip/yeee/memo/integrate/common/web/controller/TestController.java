@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.base.web.controller;
+package vip.yeee.memo.integrate.common.web.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

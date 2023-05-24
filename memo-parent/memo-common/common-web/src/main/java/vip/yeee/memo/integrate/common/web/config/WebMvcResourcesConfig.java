@@ -1,12 +1,12 @@
-package vip.yeee.memo.integrate.base.web.config;
+package vip.yeee.memo.integrate.common.web.config;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import vip.yeee.memo.integrate.base.web.filter.FilterDemo;
-import vip.yeee.memo.integrate.base.web.interceptor.InterceptorDemo;
+import vip.yeee.memo.integrate.common.web.filter.FilterDemo;
+import vip.yeee.memo.integrate.common.web.interceptor.InterceptorDemo;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;

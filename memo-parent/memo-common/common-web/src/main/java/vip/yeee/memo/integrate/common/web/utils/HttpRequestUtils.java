@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.base.web.utils;
+package vip.yeee.memo.integrate.common.web.utils;
 
 import cn.hutool.core.util.StrUtil;
 import org.slf4j.Logger;

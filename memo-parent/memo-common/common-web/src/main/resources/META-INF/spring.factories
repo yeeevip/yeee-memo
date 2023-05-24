@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  vip.yeee.memo.integrate.common.web.BaseWebAutoConfigure
+  vip.yeee.memo.integrate.common.web.CommonWebAutoConfigure

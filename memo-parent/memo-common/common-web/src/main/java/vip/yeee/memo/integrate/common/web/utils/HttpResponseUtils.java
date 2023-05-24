@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.base.web.utils;
+package vip.yeee.memo.integrate.common.web.utils;
 
 import cn.hutool.core.io.IoUtil;
 import com.alibaba.fastjson.JSONObject;
