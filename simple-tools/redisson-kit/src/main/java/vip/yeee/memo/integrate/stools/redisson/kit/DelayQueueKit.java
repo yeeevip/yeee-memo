@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
 /**
  * description......
@@ -36,10 +37,10 @@ public class DelayQueueKit {
     public <T> void addDelayQueue(String queueCode, T msg, boolean removeOld, long delay, TimeUnit timeUnit) {
         RBlockingDeque<T> blockingDeque = redissonClient.getBlockingDeque(queueCode);
         RDelayedQueue<T> delayedQueue = redissonClient.getDelayedQueue(blockingDeque);
-        delayedQueue.offer(msg, delay, timeUnit);
         if (removeOld) {
             delayedQueue.remove(msg);
         }
+        delayedQueue.offer(msg, delay, timeUnit);
     }
     public <T> void addDelayQueue(String queueCode, T msg, long delay, TimeUnit timeUnit) {
         addDelayQueue(queueCode, msg, false, delay, timeUnit);
@@ -61,5 +62,23 @@ public class DelayQueueKit {
         this.addDelayQueue(DelayQueueKit.TEST_QUEUE, ele, Math.max(delayTime - System.currentTimeMillis(), 0), TimeUnit.MILLISECONDS);
     }
 
+    public void handleTestQueueMsg(Consumer<Integer> handler) {
+        handleQueueMsg(DelayQueueKit.TEST_QUEUE, handler);
+    }
+
+    // while内不可【return或者break】，用【continue】，否则就直接中断了不会循环阻塞获取元素
+    public <T> void handleQueueMsg(String queueCode, Consumer<T> handler) {
+        while (true) {
+            RBlockingDeque<T> delayQueue = this.getDelayQueue(queueCode);
+            T ele = null;
+            try {
+                ele = delayQueue.take();
+                handler.accept(ele);
+                log.info("【队列-{}】- 处理元素成功 - ele = {}", queueCode, ele);
+            } catch (Exception e) {
+                log.error("【队列-{}】- 处理元素失败 - ele = {}", queueCode, ele, e);
+            }
+        }
+    }
 
 }
