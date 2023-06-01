@@ -17,8 +17,8 @@
         <module>jdk-example</module>
         <!-- 设计模式 -->
         <module>design-pattern</module>
-        <!-- 浙大PAT算法coding -->
-        <module>pat-coding</module>
+        <!-- 算法coding -->
+        <module>algorithm</module>
         <!-- 笔记 -->
         <module>some-note</module>
         <module>spring-example</module>

@@ -11,7 +11,7 @@
         <relativePath/>
     </parent>
 
-    <artifactId>pat-coding</artifactId>
+    <artifactId>algorithm</artifactId>
     <packaging>pom</packaging>
 
 </project>
