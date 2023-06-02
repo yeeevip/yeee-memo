@@ -49,7 +49,7 @@ public class TestService implements ApplicationRunner {
 //            }
 //        });
 //        ThreadUtil.execAsync(this::get);
-        new Thread(() -> delayQueueKit.handleTestQueueMsg(this::handle)).start();
+        new Thread(() -> delayQueueKit.consumeTestQueueMsg(this::handle)).start();
     }
 
     private void gen() throws InterruptedException {

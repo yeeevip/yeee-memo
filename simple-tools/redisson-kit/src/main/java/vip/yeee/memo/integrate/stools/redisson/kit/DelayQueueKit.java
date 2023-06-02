@@ -53,21 +53,8 @@ public class DelayQueueKit {
         return redissonClient.getBlockingDeque(queueCode);
     }
 
-    public RBlockingDeque<Integer> getTestQueue() {
-        return this.getDelayQueue(DelayQueueKit.TEST_QUEUE);
-    }
-
-    public void addTestQueue(Integer ele, long delayTime) {
-        log.info("【队列-TEST】- 添加元素，ele = {}", ele);
-        this.addDelayQueue(DelayQueueKit.TEST_QUEUE, ele, Math.max(delayTime - System.currentTimeMillis(), 0), TimeUnit.MILLISECONDS);
-    }
-
-    public void handleTestQueueMsg(Consumer<Integer> handler) {
-        handleQueueMsg(DelayQueueKit.TEST_QUEUE, handler);
-    }
-
     // while内不可【return或者break】，用【continue】，否则就直接中断了不会循环阻塞获取元素
-    public <T> void handleQueueMsg(String queueCode, Consumer<T> handler) {
+    public <T> void consumeQueueMsg(String queueCode, Consumer<T> handler) {
         while (true) {
             RBlockingDeque<T> delayQueue = this.getDelayQueue(queueCode);
             T ele = null;
@@ -79,6 +66,19 @@ public class DelayQueueKit {
                 log.error("【队列-{}】- 处理元素失败 - ele = {}", queueCode, ele, e);
             }
         }
+    }
+
+    public RBlockingDeque<Integer> getTestQueue() {
+        return this.getDelayQueue(DelayQueueKit.TEST_QUEUE);
+    }
+
+    public void addTestQueue(Integer ele, long delayTime) {
+        log.info("【队列-TEST】- 添加元素，ele = {}", ele);
+        this.addDelayQueue(DelayQueueKit.TEST_QUEUE, ele, Math.max(delayTime - System.currentTimeMillis(), 0), TimeUnit.MILLISECONDS);
+    }
+
+    public void consumeTestQueueMsg(Consumer<Integer> handler) {
+        consumeQueueMsg(DelayQueueKit.TEST_QUEUE, handler);
     }
 
 }
