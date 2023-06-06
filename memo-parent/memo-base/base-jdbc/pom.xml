@@ -18,6 +18,7 @@
     <modules>
         <module>base-mybatis</module>
         <module>base-mybatis-plus</module>
+        <module>base-tk-mapper</module>
     </modules>
 
     <dependencies>

@@ -5,7 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @author yeah丶一页 (quhailong1995@gmail.com)
+ * @author yeee丶一页 (quhailong1995@gmail.com)
  */
 @Data
 public class WhereClause implements Serializable {

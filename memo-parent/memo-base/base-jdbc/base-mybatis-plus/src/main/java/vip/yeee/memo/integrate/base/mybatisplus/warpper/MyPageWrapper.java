@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * <p>
  * 生成查询类
  * </p>
- * @author yeah丶一页 (quhailong1995@gmail.com)
+ * @author yeee丶一页 (quhailong1995@gmail.com)
  */
 public class MyPageWrapper<T> {
 

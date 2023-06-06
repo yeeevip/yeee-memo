@@ -15,7 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author yeah丶一页 (quhailong1995@gmail.com)
+ * description......
+ * @author yeeee
  */
 @Component
 public class SpringContextUtils implements  ApplicationContextAware , EmbeddedValueResolverAware {
