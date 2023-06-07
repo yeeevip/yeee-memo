@@ -8,6 +8,10 @@ import javax.annotation.Resource;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * description......
+ * @author yeeee
+ */
 @Component
 public class CheckRepeatKit {
 

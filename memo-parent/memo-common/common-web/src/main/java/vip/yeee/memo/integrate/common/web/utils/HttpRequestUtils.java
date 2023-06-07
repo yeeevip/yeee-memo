@@ -21,7 +21,7 @@ import java.util.Map;
  * http内容 工具类
  * </p>
  *
- * @author yeah丶一页 (quhailong1995@gmail.com)
+ * @author yeee丶一页 (quhailong1995@gmail.com)
  */
 public class HttpRequestUtils {
     private static final Logger logger = LoggerFactory.getLogger(HttpRequestUtils.class);

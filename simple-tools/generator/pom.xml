@@ -15,8 +15,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <!-- mybatis-plus代码生成 -->
-        <module>generate-mp</module>
         <!-- 可自定义的代码生成 -->
         <module>generate-custom</module>
     </modules>

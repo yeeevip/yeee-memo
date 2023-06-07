@@ -22,6 +22,7 @@
         <mybatis-starter.version>2.1.0</mybatis-starter.version>
         <mybatis.version>3.5.2</mybatis.version>
         <mybatis-plus.version>3.4.3.3</mybatis-plus.version>
+        <mybatis-tk.version>2.1.5</mybatis-tk.version>
         <druid.version>1.2.9</druid.version>
         <javassist.version>3.21.0-GA</javassist.version>
         <logback.version>1.2.3</logback.version>
@@ -71,6 +72,11 @@
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>base-mybatis-plus</artifactId>
+                <version>${yeee-memo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>vip.yeee.memo</groupId>
+                <artifactId>base-tk-mapper</artifactId>
                 <version>${yeee-memo.version}</version>
             </dependency>
             <dependency>
@@ -273,6 +279,11 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>tk.mybatis</groupId>
+                <artifactId>mapper-spring-boot-starter</artifactId>
+                <version>${mybatis-tk.version}</version>
             </dependency>
             <!--阿里数据库连接池 -->
             <dependency>
