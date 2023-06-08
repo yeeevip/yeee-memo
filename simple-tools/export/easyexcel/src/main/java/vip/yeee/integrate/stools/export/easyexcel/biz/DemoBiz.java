@@ -8,6 +8,7 @@ import vip.yeee.integrate.stools.export.easyexcel.model.vo.ExportDataVo;
 import vip.yeee.integrate.stools.export.easyexcel.model.vo.ImportDataVo;
 import vip.yeee.integrate.stools.export.easyexcel.utils.EasyExcelUtil;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class DemoBiz {
             ExportDataVo exportDataVo = new ExportDataVo();
             exportDataVo.setId("100000-" + i + 1);
             exportDataVo.setUserId("20000000-" + i + 1);
-            exportDataVo.setCreateTime(DateUtil.formatTime(new Date()));
+            exportDataVo.setCreateTime(LocalDateTime.now());
             exportDataVoList.add(exportDataVo);
         }
         EasyExcelUtil.export2Response(exportDataVoList, ExportDataVo.class);

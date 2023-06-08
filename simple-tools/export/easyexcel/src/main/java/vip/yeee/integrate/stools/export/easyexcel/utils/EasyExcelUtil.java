@@ -8,6 +8,7 @@ import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.builder.ExcelWriterSheetBuilder;
 import com.alibaba.excel.write.metadata.WriteSheet;
+import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 import vip.yeee.memo.integrate.base.model.exception.BizException;
@@ -106,6 +107,7 @@ public class EasyExcelUtil {
         return new ExcelWriterSheetBuilder(excelWriter)
                 .sheetNo(sheetNo)
                 .sheetName(sheetName)
+//                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
                 .build();
     }
 }

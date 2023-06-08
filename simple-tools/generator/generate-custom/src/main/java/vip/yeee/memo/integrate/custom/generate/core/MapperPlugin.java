@@ -1,5 +1,6 @@
 package vip.yeee.memo.integrate.custom.generate.core;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -63,26 +64,15 @@ public class MapperPlugin extends FalseMethodPlugin {
     }
 
     /**
-     * 生成的Mapper接口
-     */
-    @Override
-    public boolean clientGenerated(Interface interfaze, TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        //获取实体类
-        FullyQualifiedJavaType entityType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
-        //import接口
-        for (String mapper : mappers) {
-            interfaze.addImportedType(new FullyQualifiedJavaType(mapper));
-            interfaze.addSuperInterface(new FullyQualifiedJavaType(mapper + "<" + entityType.getShortName() + ">"));
-        }
-        //import实体类
-        interfaze.addImportedType(entityType);
-        return true;
-    }
-
-    /**
      * 处理实体类的包和@Table注解
      */
     private void processEntityClass(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+
+        // &useInformationSchema=true
+        topLevelClass.addJavaDocLine("/**\n" +
+                " * " + introspectedTable.getRemarks() + "\n" +
+                " */");
+
         //引入JPA注解
         if ("mp".equals(this.genType)) {
             topLevelClass.addImportedType("com.baomidou.mybatisplus.annotation.*");
@@ -166,67 +156,6 @@ public class MapperPlugin extends FalseMethodPlugin {
             } else if (forceAnnotation) {
                 topLevelClass.addAnnotation("@Table(name = \"" + getDelimiterName(tableName) + "\")");
             }
-        }
-        if (generateColumnConsts) {
-            for (IntrospectedColumn introspectedColumn : introspectedTable.getAllColumns()) {
-                Field field = new Field();
-                field.setVisibility(JavaVisibility.PUBLIC);
-                field.setStatic(true);
-                field.setFinal(true);
-                field.setName(introspectedColumn.getActualColumnName().toUpperCase()); //$NON-NLS-1$
-                field.setType(new FullyQualifiedJavaType(String.class.getName())); //$NON-NLS-1$
-                field.setInitializationString("\"" + introspectedColumn.getJavaProperty() + "\"");
-                context.getCommentGenerator().addClassComment(topLevelClass, introspectedTable);
-                topLevelClass.addField(field);
-                //增加字段名常量,用于pageHelper
-                Field columnField = new Field();
-                columnField.setVisibility(JavaVisibility.PUBLIC);
-                columnField.setStatic(true);
-                columnField.setFinal(true);
-                columnField.setName("DB_" + introspectedColumn.getActualColumnName().toUpperCase()); //$NON-NLS-1$
-                columnField.setType(new FullyQualifiedJavaType(String.class.getName())); //$NON-NLS-1$
-                columnField.setInitializationString("\"" + introspectedColumn.getActualColumnName() + "\"");
-                topLevelClass.addField(columnField);
-            }
-        }
-        if (generateDefaultInstanceMethod) {
-            Method defaultMethod = new Method();
-            defaultMethod.setStatic(true);
-            defaultMethod.setName("defaultInstance");
-            defaultMethod.setVisibility(JavaVisibility.PUBLIC);
-            defaultMethod.setReturnType(topLevelClass.getType());
-            defaultMethod.addBodyLine(String.format("%s instance = new %s();", topLevelClass.getType().getShortName(), topLevelClass.getType().getShortName()));
-            for (IntrospectedColumn introspectedColumn : introspectedTable.getAllColumns()) {
-                String shortName = introspectedColumn.getFullyQualifiedJavaType().getShortName();
-                List<String> supportType = Arrays.asList("Byte", "Short", "Character", "Integer", "Long", "Float", "Double", "String", "BigDecimal", "BigInteger");
-                if (!supportType.contains(shortName)) {
-                    continue;
-                }
-                if (introspectedColumn.getDefaultValue() != null) {
-                    String defaultValue = introspectedColumn.getDefaultValue();
-                    //去除前后'',如 '123456' -> 123456
-                    if (defaultValue.startsWith("'") && defaultValue.endsWith("'")) {
-                        if (defaultValue.length() == 2) {
-                            defaultValue = "";
-                        } else {
-                            defaultValue = defaultValue.substring(1, defaultValue.length() - 1);
-                        }
-                    }
-                    //暂不支持时间类型默认值识别,不同数据库表达式不同
-                    if ("Boolean".equals(shortName)) {
-                        if ("0".equals(defaultValue)) {
-                            defaultValue = "false";
-                        } else if ("1".equals(defaultValue)) {
-                            defaultValue = "true";
-                        }
-                    }
-                    //通过 new 方法转换
-                    defaultMethod.addBodyLine(String.format("instance.%s = new %s(\"%s\");", introspectedColumn.getJavaProperty(), shortName, defaultValue));
-                }
-
-            }
-            defaultMethod.addBodyLine("return instance;");
-            topLevelClass.addMethod(defaultMethod);
         }
     }
 
@@ -329,7 +258,7 @@ public class MapperPlugin extends FalseMethodPlugin {
             this.needsSwagger = true;
         }
 
-        this.genType = getProperty("genType");
+        this.genType = StrUtil.emptyToDefault(getProperty("genType"), this.context.getProperty("genType"));
 
         if (useMapperCommentGenerator) {
             commentCfg.addProperty("beginningDelimiter", this.beginningDelimiter);

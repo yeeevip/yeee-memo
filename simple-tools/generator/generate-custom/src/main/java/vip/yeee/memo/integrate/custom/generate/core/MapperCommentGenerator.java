@@ -121,7 +121,7 @@ public class MapperCommentGenerator implements CommentGenerator {
         for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {
             if (introspectedColumn == column) {
                 if ("mp".equals(genType)) {
-                    field.addAnnotation("@TableId(type = IdType.AUTO)");
+//                    field.addAnnotation("@TableId(type = IdType.AUTO)");
                 } else {
                     field.addAnnotation("@Id");
                 }
@@ -142,6 +142,9 @@ public class MapperCommentGenerator implements CommentGenerator {
                 field.addAnnotation("@TableField(\"" + getDelimiterName(column) + "\")");
             } else if (forceAnnotation) {
                 field.addAnnotation("@TableField(\"" + getDelimiterName(column) + "\")");
+            }
+            if (introspectedColumn.isIdentity()) {
+                field.addAnnotation("@TableId(type = IdType.AUTO)");
             }
         } else {
             if (!column.equals(introspectedColumn.getJavaProperty()) && !StrUtil.toCamelCase(column).equals(introspectedColumn.getJavaProperty())) {

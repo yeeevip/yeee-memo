@@ -1,19 +1,25 @@
 package ${package};
 
 import cn.hutool.core.collection.CollectionUtil;
-import ${modelPackage}.domain.entity.${tableClass.shortClassName};
-import ${modelPackage}.model.request.IdRequest;
-import ${modelPackage}.model.request.${tableClass.shortClassName}AddRequest;
-import ${modelPackage}.model.request.${tableClass.shortClassName}ListRequest;
-import ${modelPackage}.model.request.${tableClass.shortClassName}UpdRequest;
-import ${modelPackage}.model.vo.${tableClass.shortClassName}InfoVo;
-import ${modelPackage}.model.vo.${tableClass.shortClassName}ListVo;
-import ${modelPackage}.service.${tableClass.shortClassName}Service;
+import ${basePackage}.domain.entity.${tableClass.shortClassName};
+import ${basePackage}.model.request.IdRequest;
+import ${basePackage}.model.request.${tableClass.shortClassName}AddRequest;
+import ${basePackage}.model.request.${tableClass.shortClassName}ListRequest;
+import ${basePackage}.model.request.${tableClass.shortClassName}UpdRequest;
+import ${basePackage}.model.vo.${tableClass.shortClassName}InfoVo;
+import ${basePackage}.model.vo.${tableClass.shortClassName}ListVo;
+import ${basePackage}.service.${tableClass.shortClassName}Service;
 import org.springframework.stereotype.Component;
 import vip.yeee.memo.integrate.base.model.exception.BizException;
+<#if genType == 'mp'>
+import com.baomidou.mybatisplus.core.metadata.IPage;
+</#if>
+<#if genType == 'tk'>
+import com.github.pagehelper.PageInfo;
+</#if>
+import vip.yeee.memo.integrate.base.model.vo.PageVO;
 
 import javax.annotation.Resource;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,16 +32,32 @@ public class ${tableClass.shortClassName}Biz {
     @Resource
     private ${tableClass.shortClassName}Service ${tableClass.variableName}Service;
 
-    public List<${tableClass.shortClassName}ListVo> ${tableClass.variableName}PageList(${tableClass.shortClassName}ListRequest request) {
-        List<${tableClass.shortClassName}> ${tableClass.variableName}List = ${tableClass.variableName}Service.${tableClass.variableName}PageList(request);
-        if (CollectionUtil.isEmpty(${tableClass.variableName}List)) {
-            return Collections.emptyList();
+    public PageVO<${tableClass.shortClassName}ListVo> ${tableClass.variableName}PageList(${tableClass.shortClassName}ListRequest request) {
+        PageVO<TestGeneratorListVo> pageVO = new PageVO<>(request.getPageNum(), request.getPageSize());
+        <#if genType == 'mp'>
+        IPage<${tableClass.shortClassName}> page = ${tableClass.variableName}Service.${tableClass.variableName}PageList(request);
+        if (CollectionUtil.isEmpty(page.getRecords())) {
+            return pageVO;
         }
-        List<${tableClass.shortClassName}ListVo> voList = ${tableClass.variableName}List
+        List<${tableClass.shortClassName}ListVo> voList = page.getRecords()
                 .stream()
                 .map(po -> new ${tableClass.shortClassName}ListVo())
                 .collect(Collectors.toList());
-        return voList;
+        </#if>
+        <#if genType == 'tk'>
+        PageInfo<${tableClass.shortClassName}> page = ${tableClass.variableName}Service.${tableClass.variableName}PageList(request);
+        if (CollectionUtil.isEmpty(page.getList())) {
+            return pageVO;
+        }
+        List<${tableClass.shortClassName}ListVo> voList = page.getList()
+                .stream()
+                .map(po -> new ${tableClass.shortClassName}ListVo())
+                .collect(Collectors.toList());
+        </#if>
+        pageVO.setPages((int) page.getPages());
+        pageVO.setTotal(page.getTotal());
+        pageVO.setResult(voList);
+        return pageVO;
     }
 
     public Void ${tableClass.variableName}Add(${tableClass.shortClassName}AddRequest request) {

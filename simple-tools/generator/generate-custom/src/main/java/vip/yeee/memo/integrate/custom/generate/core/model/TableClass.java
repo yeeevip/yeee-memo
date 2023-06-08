@@ -15,6 +15,7 @@ public class TableClass implements Serializable {
     private IntrospectedTable introspectedTable;
 
     private String                 tableName;
+    private String                 remarks;
     private String                 variableName;
     private String                 lowerCaseName;
     private String                 shortClassName;
@@ -121,5 +122,13 @@ public class TableClass implements Serializable {
 
     public void setVariableName(String variableName) {
         this.variableName = variableName;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 }

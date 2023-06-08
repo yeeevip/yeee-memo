@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * description......
@@ -25,4 +26,9 @@ public class PageVO<T> {
 
     private Collection<T> result;
 
+    public PageVO(Integer pageNum, Integer pageSize) {
+        this.pageNum = pageNum;
+        this.pageSize = pageSize;
+        this.result = Collections.emptyList();
+    }
 }

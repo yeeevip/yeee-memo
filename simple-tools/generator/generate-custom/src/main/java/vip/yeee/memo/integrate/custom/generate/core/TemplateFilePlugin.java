@@ -1,5 +1,6 @@
 package vip.yeee.memo.integrate.custom.generate.core;
 
+import cn.hutool.core.util.StrUtil;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -49,11 +50,11 @@ public class TemplateFilePlugin extends PluginAdapter {
     /**
      * 项目路径（目录需要已经存在）
      */
-    private String          targetProject;
+    private String          targetDir;
     /**
      * 生成的包（路径不存在则创建）
      */
-    private String          targetPackage;
+    private String          basePackage;
     /**
      * 模板路径
      */
@@ -77,19 +78,6 @@ public class TemplateFilePlugin extends PluginAdapter {
      * 编码
      */
     private String encoding;
-
-    /**
-     * 列转换为字段
-     */
-    public static Field convertToJavaBeansField(IntrospectedColumn introspectedColumn) {
-        FullyQualifiedJavaType fqjt = introspectedColumn.getFullyQualifiedJavaType();
-        String property = introspectedColumn.getJavaProperty();
-        Field field = new Field();
-        field.setVisibility(JavaVisibility.PRIVATE);
-        field.setType(fqjt);
-        field.setName(property);
-        return field;
-    }
 
     /**
      * 读取文件
@@ -149,11 +137,11 @@ public class TemplateFilePlugin extends PluginAdapter {
             return false;
         }
         int errorCount = 0;
-        if (!StringUtility.stringHasValue(targetProject)) {
+        if (!StringUtility.stringHasValue(targetDir)) {
             errorCount++;
             warnings.add("没有配置 \"targetProject\" 路径!");
         }
-        if (!StringUtility.stringHasValue(targetPackage)) {
+        if (!StringUtility.stringHasValue(targetDir)) {
             errorCount++;
             warnings.add("没有配置 \"targetPackage\" 路径!");
         }
@@ -169,7 +157,8 @@ public class TemplateFilePlugin extends PluginAdapter {
         List<GeneratedJavaFile> list = new ArrayList<GeneratedJavaFile>();
         TableClass tableClass = TableColumnBuilder.build(introspectedTable);
         if ("TRUE".equalsIgnoreCase(singleMode)) {
-            list.add(new GenerateByTemplateFile(tableClass, (TemplateFormatter) templateFormatter, properties, targetProject, targetPackage, fileName, templateContent));
+            properties.put("genType", this.context.getProperty("genType"));
+            list.add(new GenerateByTemplateFile(tableClass, (TemplateFormatter) templateFormatter, properties, targetDir, basePackage, fileName, templateContent));
         } else {
             cacheTables.add(tableClass);
         }
@@ -180,7 +169,7 @@ public class TemplateFilePlugin extends PluginAdapter {
     public List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles() {
         List<GeneratedJavaFile> list = new ArrayList<GeneratedJavaFile>();
         if (cacheTables != null && cacheTables.size() > 0) {
-            list.add(new GenerateByListTemplateFile(cacheTables, (ListTemplateFormatter) templateFormatter, properties, targetProject, targetPackage, fileName, templateContent));
+            list.add(new GenerateByListTemplateFile(cacheTables, (ListTemplateFormatter) templateFormatter, properties, targetDir, basePackage, fileName, templateContent));
         }
         return list;
     }
@@ -192,8 +181,8 @@ public class TemplateFilePlugin extends PluginAdapter {
         if (!"TRUE".equalsIgnoreCase(singleMode)) {
             this.cacheTables = new LinkedHashSet<TableClass>();
         }
-        this.targetProject = properties.getProperty("targetProject");
-        this.targetPackage = properties.getProperty("targetPackage");
+        this.targetDir = StrUtil.emptyToDefault(properties.getProperty("targetDir"), this.context.getProperty("targetDir"));
+        this.basePackage = StrUtil.emptyToDefault(properties.getProperty("basePackage"), this.context.getProperty("basePackage"));
         this.templatePath = properties.getProperty("templatePath");
         this.fileName = properties.getProperty("fileName");
         this.templateFormatterClass = properties.getProperty("templateFormatter");

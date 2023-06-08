@@ -1,5 +1,6 @@
 package vip.yeee.memo.integrate.custom.generate.core.model;
 
+import cn.hutool.core.util.StrUtil;
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -23,6 +24,8 @@ public class TableColumnBuilder {
 
         FullyQualifiedTable fullyQualifiedTable = introspectedTable.getFullyQualifiedTable();
         tableClass.setTableName(fullyQualifiedTable.getIntrospectedTableName());
+
+        tableClass.setRemarks(StrUtil.emptyToDefault(introspectedTable.getRemarks(), "     "));
 
         FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
         tableClass.setType(type);

@@ -25,10 +25,11 @@ public class GenerateByTemplateFile extends GeneratedJavaFile {
 
     private final TemplateFormatter templateFormatter;
 
-    public GenerateByTemplateFile(TableClass tableClass, TemplateFormatter templateFormatter, Properties properties, String targetProject, String targetPackage, String fileName, String templateContent) {
-        super(null, targetProject, ENCODING, null);
+    public GenerateByTemplateFile(TableClass tableClass, TemplateFormatter templateFormatter, Properties properties, String targetProject, String basePackage, String fileName, String templateContent) {
+        super(null, basePackage + "." + properties.get("package"), ENCODING, null);
+        properties.put("basePackage", basePackage);
+        this.targetPackage = basePackage + "." + properties.get("package");
         this.targetProject = targetProject;
-        this.targetPackage = targetPackage;
         this.fileName = fileName;
         this.templateContent = templateContent;
         this.properties = properties;

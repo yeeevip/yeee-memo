@@ -1,17 +1,18 @@
 package ${package};
 
-import ${modelPackage}.biz.${tableClass.shortClassName}Biz;
-import ${modelPackage}.model.request.IdRequest;
-import ${modelPackage}.model.request.${tableClass.shortClassName}AddRequest;
-import ${modelPackage}.model.request.${tableClass.shortClassName}ListRequest;
-import ${modelPackage}.model.request.${tableClass.shortClassName}UpdRequest;
-import ${modelPackage}.model.vo.${tableClass.shortClassName}InfoVo;
-import ${modelPackage}.model.vo.${tableClass.shortClassName}ListVo;
+import ${basePackage}.biz.${tableClass.shortClassName}Biz;
+import ${basePackage}.model.request.IdRequest;
+import ${basePackage}.model.request.${tableClass.shortClassName}AddRequest;
+import ${basePackage}.model.request.${tableClass.shortClassName}ListRequest;
+import ${basePackage}.model.request.${tableClass.shortClassName}UpdRequest;
+import ${basePackage}.model.vo.${tableClass.shortClassName}InfoVo;
+import ${basePackage}.model.vo.${tableClass.shortClassName}ListVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import vip.yeee.memo.integrate.base.model.rest.CommonResult;
+import vip.yeee.memo.integrate.base.model.vo.PageVO;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
 /**
 * create by yeee.一页 ${generateDate}
 */
-@Api(tags = "${tableClass.shortClassName}")
+@Api(tags = "${tableClass.remarks}")
 @RequestMapping("/${tableClass.variableName}")
 @RestController
 public class ${tableClass.shortClassName}Controller {
@@ -29,7 +30,7 @@ public class ${tableClass.shortClassName}Controller {
 
     @ApiOperation("列表")
     @PostMapping(value = "/page")
-    public CommonResult<List<${tableClass.shortClassName}ListVo>> ${tableClass.variableName}PageList(@RequestBody @Validated ${tableClass.shortClassName}ListRequest request) {
+    public CommonResult<PageVO<${tableClass.shortClassName}ListVo>> ${tableClass.variableName}PageList(@RequestBody @Validated ${tableClass.shortClassName}ListRequest request) {
         return CommonResult.success(${tableClass.variableName}Biz.${tableClass.variableName}PageList(request));
     }
 

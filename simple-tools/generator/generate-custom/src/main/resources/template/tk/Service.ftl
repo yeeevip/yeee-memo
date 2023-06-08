@@ -1,25 +1,26 @@
 package ${package};
 
 import ${tableClass.packageName}.${tableClass.shortClassName};
-import ${modelPackage}.model.request.IdRequest;
-import ${modelPackage}.model.request.${tableClass.shortClassName}AddRequest;
-import ${modelPackage}.model.request.${tableClass.shortClassName}ListRequest;
-import ${modelPackage}.model.request.${tableClass.shortClassName}UpdRequest;
+import ${basePackage}.model.request.IdRequest;
+import ${basePackage}.model.request.${tableClass.shortClassName}AddRequest;
+import ${basePackage}.model.request.${tableClass.shortClassName}ListRequest;
+import ${basePackage}.model.request.${tableClass.shortClassName}UpdRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import vip.yeee.memo.integrate.base.tkmapper.service.BaseService;
-
-import java.util.List;
+import com.github.pagehelper.PageInfo;
+import tk.mybatis.mapper.entity.Example;
 
 /**
 * create by yeee.一页 ${generateDate}
 */
 @Service
-public class ${tableClass.shortClassName}${serviceSuffix} extends BaseService<${tableClass.shortClassName}> {
+public class ${tableClass.shortClassName}Service extends BaseService<${tableClass.shortClassName}> {
 
-    public List<${tableClass.shortClassName}> ${tableClass.variableName}PageList(${tableClass.shortClassName}ListRequest request) {
-        return null;
+    public PageInfo<${tableClass.shortClassName}> ${tableClass.variableName}PageList(${tableClass.shortClassName}ListRequest request) {
+        Example example = Example.builder(${tableClass.shortClassName}.class).build();
+        return this.queryPageListByField(request.getPageNum(), request.getPageSize(), example);
     }
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.READ_COMMITTED)
@@ -37,9 +38,6 @@ public class ${tableClass.shortClassName}${serviceSuffix} extends BaseService<${
     }
 
     public ${tableClass.shortClassName} query${tableClass.shortClassName}ById(Object id) {
-        return null;
+        return this.queryByPrimaryKey(id);
     }
 }
-
-
-
