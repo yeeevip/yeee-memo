@@ -23,6 +23,7 @@
         <module>common-websse</module>
         <module>common-websocket</module>
         <module>common-wxsdk</module>
+        <module>common-oss</module>
     </modules>
 
 </project>

@@ -1,6 +1,7 @@
-aliyun:
+yeee:
   oss:
-    access-key-id: XXXXXXXXXXXXXXXX
-    access-key-secret: XXXXXXXXXXXXXXXX
-    endpoint: https://oss-cn-hangzhou.aliyuncs.com
-    bucket-default: www-yeee-vip
+    ali:
+      access-key: XXXXXXXXXXXXXXXX
+      secret-key: XXXXXXXXXXXXXXXX
+      endpoint: https://oss-cn-hangzhou.aliyuncs.com
+      default-bucket: www-yeee-vip

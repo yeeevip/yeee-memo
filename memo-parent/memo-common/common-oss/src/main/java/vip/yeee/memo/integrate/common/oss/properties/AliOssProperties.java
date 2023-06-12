@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.thirdsdk.aliyun.oss.properties;
+package vip.yeee.memo.integrate.common.oss.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -12,10 +12,12 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "aliyun.oss")
+@ConfigurationProperties(prefix = "yeee.oss.ali")
 public class AliOssProperties {
-    private String accessKeyId;
-    private String accessKeySecret;
+
+    private String accessKey;
+
+    private String secretKey;
     /**
      * Region ID，默认：华东1（杭州）
      */
@@ -24,5 +26,18 @@ public class AliOssProperties {
      * Endpoint，默认：华东1（杭州）接入点
      */
     private String endpoint = "oss-cn-hangzhou-internal.aliyuncs.com";
-    private String bucketDefault;
+
+    private String defaultBucket;
+
+    private Sts sts;
+
+    @Data
+    public static class Sts {
+
+        private String roleArn;
+
+        private String roleSessionName;
+
+    }
+
 }

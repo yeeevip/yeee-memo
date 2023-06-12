@@ -7,7 +7,7 @@ import cn.hutool.system.SystemUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import vip.yeee.memo.integrate.thirdsdk.aliyun.oss.kit.AliyunOssKit;
+import vip.yeee.memo.integrate.common.oss.kit.AliOssKit;
 
 import javax.annotation.Resource;
 import java.io.*;
@@ -26,7 +26,7 @@ import java.util.Date;
 public class AliOssTest {
 
     @Resource
-    private AliyunOssKit aliyunOssKit;
+    private AliOssKit aliOssKit;
 
     @Test
     public void testUpload() {
@@ -34,7 +34,7 @@ public class AliOssTest {
         String datePath = StrUtil.format("{}/{}/{}", date.getYear(), date.getMonthValue(), date.getDayOfMonth());
         String objectName = "yeee/test/upload/mp3/" + datePath + "/9976014 (1).mp3";
         try {
-            aliyunOssKit.uploadObject(FileUtil.file("C:\\Users\\yeeee\\Desktop\\9976014 (1).mp3"), objectName);
+            aliOssKit.uploadObject(FileUtil.file("C:\\Users\\yeeee\\Desktop\\9976014 (1).mp3"), objectName);
         } catch (IOException e) {
             log.error("aliyun oss 上传失败 - objectName = {}", objectName, e);
         }
@@ -45,7 +45,7 @@ public class AliOssTest {
         LocalDate date = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         String datePath = StrUtil.format("{}/{}/{}", date.getYear(), date.getMonthValue(), date.getDayOfMonth());
         String objectName = "yeee/test/upload/mp3/" + datePath + "/9976014 (2).mp3";
-        aliyunOssKit.uploadObjectNoMetadata(FileUtil.getInputStream("C:\\Users\\yeeee\\Desktop\\9976014 (1).mp3"), objectName);
+        aliOssKit.uploadObjectNoMetadata(FileUtil.getInputStream("C:\\Users\\yeeee\\Desktop\\9976014 (1).mp3"), objectName);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class AliOssTest {
         LocalDate date = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         String datePath = StrUtil.format("{}/{}/{}", date.getYear(), date.getMonthValue(), date.getDayOfMonth());
         String objectName = "yeee/test/upload/mp3/" + datePath + "/9976014 (1).mp3";
-        InputStream inputStream = aliyunOssKit.getObject(objectName);
+        InputStream inputStream = aliOssKit.getObject(objectName);
         IoUtil.copy(inputStream, FileUtil.getOutputStream("C:\\Users\\yeeee\\Desktop\\temp\\download\\9976014 (1).mp3"));
     }
 
@@ -66,7 +66,7 @@ public class AliOssTest {
         try (BufferedOutputStream out = FileUtil.getOutputStream(localPath)) {
             InputStream inputStream = new ByteArrayInputStream("数据输入流".getBytes());
             IoUtil.copy(inputStream, out);
-            aliyunOssKit.uploadObject(FileUtil.getInputStream(localPath), objectName);
+            aliOssKit.uploadObject(FileUtil.getInputStream(localPath), objectName);
         } catch (Exception e) {
             log.error("aliyun oss 上传失败 - objectName = {}", objectName, e);
         } finally {
