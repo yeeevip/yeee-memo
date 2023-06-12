@@ -1,6 +1,8 @@
 package vip.yeee.memo.integrate.base.mybatisplus.config;
 
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
@@ -10,6 +12,8 @@ import org.springframework.util.ClassUtils;
 
 import java.nio.charset.Charset;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Optional;
 
 /**
@@ -55,7 +59,10 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
 		}
 		// 3. field 类型相同时设置
 		Class<?> getterType = metaObject.getGetterType(fieldName);
-		if (ClassUtils.isAssignableValue(getterType, fieldVal)) {
+		if (getterType == Date.class) {
+			Date date = Date.from(((LocalDateTime)fieldVal).atZone(ZoneId.systemDefault()).toInstant());
+			metaObject.setValue(fieldName, date);
+		} else if (ClassUtils.isAssignableValue(getterType, fieldVal)) {
 			metaObject.setValue(fieldName, fieldVal);
 		}
 	}
@@ -68,7 +75,8 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
 		try {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			if (Optional.ofNullable(authentication).isPresent()) {
-				return authentication.getName();
+				JSONObject principal = JSON.parseObject(JSON.toJSONString(authentication.getPrincipal()));
+				return principal.getString("username");
 			}
 		} catch (Throwable ignored) {
 
