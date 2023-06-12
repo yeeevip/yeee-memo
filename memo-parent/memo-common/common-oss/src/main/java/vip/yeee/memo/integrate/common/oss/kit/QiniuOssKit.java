@@ -94,7 +94,7 @@ public class QiniuOssKit implements OssKit {
         StringMap putPolicy = new StringMap();
         putPolicy.put("returnBody", "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"bucket\":\"$(bucket)\",\"fsize\":$(fsize)}");
         long expireSeconds = 3600;
-        String upToken = auth.uploadToken(bucket, fileKey, expireSeconds, putPolicy);
+        String upToken = auth.uploadToken(bucket == null ? qiniuOssProperties.getDefaultBucket() : bucket, fileKey, expireSeconds, putPolicy);
 
         Map<String, Object> info = new HashMap<>();
         info.put("upToken", upToken);
