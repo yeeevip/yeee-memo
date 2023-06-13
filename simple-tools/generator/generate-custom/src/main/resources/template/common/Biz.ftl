@@ -33,7 +33,7 @@ public class ${tableClass.shortClassName}Biz {
     private ${tableClass.shortClassName}Service ${tableClass.variableName}Service;
 
     public PageVO<${tableClass.shortClassName}ListVo> ${tableClass.variableName}PageList(${tableClass.shortClassName}ListRequest request) {
-        PageVO<TestGeneratorListVo> pageVO = new PageVO<>(request.getPageNum(), request.getPageSize());
+        PageVO<${tableClass.shortClassName}ListVo> pageVO = new PageVO<>(request.getPageNum(), request.getPageSize());
         <#if genType == 'mp'>
         IPage<${tableClass.shortClassName}> page = ${tableClass.variableName}Service.${tableClass.variableName}PageList(request);
         if (CollectionUtil.isEmpty(page.getRecords())) {

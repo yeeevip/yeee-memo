@@ -25,6 +25,7 @@ public class ${tableClass.shortClassName}Service extends ServiceImpl<${tableClas
 
     public IPage<${tableClass.shortClassName}> ${tableClass.variableName}PageList(${tableClass.shortClassName}ListRequest request) {
         LambdaQueryWrapper<${tableClass.shortClassName}> query = Wrappers.lambdaQuery();
+        query.orderByDesc(${tableClass.shortClassName}::getId);
         return this.page(new Page<>(request.getPageNum(), request.getPageSize()), query);
     }
 

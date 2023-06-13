@@ -21,4 +21,6 @@ public class QiniuOssProperties {
 
     private String defaultBucket;
 
+    private String domain;
+
 }
