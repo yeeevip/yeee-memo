@@ -1,4 +1,4 @@
-package vip.yeee.memo.integrate.thirdsdk.pay.model.bo;
+package vip.yeee.memo.integrate.thirdsdk.pay.model.vo.req;
 
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import lombok.Data;
  * @since 2022/12/21 15:20
  */
 @Data
-public class OrderQueryReqBO {
+public class UnifiedOrderQueryReqVO {
 
     private String lesseeId;
     private String orderCode;

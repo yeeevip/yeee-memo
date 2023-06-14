@@ -3,9 +3,8 @@ package vip.yeee.memo.integrate.thirdsdk.pay.controller;
 import org.springframework.web.bind.annotation.*;
 import vip.yeee.memo.integrate.base.model.rest.CommonResult;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.ChannelRetMsgBO;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.OrderQueryReqBO;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.UnifiedOrderRespBO;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.vo.req.OrderQueryReqVO;
+import vip.yeee.memo.integrate.thirdsdk.pay.model.vo.req.UnifiedOrderQueryReqVO;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.vo.req.UnifiedOrderRefundReqVO;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.vo.req.UnifiedOrderReqVO;
 import vip.yeee.memo.integrate.thirdsdk.pay.service.UnifiedPayOrderService;
@@ -36,7 +35,7 @@ public class InnerServerController {
     }
 
     @PostMapping("/inner/order/query")
-    public CommonResult<ChannelRetMsgBO> queryOrder(@Valid @RequestBody OrderQueryReqBO request) {
+    public CommonResult<ChannelRetMsgBO> queryOrder(@Valid @RequestBody UnifiedOrderQueryReqVO request) {
         return CommonResult.success(unifiedPayOrderService.queryOrder(request));
     }
 

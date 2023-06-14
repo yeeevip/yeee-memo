@@ -39,7 +39,7 @@ public class UnifiedOrderReqVO {
 
     private String orderSubject;
 
-    private String openId;
+    private String openid;
 
     private String appId;
 

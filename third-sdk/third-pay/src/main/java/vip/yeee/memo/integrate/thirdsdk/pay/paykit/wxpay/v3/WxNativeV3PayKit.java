@@ -40,7 +40,7 @@ public class WxNativeV3PayKit extends WxV3PayKit {
             CommonUnifiedOrderRespBO respBO = new CommonUnifiedOrderRespBO();
             ChannelRetMsgBO retMsgBO = new ChannelRetMsgBO();
             respBO.setChannelRetMsg(retMsgBO);
-            respBO.setMchId(payContext.getWxPayConfig().getSubMchId());
+            respBO.setMchId(payContext.getWxPayConfig().getMchId());
             if (PayConstant.PAY_DATA_TYPE.CODE_IMG_URL.equals(reqBO.getPayDataType())) {
                 PayProperties payProperties = PayContext.getContext().getPayProperties();
                 respBO.setCodeImgUrl(payProperties.getSiteUrl() + "/general/img/qr/" + PayKit.aes.encryptHex(codeUrl) + ".png");

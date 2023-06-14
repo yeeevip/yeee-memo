@@ -15,16 +15,39 @@ public class WxPayConfig {
 
     private String apiVersion;
     /**
-     * 公众号appid.
+     * 商户号mchId.
+     */
+    private String mchId;
+    /**
+     * 绑定的公众号appid.
      */
     private String appId;
 
     private String miniAppId;
 
     /**
-     * 商户号.
+     * apiV3 API证书秘钥值.
      */
-    private String mchId;
+    private String apiV3Key;
+    /**
+     * apiclient_key.pem证书文件的绝对路径或者以classpath:开头的类路径.
+     */
+    private String privateKeyPath;
+    /**
+     * apiclient_cert.p12证书文件的绝对路径或者以classpath:开头的类路径.
+     */
+    private String keyPath;
+    /**
+     * apiclient_cert.pem证书文件的绝对路径或者以classpath:开头的类路径.
+     */
+    private String privateCertPath;
+    /**
+     * apiV3 API证书序列号值
+     */
+    private String certSerialNo;
+
+    // V2
+
     /**
      * 商户密钥.
      */
@@ -36,25 +59,5 @@ public class WxPayConfig {
      * @see com.github.binarywang.wxpay.constant.WxPayConstants.SignType
      */
     private String signType;
-    /**
-     * p12证书文件的绝对路径或者以classpath:开头的类路径.
-     */
-    private String keyPath;
-    /**
-     * apiclient_key.pem证书文件的绝对路径或者以classpath:开头的类路径.
-     */
-    private String privateKeyPath;
-    /**
-     * apiclient_cert.pem证书文件的绝对路径或者以classpath:开头的类路径.
-     */
-    private String privateCertPath;
-    /**
-     * apiV3 秘钥值.
-     */
-    private String apiV3Key;
-    /**
-     * apiV3 证书序列号值
-     */
-    private String certSerialNo;
 
 }

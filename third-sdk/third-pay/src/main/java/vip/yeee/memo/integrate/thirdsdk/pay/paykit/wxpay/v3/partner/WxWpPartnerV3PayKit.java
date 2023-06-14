@@ -1,5 +1,6 @@
 package vip.yeee.memo.integrate.thirdsdk.pay.paykit.wxpay.v3.partner;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderV3Result;
 import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
@@ -35,9 +36,14 @@ public class WxWpPartnerV3PayKit extends WxPartnerV3PayKit {
             WxPayConfigBO wxPayConfig = payContext.getWxPayConfig();
             WxPayUnifiedOrderV3Result response;
             WxPayUnifiedOrderV3PartnerRequest request = super.buildPartnerUnifiedOrderRequest(reqBO);
+            request.setSpAppid(wxPayConfig.getAppId());
+            request.setSubAppId(wxPayConfig.getSubAppId());
             WxPayUnifiedOrderV3PartnerRequest.Payer payer = new WxPayUnifiedOrderV3PartnerRequest.Payer();
-            payer.setSpOpenid(reqBO.getOpenid());
-            payer.setSubOpenid(reqBO.getOpenid());
+            if (StrUtil.isNotBlank(wxPayConfig.getSubMiniAppId())) {
+                payer.setSubOpenid(reqBO.getOpenid());
+            } else {
+                payer.setSpOpenid(reqBO.getOpenid());
+            }
             request.setPayer(payer);
             String url = wxPayService.getPayBaseUrl() + TradeTypeEnum.JSAPI.getPartnerUrl();
             String responseStr = wxPayService.postV3(url, GSON.toJson(request));

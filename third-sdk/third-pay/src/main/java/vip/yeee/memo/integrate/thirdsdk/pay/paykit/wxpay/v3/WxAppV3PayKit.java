@@ -35,7 +35,7 @@ public class WxAppV3PayKit extends WxV3PayKit {
             WxAppUnifiedOrderRespBO respBO = new WxAppUnifiedOrderRespBO();
             ChannelRetMsgBO retMsgBO = new ChannelRetMsgBO();
             respBO.setChannelRetMsg(retMsgBO);
-            respBO.setMchId(payContext.getWxPayConfig().getSubMchId());
+            respBO.setMchId(payContext.getWxPayConfig().getMchId());
             respBO.setPayInfo(JacksonUtils.toJsonString(result));
             retMsgBO.setChannelAttach(respBO.getPayInfo());
             // 支付中

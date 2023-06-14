@@ -102,9 +102,9 @@ public abstract class BaseAliPayKit implements PayKit {
             req.putOtherTextParam("app_auth_token", aliPayConfig.getAuthToken());
         }
         AlipayTradeRefundModel model = new AlipayTradeRefundModel();
-        model.setOutTradeNo(reqBO.getPayOrderCode());
-        model.setTradeNo(reqBO.getRefundOrderId());
-        model.setOutRequestNo(reqBO.getRefundOrderId());
+//        model.setOutTradeNo(reqBO.getPayOrderCode());
+        model.setTradeNo(reqBO.getOutPayOrderId());
+        model.setOutRequestNo(reqBO.getRefundOrderCode());
         model.setRefundAmount(AmountUtil.convertCent2Dollar(reqBO.getRefundAmount().toString()));
         model.setRefundReason(reqBO.getRefundReason());
         req.setBizModel(model);

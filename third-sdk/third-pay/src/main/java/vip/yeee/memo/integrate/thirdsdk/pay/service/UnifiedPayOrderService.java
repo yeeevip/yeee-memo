@@ -11,7 +11,7 @@ import vip.yeee.memo.integrate.base.web.utils.SpringContextUtils;
 import vip.yeee.memo.integrate.common.web.utils.HttpRequestUtils;
 import vip.yeee.memo.integrate.thirdsdk.pay.constant.PayConstant;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.*;
-import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.OrderQueryReqBO;
+import vip.yeee.memo.integrate.thirdsdk.pay.model.vo.req.UnifiedOrderQueryReqVO;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.vo.req.UnifiedOrderRefundReqVO;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.vo.req.UnifiedOrderReqVO;
 import vip.yeee.memo.integrate.thirdsdk.pay.paykit.PayContext;
@@ -56,7 +56,7 @@ public class UnifiedPayOrderService {
         }
     }
 
-    public ChannelRetMsgBO queryOrder(OrderQueryReqBO request) {
+    public ChannelRetMsgBO queryOrder(UnifiedOrderQueryReqVO request) {
         try {
             PayContext.setContext(request.getLesseeId());
             // 获取对应处理接口
@@ -83,7 +83,7 @@ public class UnifiedPayOrderService {
                 log.error("【支付回调通知】- 业务异常", e);
                 return PayKit.getDefaultErrorResp(ifCode);
             }
-            log.warn("【支付回调通知】- 业务异常 - " + e.getMessage());
+            log.warn("【支付回调通知】- 系统异常 - " + e.getMessage());
             return PayKit.getDefaultSuccessResp(ifCode);
         } finally {
             PayContext.clearContext();
@@ -103,7 +103,7 @@ public class UnifiedPayOrderService {
                 log.error("【退款回调通知】- 业务异常", e);
                 return PayKit.getDefaultErrorResp(ifCode);
             }
-            log.warn("【退款回调通知】- 业务异常 - " + e.getMessage());
+            log.warn("【退款回调通知】- 系统异常 - " + e.getMessage());
             return PayKit.getDefaultSuccessResp(ifCode);
         } finally {
             PayContext.clearContext();

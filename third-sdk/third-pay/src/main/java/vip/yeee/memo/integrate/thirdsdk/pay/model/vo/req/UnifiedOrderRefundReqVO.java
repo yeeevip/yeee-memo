@@ -20,12 +20,14 @@ public class UnifiedOrderRefundReqVO {
      * 退款订单号（支付系统生成订单号）
      */
     @NotBlank
-    private String refundOrderId;
+    private String outPayOrderId;
 
     /**
-     * 支付订单号（与t_pay_order对应）
+     * 支付订单号（与t_refund_order对应）
      */
     @NotBlank
+    private String refundOrderCode;
+
     private String payOrderCode;
 
     @NotNull
