@@ -89,9 +89,11 @@ public class PayContext {
                     if (PayConstant.PAY_IF_VERSION.WX_V2.equals(wxPayConfigBO.getApiVersion())) {
                         wxPayConfig.setSignType(WxPayConstants.SignType.MD5);
                     }
-                    wxPayConfig.setPrivateKeyContent(FileUtil.readBytes(wxPayConfigBO.getPrivateKeyPath()));
-                    byte[] wxPayCertInfo = getWxPayCertInfo(wxPayConfigBO.getMchId(), wxPayConfigBO.getCertSerialNo(), wxPayConfigBO.getApiV3Key(), wxPayConfig.getPrivateKeyContent());
-                    wxPayConfig.setPrivateCertContent(wxPayCertInfo);
+                    if (StrUtil.isBlank(wxPayConfig.getPrivateCertPath())) {
+                        wxPayConfig.setPrivateKeyContent(FileUtil.readBytes(wxPayConfigBO.getPrivateKeyPath()));
+                        byte[] wxPayCertInfo = getWxPayCertInfo(wxPayConfigBO.getMchId(), wxPayConfigBO.getCertSerialNo(), wxPayConfigBO.getApiV3Key(), wxPayConfig.getPrivateKeyContent());
+                        wxPayConfig.setPrivateCertContent(wxPayCertInfo);
+                    }
                     wxPayService.setConfig(wxPayConfig);
                 }
                 AliPayConfigBO aliPayConfigBO = channelConfigService.getAliPayChannelConfig(lesseeId);
