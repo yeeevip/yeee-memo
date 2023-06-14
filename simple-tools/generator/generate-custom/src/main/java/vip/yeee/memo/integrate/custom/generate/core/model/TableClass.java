@@ -15,6 +15,7 @@ public class TableClass implements Serializable {
     private IntrospectedTable introspectedTable;
 
     private String                 tableName;
+    private String                 simpleTableName;
     private String                 remarks;
     private String                 variableName;
     private String                 lowerCaseName;
@@ -22,6 +23,8 @@ public class TableClass implements Serializable {
     private String                 fullClassName;
     private String                 packageName;
     private FullyQualifiedJavaType type;
+
+    private String                 pagesPath;
 
     private List<ColumnField> pkFields;
     private List<ColumnField> baseFields;
@@ -130,5 +133,21 @@ public class TableClass implements Serializable {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    public String getSimpleTableName() {
+        return simpleTableName;
+    }
+
+    public void setSimpleTableName(String simpleTableName) {
+        this.simpleTableName = simpleTableName;
+    }
+
+    public String getPagesPath() {
+        return pagesPath;
+    }
+
+    public void setPagesPath(String pagesPath) {
+        this.pagesPath = pagesPath;
     }
 }

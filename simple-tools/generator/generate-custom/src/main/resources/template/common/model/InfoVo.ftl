@@ -22,7 +22,11 @@ public class ${tableClass.shortClassName}InfoVo {
     <#if field.shortTypeName == 'Date'>
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     </#if>
+    <#if field.shortTypeName == 'Long'>
+    private String ${field.fieldName};
+    <#else>
     private ${field.shortTypeName} ${field.fieldName};
+    </#if>
 
 </#list>
 }

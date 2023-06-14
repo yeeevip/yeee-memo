@@ -21,7 +21,7 @@ import java.util.List;
 * create by yeee.一页 ${generateDate}
 */
 @Api(tags = "${tableClass.remarks}")
-@RequestMapping("/${tableClass.variableName}")
+@RequestMapping("/${tableClass.pagesPath}")
 @RestController
 public class ${tableClass.shortClassName}Controller {
 

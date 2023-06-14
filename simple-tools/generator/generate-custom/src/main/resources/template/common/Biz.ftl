@@ -1,6 +1,7 @@
 package ${package};
 
 import cn.hutool.core.collection.CollectionUtil;
+import org.springframework.beans.BeanUtils;
 import ${basePackage}.domain.entity.${tableClass.shortClassName};
 import ${basePackage}.model.request.IdRequest;
 import ${basePackage}.model.request.${tableClass.shortClassName}AddRequest;
@@ -33,19 +34,25 @@ public class ${tableClass.shortClassName}Biz {
     private ${tableClass.shortClassName}Service ${tableClass.variableName}Service;
 
     public PageVO<${tableClass.shortClassName}ListVo> ${tableClass.variableName}PageList(${tableClass.shortClassName}ListRequest request) {
-        PageVO<${tableClass.shortClassName}ListVo> pageVO = new PageVO<>(request.getPageNum(), request.getPageSize());
         <#if genType == 'mp'>
         IPage<${tableClass.shortClassName}> page = ${tableClass.variableName}Service.${tableClass.variableName}PageList(request);
+        PageVO<${tableClass.shortClassName}ListVo> pageVO = new PageVO<>(request.getPageNum(), request.getPageSize());
         if (CollectionUtil.isEmpty(page.getRecords())) {
             return pageVO;
         }
         List<${tableClass.shortClassName}ListVo> voList = page.getRecords()
                 .stream()
-                .map(po -> new ${tableClass.shortClassName}ListVo())
+                .map(po -> {
+                    ${tableClass.shortClassName}ListVo vo = new ${tableClass.shortClassName}ListVo();
+                    BeanUtils.copyProperties(po, vo);
+                    vo.setId(po.getId().toString());
+                    return vo;
+                })
                 .collect(Collectors.toList());
         </#if>
         <#if genType == 'tk'>
         PageInfo<${tableClass.shortClassName}> page = ${tableClass.variableName}Service.${tableClass.variableName}PageList(request);
+        PageVO<${tableClass.shortClassName}ListVo> pageVO = new PageVO<>(request.getPageNum(), request.getPageSize());
         if (CollectionUtil.isEmpty(page.getList())) {
             return pageVO;
         }
@@ -61,7 +68,9 @@ public class ${tableClass.shortClassName}Biz {
     }
 
     public Void ${tableClass.variableName}Add(${tableClass.shortClassName}AddRequest request) {
-        ${tableClass.variableName}Service.${tableClass.variableName}Add(request);
+        ${tableClass.shortClassName} saveModel = new ${tableClass.shortClassName}();
+        BeanUtils.copyProperties(request, saveModel);
+        ${tableClass.variableName}Service.${tableClass.variableName}Add(saveModel);
         return null;
     }
 
@@ -70,25 +79,35 @@ public class ${tableClass.shortClassName}Biz {
         if (${tableClass.variableName} == null) {
             throw new BizException("不存在");
         }
-        ${tableClass.variableName}Service.${tableClass.variableName}Upd(request);
+        ${tableClass.shortClassName} updModel = new ${tableClass.shortClassName}();
+        BeanUtils.copyProperties(request, updModel);
+        ${tableClass.variableName}Service.${tableClass.variableName}Upd(updModel);
         return null;
     }
 
     public ${tableClass.shortClassName}InfoVo ${tableClass.variableName}Info(IdRequest request) {
+        if (request.getId() == null) {
+            throw new BizException("ID不能为空");
+        }
         ${tableClass.shortClassName} ${tableClass.variableName} = ${tableClass.variableName}Service.query${tableClass.shortClassName}ById(request.getId());
         if (${tableClass.variableName} == null) {
             throw new BizException("不存在");
         }
         ${tableClass.shortClassName}InfoVo infoVo = new ${tableClass.shortClassName}InfoVo();
+        BeanUtils.copyProperties(${tableClass.variableName}, infoVo);
+        infoVo.setId(${tableClass.variableName}.getId().toString());
         return infoVo;
     }
 
     public Void ${tableClass.variableName}Del(IdRequest request) {
-        ${tableClass.shortClassName} ${tableClass.variableName} = ${tableClass.variableName}Service.query${tableClass.shortClassName}ById(request.getId());
-        if (${tableClass.variableName} == null) {
-            throw new BizException("不存在");
+        if (CollectionUtil.isEmpty(request.getIds())) {
+            throw new BizException("IDS不能为空");
         }
-        ${tableClass.variableName}Service.${tableClass.variableName}Del(request);
+        // ${tableClass.shortClassName} ${tableClass.variableName} = ${tableClass.variableName}Service.query${tableClass.shortClassName}ById(request.getId());
+        // if (${tableClass.variableName} == null) {
+        //     throw new BizException("不存在");
+        // }
+        ${tableClass.variableName}Service.${tableClass.variableName}Del(request.getIds());
         return null;
     }
 

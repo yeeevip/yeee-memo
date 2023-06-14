@@ -8,7 +8,9 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 
 import java.beans.Introspector;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @since 3.4.5
@@ -24,6 +26,12 @@ public class TableColumnBuilder {
 
         FullyQualifiedTable fullyQualifiedTable = introspectedTable.getFullyQualifiedTable();
         tableClass.setTableName(fullyQualifiedTable.getIntrospectedTableName());
+
+        String tablePrefix = introspectedTable.getContext().getProperty("tablePrefix");
+        String[] arr = tableClass.getTableName().replaceFirst(StrUtil.isNotBlank(tablePrefix) ? tablePrefix : "", "").split("_");
+        tableClass.setSimpleTableName(StrUtil.toCamelCase(Arrays.stream(arr).skip(1).collect(Collectors.joining("_"))));
+
+        tableClass.setPagesPath(arr[0] + "/" + tableClass.getSimpleTableName());
 
         tableClass.setRemarks(StrUtil.emptyToDefault(introspectedTable.getRemarks(), "     "));
 

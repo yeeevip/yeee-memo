@@ -1,5 +1,14 @@
 package ${package};
 
+import io.swagger.annotations.ApiModelProperty;
+import java.util.Date;
+<#list tableClass.allFields as field>
+<#if field.shortTypeName == 'Date'>
+import com.fasterxml.jackson.annotation.JsonFormat;
+<#break>
+</#if>
+</#list>
+
 import lombok.Data;
 
 /**
@@ -7,4 +16,17 @@ import lombok.Data;
 */
 @Data
 public class ${tableClass.shortClassName}ListVo {
+
+<#list tableClass.allFields as field>
+    @ApiModelProperty("${field.remarks}")
+    <#if field.shortTypeName == 'Date'>
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    </#if>
+    <#if field.shortTypeName == 'Long'>
+    private String ${field.fieldName};
+    <#else>
+    private ${field.shortTypeName} ${field.fieldName};
+    </#if>
+
+</#list>
 }

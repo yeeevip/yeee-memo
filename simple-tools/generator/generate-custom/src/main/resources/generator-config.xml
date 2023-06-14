@@ -9,6 +9,7 @@
         <property name="javaFileEncoding" value="UTF-8"/>
         <property name="useMapperCommentGenerator" value="true"/>
         <property name="genType" value="${yeee.generator.genType}"/>
+        <property name="tablePrefix" value="${yeee.generator.table.prefix}"/>
         <property name="targetDir" value="${yeee.generator.module.targetDir}"/>
         <property name="basePackage" value="${yeee.generator.module.basePackage}"/>
 
@@ -95,6 +96,27 @@
             <property name="package" value="controller"/>
             <property name="templatePath" value="template/common/Controller.ftl"/>
             <property name="fileName" value="${tableClass.shortClassName}Controller.java"/>
+        </plugin>
+
+        <plugin type="vip.yeee.memo.integrate.custom.generate.core.TemplateFilePlugin">
+            <property name="package" value="pages/${tableClass.pagesPath}"/>
+            <property name="templatePath" value="template/pages/list.ftl"/>
+            <property name="fileName" value="${tableClass.simpleTableName}.vue"/>
+        </plugin>
+        <plugin type="vip.yeee.memo.integrate.custom.generate.core.TemplateFilePlugin">
+            <property name="package" value="pages/${tableClass.pagesPath}"/>
+            <property name="templatePath" value="template/pages/info.ftl"/>
+            <property name="fileName" value="${tableClass.simpleTableName}-info.vue"/>
+        </plugin>
+        <plugin type="vip.yeee.memo.integrate.custom.generate.core.TemplateFilePlugin">
+            <property name="package" value="pages/${tableClass.pagesPath}"/>
+            <property name="templatePath" value="template/pages/edit.ftl"/>
+            <property name="fileName" value="${tableClass.simpleTableName}-edit.vue"/>
+        </plugin>
+        <plugin type="vip.yeee.memo.integrate.custom.generate.core.TemplateFilePlugin">
+            <property name="package" value="pages/${tableClass.pagesPath}"/>
+            <property name="templatePath" value="template/pages/menu_sql.ftl"/>
+            <property name="fileName" value="${tableClass.simpleTableName}.sql"/>
         </plugin>
 
         <jdbcConnection driverClass="${yeee.generator.datasource.driverClassName}"
