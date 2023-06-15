@@ -106,28 +106,30 @@ public class OrderBiz {
         if (order == null) {
             throw new BizException("订单不存在");
         }
+        RefundOrder saveRefund = new RefundOrder();
+        saveRefund.setCode(SeqUtil.genOrderCode());
+
         UnifiedOrderRefundReqVO orderRefundReqVO = new UnifiedOrderRefundReqVO();
         orderRefundReqVO.setLesseeId(order.getLesseeId());
-        orderRefundReqVO.setRefundOrderId(order.getOutCode());
         orderRefundReqVO.setPayOrderCode(order.getCode());
+        orderRefundReqVO.setOutPayOrderId(order.getOutCode());
+        orderRefundReqVO.setRefundOrderCode(saveRefund.getCode());
         orderRefundReqVO.setAmount(order.getAmount().multiply(BigDecimal.valueOf(100)).longValue());
         orderRefundReqVO.setRefundAmount(orderRefundReqVO.getAmount());
         orderRefundReqVO.setPayway(order.getPayway());
         ChannelRetMsgBO retMsgBO = unifiedPayOrderService.unifiedOrderRefund(orderRefundReqVO);
-        RefundOrder saveRefund = new RefundOrder();
         int updPayState;
         if (ChannelRetMsgBO.ChannelState.CONFIRM_SUCCESS.equals(retMsgBO.getChannelState())) {
             saveRefund.setState(OrderEnum.RefundState.SUCCESS.getCode());
             updPayState = OrderEnum.PayState.REFUND.getCode();
-        } else if (ChannelRetMsgBO.ChannelState.WAITING.equals(retMsgBO.getChannelState())) {
-            saveRefund.setState(OrderEnum.RefundState.ING.getCode());
-            updPayState = OrderEnum.PayState.CANCEL.getCode();
-        } else {
+        } else if (ChannelRetMsgBO.ChannelState.CONFIRM_FAIL.equals(retMsgBO.getChannelState())) {
             saveRefund.setState(OrderEnum.RefundState.FAIL.getCode());
             updPayState = OrderEnum.PayState.REFUND_FAIL.getCode();
+        } else {
+            saveRefund.setState(OrderEnum.RefundState.ING.getCode());
+            updPayState = OrderEnum.PayState.CANCEL.getCode();
         }
         saveRefund.setLesseeId(order.getLesseeId());
-        saveRefund.setCode(SeqUtil.genOrderCode());
         saveRefund.setOutCode(retMsgBO.getChannelOrderId());
         saveRefund.setMchId(order.getMchId());
         saveRefund.setChannel(order.getChannel());
@@ -150,23 +152,24 @@ public class OrderBiz {
         }
         CheckPayStateResVO resVO = new CheckPayStateResVO();
         resVO.setPayState(order.getState());
-        OrderQueryReqBO reqBO = new OrderQueryReqBO();
-        reqBO.setLesseeId(order.getLesseeId());
-        reqBO.setOrderCode(order.getCode());
-        reqBO.setPayway(order.getPayway());
-        ChannelRetMsgBO retMsgBO = unifiedPayOrderService.queryOrder(reqBO);
+        UnifiedOrderQueryReqVO reqVO = new UnifiedOrderQueryReqVO();
+        reqVO.setLesseeId(order.getLesseeId());
+        reqVO.setOrderCode(order.getCode());
+        reqVO.setPayway(order.getPayway());
+        ChannelRetMsgBO retMsgBO = unifiedPayOrderService.queryOrder(reqVO);
         PayOrder orderUpd = new PayOrder();
         orderUpd.setId(order.getId());
         if (ChannelRetMsgBO.ChannelState.CONFIRM_SUCCESS.equals(retMsgBO.getChannelState())) {
             orderUpd.setState(OrderEnum.PayState.SUCCESS.getCode());
             orderUpd.setSuccessTime(LocalDateTime.now());
             payOrderMapper.updateById(orderUpd);
-            resVO.setPayState(orderUpd.getState());
         } else if (ChannelRetMsgBO.ChannelState.CONFIRM_FAIL.equals(retMsgBO.getChannelState())) {
             orderUpd.setState(OrderEnum.PayState.FAIL.getCode());
             payOrderMapper.updateById(orderUpd);
-            resVO.setPayState(orderUpd.getState());
+        } else {
+            orderUpd.setState(OrderEnum.PayState.ING.getCode());
         }
+        resVO.setPayState(orderUpd.getState());
         return resVO;
     }
 
@@ -212,24 +215,24 @@ public class OrderBiz {
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.READ_COMMITTED)
     public ResponseEntity<Object> handleRefundNotify(String ifCode, String lesseeId) {
         return unifiedPayOrderService.refundNoticeHandle(ifCode, lesseeId, p -> {
-            String orderCode = p.getKey();
+            String refundOrderCode = p.getKey();
             ChannelRetMsgBO retMsg = p.getValue();
 //            // 微信支付为保证回调通知触达有效性，会有保障策略，在第一次通知如果网络链路返回无法连接或者状态不明，微信支付会换一条链路进行通知。
-//            boolean canDo = checkRepeatKit.canRepeatRefundNotify(orderCode, 15);
+//            boolean canDo = checkRepeatKit.canRepeatRefundNotify(refundOrderCode, 15);
 //            if (!canDo) {
 //                throw new Exception("重复操作");
 //            }
-            LambdaQueryWrapper<PayOrder> wrapper = Wrappers.<PayOrder>lambdaQuery()
-                    .select(PayOrder::getId, PayOrder::getState)
-                    .eq(PayOrder::getCode, orderCode);
-            PayOrder order = payOrderMapper.selectOne(wrapper);
-            if (order == null) {
-                throw new BizException("订单不存在");
-            }
-            RefundOrder refundOrder = refundOrderMapper.queryRefundOrderByCode(orderCode);
+            LambdaQueryWrapper<RefundOrder> wrapper = Wrappers.<RefundOrder>lambdaQuery()
+                    .select(RefundOrder::getId, RefundOrder::getState)
+                    .eq(RefundOrder::getCode, refundOrderCode);
+            RefundOrder refundOrder = refundOrderMapper.selectOne(wrapper);
             if (refundOrder == null) {
                 throw new BizException("退款单不存在");
             }
+            LambdaQueryWrapper<PayOrder> payOrderWrapper = Wrappers.<PayOrder>lambdaQuery()
+                    .select(PayOrder::getId, PayOrder::getState)
+                    .eq(PayOrder::getCode, refundOrder.getOrderCode());
+            PayOrder order = payOrderMapper.selectOne(payOrderWrapper);
             // 验证订单状态
             if (!OrderEnum.PayState.CANCEL.getCode().equals(order.getState())) {
                 throw new BizException("订单状态有误");

@@ -46,9 +46,12 @@ public abstract class WxV3PayKit extends BaseWxV3PayKit implements PayKit {
     }
 
     protected WxPayUnifiedOrderV3Request buildUnifiedOrderRequest(UnifiedOrderReqBO reqBO) {
+        PayContext payContext = PayContext.getContext();
+        WxPayConfigBO wxPayConfig = payContext.getWxPayConfig();
         // 微信统一下单请求对象
         WxpayUnifiedOrderReqBO wxReqBO = (WxpayUnifiedOrderReqBO)reqBO;
         WxPayUnifiedOrderV3Request request = new WxPayUnifiedOrderV3Request();
+        request.setMchid(wxPayConfig.getMchId());
         request.setOutTradeNo(wxReqBO.getOrderCode());
         request.setDescription(wxReqBO.getOrderDesc());
         //构建金额信息

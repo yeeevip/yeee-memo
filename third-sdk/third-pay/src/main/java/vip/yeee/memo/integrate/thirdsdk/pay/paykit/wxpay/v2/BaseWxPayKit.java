@@ -88,7 +88,8 @@ public abstract class BaseWxPayKit implements PayKit {
         try {
             WxPayRefundRequest req = new WxPayRefundRequest();
             req.setOutTradeNo(reqBO.getPayOrderCode());    // 商户订单号
-            req.setOutRefundNo(reqBO.getRefundOrderId()); // 退款单号
+//            req.setTransactionId(reqBO.getOutPayOrderId());
+            req.setOutRefundNo(reqBO.getRefundOrderCode()); // 退款单号
             req.setTotalFee(reqBO.getAmount().intValue());   // 订单总金额
             req.setRefundFee(reqBO.getRefundAmount().intValue()); // 退款金额
             req.setNotifyUrl(getRefundNotifyUrl());   // 回调url
@@ -154,14 +155,14 @@ public abstract class BaseWxPayKit implements PayKit {
         String xmlResult = IOUtils.toString(request.getInputStream(), request.getCharacterEncoding());
         WxPayRefundNotifyResult result = WxPayRefundNotifyResult.fromXML(xmlResult, payContext.getWxPayConfig().getMchKey());
         WxPayRefundNotifyResult.ReqInfo reqInfo = result.getReqInfo();
-        String orderCode = reqInfo.getOutTradeNo();
-        log.info("解析数据为：orderCode = {}, params = {}", orderCode, result);
+        String orderCode = reqInfo.getOutRefundNo();
+        log.info("解析数据为：refundOrderCode = {}, params = {}", orderCode, result);
         reqInfo.getRefundStatus();
         // 验签
         result.checkResult(payContext.getWxPayService(), WxPayConstants.SignType.MD5, true);
         ChannelRetMsgBO channelResult = new ChannelRetMsgBO();
         channelResult.setChannelState(ChannelRetMsgBO.ChannelState.WAITING); // 默认支付中
-        channelResult.setChannelOrderId(reqInfo.getTransactionId()); //渠道订单号
+        channelResult.setChannelOrderId(reqInfo.getRefundId()); //渠道订单号
         channelResult.setChannelState(ChannelRetMsgBO.ChannelState.CONFIRM_SUCCESS);
         channelResult.setResponseEntity(PayKit.getWxV2SuccessResp("OK"));
         return Pair.of(orderCode, channelResult);

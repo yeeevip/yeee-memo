@@ -62,7 +62,7 @@ public class OrderBizController {
     /**
      * 三方支付回调处理
      */
-    @PostMapping({"/api/pay/notify/{ifCode}/{lesseeId}"})
+    @PostMapping({"/api/notify/pay/{ifCode}/{lesseeId}"})
     public ResponseEntity<Object> handlePayNotify(@PathVariable("ifCode") String ifCode, @PathVariable("lesseeId") String lesseeId) {
         return orderBiz.handlePayNotify(ifCode, lesseeId);
     }
@@ -70,7 +70,7 @@ public class OrderBizController {
     /**
      * 三方退款回调处理
      */
-    @PostMapping({"/api/refund/notify/{ifCode}/{lesseeId}"})
+    @PostMapping({"/api/notify/refund/{ifCode}/{lesseeId}"})
     public ResponseEntity<Object> handleRefundNotify(@PathVariable("ifCode") String ifCode, @PathVariable("lesseeId") String lesseeId) {
         return orderBiz.handleRefundNotify(ifCode, lesseeId);
     }

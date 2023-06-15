@@ -36,6 +36,7 @@ public class WxWpV3PayKit extends WxV3PayKit {
             WxPayConfigBO wxPayConfig = payContext.getWxPayConfig();
             WxPayUnifiedOrderV3Result response;
             WxPayUnifiedOrderV3Request request = super.buildUnifiedOrderRequest(reqBO);
+            request.setAppid(wxPayConfig.getAppId());
             WxPayUnifiedOrderV3Request.Payer payer = new WxPayUnifiedOrderV3Request.Payer();
             payer.setOpenid(reqBO.getOpenid());
             request.setPayer(payer);

@@ -60,9 +60,7 @@ public abstract class WxPartnerV3PayKit extends BaseWxV3PayKit implements PayKit
         WxpayUnifiedOrderReqBO wxReqBO = (WxpayUnifiedOrderReqBO)reqBO;
         WxPayUnifiedOrderV3PartnerRequest request = new WxPayUnifiedOrderV3PartnerRequest();
         request.setSpMchId(wxPayConfig.getMchId());
-        request.setSpAppid(wxPayConfig.getAppId());
         request.setSubMchId(wxPayConfig.getSubMchId());
-        request.setSubAppId(wxPayConfig.getSubAppId());
         request.setNotifyUrl(getPayNotifyUrl());
         request.setOutTradeNo(wxReqBO.getOrderCode());
         request.setDescription(wxReqBO.getOrderDesc());

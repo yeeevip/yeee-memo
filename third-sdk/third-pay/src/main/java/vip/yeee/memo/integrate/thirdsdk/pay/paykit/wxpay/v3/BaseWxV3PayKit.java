@@ -46,7 +46,8 @@ public abstract class BaseWxV3PayKit implements PayKit {
             WxPayRefundV3Request req = new WxPayRefundV3Request();
             req.setSubMchid(StrUtil.emptyToDefault(wxPayConfig.getSubMchId(), wxPayConfig.getMchId()));
             req.setOutTradeNo(reqBO.getPayOrderCode());    // 商户订单号
-            req.setOutRefundNo(reqBO.getRefundOrderId()); // 退款单号
+//            req.setTransactionId(reqBO.getOutPayOrderId());
+            req.setOutRefundNo(reqBO.getRefundOrderCode()); // 退款单号
             req.setNotifyUrl(getRefundNotifyUrl());   // 回调url
             WxPayRefundV3Request.Amount amount = new WxPayRefundV3Request.Amount();
             amount.setTotal(reqBO.getAmount().intValue());   // 订单总金额
@@ -147,6 +148,7 @@ public abstract class BaseWxV3PayKit implements PayKit {
                 || "PAYERROR".equals(channelState)){  //CLOSED—已关闭， REVOKED—已撤销, PAYERROR--支付失败
             channelResult.setChannelState(ChannelRetMsgBO.ChannelState.CONFIRM_FAIL); //支付失败
         }
+        channelResult.setChannelId(result.getMchid());
         channelResult.setChannelOrderId(result.getTransactionId()); //渠道订单号
         WxPayOrderNotifyV3Result.Payer payer = result.getPayer();
         if (payer != null) {
@@ -175,7 +177,7 @@ public abstract class BaseWxV3PayKit implements PayKit {
         WxPayService wxPayService = PayContext.getContext().getWxPayService();
 
         WxPayRefundNotifyV3Result.DecryptNotifyResult result = wxPayService.parseRefundNotifyV3Result(params, header).getResult();
-        log.info("解析数据为：orderCode = {}, params = {}", result.getOutTradeNo(), result);
+        log.info("解析数据为：refundOrderCode = {}, params = {}", result.getOutRefundNo(), result);
 
         ChannelRetMsgBO channelResult = new ChannelRetMsgBO();
         channelResult.setChannelState(ChannelRetMsgBO.ChannelState.WAITING); // 默认支付中
@@ -188,10 +190,10 @@ public abstract class BaseWxV3PayKit implements PayKit {
                 || "PAYERROR".equals(channelState)){  //CLOSED—已关闭， REVOKED—已撤销, PAYERROR--支付失败
             channelResult.setChannelState(ChannelRetMsgBO.ChannelState.CONFIRM_FAIL); //支付失败
         }
-        channelResult.setChannelOrderId(result.getTransactionId());
+        channelResult.setChannelOrderId(result.getRefundId());
         channelResult.setResponseEntity(PayKit.getWxV3SuccessResp("SUCCESS")); //响应数据
 
-        return Pair.of(result.getOutTradeNo(), channelResult);
+        return Pair.of(result.getOutRefundNo(), channelResult);
     }
 
     protected String getPayNotifyUrl() {

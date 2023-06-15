@@ -26,9 +26,7 @@ import vip.yeee.memo.integrate.base.web.utils.SpringContextUtils;
 import vip.yeee.memo.integrate.thirdsdk.pay.constant.PayConstant;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.AliPayConfigBO;
 import vip.yeee.memo.integrate.thirdsdk.pay.model.bo.WxPayConfigBO;
-import vip.yeee.memo.integrate.thirdsdk.pay.properties.AliPayConfig;
 import vip.yeee.memo.integrate.thirdsdk.pay.properties.PayProperties;
-import vip.yeee.memo.integrate.thirdsdk.pay.properties.WxPayConfig;
 import vip.yeee.memo.integrate.thirdsdk.pay.service.PayChannelConfigService;
 
 import javax.crypto.Cipher;
@@ -36,7 +34,6 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.ByteArrayInputStream;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.security.InvalidAlgorithmParameterException;
@@ -76,13 +73,16 @@ public class PayContext {
     public static void setContext(String lesseeId) {
         try {
             PayContext payContext = PAY_CONTEXT_MAP.get(lesseeId);
-            if (payContext == null) {
+            PayChannelConfigService channelConfigService = (PayChannelConfigService) SpringContextUtils.getBean(PayChannelConfigService.class);
+            boolean refresh = channelConfigService.checkApiConfigNeedRefresh(lesseeId);
+            if (payContext == null || refresh) {
                 PayProperties payProperties = (PayProperties) SpringContextUtils.getBean(PayProperties.class);
-                PayChannelConfigService channelConfigService = (PayChannelConfigService) SpringContextUtils.getBean(PayChannelConfigService.class);
                 WxPayConfigBO wxPayConfigBO = channelConfigService.getWxPayChannelConfig(lesseeId);
                 WxPayService wxPayService = null;
                 if (wxPayConfigBO != null) {
-                    BeanUtils.copyProperties(payProperties.getWx(), wxPayConfigBO);
+                    if (payProperties.getWx() != null) {
+                        BeanUtils.copyProperties(payProperties.getWx(), wxPayConfigBO);
+                    }
                     wxPayService = new WxPayServiceImpl();
                     com.github.binarywang.wxpay.config.WxPayConfig wxPayConfig = new com.github.binarywang.wxpay.config.WxPayConfig();
                     BeanUtils.copyProperties(wxPayConfigBO, wxPayConfig);
@@ -99,7 +99,9 @@ public class PayContext {
                 AliPayConfigBO aliPayConfigBO = channelConfigService.getAliPayChannelConfig(lesseeId);
                 AlipayClient alipayClient = null;
                 if (aliPayConfigBO != null) {
-                    BeanUtils.copyProperties(payProperties.getAli(), aliPayConfigBO);
+                    if (payProperties.getAli() != null) {
+                        BeanUtils.copyProperties(payProperties.getAli(), aliPayConfigBO);
+                    }
                     CertAlipayRequest certAlipayRequest = new CertAlipayRequest();
                     certAlipayRequest.setServerUrl(aliPayConfigBO.getGatewayUrl());
                     certAlipayRequest.setAppId(aliPayConfigBO.getAppId());

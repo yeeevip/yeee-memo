@@ -32,7 +32,7 @@ public class UnifiedOrderRespBO {
     /** 渠道返回错误信息 **/
     private String errMsg;
 
-    /** 上游渠道返回数据包 (无需JSON序列化) **/
+    /** 是否JSON序列化：根据情况选择 **/
     @JSONField(serialize = false)
     private ChannelRetMsgBO channelRetMsg;
 }

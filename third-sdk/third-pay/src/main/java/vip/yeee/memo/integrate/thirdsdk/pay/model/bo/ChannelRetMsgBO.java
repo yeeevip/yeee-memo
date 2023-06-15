@@ -14,6 +14,8 @@ public class ChannelRetMsgBO implements Serializable {
     /** 上游渠道返回状态 **/
     private ChannelState channelState;
 
+    private String channelId;
+
     /** 渠道订单号 **/
     private String channelOrderId;
 

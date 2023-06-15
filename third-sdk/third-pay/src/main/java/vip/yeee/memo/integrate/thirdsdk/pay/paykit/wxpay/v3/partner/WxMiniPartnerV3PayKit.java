@@ -37,9 +37,9 @@ public class WxMiniPartnerV3PayKit extends WxPartnerV3PayKit {
             WxPayUnifiedOrderV3Result response;
             WxPayUnifiedOrderV3PartnerRequest request = super.buildPartnerUnifiedOrderRequest(reqBO);
             request.setSpAppid(wxPayConfig.getMiniAppId());
-            request.setSubAppId(StrUtil.emptyToDefault(reqBO.getAppId(), wxPayConfig.getSubMiniAppId()));
+            request.setSubAppId(wxPayConfig.getSubMiniAppId());
             WxPayUnifiedOrderV3PartnerRequest.Payer payer = new WxPayUnifiedOrderV3PartnerRequest.Payer();
-            if (StrUtil.isNotBlank(wxPayConfig.getSubMiniAppId())) {
+            if (StrUtil.isNotBlank(request.getSubAppId())) {
                 payer.setSubOpenid(reqBO.getOpenid());
             } else {
                 payer.setSpOpenid(reqBO.getOpenid());
@@ -51,7 +51,7 @@ public class WxMiniPartnerV3PayKit extends WxPartnerV3PayKit {
             WxJsapiUnifiedOrderRespBO respBO = new WxJsapiUnifiedOrderRespBO();
             ChannelRetMsgBO retMsgBO = new ChannelRetMsgBO();
             respBO.setChannelRetMsg(retMsgBO);
-            respBO.setMchId(wxPayConfig.getMchId());
+            respBO.setMchId(wxPayConfig.getSubMchId());
             Object payInfo = response.getPayInfo(TradeTypeEnum.JSAPI, wxPayConfig.getAppId(), wxPayConfig.getMchId(), wxPayService.getConfig().getPrivateKey());
             respBO.setPayInfo(JSON.toJSONString(payInfo));
             retMsgBO.setChannelAttach(respBO.getPayInfo());

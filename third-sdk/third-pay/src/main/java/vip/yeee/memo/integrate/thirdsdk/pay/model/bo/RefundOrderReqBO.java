@@ -2,6 +2,8 @@ package vip.yeee.memo.integrate.thirdsdk.pay.model.bo;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * description......
  *
@@ -14,11 +16,15 @@ public class RefundOrderReqBO {
     /**
      * 退款订单号（支付系统生成订单号）
      */
-    private String refundOrderId;
+    @NotBlank
+    private String outPayOrderId;
 
     /**
-     * 支付订单号（与t_pay_order对应）
+     * 支付订单号（与t_refund_order对应）
      */
+    @NotBlank
+    private String refundOrderCode;
+
     private String payOrderCode;
 
     private Long amount;
