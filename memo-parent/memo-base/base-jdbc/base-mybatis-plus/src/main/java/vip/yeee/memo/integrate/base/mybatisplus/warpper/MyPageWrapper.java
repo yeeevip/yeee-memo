@@ -2,6 +2,7 @@ package vip.yeee.memo.integrate.base.mybatisplus.warpper;
 
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
@@ -49,6 +50,10 @@ public class MyPageWrapper<T> {
         whereHandle(wrapper, queryClause.getW());
         orderHandle(wrapper, queryClause.getO());
         return wrapper;
+    }
+
+    public LambdaQueryWrapper<T> getLambdaQueryWrapper() {
+        return getQueryWrapper().lambda();
     }
     
     private void orderHandle(QueryWrapper<T> wrapper, List<OrderClause> orderList) {
