@@ -24,6 +24,7 @@
         <module>common-websocket</module>
         <module>common-wxsdk</module>
         <module>common-oss</module>
+        <module>common-dingtalk</module>
     </modules>
 
 </project>

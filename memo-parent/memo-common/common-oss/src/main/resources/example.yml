@@ -1,0 +1,8 @@
+
+yeee:
+  oss:
+    ali:
+      access-key: XXXXXXXXXXXXXXXX
+      secret-key: XXXXXXXXXXXXXXXX
+      endpoint: https://oss-cn-hangzhou.aliyuncs.com
+      default-bucket: www-yeee-vip

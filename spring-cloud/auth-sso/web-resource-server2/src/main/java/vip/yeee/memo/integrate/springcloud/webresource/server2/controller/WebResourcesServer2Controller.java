@@ -4,8 +4,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import vip.yeee.memo.integrate.base.model.annotation.AnonymousAccess;
 import vip.yeee.memo.integrate.base.model.rest.CommonResult;
-import vip.yeee.memo.integrate.base.websecurityoauth2.annotation.AnonymousAccess;
 import vip.yeee.memo.integrate.springcloud.webresource.server2.biz.WebResourcesServer2Biz;
 
 import javax.annotation.Resource;

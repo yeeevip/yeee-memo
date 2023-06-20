@@ -55,8 +55,9 @@ public class DelayQueueKit {
 
     // while内不可【return或者break】，用【continue】，否则就直接中断了不会循环阻塞获取元素
     public <T> void consumeQueueMsg(String queueCode, Consumer<T> handler) {
+        RBlockingDeque<T> delayQueue = this.getDelayQueue(queueCode);
+        log.info("【队列-{}】- 监听队列成功", queueCode);
         while (true) {
-            RBlockingDeque<T> delayQueue = this.getDelayQueue(queueCode);
             T ele = null;
             try {
                 ele = delayQueue.take();
