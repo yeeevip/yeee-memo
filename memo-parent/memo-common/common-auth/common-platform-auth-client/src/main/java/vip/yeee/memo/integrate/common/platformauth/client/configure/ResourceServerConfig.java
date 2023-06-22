@@ -66,6 +66,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @PostConstruct
     public void init() {
+        anonymousUrls.addAll(Arrays.asList(AuthConstant.BASE_EXCLUDE_PATTERNS));
         anonymousUrls.addAll(authClientProperties.getExclude());
         Map<RequestMappingInfo, HandlerMethod> handlerMethods = applicationContext.getBean(RequestMappingHandlerMapping.class).getHandlerMethods();
         handlerMethods.forEach((k, v) -> {

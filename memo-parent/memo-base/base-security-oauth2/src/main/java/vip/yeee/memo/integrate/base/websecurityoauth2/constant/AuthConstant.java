@@ -55,4 +55,22 @@ public class AuthConstant {
 
     public static final String ROLE_PREFIX = "ROLE_";
 
+    public final static String[] BASE_EXCLUDE_PATTERNS = new String[] {
+            "/"
+            , "/doc.html"
+            , "/swagger-resources/**"
+            , "/swagger/**"
+            , "/**/v2/api-docs"
+            , "/**/*.js"
+            , "/**/*.css"
+            , "/**/*.png"
+            , "/**/*.jpg"
+            , "/**/*.ico"
+            , "/**/*.html",
+            "/webjars/springfox-swagger-ui/**"
+            , "/actuator/**"
+            , "/error"
+            , "/inner/**"
+    };
+
 }

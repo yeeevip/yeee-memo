@@ -2,12 +2,14 @@ package vip.yeee.memo.integrate.base.websecurityoauth2.configure;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import vip.yeee.memo.integrate.base.websecurityoauth2.constant.AuthConstant;
 
 /**
  * SpringSecurity配置类
@@ -15,28 +17,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @author yeeee
  * @since 2022/4/28 16:14
  */
+//@Order(Integer.MIN_VALUE)
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 public class WebSecurityOauthConfig extends WebSecurityConfigurerAdapter {
-
-    private final static String[] EXCLUDE_PATTERNS = new String[] {
-            "/"
-            , "/doc.html"
-            , "/swagger-resources/**"
-            , "/swagger/**"
-            , "/**/v2/api-docs"
-            , "/**/*.js"
-            , "/**/*.css"
-            , "/**/*.png"
-            , "/**/*.jpg"
-            , "/**/*.ico"
-            , "/**/*.html",
-            "/webjars/springfox-swagger-ui/**"
-            , "/actuator/**"
-            , "/error"
-            , "/inner/**"
-    };
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -48,7 +33,7 @@ public class WebSecurityOauthConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
             http.csrf().disable()
                     .authorizeRequests()
-                    .antMatchers(EXCLUDE_PATTERNS)
+                    .antMatchers(AuthConstant.BASE_EXCLUDE_PATTERNS)
                     .permitAll()
                     .anyRequest()
                     .authenticated()
