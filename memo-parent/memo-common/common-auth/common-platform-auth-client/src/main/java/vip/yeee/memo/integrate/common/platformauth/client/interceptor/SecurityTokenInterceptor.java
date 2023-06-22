@@ -45,6 +45,9 @@ public class SecurityTokenInterceptor implements HandlerInterceptor {
 //            JacksonUtils.toJavaBean(subject, SecurityUser.class)
         SecurityContext.curToken.set(StrUtil.replace(request.getHeader(AuthConstant.JWT_TOKEN_HEADER), AuthConstant.JWT_TOKEN_PREFIX, ""));
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            return true;
+        }
         Object principal = authentication.getPrincipal();
         if (principal instanceof String) {
             return true;
