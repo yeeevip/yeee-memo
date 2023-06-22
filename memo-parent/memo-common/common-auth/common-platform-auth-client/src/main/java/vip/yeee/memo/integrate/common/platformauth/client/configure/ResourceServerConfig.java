@@ -24,11 +24,14 @@ import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import vip.yeee.memo.integrate.base.model.annotation.AnonymousAccess;
 import vip.yeee.memo.integrate.base.util.LogUtils;
 import vip.yeee.memo.integrate.base.websecurityoauth2.constant.AuthConstant;
+import vip.yeee.memo.integrate.common.platformauth.client.interceptor.SecurityTokenInterceptor;
 import vip.yeee.memo.integrate.common.platformauth.client.properties.AuthClientProperties;
 import vip.yeee.memo.integrate.common.platformauth.client.handle.AccessDeniedHandler;
 import vip.yeee.memo.integrate.common.platformauth.client.handle.AuthenticationEntryPointHandler;
@@ -53,7 +56,7 @@ import java.util.stream.Collectors;
  */
 @Configuration
 @EnableResourceServer
-public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+public class ResourceServerConfig extends ResourceServerConfigurerAdapter implements WebMvcConfigurer {
 
     private final static Logger log = LogUtils.commonAuthLog();
     @Resource
@@ -186,6 +189,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
             }
             filterChain.doFilter(request, response);
         }
+    }
+
+    @Resource
+    private SecurityTokenInterceptor securityTokenInterceptor;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(securityTokenInterceptor).excludePathPatterns(new ArrayList<>(anonymousUrls));
     }
 
 }
