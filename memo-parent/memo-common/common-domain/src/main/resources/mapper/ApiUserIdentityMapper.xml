@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="vip.yeee.memo.integrate.common.domain.mapper.api.ApiUserIdentityMapper">
+<mapper namespace="vip.yeee.memo.common.domain.mapper.api.ApiUserIdentityMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="vip.yeee.memo.integrate.common.domain.entity.api.ApiUserIdentity">
+    <resultMap id="BaseResultMap" type="vip.yeee.memo.common.domain.entity.api.ApiUserIdentity">
         <id column="id" property="id" />
         <result column="user_type" property="userType" />
         <result column="app_type" property="appType" />

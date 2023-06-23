@@ -13,7 +13,7 @@
         <property name="targetDir" value="${yeee.generator.module.targetDir}"/>
         <property name="basePackage" value="${yeee.generator.module.basePackage}"/>
 
-        <plugin type="vip.yeee.memo.integrate.custom.generate.core.MapperPlugin">
+        <plugin type="vip.yeee.memo.demo.custom.generate.core.MapperPlugin">
             <property name="caseSensitive" value="false"/>
             <property name="forceAnnotation" value="false"/>
             <property name="generateColumnConsts" value="false"/>
@@ -32,88 +32,88 @@
         <!--通用代码生成器插件-->
 
         <!--****Mapper.xml-->
-        <plugin type="vip.yeee.memo.integrate.custom.generate.core.TemplateFilePlugin">
+        <plugin type="vip.yeee.memo.demo.custom.generate.core.TemplateFilePlugin">
             <property name="package" value="domain.mapper"/>
             <property name="templatePath" value="template/common/MapperXml.ftl"/>
             <property name="fileName" value="${tableClass.shortClassName}Mapper.xml"/>
         </plugin>
         <!--****Mapper.java-->
-        <plugin type="vip.yeee.memo.integrate.custom.generate.core.TemplateFilePlugin">
+        <plugin type="vip.yeee.memo.demo.custom.generate.core.TemplateFilePlugin">
             <property name="package" value="domain.mapper"/>
             <property name="templatePath" value="template/${yeee.generator.genType}/Mapper.ftl"/>
             <property name="fileName" value="${tableClass.shortClassName}Mapper.java"/>
         </plugin>
         <!--****Service.java-->
-        <plugin type="vip.yeee.memo.integrate.custom.generate.core.TemplateFilePlugin">
+        <plugin type="vip.yeee.memo.demo.custom.generate.core.TemplateFilePlugin">
             <property name="package" value="service"/>
             <property name="templatePath" value="template/${yeee.generator.genType}/Service.ftl"/>
             <property name="fileName" value="${tableClass.shortClassName}Service.java"/>
         </plugin>
         <!--****InfoVo.java-->
-        <plugin type="vip.yeee.memo.integrate.custom.generate.core.TemplateFilePlugin">
+        <plugin type="vip.yeee.memo.demo.custom.generate.core.TemplateFilePlugin">
             <property name="package" value="model.vo"/>
             <property name="templatePath" value="template/common/model/InfoVo.ftl"/>
             <property name="fileName" value="${tableClass.shortClassName}InfoVo.java"/>
         </plugin>
         <!--****ListVo.java-->
-        <plugin type="vip.yeee.memo.integrate.custom.generate.core.TemplateFilePlugin">
+        <plugin type="vip.yeee.memo.demo.custom.generate.core.TemplateFilePlugin">
             <property name="package" value="model.vo"/>
             <property name="templatePath" value="template/common/model/ListVo.ftl"/>
             <property name="fileName" value="${tableClass.shortClassName}ListVo.java"/>
         </plugin>
         <!--****IdRequest.java-->
-        <plugin type="vip.yeee.memo.integrate.custom.generate.core.TemplateFilePlugin">
+        <plugin type="vip.yeee.memo.demo.custom.generate.core.TemplateFilePlugin">
             <property name="package" value="model.request"/>
             <property name="templatePath" value="template/common/model/IdRequest.ftl"/>
             <property name="fileName" value="IdRequest.java"/>
         </plugin>
         <!--****AddRequest.java-->
-        <plugin type="vip.yeee.memo.integrate.custom.generate.core.TemplateFilePlugin">
+        <plugin type="vip.yeee.memo.demo.custom.generate.core.TemplateFilePlugin">
             <property name="package" value="model.request"/>
             <property name="templatePath" value="template/common/model/AddRequest.ftl"/>
             <property name="fileName" value="${tableClass.shortClassName}AddRequest.java"/>
         </plugin>
         <!--****ListRequest.java-->
-        <plugin type="vip.yeee.memo.integrate.custom.generate.core.TemplateFilePlugin">
+        <plugin type="vip.yeee.memo.demo.custom.generate.core.TemplateFilePlugin">
             <property name="package" value="model.request"/>
             <property name="templatePath" value="template/common/model/ListRequest.ftl"/>
             <property name="fileName" value="${tableClass.shortClassName}ListRequest.java"/>
         </plugin>
         <!--****UpdRequest.java-->
-        <plugin type="vip.yeee.memo.integrate.custom.generate.core.TemplateFilePlugin">
+        <plugin type="vip.yeee.memo.demo.custom.generate.core.TemplateFilePlugin">
             <property name="package" value="model.request"/>
             <property name="templatePath" value="template/common/model/UpdRequest.ftl"/>
             <property name="fileName" value="${tableClass.shortClassName}UpdRequest.java"/>
         </plugin>
         <!--****Biz.java-->
-        <plugin type="vip.yeee.memo.integrate.custom.generate.core.TemplateFilePlugin">
+        <plugin type="vip.yeee.memo.demo.custom.generate.core.TemplateFilePlugin">
             <property name="package" value="biz"/>
             <property name="templatePath" value="template/common/Biz.ftl"/>
             <property name="fileName" value="${tableClass.shortClassName}Biz.java"/>
         </plugin>
         <!--****Controller.java-->
-        <plugin type="vip.yeee.memo.integrate.custom.generate.core.TemplateFilePlugin">
+        <plugin type="vip.yeee.memo.demo.custom.generate.core.TemplateFilePlugin">
             <property name="package" value="controller"/>
             <property name="templatePath" value="template/common/Controller.ftl"/>
             <property name="fileName" value="${tableClass.shortClassName}Controller.java"/>
         </plugin>
 
-        <plugin type="vip.yeee.memo.integrate.custom.generate.core.TemplateFilePlugin">
+        <plugin type="vip.yeee.memo.demo.custom.generate.core.TemplateFilePlugin">
             <property name="package" value="pages/${tableClass.pagesPath}"/>
             <property name="templatePath" value="template/pages/list.ftl"/>
             <property name="fileName" value="${tableClass.simpleTableName}.vue"/>
         </plugin>
-        <plugin type="vip.yeee.memo.integrate.custom.generate.core.TemplateFilePlugin">
+        <plugin type="vip.yeee.memo.demo.custom.generate.core.TemplateFilePlugin">
             <property name="package" value="pages/${tableClass.pagesPath}"/>
             <property name="templatePath" value="template/pages/info.ftl"/>
             <property name="fileName" value="${tableClass.simpleTableName}-info.vue"/>
         </plugin>
-        <plugin type="vip.yeee.memo.integrate.custom.generate.core.TemplateFilePlugin">
+        <plugin type="vip.yeee.memo.demo.custom.generate.core.TemplateFilePlugin">
             <property name="package" value="pages/${tableClass.pagesPath}"/>
             <property name="templatePath" value="template/pages/edit.ftl"/>
             <property name="fileName" value="${tableClass.simpleTableName}-edit.vue"/>
         </plugin>
-        <plugin type="vip.yeee.memo.integrate.custom.generate.core.TemplateFilePlugin">
+        <plugin type="vip.yeee.memo.demo.custom.generate.core.TemplateFilePlugin">
             <property name="package" value="pages/${tableClass.pagesPath}"/>
             <property name="templatePath" value="template/pages/menu_sql.ftl"/>
             <property name="fileName" value="${tableClass.simpleTableName}.sql"/>

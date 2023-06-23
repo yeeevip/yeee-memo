@@ -14,17 +14,17 @@
 		http://www.springframework.org/schema/tx/spring-tx-4.2.xsd ">
 
     <bean id="myBeanFactoryPostProcessor1"
-          class="vip.yeee.memo.integrate.learn.spring.postprocessor.MyBeanFactoryPostProcessor1"/>
+          class="vip.yeee.memo.demo.spring.postprocessor.MyBeanFactoryPostProcessor1"/>
 
     <bean id="myBeanPostProcessor1"
-          class="vip.yeee.memo.integrate.learn.spring.postprocessor.MyBeanPostProcessor1"/>
+          class="vip.yeee.memo.demo.spring.postprocessor.MyBeanPostProcessor1"/>
 
     <bean id="testBean"
-          class="vip.yeee.memo.integrate.learn.spring.postprocessor.TestBean">
+          class="vip.yeee.memo.demo.spring.postprocessor.TestBean">
         <property name="testBean1" ref="testBean1"/>
         <property name="testBean2" ref="testBean2"/>
     </bean>
-    <bean id="testBean1" class="vip.yeee.memo.integrate.learn.spring.postprocessor.TestBean1"/>
-    <bean id="testBean2" class="vip.yeee.memo.integrate.learn.spring.postprocessor.TestBean2"/>
+    <bean id="testBean1" class="vip.yeee.memo.demo.spring.postprocessor.TestBean1"/>
+    <bean id="testBean2" class="vip.yeee.memo.demo.spring.postprocessor.TestBean2"/>
 
 </beans>

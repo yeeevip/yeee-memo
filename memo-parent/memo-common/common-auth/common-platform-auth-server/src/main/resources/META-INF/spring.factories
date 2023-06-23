@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  vip.yeee.memo.integrate.common.platformauth.server.PlatformAuthServerAutoConfigure
+  vip.yeee.memo.common.platformauth.server.PlatformAuthServerAutoConfigure

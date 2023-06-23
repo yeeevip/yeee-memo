@@ -8,7 +8,7 @@ import ${basePackage}.model.request.${tableClass.shortClassName}UpdRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import vip.yeee.memo.integrate.base.tkmapper.service.BaseService;
+import vip.yeee.memo.base.tkmapper.service.BaseService;
 import com.github.pagehelper.PageInfo;
 import tk.mybatis.mapper.entity.Example;
 

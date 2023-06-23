@@ -47,7 +47,7 @@
                             </includes>
                             <archive>
                                 <manifestEntries>
-                                    <Main-Class>vip.yeee.memo.integrate.blockchain.hyperchain.contract.NFTPropertyContract</Main-Class>
+                                    <Main-Class>vip.yeee.memo.demo.blockchain.hyperchain.contract.NFTPropertyContract</Main-Class>
                                 </manifestEntries>
                             </archive>
                         </configuration>

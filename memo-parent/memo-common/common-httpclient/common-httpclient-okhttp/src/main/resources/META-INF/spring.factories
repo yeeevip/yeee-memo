@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  vip.yeee.memo.integrate.common.httpclient.okhttp.CommonOkhttpClientAutoConfigure
+  vip.yeee.memo.common.httpclient.okhttp.CommonOkhttpClientAutoConfigure

@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  vip.yeee.memo.integrate.base.tkmapper.TkMapperAutoConfigure
+  vip.yeee.memo.base.tkmapper.TkMapperAutoConfigure

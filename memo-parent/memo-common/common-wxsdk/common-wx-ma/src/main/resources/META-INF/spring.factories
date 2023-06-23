@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  vip.yeee.memo.integrate.common.wxsdk.ma.WeiXinMaAutoConfigure
+  vip.yeee.memo.common.wxsdk.ma.WeiXinMaAutoConfigure

@@ -4,13 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>vip.yeee.memo</groupId>
-	<artifactId>java-integrate</artifactId>
+	<artifactId>yeee-memo</artifactId>
 	<version>3.2.2-SNAPSHOT</version>
-	<name>java-integrate</name>
-	<description>The project for the study java and record</description>
 	<packaging>pom</packaging>
 
 	<modules>
+		<!-- java通用脚手架 -->
 		<module>memo-parent</module>
 		<!-- 常用解决方案 -->
 		<module>solution-problem</module>

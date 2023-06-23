@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  vip.yeee.memo.integrate.common.scloud.gray.inner.CommonSpringCloudGrayInnerAutoConfigure
+  vip.yeee.memo.common.scloud.gray.inner.CommonSpringCloudGrayInnerAutoConfigure

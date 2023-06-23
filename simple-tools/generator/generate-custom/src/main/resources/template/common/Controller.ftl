@@ -11,8 +11,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import vip.yeee.memo.integrate.base.model.rest.CommonResult;
-import vip.yeee.memo.integrate.base.model.vo.PageVO;
+import vip.yeee.memo.base.model.rest.CommonResult;
+import vip.yeee.memo.base.model.vo.PageVO;
 
 import javax.annotation.Resource;
 import java.util.List;

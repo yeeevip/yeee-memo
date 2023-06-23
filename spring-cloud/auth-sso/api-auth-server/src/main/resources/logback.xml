@@ -5,7 +5,7 @@
     <!-- 日志输出格式 -->
     <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n" />
     <!--脱敏处理 -->
-    <conversionRule conversionWord="msg" converterClass="vip.yeee.memo.integrate.base.util.LogMessageConverter" />
+    <conversionRule conversionWord="msg" converterClass="vip.yeee.memo.base.util.LogMessageConverter" />
     <!-- 彩色日志格式 -->
     <property name="CONSOLE_LOG_PATTERN"
               value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>

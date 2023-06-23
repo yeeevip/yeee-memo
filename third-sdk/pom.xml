@@ -18,7 +18,6 @@
         <module>weixin-sdk</module>
         <!-- 集成三方支付 -->
         <module>third-pay</module>
-        <module>ai</module>
     </modules>
 
 </project>

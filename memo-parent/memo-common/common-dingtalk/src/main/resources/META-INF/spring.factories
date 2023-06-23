@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  vip.yeee.memo.integrate.common.dingtalk.CommonDingtalkAutoConfigure
+  vip.yeee.memo.common.dingtalk.CommonDingtalkAutoConfigure

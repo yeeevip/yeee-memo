@@ -11,14 +11,14 @@ import ${basePackage}.model.vo.${tableClass.shortClassName}InfoVo;
 import ${basePackage}.model.vo.${tableClass.shortClassName}ListVo;
 import ${basePackage}.service.${tableClass.shortClassName}Service;
 import org.springframework.stereotype.Component;
-import vip.yeee.memo.integrate.base.model.exception.BizException;
+import vip.yeee.memo.base.model.exception.BizException;
 <#if genType == 'mp'>
 import com.baomidou.mybatisplus.core.metadata.IPage;
 </#if>
 <#if genType == 'tk'>
 import com.github.pagehelper.PageInfo;
 </#if>
-import vip.yeee.memo.integrate.base.model.vo.PageVO;
+import vip.yeee.memo.base.model.vo.PageVO;
 
 import javax.annotation.Resource;
 import java.util.List;
