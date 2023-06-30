@@ -1,9 +1,13 @@
 package vip.yeee.memo.common.appauth.client.configure;
 
+import cn.hutool.core.collection.CollectionUtil;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import vip.yeee.memo.common.appauth.client.interceptor.JwtTokenInterceptor;
+import vip.yeee.memo.common.appauth.client.constant.ApiAuthConstant;
+import vip.yeee.memo.common.appauth.client.interceptor.JwtAuthCheckInterceptor;
+import vip.yeee.memo.common.appauth.client.properties.ApiAuthClientProperties;
 
 import javax.annotation.Resource;
 
@@ -17,12 +21,17 @@ import javax.annotation.Resource;
 public class WebMvcApiAuthConfig implements WebMvcConfigurer {
 
     @Resource
-    private JwtTokenInterceptor jwtTokenInterceptor;
+    private JwtAuthCheckInterceptor jwtAuthCheckInterceptor;
+    @Resource
+    private ApiAuthClientProperties apiAuthClientProperties;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(jwtTokenInterceptor)
-                .addPathPatterns("/general/**", "/access/**");
+        InterceptorRegistration interceptor = registry.addInterceptor(jwtAuthCheckInterceptor);
+        interceptor.excludePathPatterns(ApiAuthConstant.BASE_EXCLUDE_PATTERNS);
+        if (CollectionUtil.isNotEmpty(apiAuthClientProperties.getExclude())) {
+            interceptor.excludePathPatterns(apiAuthClientProperties.getExclude());
+        }
     }
 
 }

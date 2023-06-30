@@ -1,5 +1,6 @@
 package vip.yeee.memo.common.appauth.server.kit;
 
+import cn.hutool.crypto.SecureUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -74,5 +75,12 @@ public class JwtServerKit {
         return getTokenClaim(token).getExpiration();
     }
 
+    public String encodePassword(String password) {
+        return SecureUtil.md5(password);
+    }
+
+    public boolean matchPassword(String rawPassword, String encodedPassword) {
+        return SecureUtil.md5(rawPassword).equals(encodedPassword);
+    }
 
 }

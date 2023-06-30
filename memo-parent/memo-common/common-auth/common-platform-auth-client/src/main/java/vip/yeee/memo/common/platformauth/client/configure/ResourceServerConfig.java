@@ -20,6 +20,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -157,7 +158,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
                 throws IOException, ServletException {
 
-            if (anonymousUrls.contains(request.getRequestURI())) {
+            HttpServletRequest finalRequest = request;
+            if (anonymousUrls.contains(request.getRequestURI())
+                    || anonymousUrls.stream().anyMatch(l -> new AntPathMatcher().match(l, finalRequest.getRequestURI()))) {
                 log.info("[YEEE认证] - 包含匿名请求，url = {}", request.getRequestURI());
                 // 在此处创建HttpServletRequestWrapper对象并包装原始请求
                 request = new HttpServletRequestWrapper(request) {

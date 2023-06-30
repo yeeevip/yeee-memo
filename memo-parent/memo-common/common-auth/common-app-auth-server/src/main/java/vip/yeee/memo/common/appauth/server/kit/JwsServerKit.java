@@ -8,6 +8,7 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.RSASSASigner;
 import com.nimbusds.jose.jwk.RSAKey;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.rsa.crypto.KeyStoreKeyFactory;
 import org.springframework.stereotype.Component;
@@ -24,6 +25,7 @@ import java.util.Date;
  * @author yeeee
  * @since 2022/11/30 10:21
  */
+@ConditionalOnProperty(value = "yeee.apiauth.jwt.useJws", havingValue = "true")
 @Component
 public class JwsServerKit {
 

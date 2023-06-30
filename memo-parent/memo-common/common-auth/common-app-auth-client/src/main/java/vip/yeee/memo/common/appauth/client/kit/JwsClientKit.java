@@ -31,7 +31,7 @@ import java.util.Date;
 public class JwsClientKit {
 
     @Resource
-    private ApiAuthClientProperties authClientProperties;
+    private ApiAuthClientProperties apiAuthClientProperties;
     @Resource
     @Qualifier("lbRestTemplate")
     private RestTemplate restTemplate;
@@ -60,7 +60,7 @@ public class JwsClientKit {
     }
 
     public PayloadDto verifyTokenByRSA(String token) throws ParseException, JOSEException, IOException {
-        ResponseEntity<String> response = restTemplate.getForEntity(authClientProperties.getSecretUrl(), String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity(apiAuthClientProperties.getSecretUrl(), String.class);
         return this.verifyTokenByRSA(token, (RSAKey) JWKSet.parse(response.getBody()).getKeys().get(0));
     }
 

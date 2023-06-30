@@ -1,9 +1,12 @@
 package vip.yeee.memo.common.appauth.client.properties;
 
+import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 /**
  * 授权配置
@@ -16,8 +19,10 @@ public class ApiAuthClientProperties {
 
     private String secret;
 
-    private Integer expire = 3600;
-
     private String secretUrl;
+
+    private String failUrl;
+
+    private List<String> exclude = Lists.newArrayList();
 
 }

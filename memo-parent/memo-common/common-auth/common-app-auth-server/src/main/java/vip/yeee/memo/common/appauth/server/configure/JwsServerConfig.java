@@ -1,5 +1,6 @@
 package vip.yeee.memo.common.appauth.server.configure;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import vip.yeee.memo.common.appauth.server.kit.JwsServerKit;
@@ -13,6 +14,7 @@ import java.security.KeyPair;
  * @author yeeee
  * @since 2022/11/30 11:21
  */
+@ConditionalOnBean(JwsServerKit.class)
 @Configuration
 public class JwsServerConfig {
 
