@@ -1,7 +1,110 @@
 ## 框架说明
 
-- 经过多年实战经验中积累的一套基于**SpringBoot**的**JavaWeb通用脚手架**
+- 经过多年实战经验中积累的一套基于**SpringBoot**、**SpringCloud**的**JavaWeb通用脚手架**
 - 核心设计思想是将web应用开发中的通用功能**抽象组件化**，从而达到**轻量级**、**可拓展**
+
+## 应用案例
+
+| 项目名称      | 描述                                                                   |                          仓库地址                          |
+|:----------|:---------------------------------------------------------------------|:------------------------------------------------------:|
+| yeee-blog | 轻量级博客系统         |     [仓库](https://gitee.com/yeeevip/yeee-blog.git)     |     
+| yeee-chatgpt | GPT微信小程序            |    [仓库](https://gitee.com/yeeevip/yeee-chatgpt.git)    |    
+| yeee-crowdfunding | 毕业设计-众筹平台   | [仓库](https://gitee.com/yeeevip/yeee-crowdfunding.git) |
+
+## 快速开始
+
+### 基于**memo-parent**框架，如何快速搭建一个基于spring-security+oauth2的认证服/资源务器？
+
+1. 下载yeee-memo工程，打包构建JavaWeb通用脚手架**memo-parent**
+
+```
+git clone https://github.com/yeeevip/yeee-memo.git
+cd memo-parent && mvn clean install
+```
+
+2. 使用IDEA新建maven工程web-auth-server，pom文件引入**common-auth**通用依赖
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>memo-parent</artifactId>
+        <groupId>vip.yeee.memo</groupId>
+        <version>3.2.2-SNAPSHOT</version>
+        <relativePath/>
+    </parent>
+    <artifactId>api-auth-server</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>common-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>common-springcloud-dependencies</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>common-app-auth-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>common-app-auth-client</artifactId>
+        </dependency>
+    </dependencies>
+</project>
+```
+
+3. 继承AbstractCustomUserDetailsService重写getSystemUserByUsername方法和自己系统用户关联起来
+
+```java
+public class UserAuthService extends AbstractCustomUserDetailsService {
+    
+    @Override
+    public AuthUser getSystemUserByUsername(String username) {
+        SysUser sysUser = sysUserMapper.selectOne(username);
+        if (sysUser == null) {
+            throw new BizException(MessageConstant.USER_NOT_EXIST);
+        }
+        ...
+        SystemUserBo userBo = new SystemUserBo();
+        ...
+        return userBo;
+    }
+
+    @Override
+    public AuthUser getFrontUserByUsername(String username) {
+        return null;
+    }
+}
+```
+
+4. 在application.yml中添加以下配置
+
+```
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://cloud-web-auth-server/auth-server/oauth/check_token
+    client:
+      client-id: ${spring.application.name}
+      client-secret: 123456
+      #      grant-type: password
+      access-token-uri: http://cloud-web-auth-server/auth-server/oauth/token
+yeee:
+  auth:
+    resource:
+      # 设置排除鉴权的URL
+      exclude:
+        - "/system/register"
+        - "/system/login"
+        - "/anonymous/limit/api"
+```
+
+5. 最后一个web认证服务器就搭建好了
+
+- 完整代码请参考：[web-auth-server](https://gitee.com/yeeevip/yeee-memo/tree/master/spring-cloud/auth-sso/web-auth-server)
 
 ## 模块说明
 
@@ -92,116 +195,6 @@
     ├── third-pay ------------------------------- 基于策略模式封装统一支付DEMo，包含微信、支付宝各种支付方式的统一处理
     └── weixin-sdk
 ```
-
-## 快速开始
-
-> 基于**memo-parent**框架，如何快速搭建一个基于spring-security+oauth2的认证服/资源务器？
-
-1. 下载yeee-memo工程，打包构建JavaWeb通用脚手架**memo-parent**
-
-```
-git clone https://github.com/yeeevip/yeee-memo.git
-
-cd memo-parent && mvn clean install
-```
-
-2. 使用IDEA新建maven工程web-auth-server，pom文件引入**common-auth**通用依赖
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
-    <parent>
-        <artifactId>memo-parent</artifactId>
-        <groupId>vip.yeee.memo</groupId>
-        <version>3.2.2-SNAPSHOT</version>
-        <relativePath/>
-    </parent>
-
-    <artifactId>api-auth-server</artifactId>
-
-    <dependencies>
-        <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-springcloud-dependencies</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-app-auth-server</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-app-auth-client</artifactId>
-        </dependency>
-    </dependencies>
-
-</project>
-```
-
-3. 继承AbstractCustomUserDetailsService重写getSystemUserByUsername方法和自己系统用户关联起来
-
-```java
-public class UserAuthService extends AbstractCustomUserDetailsService {
-    
-    @Override
-    public AuthUser getSystemUserByUsername(String username) {
-        SysUser sysUser = sysUserMapper.selectOne(username);
-        if (sysUser == null) {
-            throw new BizException(MessageConstant.USER_NOT_EXIST);
-        }
-        ...
-        SystemUserBo userBo = new SystemUserBo();
-        ...
-        return userBo;
-    }
-
-    @Override
-    public AuthUser getFrontUserByUsername(String username) {
-        return null;
-    }
-}
-```
-
-4. 在application.yml中添加以下配置
-
-```
-security:
-  oauth2:
-    resource:
-      token-info-uri: http://cloud-web-auth-server/auth-server/oauth/check_token
-    client:
-      client-id: ${spring.application.name}
-      client-secret: 123456
-      #      grant-type: password
-      access-token-uri: http://cloud-web-auth-server/auth-server/oauth/token
-yeee:
-  auth:
-    resource:
-      # 设置排除鉴权的URL
-      exclude:
-        - "/system/register"
-        - "/system/login"
-        - "/anonymous/limit/api"
-```
-
-5. 最后一个web认证服务器就搭建好了
-
-- 完整代码请参考：[web-auth-server](https://gitee.com/yeeevip/yeee-memo/tree/master/spring-cloud/auth-sso/web-auth-server)
-
-## 应用案例
-
-
-
-| 项目名称      | 描述                                                                   |                          仓库地址                          |
-|:----------|:---------------------------------------------------------------------|:------------------------------------------------------:|
-| yeee-blog | 轻量级博客系统         |     [仓库](https://gitee.com/yeeevip/yeee-blog.git)     |     
-| yeee-chatgpt | GPT微信小程序            |    [仓库](https://gitee.com/yeeevip/yeee-chatgpt.git)    |    
-| yeee-crowdfunding | 毕业设计-众筹平台   | [仓库](https://gitee.com/yeeevip/yeee-crowdfunding.git) |
 
 ## 其他说明
 
