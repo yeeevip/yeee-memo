@@ -52,7 +52,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public class PayContext {
 
-    private final String lesseeId;;
+    private final String lesseeId;
     private final PayProperties payProperties;
     private final WxPayConfigBO wxPayConfig;
     private final AliPayConfigBO aliPayConfig;
