@@ -13,7 +13,7 @@
 
 ## 快速开始
 
-### 基于<memo-parent>框架，如何快速搭建一个基于Spring-Security+Oauth2的认证/授权服务器？
+### 使用[memo-parent]框架，如何快速搭建一个基于Spring-Security+Oauth2的认证/授权服务器？
 
 1. 下载yeee-memo工程，打包构建JavaWeb通用脚手架**memo-parent**
 
