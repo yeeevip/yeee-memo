@@ -2,9 +2,9 @@ package vip.yeee.memo.demo.springcloud.webauth.server.biz;
 
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import vip.yeee.memo.demo.springcloud.webauth.server.model.request.UserAuthRequest;
-import vip.yeee.memo.demo.springcloud.webauth.server.service.UserAuthService;
 import vip.yeee.memo.base.model.exception.BizException;
 import vip.yeee.memo.common.domain.entity.sys.SysUser;
 import vip.yeee.memo.common.domain.mapper.sys.SysUserMapper;
@@ -22,7 +22,7 @@ import javax.annotation.Resource;
 public class UserAuthBiz {
 
     @Resource
-    private UserAuthService userAuthService;
+    private PasswordEncoder passwordEncoder;
     @Resource
     private SysUserMapper sysUserMapper;
 
@@ -32,7 +32,7 @@ public class UserAuthBiz {
         }
         SysUser save = new SysUser();
         save.setUsername(request.getUsername());
-        save.setPassword(userAuthService.decodePassword(request.getPassword()));
+        save.setPassword(passwordEncoder.encode(request.getPassword()));
         sysUserMapper.insert(save);
         return null;
     }

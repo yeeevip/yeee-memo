@@ -7,10 +7,10 @@ import vip.yeee.memo.base.websecurityoauth2.constant.SecurityUserTypeEnum;
 import vip.yeee.memo.base.websecurityoauth2.context.SecurityContext;
 import vip.yeee.memo.base.websecurityoauth2.model.AuthedUser;
 import vip.yeee.memo.base.websecurityoauth2.model.Oauth2TokenVo;
+import vip.yeee.memo.common.platformauth.client.service.WebAuthClientService;
 import vip.yeee.memo.demo.springcloud.webresource.server1.feignclient.WebAuthServerFeignClient;
 import vip.yeee.memo.demo.springcloud.webresource.server1.model.request.UserAuthRequest;
 import vip.yeee.memo.demo.springcloud.webresource.server1.model.vo.UserAuthVo;
-import vip.yeee.memo.demo.springcloud.webresource.server1.service.WebAuthService;
 
 import javax.annotation.Resource;
 
@@ -27,16 +27,15 @@ public class WebResourcesServer1Biz {
     @Resource
     private WebAuthServerFeignClient webAuthServerFeignClient;
     @Resource
-    private WebAuthService webAuthService;
+    private WebAuthClientService webAuthClientService;
 
     public Void systemUserRegister(UserAuthRequest request) {
         return webAuthServerFeignClient.systemUserRegister(request).getData();
     }
 
     public UserAuthVo systemUserLogin(UserAuthRequest request) {
-        Oauth2TokenVo oauthToken = webAuthService.getUserAccessToken(request.getUsername()
-                , request.getPassword()
-                , SecurityUserTypeEnum.SYSTEM_USER.getType());
+        Oauth2TokenVo oauthToken = webAuthClientService.getUserAccessToken(SecurityUserTypeEnum.SYSTEM_USER.getType(), request.getUsername()
+                , request.getPassword());
         UserAuthVo authVo = new UserAuthVo();
         authVo.setToken(oauthToken.getToken());
         authVo.setTokenHead(oauthToken.getTokenHead());
@@ -44,7 +43,7 @@ public class WebResourcesServer1Biz {
     }
 
     public Void userLogout() {
-        webAuthService.userLogout(SecurityContext.getCurToken());
+        webAuthClientService.userLogout(SecurityContext.getCurToken());
         return null;
     }
     public String accessApi() {

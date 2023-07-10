@@ -22,7 +22,7 @@ git clone https://github.com/yeeevip/yeee-memo.git
 cd memo-parent && mvn clean install
 ```
 
-2. 使用IDEA新建maven工程web-auth-server，pom文件引入**common-auth**通用依赖
+2. 使用IDEA新建maven工程web-auth-server，pom文件引入**common-platform-auth**通用依赖
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -42,15 +42,11 @@ cd memo-parent && mvn clean install
         </dependency>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-springcloud-dependencies</artifactId>
+            <artifactId>common-platform-auth-server</artifactId>
         </dependency>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-app-auth-server</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-app-auth-client</artifactId>
+            <artifactId>common-platform-auth-client</artifactId>
         </dependency>
     </dependencies>
 </project>
@@ -59,10 +55,10 @@ cd memo-parent && mvn clean install
 3. 继承AbstractCustomUserDetailsService重写getSystemUserByUsername方法和自己系统用户关联起来
 
 ```java
-public class UserAuthService extends AbstractCustomUserDetailsService {
+public class CustomUserDetailsService extends AbstractCustomUserDetailsService {
     
     @Override
-    public AuthUser getSystemUserByUsername(String username) {
+    public AuthUser getUserByUserTypeAndUsername(String username) {
         SysUser sysUser = sysUserMapper.selectOne(username);
         if (sysUser == null) {
             throw new BizException(MessageConstant.USER_NOT_EXIST);
@@ -71,11 +67,6 @@ public class UserAuthService extends AbstractCustomUserDetailsService {
         SystemUserBo userBo = new SystemUserBo();
         ...
         return userBo;
-    }
-
-    @Override
-    public AuthUser getFrontUserByUsername(String username) {
-        return null;
     }
 }
 ```

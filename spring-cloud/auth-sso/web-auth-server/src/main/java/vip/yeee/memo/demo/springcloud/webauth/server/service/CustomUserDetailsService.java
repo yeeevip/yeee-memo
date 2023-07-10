@@ -7,6 +7,7 @@ import com.google.common.collect.Sets;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import vip.yeee.memo.base.websecurityoauth2.constant.SecurityUserTypeEnum;
 import vip.yeee.memo.demo.springcloud.webauth.server.model.bo.FrontUserBo;
 import vip.yeee.memo.demo.springcloud.webauth.server.model.bo.SystemUserBo;
 import vip.yeee.memo.base.model.exception.BizException;
@@ -34,7 +35,7 @@ import java.util.Set;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class UserAuthService extends AbstractCustomUserDetailsService {
+public class CustomUserDetailsService extends AbstractCustomUserDetailsService {
 
     private final SysUserMapper sysUserMapper;
     private final UserMapper userMapper;
@@ -42,6 +43,15 @@ public class UserAuthService extends AbstractCustomUserDetailsService {
     private final SysUserRoleMapper sysUserRoleMapper;
 
     @Override
+    public AuthUser getUserByUserTypeAndUsername(String userType, String username) {
+        if (SecurityUserTypeEnum.SYSTEM_USER.getType().equals(userType)) {
+            return this.getSystemUserByUsername(username);
+        } else if (SecurityUserTypeEnum.FRONT_USER.getType().equals(userType)) {
+            return this.getFrontUserByUsername(username);
+        }
+        return null;
+    }
+
     public AuthUser getSystemUserByUsername(String username) {
         LambdaQueryWrapper<SysUser> userQuery = Wrappers.lambdaQuery();
         userQuery.eq(SysUser::getUsername, username);
@@ -75,7 +85,6 @@ public class UserAuthService extends AbstractCustomUserDetailsService {
         return userBo;
     }
 
-    @Override
     public AuthUser getFrontUserByUsername(String username) {
         LambdaQueryWrapper<User> userQuery = Wrappers.lambdaQuery();
         userQuery.eq(User::getUsername, username);

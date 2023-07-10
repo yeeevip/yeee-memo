@@ -73,4 +73,6 @@ public class AuthConstant {
             , "/inner/**"
     };
 
+    public final static String USERNAME_SEPARATOR = "##";
+
 }
