@@ -5,8 +5,8 @@ import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import vip.yeee.memo.common.excel.kit.EasyExcelKit;
 import vip.yeee.memo.demo.stools.export.easyexcel.model.TestVo;
-import vip.yeee.memo.demo.stools.export.easyexcel.utils.EasyExcelUtil;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class EasyexcelTests {
 
     @Test
     public void importData1() {
-        List<TestVo> testVoList = EasyExcelUtil.syncReadExcel(FileUtil.getInputStream("C:\\Users\\yeeee\\Desktop\\新建文件夹\\111\\1111.xlsx"), TestVo.class);
+        List<TestVo> testVoList = EasyExcelKit.syncReadExcel(FileUtil.getInputStream("C:\\Users\\yeeee\\Desktop\\新建文件夹\\111\\1111.xlsx"), TestVo.class);
         log.info("size = {}", testVoList.size());
         StringBuilder sb = new StringBuilder("INSERT INTO 11_area (id,pid,rid,`type`,`level`,name,remark) VALUES ");
         for (TestVo vo : testVoList) {

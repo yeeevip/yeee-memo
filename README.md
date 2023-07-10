@@ -129,6 +129,9 @@ yeee:
     ├── common-domain
     ├── common-httpclient
         └── common-httpclient-okhttp ------------ okhttp3通用封装
+    ├── common-kit ------------------------------ 通用工具组件
+        ├── common-excel-kit
+        └── common-redisson-kit
     ├── common-oss ------------------------------ 基于策略模式的通用oss工具组件封装，如ali、七牛云等
     ├── common-springcloud 
         ├── common-springcloud-dependencies ----- Springcloud项目公共依赖，如服务配置、服务注册、负载均衡、限流熔断等

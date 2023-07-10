@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  vip.yeee.memo.base.websecurityoauth2.CommonWebSecurityAutoConfigure
+  vip.yeee.memo.base.websecurityoauth2.BaseWebSecurityAutoConfigure

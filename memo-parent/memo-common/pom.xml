@@ -25,6 +25,7 @@
         <module>common-wxsdk</module>
         <module>common-oss</module>
         <module>common-dingtalk</module>
+        <module>common-kit</module>
     </modules>
 
 </project>
