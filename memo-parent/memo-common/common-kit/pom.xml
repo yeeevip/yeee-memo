@@ -3,23 +3,18 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>export</artifactId>
+        <artifactId>memo-common</artifactId>
         <groupId>vip.yeee.memo</groupId>
         <version>3.2.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>easyexcel</artifactId>
+    <artifactId>common-kit</artifactId>
+    <packaging>pom</packaging>
 
-    <dependencies>
-        <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>base-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-excel-kit</artifactId>
-        </dependency>
-    </dependencies>
+    <modules>
+        <module>common-excel-kit</module>
+        <module>common-redisson-kit</module>
+    </modules>
 
 </project>

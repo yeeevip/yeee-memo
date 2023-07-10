@@ -18,7 +18,6 @@
         <module>generator</module>
         <module>export</module>
         <module>simple-kit</module>
-        <module>redisson-kit</module>
     </modules>
 
 </project>

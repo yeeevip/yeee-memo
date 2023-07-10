@@ -18,8 +18,8 @@
             <artifactId>common-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>base-redis</artifactId>
         </dependency>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
@@ -32,6 +32,10 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>common-redisson-kit</artifactId>
         </dependency>
     </dependencies>
 

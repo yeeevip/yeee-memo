@@ -196,6 +196,16 @@
                 <artifactId>common-dingtalk</artifactId>
                 <version>${yeee-memo.version}</version>
             </dependency>
+            <dependency>
+                <groupId>vip.yeee.memo</groupId>
+                <artifactId>common-excel-kit</artifactId>
+                <version>${yeee-memo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>vip.yeee.memo</groupId>
+                <artifactId>common-redisson-kit</artifactId>
+                <version>${yeee-memo.version}</version>
+            </dependency>
             <!-- log4j -->
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
