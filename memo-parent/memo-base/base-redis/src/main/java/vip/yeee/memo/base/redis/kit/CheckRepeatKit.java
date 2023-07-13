@@ -18,7 +18,7 @@ public class CheckRepeatKit {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
-    private boolean canRepeatOpr(String redisKey, long expire) {
+    public boolean canRepeatOpr(String redisKey, long expire) {
         try {
             Boolean res = stringRedisTemplate
                     .opsForValue()
