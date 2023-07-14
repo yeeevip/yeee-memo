@@ -5,12 +5,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import vip.yeee.memo.base.model.exception.BizException;
 import vip.yeee.memo.base.model.rest.CommonResult;
 import vip.yeee.memo.base.model.rest.ResultCode;
+import vip.yeee.memo.base.web.utils.SpringContextUtils;
 
 import java.lang.reflect.Field;
 
@@ -37,6 +39,12 @@ public class GlobalExceptionHandler {
     public CommonResult<String> handleException(Exception e) {
         log.error("system error", e);
         return CommonResult.failed(ResultCode.SYS_ERROR);
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public void handleMethodNotSupportedException(Exception e) {
+        log.warn("", e);
+        SpringContextUtils.getHttpServletResponse().setStatus(403);
     }
 
     /**

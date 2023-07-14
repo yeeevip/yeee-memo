@@ -45,11 +45,11 @@ public class JwtAuthCheckInterceptor implements HandlerInterceptor {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             AnonymousAccess annotation = handlerMethod.getMethod().getAnnotation(AnonymousAccess.class);
             if (annotation != null) {
-                log.info("【API资源拦截器】- 匿名资源 - url = {}", request.getRequestURI());
+                log.debug("【API资源拦截器】- 匿名资源 - url = {}", request.getRequestURI());
                 return true;
             }
         }
-        log.info("【API资源拦截器】- url = {}", request.getRequestURI());
+        log.debug("【API资源拦截器】- url = {}", request.getRequestURI());
         String token = request.getHeader(ApiAuthConstant.TOKEN);
         boolean success = true;
         if (StrUtil.isBlank(token) || StrUtil.isBlank(token = token.replace(ApiAuthConstant.JWT_TOKEN_PREFIX, ""))) {

@@ -161,7 +161,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
             HttpServletRequest finalRequest = request;
             if (anonymousUrls.contains(request.getRequestURI())
                     || anonymousUrls.stream().anyMatch(l -> new AntPathMatcher().match(l, finalRequest.getRequestURI()))) {
-                log.info("[YEEE认证] - 包含匿名请求，url = {}", request.getRequestURI());
+                log.debug("[YEEE认证] - 包含匿名请求，url = {}", request.getRequestURI());
                 // 在此处创建HttpServletRequestWrapper对象并包装原始请求
                 request = new HttpServletRequestWrapper(request) {
                     @Override
