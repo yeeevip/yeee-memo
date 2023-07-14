@@ -2,6 +2,7 @@ package vip.yeee.memo.base.redis.kit;
 
 import cn.hutool.core.collection.CollectionUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.*;
@@ -22,8 +23,10 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisKit {
 
-    @Resource
-    private RedisTemplate<String, String> redisTemplate;
+//    @Resource
+//    private RedisTemplate<String, String> redisTemplate;
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
     /**
      * 缓存value操作
