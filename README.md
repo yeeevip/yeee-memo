@@ -5,11 +5,11 @@
 
 ## 应用案例
 
-| 项目名称      | 描述                                                                   |                          仓库地址                          |
-|:----------|:---------------------------------------------------------------------|:------------------------------------------------------:|
-| yeee-blog | 轻量级博客系统         |     [仓库](https://gitee.com/yeeevip/yeee-blog.git)     |     
-| yeee-chatgpt | GPT微信小程序            |    [仓库](https://gitee.com/yeeevip/yeee-chatgpt.git)    |    
-| yeee-crowdfunding | 毕业设计-众筹平台   | [仓库](https://gitee.com/yeeevip/yeee-crowdfunding.git) |
+| 项目名称      | 描述       |                          仓库地址                          |
+|:----------|:---------|:------------------------------------------------------:|
+| yeee-blog | 轻量级博客系统  |     [仓库](https://gitee.com/yeeevip/yeee-blog.git)     |     
+| yeee-chatgpt | GPT微信小程序 |    [仓库](https://gitee.com/yeeevip/yeee-chatgpt.git)    |    
+| yeee-crowdfunding | 大学生众筹平台  | [仓库](https://gitee.com/yeeevip/yeee-crowdfunding.git) |
 
 ## 快速开始
 
