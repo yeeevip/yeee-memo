@@ -11,17 +11,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>common-websocket</artifactId>
+    <packaging>pom</packaging>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
-    </dependencies>
+    <modules>
+        <module>common-spring-websocket</module>
+        <module>common-netty-websocket</module>
+    </modules>
 
 </project>

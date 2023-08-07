@@ -2,29 +2,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
     <parent>
-        <artifactId>memo-parent</artifactId>
+        <artifactId>common-websocket</artifactId>
         <groupId>vip.yeee.memo</groupId>
         <version>3.2.2-SNAPSHOT</version>
-        <relativePath/>
     </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>websocket-example</artifactId>
+    <artifactId>common-spring-websocket</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-spring-websocket</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
     </dependencies>
 

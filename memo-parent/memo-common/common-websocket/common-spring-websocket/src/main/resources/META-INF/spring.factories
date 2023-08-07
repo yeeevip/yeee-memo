@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  vip.yeee.memo.common.websocket.spring.CommonSpringWebSocketAutoConfigure
