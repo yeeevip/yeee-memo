@@ -18,6 +18,7 @@ import java.io.*;
 import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * description......
@@ -64,7 +65,7 @@ public class EasyExcelKit {
     public static <T> void export(OutputStream out, Class<T> clazz, List<T> exportDataList) {
         try {
             ExcelWriter excelWriter = EasyExcelKit.buildExcelWriter(out, clazz);
-            WriteSheet writeSheet = EasyExcelKit.buildWriteSheet(excelWriter, 0, "工作表1");
+            WriteSheet writeSheet = EasyExcelKit.buildWriteSheet(excelWriter, 0, "工作表1").build();
             EasyExcelKit.export(excelWriter, writeSheet, exportDataList);
             excelWriter.finish();
         } catch (Exception e) {
@@ -74,10 +75,14 @@ public class EasyExcelKit {
     }
 
     public static <T> void export2Response(List<T> exportDataList, Class<T> clazz) {
-        EasyExcelKit.export2Response(exportDataList, clazz, null);
+        EasyExcelKit.export2Response(excelWriter -> EasyExcelKit.buildWriteSheet(excelWriter, 1, "工作表1"), exportDataList, clazz, null);
     }
 
     public static <T> void export2Response(List<T> exportDataList, Class<T> clazz, String fileName) {
+        EasyExcelKit.export2Response(excelWriter -> EasyExcelKit.buildWriteSheet(excelWriter, 1, "工作表1"), exportDataList, clazz, fileName);
+    }
+
+    public static <T> void export2Response(Function<ExcelWriter, ExcelWriterSheetBuilder> sheetBuilder, List<T> exportDataList, Class<T> clazz, String fileName) {
         try {
             HttpServletResponse response = SpringContextUtils.getHttpServletResponse();
             response.setCharacterEncoding("UTF-8");
@@ -86,8 +91,7 @@ public class EasyExcelKit {
             fileName = (StrUtil.isNotBlank(fileName) ? fileName : "export" + "/" + DateUtil.format(now, DatePattern.PURE_DATETIME_MS_PATTERN) + "/" + System.currentTimeMillis()) + ".xlsx";
             response.addHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
             ExcelWriter excelWriter = EasyExcelKit.buildExcelWriter(response.getOutputStream(), clazz);
-            WriteSheet writeSheet = EasyExcelKit.buildWriteSheet(excelWriter, 1, "工作表1");
-            EasyExcelKit.export(excelWriter, writeSheet, exportDataList);
+            EasyExcelKit.export(excelWriter, sheetBuilder.apply(excelWriter).build(), exportDataList);
             excelWriter.finish();
         } catch (Exception e) {
             log.error("【导出失败】 ", e);
@@ -102,11 +106,11 @@ public class EasyExcelKit {
                 .build();
     }
 
-    public static WriteSheet buildWriteSheet(ExcelWriter excelWriter, Integer sheetNo, String sheetName) {
+    public static ExcelWriterSheetBuilder buildWriteSheet(ExcelWriter excelWriter, Integer sheetNo, String sheetName) {
         return new ExcelWriterSheetBuilder(excelWriter)
                 .sheetNo(sheetNo)
                 .sheetName(sheetName)
 //                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
-                .build();
+        ;
     }
 }
