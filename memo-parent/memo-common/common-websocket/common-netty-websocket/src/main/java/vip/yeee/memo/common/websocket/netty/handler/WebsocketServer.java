@@ -27,10 +27,6 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 
-/**
- * @author Yeauty
- * @version 1.0
- */
 public class WebsocketServer {
 
     private final WsEndpointDispatcher wsEndpointDispatcher;

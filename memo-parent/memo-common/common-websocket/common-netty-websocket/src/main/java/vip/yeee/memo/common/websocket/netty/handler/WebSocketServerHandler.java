@@ -36,6 +36,11 @@ class WebSocketServerHandler extends SimpleChannelInboundHandler<WebSocketFrame>
 
     private void handleWebSocketFrame(ChannelHandlerContext ctx, WebSocketFrame frame) {
         if (frame instanceof TextWebSocketFrame) {
+            String msg = ((TextWebSocketFrame) frame).text();
+            if ("ping".equals(msg)) {
+                ctx.channel().writeAndFlush(new TextWebSocketFrame("pong"));
+                return;
+            }
             wsEndpointDispatcher.doOnMessage(ctx.channel(), frame);
             return;
         }
