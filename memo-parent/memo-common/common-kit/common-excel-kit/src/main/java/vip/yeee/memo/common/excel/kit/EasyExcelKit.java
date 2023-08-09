@@ -18,7 +18,7 @@ import java.io.*;
 import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.function.Function;
+import java.util.function.Consumer;
 
 /**
  * description......
@@ -75,14 +75,14 @@ public class EasyExcelKit {
     }
 
     public static <T> void export2Response(List<T> exportDataList, Class<T> clazz) {
-        EasyExcelKit.export2Response(excelWriter -> EasyExcelKit.buildWriteSheet(excelWriter, 1, "工作表1"), exportDataList, clazz, null);
+        EasyExcelKit.export2Response(null, exportDataList, clazz, null);
     }
 
     public static <T> void export2Response(List<T> exportDataList, Class<T> clazz, String fileName) {
-        EasyExcelKit.export2Response(excelWriter -> EasyExcelKit.buildWriteSheet(excelWriter, 1, "工作表1"), exportDataList, clazz, fileName);
+        EasyExcelKit.export2Response(null, exportDataList, clazz, fileName);
     }
 
-    public static <T> void export2Response(Function<ExcelWriter, ExcelWriterSheetBuilder> sheetBuilder, List<T> exportDataList, Class<T> clazz, String fileName) {
+    public static <T> void export2Response(Consumer<ExcelWriterSheetBuilder> sheetBuilderConsumer, List<T> exportDataList, Class<T> clazz, String fileName) {
         try {
             HttpServletResponse response = SpringContextUtils.getHttpServletResponse();
             response.setCharacterEncoding("UTF-8");
@@ -91,7 +91,11 @@ public class EasyExcelKit {
             fileName = (StrUtil.isNotBlank(fileName) ? fileName : "export" + "/" + DateUtil.format(now, DatePattern.PURE_DATETIME_MS_PATTERN) + "/" + System.currentTimeMillis()) + ".xlsx";
             response.addHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
             ExcelWriter excelWriter = EasyExcelKit.buildExcelWriter(response.getOutputStream(), clazz);
-            EasyExcelKit.export(excelWriter, sheetBuilder.apply(excelWriter).build(), exportDataList);
+            ExcelWriterSheetBuilder sheetBuilder = EasyExcelKit.buildWriteSheet(excelWriter, 1, "工作表1");
+            if (sheetBuilderConsumer != null) {
+                sheetBuilderConsumer.accept(sheetBuilder);
+            }
+            EasyExcelKit.export(excelWriter, sheetBuilder.build(), exportDataList);
             excelWriter.finish();
         } catch (Exception e) {
             log.error("【导出失败】 ", e);
