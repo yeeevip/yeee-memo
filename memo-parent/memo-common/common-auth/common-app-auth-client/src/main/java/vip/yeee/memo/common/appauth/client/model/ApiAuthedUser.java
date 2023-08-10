@@ -14,6 +14,10 @@ public class ApiAuthedUser {
      * ID
      */
     private String id;
+
+    private String uid;
+
+    private String openid;
     /**
      * 用户名
      */
