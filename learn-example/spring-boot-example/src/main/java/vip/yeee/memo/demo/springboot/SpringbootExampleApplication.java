@@ -2,6 +2,8 @@ package vip.yeee.memo.demo.springboot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+import vip.yeee.memo.demo.springboot.extpoint.Ext01ApplicationContextInitializer;
 
 /**
  * description......
@@ -13,6 +15,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SpringbootExampleApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringbootExampleApplication.class, args);
+        SpringApplication springApplication = new SpringApplication(SpringbootExampleApplication.class);
+        springApplication.addInitializers(new Ext01ApplicationContextInitializer());
+        springApplication.run(args);
     }
 }
