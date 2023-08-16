@@ -1,4 +1,4 @@
-package vip.yeee.memo.common.websocket.netty.annotation;
+package vip.yeee.memo.common.websocket.netty.config;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -7,7 +7,7 @@ import vip.yeee.memo.common.websocket.netty.bootstrap.ServerEndpointBootstrap;
 
 @ConditionalOnMissingBean(ServerEndpointBootstrap.class)
 @Configuration
-public class NettyWebSocketSelector {
+public class NettyWebSocketConfiguration {
 
     @Bean
     public ServerEndpointBootstrap serverEndpointExporter() {

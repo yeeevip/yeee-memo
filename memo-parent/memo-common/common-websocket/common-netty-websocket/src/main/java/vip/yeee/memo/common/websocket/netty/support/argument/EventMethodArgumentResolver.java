@@ -22,7 +22,7 @@ public class EventMethodArgumentResolver implements MethodArgumentResolver {
 
     @Override
     public Object resolveArgument(MethodParameter parameter, Channel channel, Object object) throws Exception {
-        if (object==null) {
+        if (object == null) {
             return null;
         }
         TypeConverter typeConverter = beanFactory.getTypeConverter();

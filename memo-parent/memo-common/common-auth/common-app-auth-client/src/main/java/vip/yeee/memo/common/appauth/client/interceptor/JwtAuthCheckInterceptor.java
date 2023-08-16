@@ -9,6 +9,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import vip.yeee.memo.base.model.annotation.AnonymousAccess;
 import vip.yeee.memo.base.model.exception.BizException;
+import vip.yeee.memo.base.model.rest.ResultCode;
 import vip.yeee.memo.base.util.LogUtils;
 import vip.yeee.memo.common.appauth.client.constant.ApiAuthConstant;
 import vip.yeee.memo.common.appauth.client.context.ApiSecurityContext;
@@ -72,7 +73,7 @@ public class JwtAuthCheckInterceptor implements HandlerInterceptor {
             if (StrUtil.isNotBlank(apiAuthClientProperties.getFailUrl())) {
                 response.sendRedirect(apiAuthClientProperties.getFailUrl());
             } else {
-                throw new BizException("身份验证失效，请重新登录！");
+                throw new BizException(ResultCode.UNAUTHORIZED);
             }
             return false;
         }
