@@ -1,6 +1,7 @@
 package vip.yeee.memo.common.appauth.client.configure;
 
 import cn.hutool.core.collection.CollectionUtil;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -18,6 +19,7 @@ import javax.annotation.Resource;
  * @since 2022/7/12 14:16
  */
 @Configuration
+@ConditionalOnClass(WebMvcConfigurer.class)
 public class WebMvcApiAuthConfig implements WebMvcConfigurer {
 
     @Resource

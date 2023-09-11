@@ -40,7 +40,7 @@ yeee:
     contact-name: yeee
     version: 1.0
   auth:
-    jwt-secret: test_key
+    jwt-secret: 123456
     server:
     resource:
       exclude:

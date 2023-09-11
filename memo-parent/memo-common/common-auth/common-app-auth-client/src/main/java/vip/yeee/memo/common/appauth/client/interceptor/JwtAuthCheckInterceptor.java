@@ -3,6 +3,7 @@ package vip.yeee.memo.common.appauth.client.interceptor;
 import cn.hutool.core.util.StrUtil;
 import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -30,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
  * @since 2022/11/16 14:38
  */
 @Component
+@ConditionalOnClass(org.springframework.web.servlet.HandlerInterceptor.class)
 public class JwtAuthCheckInterceptor implements HandlerInterceptor {
 
     private final static Logger log = LogUtils.commonAuthLog();

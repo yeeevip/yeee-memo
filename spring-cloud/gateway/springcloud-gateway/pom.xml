@@ -16,17 +16,27 @@
     <dependencies>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-web</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>base-util</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>base-model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>base-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>base-swagger</artifactId>
         </dependency>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
             <artifactId>common-springcloud-dependencies</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>common-app-auth-client</artifactId>
         </dependency>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
@@ -37,7 +47,7 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
-        <!--引入 redis，使用RateLimter-->
+        <!--引入 redis，使用RateLimiter-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis-reactive</artifactId>

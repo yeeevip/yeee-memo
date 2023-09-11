@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  * @since 2023/2/10 9:31
  */
 @RestController
-public class TestController {
+public class TestGatewayController {
 
     @Resource
     private TestBiz testBiz;
