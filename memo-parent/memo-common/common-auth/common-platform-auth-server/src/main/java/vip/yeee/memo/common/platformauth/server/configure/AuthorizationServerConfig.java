@@ -16,6 +16,8 @@ import vip.yeee.memo.common.platformauth.server.constant.SecurityConstants;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 认证服务器配置
@@ -71,12 +73,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     // 使用密码模式所需配置
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-//
+
 //        //配置JWT内容增强
 //        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
 //        List<TokenEnhancer> delegates = new ArrayList<>();
-//        delegates.add(jwtTokenEnhancer);
-//        delegates.add(jwtAccessTokenConverter);
+////        delegates.add(jwtTokenEnhancer);
+//        delegates.add((TokenEnhancer) accessTokenConverter);
 //        tokenEnhancerChain.setTokenEnhancers(delegates);
 
         endpoints.authenticationManager(authenticationManager)
@@ -85,7 +87,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 //                .tokenStore(redisTokenStore);
                 //配置存储令牌策略
                 .tokenStore(tokenStore)
-//                .accessTokenConverter(jwtAccessTokenConverter)
+                .accessTokenConverter(accessTokenConverter)
 //                .tokenEnhancer(tokenEnhancerChain)
         ;
     }
