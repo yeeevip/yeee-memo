@@ -4,16 +4,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.jwt.crypto.sign.MacSigner;
 import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import vip.yeee.memo.base.websecurityoauth2.properties.AuthProperties;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
+import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.DatatypeConverter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -27,6 +26,8 @@ public class JwtTokenStoreConfig {
     @Resource
     private AuthProperties authProperties;
 
+    private final static String SIGN_ALGORITHM = "HMACSHA512";
+
     @Bean
     public TokenStore jwtTokenStore() {
         return new JwtTokenStore((JwtAccessTokenConverter) accessTokenConverter());
@@ -37,6 +38,10 @@ public class JwtTokenStoreConfig {
         JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
         //配置JWT使用的秘钥
         jwtAccessTokenConverter.setSigningKey(authProperties.getJwtSecret());
+        jwtAccessTokenConverter.setSigner(new MacSigner(SIGN_ALGORITHM
+                , new SecretKeySpec(DatatypeConverter.parseBase64Binary(authProperties.getJwtSecret()), SIGN_ALGORITHM)));
+        jwtAccessTokenConverter.setVerifier(new MacSigner(SIGN_ALGORITHM
+                , new SecretKeySpec(DatatypeConverter.parseBase64Binary(authProperties.getJwtSecret()), SIGN_ALGORITHM)));
 
         UserAuthenticationConverter userAuthenticationConverter = new DefaultUserAuthenticationConverter() {
             @Override
