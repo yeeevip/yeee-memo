@@ -15,6 +15,11 @@ spring:
     allow-circular-references: true
   application:
     name: cloud-web-resource-server1
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: yeah
+    database: 0
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/yeee_auth?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
@@ -67,8 +72,28 @@ yeee:
     contact-name: yeee
     version: 1.0
   auth:
+    jwtSecret: 123456
     resource:
       exclude:
         - "/system/register"
         - "/system/login"
         - "/anonymous/limit/api"
+  custom:
+    redis:
+      enabled: true
+      instance:
+        - beanName: customeRedisTemplate01
+          host: 127.0.0.1
+          port: 6379
+          password: yeah
+          database: 1
+        - beanName: customeRedisTemplate02
+          host: 127.0.0.1
+          port: 6379
+          password: yeah
+          database: 2
+        - beanName: customeRedisTemplate03
+          host: 127.0.0.1
+          port: 6379
+          password: yeah
+          database: 3

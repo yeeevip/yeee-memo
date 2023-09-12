@@ -4,7 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClients;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.ConfigurableApplicationContext;
 import vip.yeee.memo.common.scloud.gray.inner.configure.GrayInnerLoadBalancerConfig;
+
+import java.util.Map;
 
 /**
  * description......
@@ -19,7 +22,16 @@ import vip.yeee.memo.common.scloud.gray.inner.configure.GrayInnerLoadBalancerCon
 public class CloudWebResourceServer1Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(CloudWebResourceServer1Application.class, args);
+        ConfigurableApplicationContext context = SpringApplication.run(CloudWebResourceServer1Application.class, args);
+//        Map<String, RedisTemplate> templateMap = context.getBeansOfType(RedisTemplate.class);
+//        templateMap.forEach((k, v) -> {
+//            System.out.println(k + " setValue！");
+//            v.opsForValue().set("rdsKey", k);
+//        });
+//        templateMap.forEach((k, v) -> {
+//            System.out.println(k + " getValue！");
+//            System.out.println(v.opsForValue().get("rdsKey"));
+//        });
     }
 
 }
