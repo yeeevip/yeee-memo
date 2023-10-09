@@ -24,10 +24,12 @@ spring:
 #            - name: RequestRateLimiter
 #              args:
 #                key-resolver: '#{@remoteAddrKeyResolver}'
-#                # 允许用户每秒处理多少个请求
+#                # 表示每秒向令牌桶中添加10个令牌
 #                redis-rate-limiter.replenishRate: 10
 #                # 令牌桶的容量,允许在一秒钟内完成的最大请求
 #                redis-rate-limiter.burstCapacity: 20
+#                # 每个请求需要消耗一个令牌
+#                redis-rate-limiter.requestedTokens: 1
         - id: feign-fallback-sentinel
           uri: lb://feign-fallback-sentinel
           predicates:
