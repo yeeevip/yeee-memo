@@ -1,6 +1,7 @@
 package vip.yeee.memo.demo.elasticsearch.domain.es.repository;
 
 import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
+import org.elasticsearch.search.sort.SortBuilder;
 import org.springframework.data.elasticsearch.core.IndexedObjectInformation;
 import vip.yeee.memo.demo.elasticsearch.domain.es.entity.BaseIndex;
 import vip.yeee.memo.demo.elasticsearch.vo.PageVO;
@@ -66,9 +67,11 @@ public class EsRestTemplateRepository {
         return restTemplate.save(list);
     }
 
-    public <T> PageVO<T> pageSearch(Integer pageNum, Integer pageSize, QueryBuilder queryBuilder, Class<T> index) {
+    public <T> PageVO<T> pageSearch(Integer pageNum, Integer pageSize, QueryBuilder queryBuilder, SortBuilder<?> sortBuilder, Class<T> index) {
         PageRequest pageRequest = PageRequest.of(pageNum - 1, pageSize);
-        FieldSortBuilder sortBuilder = SortBuilders.fieldSort("id").order(SortOrder.DESC);
+        if (sortBuilder == null) {
+            sortBuilder = new FieldSortBuilder("id").order(SortOrder.DESC);
+        }
         NativeSearchQuery nativeSearchQuery = new NativeSearchQueryBuilder()
                 .withQuery(queryBuilder)
                 .withPageable(pageRequest)

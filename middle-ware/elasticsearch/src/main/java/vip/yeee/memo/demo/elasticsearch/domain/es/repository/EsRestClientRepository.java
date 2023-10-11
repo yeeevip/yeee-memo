@@ -1,6 +1,7 @@
 package vip.yeee.memo.demo.elasticsearch.domain.es.repository;
 
 import com.alibaba.fastjson.JSONObject;
+import org.elasticsearch.search.sort.SortBuilder;
 import vip.yeee.memo.base.util.JacksonUtils;
 import vip.yeee.memo.demo.elasticsearch.vo.PageVO;
 import lombok.RequiredArgsConstructor;
@@ -94,7 +95,7 @@ public class EsRestClientRepository {
         return restClient.bulk(bulkRequest, RequestOptions.DEFAULT);
     }
 
-    public PageVO<SearchHit> pageSearch(Integer pageNum, Integer pageSize, QueryBuilder queryBuilder, String... index) throws IOException {
+    public PageVO<SearchHit> pageSearch(Integer pageNum, Integer pageSize, QueryBuilder queryBuilder, SortBuilder<?> sortBuilder, String... index) throws IOException {
 
         PageVO<SearchHit> pageVO = new PageVO<>(pageNum, pageSize);
 
@@ -105,7 +106,10 @@ public class EsRestClientRepository {
         // 分页
         searchSourceBuilder.from((pageNum - 1) * pageSize).size(pageSize);
         // 排序
-        searchSourceBuilder.sort(new FieldSortBuilder("id").order(SortOrder.DESC));
+        if (sortBuilder == null) {
+            sortBuilder = new FieldSortBuilder("id").order(SortOrder.DESC);
+        }
+        searchSourceBuilder.sort(sortBuilder);
 
         // 构造搜索请求对象
         SearchRequest searchRequest = new SearchRequest(index);

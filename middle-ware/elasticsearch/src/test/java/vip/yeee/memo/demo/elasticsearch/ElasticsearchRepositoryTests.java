@@ -3,6 +3,8 @@ package vip.yeee.memo.demo.elasticsearch;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DatePattern;
 import com.google.common.collect.Maps;
+import org.elasticsearch.common.unit.DistanceUnit;
+import org.elasticsearch.index.query.GeoDistanceQueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.histogram.*;
@@ -12,6 +14,9 @@ import org.elasticsearch.search.aggregations.bucket.range.RangeAggregationBuilde
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.*;
+import org.elasticsearch.search.sort.GeoDistanceSortBuilder;
+import org.elasticsearch.search.sort.SortBuilders;
+import org.elasticsearch.search.sort.SortOrder;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
@@ -359,6 +364,70 @@ public class ElasticsearchRepositoryTests {
                 })
                 .collect(Collectors.toList());
         log.info("rangeDataGroup = {}", rangeDataGroup);
+    }
+
+    /**
+     * ## 创建索引
+     * PUT http://localhost:9200/location_test/_mapping
+     * {
+     *     "properties":{
+     *         "locationName":{
+     *             "type":"text",
+     *             "analyzer":"ik_max_word"
+     *         },
+     *         "location":{
+     *             "type":"geo_point"
+     *         }
+     *     }
+     * }
+     *
+     * ## 插入数据
+     * POST http://localhost:9200/location_test/_doc
+     * {
+     * 	"locationName": "召稼楼古镇",
+     * 	"location": {
+     * 		"lat": 31.081128,
+     * 		"lon": 121.555511
+     *        }
+     * }
+     * {
+     * 	"locationName": "上海奇思妙想减压馆",
+     * 	"location": {
+     * 		"lat": 31.24249,
+     * 		"lon": 121.490283
+     *    }
+     * }
+     */
+    @Test
+    public void testGeoDistanceQuery() throws Exception {
+
+        double curLat = 39.929986;
+        double curLon = 116.395645;
+
+        Integer pageNum = 1, pageSize = 5;
+
+        NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder();
+
+        // 查询某经纬度100米范围内
+        GeoDistanceQueryBuilder geoDistanceQueryBuilder = QueryBuilders.geoDistanceQuery("location")
+                .point(curLat, curLon)
+                .distance(100, DistanceUnit.METERS);
+
+        nativeSearchQueryBuilder.withQuery(geoDistanceQueryBuilder);
+
+        GeoDistanceSortBuilder geoDistanceSortBuilder = SortBuilders.geoDistanceSort("location", curLat, curLon)
+                .unit(DistanceUnit.METERS)
+                .order(SortOrder.ASC);
+
+        nativeSearchQueryBuilder
+                .withPageable(PageRequest.of(pageNum - 1, pageSize))
+                .withSorts(geoDistanceSortBuilder);
+
+        SearchHits<TProjectIndex> hits = elasticsearchRestTemplate.search(nativeSearchQueryBuilder.build(), TProjectIndex.class);
+        PageVO<TProjectIndex> page2 = new PageVO<>(pageNum, pageSize);
+        page2.setTotal(hits.getTotalHits());
+        page2.setResult(hits.getSearchHits().stream().map(SearchHit::getContent).collect(Collectors.toList()));
+        log.info("----------------------------- geoDistancePageVO = {} --------------------------------------", page2);
     }
 
 }

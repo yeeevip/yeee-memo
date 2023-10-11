@@ -1,5 +1,10 @@
 package vip.yeee.memo.demo.elasticsearch;
 
+import org.elasticsearch.common.unit.DistanceUnit;
+import org.elasticsearch.index.query.GeoDistanceQueryBuilder;
+import org.elasticsearch.search.sort.GeoDistanceSortBuilder;
+import org.elasticsearch.search.sort.SortBuilders;
+import org.elasticsearch.search.sort.SortOrder;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.elasticsearch.core.IndexedObjectInformation;
 import vip.yeee.memo.demo.elasticsearch.domain.es.entity.BaseIndex;
@@ -119,7 +124,7 @@ public class EsRestTemplateRepositoryTests {
         queryBuilder.must(QueryBuilders.boolQuery()
                 .should(QueryBuilders.matchPhraseQuery("title", keyword))
                 .should(QueryBuilders.matchPhraseQuery("content", keyword)));
-        PageVO<TProjectIndex> pageVO = esRestTemplateRepository.pageSearch(1, 20, queryBuilder, TProjectIndex.class);
+        PageVO<TProjectIndex> pageVO = esRestTemplateRepository.pageSearch(1, 20, queryBuilder, null, TProjectIndex.class);
         log.info("---------pageVO = {}-----------", pageVO);
     }
 
@@ -150,6 +155,55 @@ public class EsRestTemplateRepositoryTests {
     public void testDelIndex() throws Exception {
         esRestTemplateRepository.delete(TProjectIndex.class);
         log.info("---------------del----------------");
+    }
+
+    /**
+     * ## 创建索引
+     * PUT http://localhost:9200/location_test/_mapping
+     * {
+     *     "properties":{
+     *         "locationName":{
+     *             "type":"text",
+     *             "analyzer":"ik_max_word"
+     *         },
+     *         "location":{
+     *             "type":"geo_point"
+     *         }
+     *     }
+     * }
+     *
+     * ## 插入数据
+     * POST http://localhost:9200/location_test/_doc
+     * {
+     * 	"locationName": "召稼楼古镇",
+     * 	"location": {
+     * 		"lat": 31.081128,
+     * 		"lon": 121.555511
+     *        }
+     * }
+     * {
+     * 	"locationName": "上海奇思妙想减压馆",
+     * 	"location": {
+     * 		"lat": 31.24249,
+     * 		"lon": 121.490283
+     *    }
+     * }
+     */
+    @Test
+    public void testGeoDistanceQuery() throws Exception {
+
+        double curLat = 39.929986;
+        double curLon = 116.395645;
+
+        // 查询某经纬度100米范围内
+        GeoDistanceQueryBuilder queryBuilder = QueryBuilders.geoDistanceQuery("location")
+                .point(curLat, curLon)
+                .distance(100, DistanceUnit.METERS);
+        GeoDistanceSortBuilder sortBuilder = SortBuilders.geoDistanceSort("location", curLat, curLon)
+                .unit(DistanceUnit.METERS)
+                .order(SortOrder.ASC);
+        PageVO<TProjectIndex> pageVO = esRestTemplateRepository.pageSearch(0, 50, queryBuilder, sortBuilder, TProjectIndex.class);
+        log.info("-----------------geoDistancePageVO = {} ---------------------", pageVO);
     }
 
 }
