@@ -18,7 +18,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.provider.token.*;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.client.DefaultResponseErrorHandler;
@@ -30,8 +29,8 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import vip.yeee.memo.base.model.annotation.AnonymousAccess;
 import vip.yeee.memo.base.util.LogUtils;
 import vip.yeee.memo.base.websecurityoauth2.constant.AuthConstant;
-import vip.yeee.memo.common.platformauth.client.handle.AccessDeniedHandler;
-import vip.yeee.memo.common.platformauth.client.handle.AuthenticationEntryPointHandler;
+import vip.yeee.memo.common.platformauth.client.handle.CustomAccessDeniedHandler;
+import vip.yeee.memo.common.platformauth.client.handle.CustomAuthenticationEntryPoint;
 import vip.yeee.memo.common.platformauth.client.properties.AuthClientProperties;
 import vip.yeee.memo.base.websecurityoauth2.constant.SecurityUserTypeEnum;
 
@@ -91,9 +90,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .and()
                 .exceptionHandling()
                 // 处理未认证
-                .authenticationEntryPoint(authenticationEntryPoint())
+                .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                 // 处理未授权
-                .accessDeniedHandler(accessDeniedHandler())
+                .accessDeniedHandler(new CustomAccessDeniedHandler())
                 .and()
                 // 不创建会话
                 .sessionManagement()
@@ -112,17 +111,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
         http.addFilterBefore(new AuthenticationBeforeFilter(), AbstractPreAuthenticatedProcessingFilter.class);
 
-    }
-
-
-    @Bean
-    public AccessDeniedHandler accessDeniedHandler() {
-        return new AccessDeniedHandler();
-    }
-
-    @Bean
-    public AuthenticationEntryPoint authenticationEntryPoint() {
-        return new AuthenticationEntryPointHandler();
     }
 
     @Bean("remoteTokenLbRestTemplate")

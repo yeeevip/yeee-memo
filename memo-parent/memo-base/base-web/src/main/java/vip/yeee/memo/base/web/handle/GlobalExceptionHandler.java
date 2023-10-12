@@ -37,6 +37,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public CommonResult<String> handleException(Exception e) {
+        if ("org.springframework.security.access.AccessDeniedException".equals(e.getClass().getName())) {
+            return CommonResult.failed(ResultCode.FORBIDDEN, e.getMessage());
+        }
         log.error("system error", e);
         return CommonResult.failed(ResultCode.SYS_ERROR);
     }

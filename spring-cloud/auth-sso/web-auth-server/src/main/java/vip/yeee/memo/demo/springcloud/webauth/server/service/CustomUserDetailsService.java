@@ -23,6 +23,7 @@ import vip.yeee.memo.common.domain.mapper.sys.SysUserMapper;
 import vip.yeee.memo.common.domain.mapper.sys.SysUserRoleMapper;
 import vip.yeee.memo.base.websecurityoauth2.model.AuthUser;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -82,6 +83,9 @@ public class CustomUserDetailsService extends AbstractCustomUserDetailsService {
         userBo.setPassword(sysUser.getPassword());
         userBo.setState(sysUser.getState());
         userBo.setRoles(roles);
+        HashSet<String> permissions = Sets.newHashSet();
+        permissions.add("yeee:test:aaa");
+        userBo.setPermissions(permissions);
         return userBo;
     }
 

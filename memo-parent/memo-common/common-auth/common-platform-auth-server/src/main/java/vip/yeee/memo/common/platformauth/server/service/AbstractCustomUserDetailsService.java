@@ -43,12 +43,14 @@ public abstract class AbstractCustomUserDetailsService implements UserDetailsSer
         try {
             // find user
             AuthUser sysUser = this.getUserByUserTypeAndUsername(userType, realUsername);
+            Set<String> authoritySet = Sets.newHashSet();
             Set<String> roles = Optional.ofNullable(sysUser.getRoles()).orElseGet(Sets::newHashSet);
-            Set<String> permissions = Optional.ofNullable(sysUser.getPermissions()).orElseGet(Sets::newHashSet);
             roles.add(AuthConstant.ROLE_PREFIX + userType);
-            roles.addAll(permissions);
+            authoritySet.addAll(roles);
+            Set<String> permissions = Optional.ofNullable(sysUser.getPermissions()).orElseGet(Sets::newHashSet);
+            authoritySet.addAll(permissions);
             // build security-user
-            securityUser = new SecurityUser(sysUser.getUserId(), sysUser.getUsername(), sysUser.getPassword(), sysUser.getState(), roles);
+            securityUser = new SecurityUser(sysUser.getUserId(), sysUser.getUsername(), sysUser.getPassword(), sysUser.getState(), authoritySet);
         } catch (Exception e) {
             throw new UsernameNotFoundException(e.getMessage());
         }

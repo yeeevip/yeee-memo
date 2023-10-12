@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * 处理器
  */
-public class AuthenticationEntryPointHandler implements AuthenticationEntryPoint {
+public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
