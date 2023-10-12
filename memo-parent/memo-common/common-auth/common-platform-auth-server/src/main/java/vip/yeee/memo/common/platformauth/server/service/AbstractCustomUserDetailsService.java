@@ -19,6 +19,7 @@ import vip.yeee.memo.base.websecurityoauth2.model.SecurityUser;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * description......
@@ -45,7 +46,14 @@ public abstract class AbstractCustomUserDetailsService implements UserDetailsSer
             AuthUser sysUser = this.getUserByUserTypeAndUsername(userType, realUsername);
             Set<String> authoritySet = Sets.newHashSet();
             Set<String> roles = Optional.ofNullable(sysUser.getRoles()).orElseGet(Sets::newHashSet);
-            roles.add(AuthConstant.ROLE_PREFIX + userType);
+            roles.add(userType);
+            roles = roles.stream()
+                    .map(r -> {
+                        if (!r.startsWith(AuthConstant.ROLE_PREFIX)) {
+                            r = AuthConstant.ROLE_PREFIX + r;
+                        }
+                        return r;
+                    }).collect(Collectors.toSet());
             authoritySet.addAll(roles);
             Set<String> permissions = Optional.ofNullable(sysUser.getPermissions()).orElseGet(Sets::newHashSet);
             authoritySet.addAll(permissions);
