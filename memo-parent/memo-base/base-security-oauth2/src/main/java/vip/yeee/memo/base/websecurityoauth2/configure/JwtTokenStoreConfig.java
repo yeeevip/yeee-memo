@@ -1,5 +1,6 @@
 package vip.yeee.memo.base.websecurityoauth2.configure;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
@@ -8,6 +9,7 @@ import org.springframework.security.jwt.crypto.sign.MacSigner;
 import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import vip.yeee.memo.base.websecurityoauth2.model.UserInfo;
 import vip.yeee.memo.base.websecurityoauth2.properties.AuthProperties;
 
 import javax.annotation.Resource;
@@ -47,7 +49,9 @@ public class JwtTokenStoreConfig {
             @Override
             public Map<String, ?> convertUserAuthentication(Authentication authentication) {
                 Map<String, Object> response = new LinkedHashMap<String, Object>();
-                response.put(USERNAME, authentication.getPrincipal());
+                UserInfo userInfo = new UserInfo();
+                BeanUtils.copyProperties(authentication.getPrincipal(), userInfo);
+                response.put(USERNAME, userInfo);
                 if (authentication.getAuthorities() != null && !authentication.getAuthorities().isEmpty()) {
                     response.put(AUTHORITIES, AuthorityUtils.authorityListToSet(authentication.getAuthorities()));
                 }
