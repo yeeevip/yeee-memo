@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import vip.yeee.memo.base.model.rest.CommonResult;
 import vip.yeee.memo.base.model.vo.PageVO;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -29,30 +30,35 @@ public class ${tableClass.shortClassName}Controller {
     private ${tableClass.shortClassName}Biz ${tableClass.variableName}Biz;
 
     @ApiOperation("列表")
+    @PreAuthorize("hasAuthority('${tableClass.pagesPath?replace("/", ":")}:info')")
     @PostMapping(value = "/page")
     public CommonResult<PageVO<${tableClass.shortClassName}ListVo>> ${tableClass.variableName}PageList(@RequestBody @Validated ${tableClass.shortClassName}ListRequest request) {
         return CommonResult.success(${tableClass.variableName}Biz.${tableClass.variableName}PageList(request));
     }
 
     @ApiOperation("创建")
+    @PreAuthorize("hasAuthority('${tableClass.pagesPath?replace("/", ":")}:add')")
     @PostMapping(value = "/add")
     public CommonResult<Void> ${tableClass.variableName}Add(@RequestBody @Validated ${tableClass.shortClassName}AddRequest request) {
         return CommonResult.success(${tableClass.variableName}Biz.${tableClass.variableName}Add(request));
     }
 
     @ApiOperation("修改")
+    @PreAuthorize("hasAuthority('${tableClass.pagesPath?replace("/", ":")}:upd')")
     @PostMapping(value = "/upd")
     public CommonResult<Void> ${tableClass.variableName}Upd(@RequestBody @Validated ${tableClass.shortClassName}UpdRequest request) {
         return CommonResult.success(${tableClass.variableName}Biz.${tableClass.variableName}Upd(request));
     }
 
     @ApiOperation("详情")
+    @PreAuthorize("hasAuthority('${tableClass.pagesPath?replace("/", ":")}:info')")
     @PostMapping(value = "/info")
     public CommonResult<${tableClass.shortClassName}InfoVo> ${tableClass.variableName}Info(@RequestBody @Validated IdRequest request) {
         return CommonResult.success(${tableClass.variableName}Biz.${tableClass.variableName}Info(request));
     }
 
     @ApiOperation("删除")
+    @PreAuthorize("hasAuthority('${tableClass.pagesPath?replace("/", ":")}:del')")
     @PostMapping(value = "/del")
     public CommonResult<Void> ${tableClass.variableName}Del(@RequestBody @Validated IdRequest request) {
         return CommonResult.success(${tableClass.variableName}Biz.${tableClass.variableName}Del(request));
