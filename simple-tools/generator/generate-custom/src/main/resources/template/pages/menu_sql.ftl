@@ -14,7 +14,7 @@ VALUES(001, 权限归属ID, '修改', '', '${tableClass.pagesPath?replace("/", "
 
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)
-VALUES(001, 权限归属ID, '查看', '', '${tableClass.pagesPath?replace("/", ":")}:info', '', 1, NULL, 1, '${generateDate}', 'admin', '${generateDate}', 'admin');
+VALUES(001, 权限归属ID, '查看', '', '${tableClass.pagesPath?replace("/", ":")}:info,${tableClass.pagesPath?replace("/", ":")}:page,${tableClass.pagesPath?replace("/", ":")}:list', '', 1, NULL, 1, '${generateDate}', 'admin', '${generateDate}', 'admin');
 
 INSERT INTO sys_menu
 (id, pid, name, url, perm, icon, seq, remark, `type`, create_time, create_by, update_time, update_by)

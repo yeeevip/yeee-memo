@@ -30,7 +30,7 @@ public class ${tableClass.shortClassName}Controller {
     private ${tableClass.shortClassName}Biz ${tableClass.variableName}Biz;
 
     @ApiOperation("列表")
-    @PreAuthorize("hasAuthority('${tableClass.pagesPath?replace("/", ":")}:info')")
+    @PreAuthorize("hasAuthority('${tableClass.pagesPath?replace("/", ":")}:page')")
     @PostMapping(value = "/page")
     public CommonResult<PageVO<${tableClass.shortClassName}ListVo>> ${tableClass.variableName}PageList(@RequestBody @Validated ${tableClass.shortClassName}ListRequest request) {
         return CommonResult.success(${tableClass.variableName}Biz.${tableClass.variableName}PageList(request));
