@@ -12,18 +12,19 @@
 		<!-- java通用脚手架 -->
 		<module>memo-parent</module>
 		<!-- 常用解决方案 -->
-		<module>solution-problem</module>
+<!--		<module>solution-problem</module>-->
 		<!-- 中间件的使用 -->
-		<module>middle-ware</module>
+<!--		<module>middle-ware</module>-->
 		<!-- 微服务 -->
-		<module>spring-cloud</module>
+<!--		<module>spring-cloud</module>-->
 		<!-- 三方SDK -->
-		<module>third-sdk</module>
+<!--		<module>third-sdk</module>-->
 		<!-- 小工具 -->
-		<module>simple-tools</module>
+<!--		<module>simple-tools</module>-->
 		<!-- 测试工具 -->
-		<module>test-tool</module>
-		<module>learn-example</module>
+<!--		<module>test-tool</module>-->
+		<!-- 学习测试用例 -->
+<!--		<module>learn-example</module>-->
     </modules>
 
 </project>
