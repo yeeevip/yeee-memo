@@ -3,7 +3,7 @@
 - 经过多年实战经验中积累的一套基于**SpringBoot**、**SpringCloud**的**JavaWeb通用脚手架**
 - 核心设计思想是将web应用开发中的通用功能**抽象组件化**，从而达到**轻量级**、**可拓展**
 
-## 应用案例
+## 项目案例
 
 | 项目名称      | 描述       |                          仓库地址                          |
 |:----------|:---------|:------------------------------------------------------:|
@@ -11,98 +11,14 @@
 | yeee-chatgpt | GPT微信小程序 |    [仓库](https://gitee.com/yeeevip/yeee-chatgpt.git)    |    
 | yeee-crowdfunding | 大学生众筹平台  | [仓库](https://gitee.com/yeeevip/yeee-crowdfunding.git) |
 
-## 快速开始
-
-### 使用[memo-parent]框架，如何快速搭建一个基于Spring-Security+Oauth2的认证/授权服务器？
-
-1. 下载yeee-memo工程，打包构建JavaWeb通用脚手架**memo-parent**
-
-```
-git clone https://github.com/yeeevip/yeee-memo.git
-cd memo-parent && mvn clean install
-```
-
-2. 使用IDEA新建maven工程web-auth-server，pom文件引入**common-platform-auth**通用依赖
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <artifactId>memo-parent</artifactId>
-        <groupId>vip.yeee.memo</groupId>
-        <version>3.2.2-SNAPSHOT</version>
-        <relativePath/>
-    </parent>
-    <artifactId>api-auth-server</artifactId>
-    <dependencies>
-        <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-platform-auth-server</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-platform-auth-client</artifactId>
-        </dependency>
-    </dependencies>
-</project>
-```
-
-3. 继承AbstractCustomUserDetailsService重写getSystemUserByUsername方法和自己系统用户关联起来
-
-```java
-public class CustomUserDetailsService extends AbstractCustomUserDetailsService {
-    
-    @Override
-    public AuthUser getUserByUserTypeAndUsername(String username) {
-        SysUser sysUser = sysUserMapper.selectOne(username);
-        if (sysUser == null) {
-            throw new BizException(MessageConstant.USER_NOT_EXIST);
-        }
-        ...
-        SystemUserBo userBo = new SystemUserBo();
-        ...
-        return userBo;
-    }
-}
-```
-
-4. 在application.yml中添加以下配置
-
-```
-security:
-  oauth2:
-    resource:
-      token-info-uri: http://cloud-web-auth-server/auth-server/oauth/check_token
-    client:
-      client-id: ${spring.application.name}
-      client-secret: 123456
-      #      grant-type: password
-      access-token-uri: http://cloud-web-auth-server/auth-server/oauth/token
-yeee:
-  auth:
-    resource:
-      # 设置排除鉴权的URL
-      exclude:
-        - "/system/register"
-        - "/system/login"
-        - "/anonymous/limit/api"
-```
-
-5. 最后一个web认证服务器就搭建好了
-
-- 完整代码请参考：[web-auth-server](https://gitee.com/yeeevip/yeee-memo/tree/master/spring-cloud/auth-sso/web-auth-server)
-
 ## 模块说明
 
-- 通用模块**memo-parent**，按功能抽取出来封装为**starter**
+---------------------------------
+- 脚手架核心通用模块**memo-parent**，按功能抽取出来封装为通用的**starter**
+---------------------------------
 
 ```lua
-├memo-parent
+├ memo-parent
 ├
 ├── memo-dependencies --------------------------- Maven依赖版本统一管理
 ├
@@ -149,16 +65,18 @@ yeee:
     ├── common-wxsdk
         ├── common-wx-ma ------------------------ 通用微信小程序组件
         └── common-wx-mp ------------------------ 通用微信公众号组件
-    └── mybatis-encrypt-plugin ------------------ 借鉴其他开源封装的基于mybatis的数据库字段脱敏组件
+    └── common-mybatis-encrypt ------------------ 借鉴其他开源封装的基于mybatis的数据库字段脱敏组件
 ```
 
-- 基于memo-parent的一些**demo**
+---------------------------------
+- 基于memo-parent脚手架的一些应用**Demo**，只需引入对应的**starter**即可实现功能
+---------------------------------
 
 ```lua
 ├ 
-├learn-example ---------------------------------- 临时学习测试
+├ learn-example --------------------------------- 临时学习测试
 ├
-├solution-problem ------------------------------- 解决方案
+├ solution-problem ------------------------------ 解决方案
     ├── distribute-lock ------------------------- 分布式锁的不同实现方案
     ├── jetcache -------------------------------- 分布式二级缓存
     ├── netty
@@ -167,14 +85,14 @@ yeee:
     ├── webservice-example 
     └── websocket-example
 ├ 
-├middle-ware ------------------------------------ 中间件使用
+├ middle-ware ----------------------------------- 中间件使用
     ├── canal
     ├── elasticsearch --------------------------- 搜索
     ├── flink ----------------------------------- 大数据实时计算
     ├── mongodb --------------------------------- 高性能、海量分布式存储
     └── MQ -------------------------------------- 消息队列
 ├ 
-├spring-cloud ----------------------------------- springcloud的一些demo
+├ spring-cloud ---------------------------------- springcloud的一些demo
     ├── auth-sso -------------------------------- 身份认证、资源授权
     ├── config ---------------------------------- 配置中心
     ├── gateway --------------------------------- springcloud-gateway网关
@@ -183,20 +101,172 @@ yeee:
     ├── rpc ------------------------------------- RPC远程服务调用
     └── transaction ----------------------------- 分布式事务
 ├ 
-├third-sdk -------------------------------------- 三方SDK
+├ third-sdk ------------------------------------- 三方SDK
     ├── aliyun-sdk
     ├── blockchain ------------------------------ 区块链
     ├── third-pay ------------------------------- 基于策略模式封装统一支付DEMo，包含微信、支付宝各种支付方式的统一处理
     └── weixin-sdk
 ```
 
-## 其他说明
+## 快速开始
 
-1. 欢迎提交 [PR](https://www.yeee.vip)，注意对应提交对应 `dev` 分支
+### 快速搭建基于Netty的Websocket应用程序
 
-2. 欢迎提交 [issue](https://github.com/yeeevip/yeee-memo/issues)，请写清楚遇到问题的原因、开发环境、复显步骤。
+1. 下载yeee-memo工程，打包构建JavaWeb通用脚手架**memo-parent**
 
-## 交流群
+```
+git clone https://github.com/yeeevip/yeee-memo.git
+cd memo-parent && mvn clean install
+```
+
+2. pom文件引入**common-netty-websocket**通用依赖
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- yeee-memo脚手架 -->
+    <parent>
+        <artifactId>memo-parent</artifactId>
+        <groupId>vip.yeee.memo</groupId>
+        <version>3.2.2-SNAPSHOT</version>
+        <relativePath/>
+    </parent>
+    <artifactId>api-auth-server</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>common-web</artifactId>
+        </dependency>
+        <!-- [netty-websocket]通用依赖 -->
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>common-netty-websocket</artifactId>
+        </dependency>
+    </dependencies>
+</project>
+```
+
+3. 创建端点控制器类，类似Controller，就可以实现自己的业务逻辑
+
+```java
+@ServerEndpoint(path = "/ws/{arg}")
+public class MyWebSocket {
+
+    @OnOpen
+    public void onOpen(Session session, HttpHeaders headers, @RequestParam String req, @RequestParam MultiValueMap reqMap, @PathParam String arg, @PathParam Map pathMap) {
+        ...
+    }
+
+    @OnClose
+    public void onClose(Session session) throws IOException {
+        ...
+    }
+
+    @OnError
+    public void onError(Session session, Throwable throwable) {
+        ...
+    }
+
+    @OnMessage
+    public void onMessage(Session session, String message) {
+        ...
+    }
+}
+```    
+
+4. 最后一个Netty-Websocket应用就搭建好了
+
+- 完整代码请参考：[yeee-chatgpt](https://gitee.com/yeeevip/yeee-chatgpt.git)
+
+### 基于memo脚手架快速搭建Spring+Security+Oauth2的认证/授权服务器
+
+1. 下载yeee-memo工程，打包构建JavaWeb通用脚手架**memo-parent**
+
+```
+git clone https://github.com/yeeevip/yeee-memo.git
+cd memo-parent && mvn clean install
+```
+
+2. 使用IDEA新建maven工程web-auth-server，pom文件引入**common-platform-auth**通用依赖
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- yeee-memo脚手架 -->
+    <parent>
+        <artifactId>memo-parent</artifactId>
+        <groupId>vip.yeee.memo</groupId>
+        <version>3.2.2-SNAPSHOT</version>
+        <relativePath/>
+    </parent>
+    <artifactId>api-auth-server</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>common-web</artifactId>
+        </dependency>
+        <!-- [授权/认证服务器]通用依赖 -->
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>common-platform-auth-server</artifactId>
+        </dependency>
+        <!-- [资源客户端]通用依赖 -->
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>common-platform-auth-client</artifactId>
+        </dependency>
+    </dependencies>
+</project>
+```
+
+3. 继承AbstractCustomUserDetailsService重写getSystemUserByUsername方法和自己系统用户关联起来
+
+```java
+public class CustomUserDetailsService extends AbstractCustomUserDetailsService {
+    
+    @Override
+    public AuthUser getUserByUserTypeAndUsername(String username) {
+        SysUser sysUser = sysUserMapper.selectOne(username);
+        if (sysUser == null) {
+            throw new BizException(MessageConstant.USER_NOT_EXIST);
+        }
+        ...
+        SystemUserBo userBo = new SystemUserBo();
+        ...
+        return userBo;
+    }
+}
+```
+
+4. 在application.yml中添加以下配置
+
+```
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://cloud-web-auth-server/auth-server/oauth/check_token
+    client:
+      client-id: ${spring.application.name}
+      client-secret: 123456
+      #      grant-type: password
+      access-token-uri: http://cloud-web-auth-server/auth-server/oauth/token
+yeee:
+  auth:
+    resource:
+      # 设置排除鉴权的URL
+      exclude:
+        - /system/register
+        - /system/login
+        - /anonymous/limit/api
+```
+
+5. 最后一个web认证服务器就搭建好了
+
+- 完整代码请参考：[web-auth-server](https://gitee.com/yeeevip/yeee-memo/tree/master/spring-cloud/auth-sso/web-auth-server)
+
+## 技术交流群
 
 - 作者QQ：1324459373
 
