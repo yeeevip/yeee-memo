@@ -17,7 +17,7 @@
         <module>common-auth</module>
         <module>common-springcloud</module>
         <module>common-web</module>
-        <module>mybatis-encrypt-plugin</module>
+        <module>common-mybatis-encrypt</module>
         <module>common-sso</module>
         <module>common-httpclient</module>
         <module>common-websse</module>

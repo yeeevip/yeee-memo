@@ -211,6 +211,11 @@
                 <artifactId>common-redisson-kit</artifactId>
                 <version>${yeee-memo.version}</version>
             </dependency>
+            <dependency>
+                <groupId>vip.yeee.memo</groupId>
+                <artifactId>common-mybatis-encrypt</artifactId>
+                <version>${yeee-memo.version}</version>
+            </dependency>
             <!-- log4j -->
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
@@ -299,6 +304,11 @@
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-autoconfigure</artifactId>
                 <version>${mybatis-starter.version}</version>
             </dependency>
             <!-- mybatis-plus -->
