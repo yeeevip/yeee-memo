@@ -201,13 +201,25 @@
     </pluginRepositories>
 
     <distributionManagement>
+        <!--
+
+         // install到本地仓库
+         C:\install\apache-maven\bin\mvn -s C:\install\apache-maven\conf\settings.xml -Dmaven.repo.local=D:\java-jar\maven\repository install:install-file -Dfile=C:\***.jar -DgroupId=com.api.aa -DartifactId=third-sdk -Dversion=3.2.0 -Dpackaging=jar
+         // deploy到远程仓库
+         C:\install\apache-maven\bin\mvn -s C:\install\apache-maven\conf\settings.xml -Dmaven.repo.local=D:\java-jar\maven\repository deploy:deploy-file -Dfile=C:\***.jar -DgroupId=com.api.aa -DartifactId=third-sdk -Dversion=3.2.0 -Dpackaging=jar -DrepositoryId=yeee-memo -Durl=https://nexus3.yeee.vip/repository/yeee-memo/
+
+         -->
         <repository>
-            <id>releases</id>
-            <url>https://nexus3.yeee.vip/repository/maven-releases/</url>
+            <id>yeee-memo</id>
+            <name>yeee-memo</name>
+            <url>https://nexus3.yeee.vip/repository/yeee-memo/</url>
         </repository>
         <snapshotRepository>
-            <id>snapshots</id>
-            <url>https://nexus3.yeee.vip/repository/maven-snapshots/</url>
+            <id>yeee-memo-snapshots</id>
+            <name>yeee-memo-snapshot</name>
+            <uniqueVersion>false</uniqueVersion>
+            <layout>default</layout>
+            <url>https://nexus3.yeee.vip/repository/yeee-memo-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 

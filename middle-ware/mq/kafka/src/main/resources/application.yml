@@ -3,7 +3,7 @@ spring:
     bootstrap-servers: yeee.vip.host:21661
     consumer:
       group-id: GID_yeee-memo
-      enable-auto-commit: false
+      enable-auto-commit: false # 需要ack.acknowledge()
       isolation-level: read_committed
     producer:
       retries: 3
