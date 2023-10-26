@@ -1,6 +1,5 @@
 package vip.yeee.memo.common.platformauth.client.interceptor;
 
-import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.slf4j.Logger;
@@ -43,7 +42,6 @@ public class SecurityTokenInterceptor implements HandlerInterceptor {
 //                    .parseClaimsJws(token);
 //            String subject = claimsJws.getBody().getSubject();
 //            JacksonUtils.toJavaBean(subject, SecurityUser.class)
-        SecurityContext.curToken.set(StrUtil.replace(request.getHeader(AuthConstant.JWT_TOKEN_HEADER), AuthConstant.JWT_TOKEN_PREFIX, ""));
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null) {
             return true;
@@ -71,6 +69,5 @@ public class SecurityTokenInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         SecurityContext.curUser.remove();
-        SecurityContext.curToken.remove();
     }
 }

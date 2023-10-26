@@ -105,8 +105,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers("/server/**").permitAll()
 //                .antMatchers("/**/front/**").hasAnyAuthority(SecurityUserTypeEnum.SYSTEM_USER.getRole())
 //                .antMatchers("/**/system/**").hasAnyAuthority(SecurityUserTypeEnum.FRONT_USER.getRole())
-                .antMatchers("/**/front/**").hasRole(SecurityUserTypeEnum.FRONT_USER.getRole())
-                .antMatchers("/**/system/**").hasRole(SecurityUserTypeEnum.SYSTEM_USER.getRole())
+//                .antMatchers("/**/front/**").hasRole(SecurityUserTypeEnum.FRONT_USER.getRole())
+//                .antMatchers("/**/system/**").hasRole(SecurityUserTypeEnum.SYSTEM_USER.getRole())
                 .anyRequest().authenticated();
 
         http.addFilterBefore(new AuthenticationBeforeFilter(), AbstractPreAuthenticatedProcessingFilter.class);

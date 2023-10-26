@@ -34,6 +34,11 @@ public class AuthConstant {
     public static final String AUTH_CLIENT_SECRET = "client_secret";
 
     /**
+     * 授权scope
+     */
+    public static final String AUTH_SCOPE = "scope";
+
+    /**
      * grant_type
      */
     public static final String AUTH_GRANT_TYPE = "grant_type";
@@ -42,6 +47,8 @@ public class AuthConstant {
      * username
      */
     public static final String AUTH_USERNAME = "username";
+
+    public static final String AUTH_USERID = "userId";
 
     /**
      * userType
@@ -74,5 +81,9 @@ public class AuthConstant {
     };
 
     public final static String USERNAME_SEPARATOR = "##";
+
+    public final static String JWT_SIGN_ALGORITHM = "HMACSHA512";
+
+    public final static String OAUTH_USER_DETAIL_CACHE_KEY = "YEEE:oauth:userinfo:";
 
 }

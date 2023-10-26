@@ -26,6 +26,10 @@
             <groupId>vip.yeee.memo</groupId>
             <artifactId>common-platform-auth-server</artifactId>
         </dependency>
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>common-platform-auth-client</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

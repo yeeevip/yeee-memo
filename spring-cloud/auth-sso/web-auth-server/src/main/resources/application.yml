@@ -31,6 +31,13 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://cloud-web-auth-server/auth-server/oauth/check_token
+    client:
+      client-id: ${spring.application.name}
+      client-secret: 123456
 yeee:
   api-version: 2.0
   swagger:
@@ -39,13 +46,14 @@ yeee:
     description: 认证授权中心
     contact-name: yeee
     version: 1.0
-  auth:
-    jwt-secret: 123456
-    server:
+  webauth:
+    token-store:
+      jwt-secret: 123456
+      jwt:
+        enabled: true
     resource:
       exclude:
-        - "/front/register"
-        - "/system/register"
-        - "/front/login"
-        - "/system/login"
-        - "/anonymous/limit/api"
+        - /front/register
+        - /system/register
+        - /front/login
+        - /system/login

@@ -1,22 +1,31 @@
 package vip.yeee.memo.base.model.rest;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
 /**
  * 通用返回对象
  */
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 public class CommonResult<T> implements Serializable {
 
     private long code;
+    private long timestamps;
     private String message;
     private T data;
+
+    public CommonResult(long code, String message, T data) {
+        this.code = code;
+        this.timestamps = System.currentTimeMillis();
+        this.message = message;
+        this.data = data;
+    }
+
+    public CommonResult() {
+    }
+
+
 
     /**
      * 成功返回结果

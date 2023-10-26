@@ -43,8 +43,6 @@ security:
     client:
       client-id: ${spring.application.name}
       client-secret: 123456
-      #      grant-type: password
-      access-token-uri: http://cloud-web-auth-server/auth-server/oauth/token
 feign:
   sentinel:
     enabled: true
@@ -71,13 +69,10 @@ yeee:
     description: 资源1服务中心
     contact-name: yeee
     version: 1.0
-  auth:
-    jwtSecret: 123456
+  webauth:
     resource:
       exclude:
-        - "/system/register"
-        - "/system/login"
-        - "/anonymous/limit/api"
+        - /anonymous/limit/api
   custom:
     redis:
       enabled: true

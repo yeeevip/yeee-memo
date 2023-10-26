@@ -1,9 +1,14 @@
 package vip.yeee.memo.common.platformauth.server.configure;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
+import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -16,8 +21,8 @@ import vip.yeee.memo.common.platformauth.server.constant.SecurityConstants;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * 认证服务器配置
@@ -74,21 +79,19 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 
-//        //配置JWT内容增强
-//        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+//        // 配置JWT的内容增强器
+//        TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
 //        List<TokenEnhancer> delegates = new ArrayList<>();
-////        delegates.add(jwtTokenEnhancer);
+//        delegates.add(jwtTokenEnhancer);
 //        delegates.add((TokenEnhancer) accessTokenConverter);
-//        tokenEnhancerChain.setTokenEnhancers(delegates);
+//        enhancerChain.setTokenEnhancers(delegates);
 
         endpoints.authenticationManager(authenticationManager)
-//                .accessTokenConverter()
                 .userDetailsService(userDetailsService)
-//                .tokenStore(redisTokenStore);
                 //配置存储令牌策略
                 .tokenStore(tokenStore)
                 .accessTokenConverter(accessTokenConverter)
-//                .tokenEnhancer(tokenEnhancerChain)
+//                .tokenEnhancer(enhancerChain)
         ;
     }
 
@@ -97,12 +100,34 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Bean
     public CheckTokenEndpoint checkTokenEndpoint() {
-        AuthorizationTokenService tokenService = new AuthorizationTokenService();
+        CustomTokenService tokenService = new CustomTokenService();
         tokenService.setTokenStore(tokenStore);
         CheckTokenEndpoint checkTokenEndpoint = new CheckTokenEndpoint(tokenService);
-        checkTokenEndpoint.setAccessTokenConverter(accessTokenConverter);
+
+        DefaultAccessTokenConverter defaultAccessTokenConverter = new DefaultAccessTokenConverter();
+        UserAuthenticationConverter userAuthenticationConverter = new DefaultUserAuthenticationConverter() {
+            @Override
+            public Map<String, ?> convertUserAuthentication(Authentication authentication) {
+                Map<String, Object> response = new LinkedHashMap<>();
+                response.put(USERNAME, authentication.getPrincipal());
+                if (authentication.getAuthorities() != null && !authentication.getAuthorities().isEmpty()) {
+                    response.put(AUTHORITIES, AuthorityUtils.authorityListToSet(authentication.getAuthorities()));
+                }
+                return response;
+            }
+
+        };
+        defaultAccessTokenConverter.setUserTokenConverter(userAuthenticationConverter);
+
+        checkTokenEndpoint.setAccessTokenConverter(defaultAccessTokenConverter);
 //        checkTokenEndpoint.setExceptionTranslator(cloudWebResponseExceptionTranslator);
         return checkTokenEndpoint;
     }
+
+    @ConfigurationProperties(prefix = "security.oauth2.client")
+	@Bean
+	public OAuth2ProtectedResourceDetails resourceOwnerPasswordResourceDetails() {
+		return new ResourceOwnerPasswordResourceDetails();
+	}
 
 }

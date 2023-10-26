@@ -15,6 +15,7 @@ public class UserInfo {
      * ID
      */
     private String id;
+    private String userType;
     /**
      * 用户名
      */

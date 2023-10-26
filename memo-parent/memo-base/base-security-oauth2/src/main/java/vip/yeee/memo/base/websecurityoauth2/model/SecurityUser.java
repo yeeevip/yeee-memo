@@ -20,6 +20,8 @@ public class SecurityUser implements UserDetails {
      * ID
      */
     private String id;
+
+    private String userType;
     /**
      * 用户名
      */
@@ -57,8 +59,9 @@ public class SecurityUser implements UserDetails {
 //        }
 //    }
 
-    public SecurityUser(String id, String username, String password, Integer state, Set<String> roles) {
+    public SecurityUser(String id, String userType, String username, String password, Integer state, Set<String> roles) {
         this.setId(id);
+        this.setUserType(userType);
         this.setUsername(username);
         this.setPassword(password);
         this.setEnabled(state == 0);

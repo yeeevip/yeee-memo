@@ -7,7 +7,6 @@ import vip.yeee.memo.base.websecurityoauth2.model.AuthedUser;
 public class SecurityContext {
 
     public static ThreadLocal<AuthedUser> curUser = new ThreadLocal<>();
-    public static ThreadLocal<String> curToken = new ThreadLocal<>();
 
     /**
      * 返回当前用户ID
@@ -22,10 +21,6 @@ public class SecurityContext {
 
     public static AuthedUser getCurUser() {
         return curUser.get();
-    }
-
-    public static String getCurToken() {
-        return curToken.get();
     }
 
 }

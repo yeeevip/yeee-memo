@@ -45,6 +45,7 @@ public class CustomUserDetailsService extends AbstractCustomUserDetailsService {
 
     @Override
     public AuthUser getUserByUserTypeAndUsername(String userType, String username) {
+        // cache
         if (SecurityUserTypeEnum.SYSTEM_USER.getType().equals(userType)) {
             return this.getSystemUserByUsername(username);
         } else if (SecurityUserTypeEnum.FRONT_USER.getType().equals(userType)) {

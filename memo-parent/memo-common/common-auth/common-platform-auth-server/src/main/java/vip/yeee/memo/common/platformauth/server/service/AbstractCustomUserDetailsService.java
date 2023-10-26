@@ -1,24 +1,37 @@
 package vip.yeee.memo.common.platformauth.server.service;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpResponse;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.slf4j.Logger;
-import org.springframework.security.authentication.AccountExpiredException;
-import org.springframework.security.authentication.CredentialsExpiredException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.LockedException;
+import org.springframework.security.authentication.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import vip.yeee.memo.base.model.exception.BizException;
 import vip.yeee.memo.base.util.LogUtils;
 import vip.yeee.memo.base.websecurityoauth2.constant.AuthConstant;
 import vip.yeee.memo.base.websecurityoauth2.constant.MessageConstant;
 import vip.yeee.memo.base.websecurityoauth2.model.AuthUser;
+import vip.yeee.memo.base.websecurityoauth2.model.Oauth2TokenVo;
 import vip.yeee.memo.base.websecurityoauth2.model.SecurityUser;
 
-import java.util.Optional;
-import java.util.Set;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -30,6 +43,11 @@ import java.util.stream.Collectors;
 public abstract class AbstractCustomUserDetailsService implements UserDetailsService {
 
     private final static Logger log = LogUtils.commonAuthLog();
+
+    @Resource
+    private TokenStore tokenStore;
+    @Resource
+    private OAuth2ProtectedResourceDetails resourceOwnerPasswordResourceDetails;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -58,7 +76,7 @@ public abstract class AbstractCustomUserDetailsService implements UserDetailsSer
             Set<String> permissions = Optional.ofNullable(sysUser.getPermissions()).orElseGet(Sets::newHashSet);
             authoritySet.addAll(permissions);
             // build security-user
-            securityUser = new SecurityUser(sysUser.getUserId(), sysUser.getUsername(), sysUser.getPassword(), sysUser.getState(), authoritySet);
+            securityUser = new SecurityUser(sysUser.getUserId(), userType, sysUser.getUsername(), sysUser.getPassword(), sysUser.getState(), authoritySet);
         } catch (Exception e) {
             throw new UsernameNotFoundException(e.getMessage());
         }
@@ -77,5 +95,53 @@ public abstract class AbstractCustomUserDetailsService implements UserDetailsSer
     }
 
     public abstract AuthUser getUserByUserTypeAndUsername(String userType, String username);
+
+    public Oauth2TokenVo oauthToken(String userType, String username, String password) {
+        if (StrUtil.isBlank(username) || StrUtil.isBlank(password)) {
+            throw new BizException(MessageConstant.USERNAME_PASSWORD_ERROR);
+        }
+        try {
+            Map<String, Object> params = Maps.newHashMap();
+            params.put(AuthConstant.AUTH_CLIENT_ID, resourceOwnerPasswordResourceDetails.getClientId());
+            params.put(AuthConstant.AUTH_CLIENT_SECRET, resourceOwnerPasswordResourceDetails.getClientSecret());
+            params.put(AuthConstant.AUTH_GRANT_TYPE, resourceOwnerPasswordResourceDetails.getGrantType());
+            params.put(AuthConstant.AUTH_USERNAME, userType + AuthConstant.USERNAME_SEPARATOR + username);
+            params.put(AuthConstant.AUTH_PASSWORD, password);
+            RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+            HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
+            HttpResponse response = HttpRequest.post("http://localhost" + ":" + request.getServerPort() + request.getContextPath() + "/oauth/token").form(params).execute();
+            if (!response.isOk()) {
+                log.warn("oauthToken error, response = {}", response);
+                throw new Exception(response.body());
+            }
+            JSONObject jsonObject = JSON.parseObject(response.body());
+            Oauth2TokenVo oauth2TokenVo = new Oauth2TokenVo();
+            oauth2TokenVo.setToken(jsonObject.getString("access_token"));
+            oauth2TokenVo.setRefreshToken(jsonObject.getString("refresh_token"));
+            oauth2TokenVo.setExpiresIn(jsonObject.getInteger("expires_in"));
+            oauth2TokenVo.setTokenHead(AuthConstant.JWT_TOKEN_PREFIX);
+            return oauth2TokenVo;
+        } catch (Exception e) {
+            log.error("oauthToken error，userType = {}，username = {}", userType, username, e);
+            throw new BizException(MessageConstant.AUTH_ERROR);
+        }
+    }
+
+    public void logout() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        this.logout(authentication);
+    }
+
+    public void logout(Authentication authentication) {
+        OAuth2AccessToken accessToken = tokenStore.getAccessToken((OAuth2Authentication) authentication);
+        if (accessToken != null) {
+            // 移除access_token
+            tokenStore.removeAccessToken(accessToken);
+            // 移除refresh_token
+            if (accessToken.getRefreshToken() != null) {
+                tokenStore.removeRefreshToken(accessToken.getRefreshToken());
+            }
+        }
+    }
 
 }
