@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.slf4j.Logger;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,9 +19,6 @@ import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResour
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import vip.yeee.memo.base.model.exception.BizException;
 import vip.yeee.memo.base.util.LogUtils;
 import vip.yeee.memo.base.websecurityoauth2.constant.AuthConstant;
@@ -30,7 +28,6 @@ import vip.yeee.memo.base.websecurityoauth2.model.Oauth2TokenVo;
 import vip.yeee.memo.base.websecurityoauth2.model.SecurityUser;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -48,6 +45,8 @@ public abstract class AbstractCustomUserDetailsService implements UserDetailsSer
     private TokenStore tokenStore;
     @Resource
     private OAuth2ProtectedResourceDetails resourceOwnerPasswordResourceDetails;
+    @Resource
+    private ServerProperties serverProperties;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -107,12 +106,13 @@ public abstract class AbstractCustomUserDetailsService implements UserDetailsSer
             params.put(AuthConstant.AUTH_GRANT_TYPE, resourceOwnerPasswordResourceDetails.getGrantType());
             params.put(AuthConstant.AUTH_USERNAME, userType + AuthConstant.USERNAME_SEPARATOR + username);
             params.put(AuthConstant.AUTH_PASSWORD, password);
-            RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
-            HttpResponse response = HttpRequest.post("http://localhost" + ":" + request.getServerPort() + request.getContextPath() + "/oauth/token").form(params).execute();
+            String contextPath = serverProperties.getServlet().getContextPath();
+            String url = "http://localhost" + ":" + serverProperties.getPort()
+                    + ("/".equals(contextPath) ? "" : contextPath) + "/oauth/token";
+            HttpResponse response = HttpRequest.post(url).form(params).execute();
             if (!response.isOk()) {
                 log.warn("oauthToken error, response = {}", response);
-                throw new Exception(response.body());
+                throw new Exception(response.toString());
             }
             JSONObject jsonObject = JSON.parseObject(response.body());
             Oauth2TokenVo oauth2TokenVo = new Oauth2TokenVo();
