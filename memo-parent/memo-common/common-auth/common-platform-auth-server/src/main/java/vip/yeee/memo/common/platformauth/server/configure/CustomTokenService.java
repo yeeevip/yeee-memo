@@ -12,7 +12,6 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.stereotype.Component;
 import vip.yeee.memo.base.util.LogUtils;
 
 import javax.annotation.Resource;
@@ -25,7 +24,6 @@ import java.util.Date;
  * @author yeeee
  * @since 2022/11/25 13:46
  */
-@Component
 public class CustomTokenService extends DefaultTokenServices {
 
     private final static Logger log = LogUtils.commonAuthLog();

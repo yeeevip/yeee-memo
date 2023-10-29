@@ -14,6 +14,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.security.oauth2.provider.endpoint.CheckTokenEndpoint;
 import org.springframework.security.oauth2.provider.token.*;
@@ -93,6 +94,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .accessTokenConverter(accessTokenConverter)
 //                .tokenEnhancer(enhancerChain)
         ;
+    }
+
+    @Bean
+    public CustomTokenService customTokenService(TokenStore tokenStore, ClientDetailsService clientDetailsService) {
+        CustomTokenService customTokenService = new CustomTokenService();
+        customTokenService.setTokenStore(tokenStore);
+        customTokenService.setClientDetailsService(clientDetailsService);
+        return customTokenService;
     }
 
     /**
