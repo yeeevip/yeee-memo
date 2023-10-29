@@ -99,10 +99,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      * check_token端点重写
      */
     @Bean
-    public CheckTokenEndpoint checkTokenEndpoint() {
-        CustomTokenService tokenService = new CustomTokenService();
-        tokenService.setTokenStore(tokenStore);
-        CheckTokenEndpoint checkTokenEndpoint = new CheckTokenEndpoint(tokenService);
+    public CheckTokenEndpoint checkTokenEndpoint(CustomTokenService customTokenService) {
+        CheckTokenEndpoint checkTokenEndpoint = new CheckTokenEndpoint(customTokenService);
 
         DefaultAccessTokenConverter defaultAccessTokenConverter = new DefaultAccessTokenConverter();
         UserAuthenticationConverter userAuthenticationConverter = new DefaultUserAuthenticationConverter() {
