@@ -89,6 +89,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
         endpoints.authenticationManager(authenticationManager)
                 .userDetailsService(userDetailsService)
+                .tokenServices(customTokenService(tokenStore, clientDetailsService()))
                 //配置存储令牌策略
                 .tokenStore(tokenStore)
                 .accessTokenConverter(accessTokenConverter)
