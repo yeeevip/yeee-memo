@@ -5,7 +5,7 @@
     <!-- 日志输出格式 -->
     <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n" />
     <!--脱敏处理 -->
-    <conversionRule conversionWord="msg" converterClass="vip.yeee.memo.base.util.LogMessageConverter" />
+    <conversionRule conversionWord="msg" converterClass="vip.yeee.memo.base.web.handle.LogSensitiveMessageConverter" />
     <!-- 彩色日志格式 -->
     <property name="CONSOLE_LOG_PATTERN"
               value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
@@ -21,6 +21,23 @@
         </encoder>
     </appender>
     <!-- 系统日志输出 -->
+    <appender name="REF-DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/log_debug.log</file>
+        <!-- 循环政策：基于时间创建日志文件 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 日志文件名格式 -->
+            <fileNamePattern>${LOG_PATH}/log_debug.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <!-- 日志最大的历史 60天 -->
+            <maxHistory>60</maxHistory>
+            <maxFileSize>100MB</maxFileSize>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+    </appender>
     <appender name="REF-INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_PATH}/log_info.log</file>
         <!-- 循环政策：基于时间创建日志文件 -->
@@ -34,14 +51,9 @@
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern>${LOG_PATTERN}</pattern>
         </encoder>
-<!--        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            &lt;!&ndash; 过滤的级别 &ndash;&gt;
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>INFO</level>
-            &lt;!&ndash; 匹配时的操作：接收（记录） &ndash;&gt;
-            <onMatch>ACCEPT</onMatch>
-            &lt;!&ndash; 不匹配时的操作：拒绝（不记录） &ndash;&gt;
-            <onMismatch>DENY</onMismatch>
-        </filter>-->
+        </filter>
     </appender>
     <appender name="REF-ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_PATH}/log_error.log</file>
@@ -57,6 +69,9 @@
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern>${LOG_PATTERN}</pattern>
         </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
     </appender>
 
     <appender name="REF-YEEE-COMMON-AUTH" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -82,12 +97,16 @@
     <springProfile name="dev">
         <root level="INFO">
             <appender-ref ref="REF-CONSOLE"/>
+            <appender-ref ref="REF-DEBUG"/>
+            <appender-ref ref="REF-INFO"/>
+            <appender-ref ref="REF-ERROR"/>
         </root>
     </springProfile>
 
-    <springProfile name="stage, prod">
+    <springProfile name="test, stage, prod">
         <root level="INFO">
             <appender-ref ref="REF-CONSOLE"/>
+            <appender-ref ref="REF-DEBUG"/>
             <appender-ref ref="REF-INFO"/>
             <appender-ref ref="REF-ERROR"/>
         </root>

@@ -1,4 +1,4 @@
-package vip.yeee.memo.base.util;
+package vip.yeee.memo.base.web.handle;
 
 import ch.qos.logback.classic.pattern.MessageConverter;
 import ch.qos.logback.classic.spi.ILoggingEvent;
@@ -14,12 +14,24 @@ import java.util.regex.Pattern;
  * 日志打印进行相应脱敏处理
  */
 @Slf4j
-public class LogMessageConverter extends MessageConverter {
+public class LogSensitiveMessageConverter extends MessageConverter {
 
     /**
      * 排除日志
      */
-    public static final String EXCLUDE_LOG = "ERROR";
+    private final Set<String> excludeLevel = new HashSet<>();
+
+    private final Set<String> excludeName = new HashSet<>();
+
+    public Set<String> addExcludeLevel(String excludeLevel) {
+        this.excludeLevel.add(excludeLevel);
+        return this.excludeLevel;
+    }
+
+    public Set<String> addExcludeName(String excludeName) {
+        this.excludeName.add(excludeName);
+        return this.excludeName;
+    }
 
     /**
      * 正则规则
@@ -35,7 +47,7 @@ public class LogMessageConverter extends MessageConverter {
 
     @Override
     public String convert(ILoggingEvent event) {
-        if (!EXCLUDE_LOG.contains(event.getLevel().levelStr)) {
+        if (!excludeLevel.contains(event.getLevel().levelStr) && !excludeName.contains(event.getLoggerName())) {
             return sensitiveMessage(event.getFormattedMessage());
         }
         return event.getFormattedMessage();
