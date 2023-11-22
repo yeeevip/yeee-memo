@@ -47,10 +47,10 @@ public class LogSensitiveMessageConverter extends MessageConverter {
 
     @Override
     public String convert(ILoggingEvent event) {
-        if (!excludeLevel.contains(event.getLevel().levelStr) && !excludeName.contains(event.getLoggerName())) {
-            return sensitiveMessage(event.getFormattedMessage());
+        if (excludeLevel.contains(event.getLevel().levelStr) || excludeName.contains(event.getLoggerName())) {
+            return event.getFormattedMessage();
         }
-        return event.getFormattedMessage();
+        return sensitiveMessage(event.getFormattedMessage());
     }
 
     /**
