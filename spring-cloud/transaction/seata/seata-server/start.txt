@@ -65,10 +65,8 @@
         1.新增配置
         #1.4.2没有service这个配置,可以自己添加上
         service {
-            vgroupMapping.seata-client-01 = "default" #指定分组
-            vgroupMapping.seata-client-02 = "default" #指定分组
-            vgroupMapping.seata-client-03 = "default" #指定分组
-            # default.grouplist = "127.0.0.1:8091"
+            vgroupMapping.yeee_test_tx_group = "seata-server-yeee" #指定分组
+            yeee_test_tx_group.grouplist = "127.0.0.1:8091"
             enableDegrade = false
             disable = false
             max.commit.retry.timeout = "-1"
@@ -113,9 +111,9 @@
           nacos {
             application = "seata-server" #随便写
             serverAddr = "127.0.0.1:8848"
-            group = "dev" #随便写
+            group = "seata_group" #随便写
             namespace = "e69ceae8-160c-4d52-b512-ad0e919ad86b"
-            cluster = "default"
+            cluster = "seata-server-yeee"
             username = "nacos"
             password = "nacos"
           }
