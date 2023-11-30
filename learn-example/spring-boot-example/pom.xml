@@ -21,6 +21,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>base-mybatis</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

@@ -32,6 +32,6 @@ public class Ext13DisposableBean implements DisposableBean, ApplicationListener<
 
     @Override
     public void onApplicationEvent(SpringApplicationEvent event) {
-        throw new RuntimeException();
+//        throw new RuntimeException();
     }
 }
