@@ -9,6 +9,23 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 </#if>
 </#list>
 
+<#list tableClass.allFields as field>
+<#if !field.nullable>
+<#if field.jdbcCharacterColumn>
+import javax.validation.constraints.NotBlank;
+<#break>
+</#if>
+</#if>
+</#list>
+<#list tableClass.allFields as field>
+<#if !field.nullable>
+<#if field.jdbcCharacterColumn>
+import javax.validation.constraints.NotNull;
+<#break>
+</#if>
+</#if>
+</#list>
+
 import lombok.Data;
 
 /**
@@ -22,6 +39,13 @@ public class ${tableClass.shortClassName}AddRequest {
     <#if field.shortTypeName == 'Date'>
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     </#if>
+<#if !field.nullable>
+<#if field.jdbcCharacterColumn>
+    @NotBlank(message = "${field.remarks}不能为空")
+<#else>
+    @NotNull(message = "${field.remarks}不能为空")
+</#if>
+</#if>
     private ${field.shortTypeName} ${field.fieldName};
     </#if>
 
