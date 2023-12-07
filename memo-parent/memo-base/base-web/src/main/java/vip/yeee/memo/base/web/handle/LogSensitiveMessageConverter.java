@@ -23,14 +23,16 @@ public class LogSensitiveMessageConverter extends MessageConverter {
 
     private final Set<String> excludeName = new HashSet<>();
 
-    public Set<String> addExcludeLevel(String excludeLevel) {
-        this.excludeLevel.add(excludeLevel);
-        return this.excludeLevel;
+    public LogSensitiveMessageConverter() {
+        super();
+        handleExcludeLevel(excludeLevel);
+        handleExcludeName(excludeName);
     }
 
-    public Set<String> addExcludeName(String excludeName) {
-        this.excludeName.add(excludeName);
-        return this.excludeName;
+    public void handleExcludeLevel(Set<String> excludeLevel) {
+    }
+
+    public void handleExcludeName(Set<String> excludeName) {
     }
 
     /**
