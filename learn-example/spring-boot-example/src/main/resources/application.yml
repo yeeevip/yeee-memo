@@ -13,3 +13,8 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/yeee_auth?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
     password: root
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: yeah
+    database: 6

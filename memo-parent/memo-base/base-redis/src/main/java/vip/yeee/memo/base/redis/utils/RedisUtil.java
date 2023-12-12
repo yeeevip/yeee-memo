@@ -1,15 +1,18 @@
-package vip.yeee.memo.base.redis.kit;
+package vip.yeee.memo.base.redis.utils;
 
 import cn.hutool.core.collection.CollectionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.geo.*;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.data.redis.core.*;
+import org.springframework.data.redis.domain.geo.BoundingBox;
+import org.springframework.data.redis.domain.geo.GeoReference;
 import org.springframework.stereotype.Component;
 import vip.yeee.memo.base.redis.constant.RedisConstant;
 
-import javax.annotation.Resource;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -21,7 +24,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @Component
-public class RedisKit {
+public class RedisUtil {
 
 //    @Resource
 //    private RedisTemplate<String, String> redisTemplate;
@@ -588,6 +591,153 @@ public class RedisKit {
         } catch (Exception e) {
             log.error("判断缓存存在失败key[" + redisKey + "]", e);
             return true;
+        }
+    }
+
+    /**
+     * 添加地理位置
+     */
+    public void addGeoLocations(String key, Map<String, Point> locations, long expire) {
+        try {
+            redisTemplate.opsForGeo()
+                    .add(key, locations);
+            if (expire > 0) {
+                redisTemplate.expire(key, expire, TimeUnit.SECONDS);
+            }
+        } catch (Exception e) {
+            log.error("缓存GEO失败，key[" + key + "]", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void addGeoLocations(String key, Map<String, Point> locations) {
+        addGeoLocations(key, locations, -1);
+    }
+
+
+    public void addGeoLocation(String key, double longitude, double latitude, String member, long expire) {
+        addGeoLocations(key, Collections.singletonMap(member, new Point(longitude, latitude)), expire);
+    }
+
+    public void addGeoLocation(String key, double longitude, double latitude, String member) {
+        addGeoLocation(key, longitude, latitude, member, -1);
+    }
+
+    /**
+     * 查询地理位置
+     */
+    public List<Point> getGeoPositions(String key, List<String> members) {
+        try {
+            return redisTemplate.opsForGeo()
+                    .position(key, members.toArray(new String[0]));
+        } catch (Exception e) {
+            log.error("获取GEO失败，key[" + key + "]", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Point getGeoPosition(String key, String member) {
+        List<Point> positions = getGeoPositions(key, Collections.singletonList(member));
+        if (CollectionUtil.isEmpty(positions)) {
+            return null;
+        }
+        return positions.get(0);
+    }
+
+    /**
+     * 查询地理距离
+     */
+    public Distance getGeoDistance(String key, String member1, String member2) {
+        try {
+            return redisTemplate.opsForGeo()
+                    .distance(key, member1, member2);
+        } catch (Exception e) {
+            log.error("获取GEO距离失败，key[" + key + "]", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 查询半径范围坐标
+     */
+    public GeoResults<RedisGeoCommands.GeoLocation<String>> getGeoRadius(String key, Point center, Distance radius) {
+        try {
+            RedisGeoCommands.GeoRadiusCommandArgs commandArgs = RedisGeoCommands.GeoRadiusCommandArgs.newGeoRadiusArgs();
+            commandArgs.includeCoordinates();
+            commandArgs.includeDistance();
+            return redisTemplate.opsForGeo()
+                    .radius(key, new Circle(center, radius), commandArgs);
+        } catch (Exception e) {
+            log.error("获取GEO半径内坐标失败，key[" + key + "]", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 查询半径范围坐标
+     */
+    public GeoResults<RedisGeoCommands.GeoLocation<String>> getGeoRadius(String key, String member, Distance radius) {
+        try {
+            RedisGeoCommands.GeoRadiusCommandArgs commandArgs = RedisGeoCommands.GeoRadiusCommandArgs.newGeoRadiusArgs();
+            commandArgs.includeCoordinates();
+            commandArgs.includeDistance();
+            return redisTemplate.opsForGeo()
+                    .radius(key, member, radius, commandArgs);
+        } catch (Exception e) {
+            log.error("获取GEO半径内坐标失败，key[" + key + "]", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 查询半径范围坐标 redis6.2
+     */
+    public GeoResults<RedisGeoCommands.GeoLocation<String>> getGeoByCircle(String key, Point center, Distance radius) {
+        try {
+            return redisTemplate.opsForGeo()
+                    .search(key, new Circle(center, radius));
+        } catch (Exception e) {
+            log.error("获取GEO半径内坐标失败，key[" + key + "]", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 查询半径范围坐标 redis6.2
+     */
+    public GeoResults<RedisGeoCommands.GeoLocation<String>> getGeoByCircle(String key, String member, Distance radius) {
+        try {
+            return redisTemplate.opsForGeo()
+                    .search(key, GeoReference.fromMember(member), radius);
+        } catch (Exception e) {
+            log.error("获取GEO半径内坐标失败，key[" + key + "]", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 查询矩形范围坐标 redis6.2
+     */
+    public GeoResults<RedisGeoCommands.GeoLocation<String>> getGeoByBox(String key, Point point, Distance width, Distance height) {
+        try {
+            return redisTemplate.opsForGeo()
+                    .search(key, GeoReference.fromCoordinate(point), new BoundingBox(width, height));
+        } catch (Exception e) {
+            log.error("获取GEO矩形内坐标失败，key[" + key + "]", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 查询矩形范围坐标 redis6.2
+     */
+    public GeoResults<RedisGeoCommands.GeoLocation<String>> getGeoByBox(String key, String member, Distance width, Distance height) {
+        try {
+            return redisTemplate.opsForGeo()
+                    .search(key, GeoReference.fromMember(member), new BoundingBox(width, height));
+        } catch (Exception e) {
+            log.error("获取GEO矩形内坐标失败，key[" + key + "]", e);
+            throw new RuntimeException(e);
         }
     }
 
