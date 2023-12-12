@@ -7,12 +7,14 @@ import org.springframework.data.geo.*;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisGeoCommands;
+import org.springframework.data.redis.connection.stream.*;
 import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.domain.geo.BoundingBox;
 import org.springframework.data.redis.domain.geo.GeoReference;
 import org.springframework.stereotype.Component;
 import vip.yeee.memo.base.redis.constant.RedisConstant;
 
+import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -737,6 +739,51 @@ public class RedisUtil {
                     .search(key, GeoReference.fromMember(member), new BoundingBox(width, height));
         } catch (Exception e) {
             log.error("获取GEO矩形内坐标失败，key[" + key + "]", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 添加流 redis5.0
+     */
+    public RecordId addStream(String key, String message) {
+        try {
+            return redisTemplate.opsForStream()
+                    .add(StreamRecords.newRecord().in(key).ofObject(message));
+        } catch (Exception e) {
+            log.error("添加Stream失败，key[" + key + "]", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 创建消费者组 redis5.0
+     */
+    public void createGroup(String key, String group) {
+        try {
+            redisTemplate.opsForStream().createGroup(key, group);
+        } catch (Exception e) {
+            if (e.getMessage().contains("already exists")) {
+                return;
+            }
+            log.error("创建Stream消费组失败，key[" + key + "]", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 获取流 redis5.0
+     */
+    public List<MapRecord<String, String, String>> readStream(String key, String consumerName, String group) {
+        try {
+            StreamReadOptions readOptions = StreamReadOptions.empty()
+                    .block(Duration.ofSeconds(10))
+                    .count(20)
+                    .autoAcknowledge();
+            return redisTemplate.<String, String>opsForStream()
+                    .read(Consumer.from(group, consumerName), readOptions, StreamOffset.create(key, ReadOffset.lastConsumed()));
+        } catch (Exception e) {
+            log.error("获取Stream失败，key[" + key + "]", e);
             throw new RuntimeException(e);
         }
     }
