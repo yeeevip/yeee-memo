@@ -37,6 +37,10 @@
             <groupId>vip.yeee.memo</groupId>
             <artifactId>common-redisson-kit</artifactId>
         </dependency>
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>common-doc-kit</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
