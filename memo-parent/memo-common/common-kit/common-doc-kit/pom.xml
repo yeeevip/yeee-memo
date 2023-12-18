@@ -10,7 +10,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>common-doc-kit</artifactId>
-    <version>3.2.2-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
@@ -31,6 +30,5 @@
             <artifactId>docx4j-documents4j-local</artifactId>
         </dependency>
     </dependencies>
-
 
 </project>

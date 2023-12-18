@@ -26,12 +26,14 @@
         <module>common-oss</module>
         <module>common-dingtalk</module>
         <module>common-kit</module>
+        <module>common-workflow</module>
     </modules>
 
     <build>
         <plugins>
             <plugin>
-                <artifactId>maven-source-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

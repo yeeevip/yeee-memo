@@ -52,7 +52,6 @@
         <jcseg.version>2.6.3</jcseg.version>
         <protobuf-java.version>3.6.1</protobuf-java.version>
         <dingtalk-service-sdk.version>2.0.0</dingtalk-service-sdk.version>
-        <activiti-spring-boot-starter.version>7.1.0.M6</activiti-spring-boot-starter.version>
         <poi-scratchpad.version>4.1.2</poi-scratchpad.version>
         <itextpdf.version>5.5.1</itextpdf.version>
         <docx4j-documents4j-local.version>8.3.4</docx4j-documents4j-local.version>
@@ -223,6 +222,11 @@
             <dependency>
                 <groupId>vip.yeee.memo</groupId>
                 <artifactId>common-doc-kit</artifactId>
+                <version>${yeee-memo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>vip.yeee.memo</groupId>
+                <artifactId>common-activiti7</artifactId>
                 <version>${yeee-memo.version}</version>
             </dependency>
             <!-- log4j -->
@@ -494,11 +498,6 @@
                 <groupId>com.aliyun</groupId>
                 <artifactId>alibaba-dingtalk-service-sdk</artifactId>
                 <version>${dingtalk-service-sdk.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.activiti</groupId>
-                <artifactId>activiti-spring-boot-starter</artifactId>
-                <version>${activiti-spring-boot-starter.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.poi</groupId>
