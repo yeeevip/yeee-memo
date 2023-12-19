@@ -23,4 +23,12 @@ public class SecurityContext {
         return curUser.get();
     }
 
+    public static boolean isSuperAdmin() {
+        AuthedUser authedUser = curUser.get();
+        if (authedUser != null) {
+            return authedUser.isSuperAdmin();
+        }
+        return false;
+    }
+
 }
