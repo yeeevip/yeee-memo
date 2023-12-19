@@ -26,7 +26,7 @@ public class SecurityContext {
     public static boolean isSuperAdmin() {
         AuthedUser authedUser = curUser.get();
         if (authedUser != null) {
-            return authedUser.isSuperAdmin();
+            return authedUser.getSuperAdmin();
         }
         return false;
     }

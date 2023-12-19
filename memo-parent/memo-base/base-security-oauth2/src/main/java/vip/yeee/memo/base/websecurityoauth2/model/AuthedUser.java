@@ -30,6 +30,6 @@ public class AuthedUser {
      */
     private Set<String> roles;
 
-    private boolean superAdmin;
+    private Boolean superAdmin;
 
 }

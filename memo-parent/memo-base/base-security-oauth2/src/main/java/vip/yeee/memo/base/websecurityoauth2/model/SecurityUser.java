@@ -43,7 +43,7 @@ public class SecurityUser implements UserDetails {
      */
     private List<SimpleGrantedAuthority> authorities;
 
-    private boolean superAdmin;
+    private Boolean superAdmin;
 
     public SecurityUser() {
 
@@ -107,5 +107,4 @@ public class SecurityUser implements UserDetails {
     public boolean isEnabled() {
         return this.enabled;
     }
-
 }
