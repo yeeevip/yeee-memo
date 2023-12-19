@@ -43,6 +43,8 @@ public class SecurityUser implements UserDetails {
      */
     private List<SimpleGrantedAuthority> authorities;
 
+    private boolean superAdmin;
+
     public SecurityUser() {
 
     }

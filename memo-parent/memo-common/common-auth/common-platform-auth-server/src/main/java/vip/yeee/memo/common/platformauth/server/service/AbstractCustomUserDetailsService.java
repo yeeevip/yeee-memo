@@ -76,6 +76,7 @@ public abstract class AbstractCustomUserDetailsService implements UserDetailsSer
             authoritySet.addAll(permissions);
             // build security-user
             securityUser = new SecurityUser(sysUser.getUserId(), userType, sysUser.getUsername(), sysUser.getPassword(), sysUser.getState(), authoritySet);
+            securityUser.setSuperAdmin(Integer.valueOf(1).equals(sysUser.getSuperAdmin()));
         } catch (Exception e) {
             throw new UsernameNotFoundException(e.getMessage());
         }

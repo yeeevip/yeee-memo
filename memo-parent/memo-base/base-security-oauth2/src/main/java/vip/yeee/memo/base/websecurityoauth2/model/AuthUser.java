@@ -16,4 +16,5 @@ public class AuthUser {
     private Integer state;
     private Set<String> permissions;
     private Set<String> roles;
+    private Integer superAdmin;
 }
