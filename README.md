@@ -5,11 +5,12 @@
 
 ## 项目案例
 
-| 项目名称      | 描述       |                          仓库地址                          |
-|:----------|:---------|:------------------------------------------------------:|
-| yeee-blog | 轻量级博客系统  |     [仓库](https://gitee.com/yeeevip/yeee-blog.git)     |     
-| yeee-chatgpt | GPT微信小程序 |    [仓库](https://gitee.com/yeeevip/yeee-chatgpt.git)    |    
-| yeee-crowdfunding | 大学生众筹平台  | [仓库](https://gitee.com/yeeevip/yeee-crowdfunding.git) |
+| 项目名称              | 描述           |                          仓库地址                          |
+|:------------------|:-------------|:------------------------------------------------------:|
+| yeee-blog         | 轻量级博客系统      |     [仓库](https://gitee.com/yeeevip/yeee-blog.git)     |     
+| yeee-chatgpt      | GPT微信小程序     |    [仓库](https://gitee.com/yeeevip/yeee-chatgpt.git)    |    
+| yeee-crowdfunding | 大学生众筹平台      | [仓库](https://gitee.com/yeeevip/yeee-crowdfunding.git) |
+| yeee-activiti7    | activiti7工作流 | [仓库](https://gitee.com/yeeevip/yeee-activiti7.git) |
 
 ## 模块说明
 
@@ -65,6 +66,8 @@
     ├── common-wxsdk
         ├── common-wx-ma ------------------------ 通用微信小程序组件
         └── common-wx-mp ------------------------ 通用微信公众号组件
+    ├── common-workflow
+        ├── common-activiti7 ------------------------ 工作流
     └── common-mybatis-encrypt ------------------ 借鉴其他开源封装的基于mybatis的数据库字段脱敏组件
 ```
 
