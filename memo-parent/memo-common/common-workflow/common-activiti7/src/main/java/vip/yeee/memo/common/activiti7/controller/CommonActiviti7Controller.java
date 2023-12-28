@@ -7,6 +7,7 @@ import vip.yeee.memo.base.model.rest.CommonResult;
 import vip.yeee.memo.base.model.vo.PageReqVO;
 import vip.yeee.memo.base.model.vo.PageVO;
 import vip.yeee.memo.common.activiti7.model.request.DefDeleteReq;
+import vip.yeee.memo.common.activiti7.model.request.InsDeleteReq;
 import vip.yeee.memo.common.activiti7.model.request.InstCreateReq;
 import vip.yeee.memo.common.activiti7.model.vo.DefinitionVo;
 import vip.yeee.memo.common.activiti7.model.vo.InstanceVo;
@@ -69,9 +70,9 @@ public class CommonActiviti7Controller {
         return CommonResult.success(commonActiviti7Service.instanceResume(instanceId));
     }
 
-    @GetMapping(value = "/instance/delete")
-    public CommonResult<Void> instanceDelete(String instanceId) {
-        return CommonResult.success(commonActiviti7Service.instanceDelete(instanceId));
+    @PostMapping(value = "/instance/delete")
+    public CommonResult<Void> instanceDelete(@RequestBody InsDeleteReq req) {
+        return CommonResult.success(commonActiviti7Service.instanceDelete(req));
     }
 
     @GetMapping(value = "/task/list")

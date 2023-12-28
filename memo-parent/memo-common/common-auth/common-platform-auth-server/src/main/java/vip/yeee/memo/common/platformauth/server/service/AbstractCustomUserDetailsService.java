@@ -65,13 +65,14 @@ public abstract class AbstractCustomUserDetailsService implements UserDetailsSer
             Set<String> roles = Optional.ofNullable(sysUser.getRoles()).orElseGet(Sets::newHashSet);
             roles.add(userType);
             roles = roles.stream()
-                    .map(r -> {
-                        if (!r.startsWith(AuthConstant.ROLE_PREFIX)) {
-                            r = AuthConstant.ROLE_PREFIX + r;
-                        }
-                        return r;
-                    }).collect(Collectors.toSet());
+                    .map(r -> !r.startsWith(AuthConstant.ROLE_PREFIX) ? AuthConstant.ROLE_PREFIX + r : r)
+                    .collect(Collectors.toSet());
             authoritySet.addAll(roles);
+            Set<String> groups = Optional.ofNullable(sysUser.getGroups()).orElseGet(Sets::newHashSet);
+            groups = groups.stream()
+                    .map(r -> !r.startsWith(AuthConstant.GROUP_PREFIX) ? AuthConstant.GROUP_PREFIX + r : r)
+                    .collect(Collectors.toSet());
+            authoritySet.addAll(groups);
             Set<String> permissions = Optional.ofNullable(sysUser.getPermissions()).orElseGet(Sets::newHashSet);
             authoritySet.addAll(permissions);
             // build security-user

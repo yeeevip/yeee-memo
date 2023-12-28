@@ -62,6 +62,8 @@ public class AuthConstant {
 
     public static final String ROLE_PREFIX = "ROLE_";
 
+    public static final String GROUP_PREFIX = "GROUP_";
+
     public final static String[] BASE_EXCLUDE_PATTERNS = new String[] {
             "/"
             , "/doc.html"

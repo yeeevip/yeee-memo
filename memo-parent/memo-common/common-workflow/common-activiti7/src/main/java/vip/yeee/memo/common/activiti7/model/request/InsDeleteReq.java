@@ -11,7 +11,7 @@ import java.util.List;
  * @since 2023/12/18 17:21
  */
 @Data
-public class DefDeleteReq {
+public class InsDeleteReq {
 
     private List<String> ids;
 }

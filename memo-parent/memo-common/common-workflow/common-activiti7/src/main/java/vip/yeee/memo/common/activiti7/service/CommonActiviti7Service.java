@@ -28,6 +28,7 @@ import vip.yeee.memo.base.model.vo.PageReqVO;
 import vip.yeee.memo.base.model.vo.PageVO;
 import vip.yeee.memo.common.activiti7.mapper.ActivitiMapper;
 import vip.yeee.memo.common.activiti7.model.request.DefDeleteReq;
+import vip.yeee.memo.common.activiti7.model.request.InsDeleteReq;
 import vip.yeee.memo.common.activiti7.model.request.InstCreateReq;
 import vip.yeee.memo.common.activiti7.model.vo.DefinitionVo;
 import vip.yeee.memo.common.activiti7.model.vo.InstanceVo;
@@ -95,13 +96,15 @@ public class CommonActiviti7Service {
     }
 
     public Void definitionDelete(DefDeleteReq req) {
-        repositoryService.deleteDeployment(req.getDepID(), true);
+        for (String depId : req.getIds()) {
+            repositoryService.deleteDeployment(depId, true);
+        }
         return null;
     }
 
     public Void definitionAddDeploymentByString(String stringBPMN) {
         Deployment deployment = repositoryService.createDeployment()
-                .addString("CreateWithYeeeSystem.bpmn",stringBPMN)
+                .addString("CreateWithYeeeSystem.bpmn", stringBPMN)
                 .name("未命名的部署名称")
                 .deploy();
         return null;
@@ -177,12 +180,14 @@ public class CommonActiviti7Service {
         return null;
     }
 
-    public Void instanceDelete(String instanceId) {
-        DeleteProcessPayload payload = ProcessPayloadBuilder
-                .delete()
-                .withProcessInstanceId(instanceId)
-                .build();
-        processRuntime.delete(payload);
+    public Void instanceDelete(InsDeleteReq req) {
+        for (String instanceId : req.getIds()) {
+            DeleteProcessPayload payload = ProcessPayloadBuilder
+                    .delete()
+                    .withProcessInstanceId(instanceId)
+                    .build();
+            processRuntime.delete(payload);
+        }
         return null;
     }
 
@@ -208,7 +213,7 @@ public class CommonActiviti7Service {
                     vo.setCreatedDate(po.getCreatedDate());
                     vo.setAssignee(po.getAssignee());
                     org.activiti.engine.runtime.ProcessInstance instance = definitionMap.get(po.getProcessInstanceId());
-                    vo.setInstanceName(instance.getName());
+                    vo.setInstanceName(instance.getProcessDefinitionName());
                     return vo;
                 })
                 .collect(Collectors.toList());

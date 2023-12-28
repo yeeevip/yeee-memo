@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public void handleMethodNotSupportedException(Exception e) {
         log.warn("", e);
-        SpringContextUtils.getHttpServletResponse().setStatus(403);
+        SpringContextUtils.getHttpServletResponse().setStatus(400);
     }
 
     /**
