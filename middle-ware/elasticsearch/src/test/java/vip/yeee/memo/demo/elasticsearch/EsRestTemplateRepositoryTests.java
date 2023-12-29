@@ -91,18 +91,25 @@ public class EsRestTemplateRepositoryTests {
      * //进行单个值得精确匹配termQuery("key", obj) 完全匹配
      * QueryBuilders.termQuery("name","我是中国人")
      *
-     * //进行模糊查询multiMatchQuery("key.keyword", "*field1*"); 可以使用通配符.keyword是否添加查看上方的    Es的常见问题
-     * QueryBuilders.wildcardQuery("name"/"name.keyword","*我是中*")
-     *
      * //进行多个值得精确匹配termsQuery("key", obj1, obj2..)   一次匹配多个值
+     * 用于keyword类型
      * String[] a = {"a","ab","ac","qq"}
      * QueryBuilders.termsQuery("name",a)
      *
-     * //模糊查询  和wildcardQuery对比的话不能使用通配符
-     * QueryBuilders.matchQuery("name","我是")
      *
-     * //matchPhraseQuery对中文精确匹配
-     * queryBuilders.matchPhraseQuery("key", value)
+     * //进行模糊查询multiMatchQuery("key.keyword", "*field1*"); 可以使用通配符
+     * ！！！ 查询的字段类型为keyword，如果text的话匹配不准确
+     * QueryBuilders.wildcardQuery("name"/"name.keyword","*我是中*")
+     *
+     *
+     * //对关键字分词后全文检索，eg：找到所有‘中国’、‘加油’的索引后回查doc返回
+     * text
+     * QueryBuilders.matchQuery("name", "中国 加油")
+     *
+     * //对关键字分词后全文检索，再次过滤doc匹配，eg：找到所有‘中国’、‘加油’的索引后回查doc后再次过滤
+     * text
+     * queryBuilders.matchPhraseQuery("key", "中国 加油")
+     *
      *
      * //进行布尔查询
      * QueryBuilders.boolQuery()
