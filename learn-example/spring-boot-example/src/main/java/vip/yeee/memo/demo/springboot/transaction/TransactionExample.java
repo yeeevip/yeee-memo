@@ -1,6 +1,7 @@
 package vip.yeee.memo.demo.springboot.transaction;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
@@ -17,6 +18,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 public class TransactionExample {
 
     @Autowired
+    @Qualifier("mysqlTransactionTemplate")
     private TransactionTemplate transactionTemplate;
 
     public void doSomething() {

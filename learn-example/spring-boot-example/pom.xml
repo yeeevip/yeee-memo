@@ -27,7 +27,12 @@
         </dependency>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
-            <artifactId>base-mybatis</artifactId>
+            <artifactId>base-tk-mapper</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>8.2.0.jre8</version>
         </dependency>
     </dependencies>
 
