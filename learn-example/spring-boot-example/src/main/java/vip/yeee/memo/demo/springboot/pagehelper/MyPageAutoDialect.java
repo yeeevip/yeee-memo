@@ -115,9 +115,9 @@ public class MyPageAutoDialect {
 
     //获取当前的代理对象
     public AbstractHelperDialect getDelegate() {
-//        if (delegate != null) {
-//            return delegate;
-//        }
+        if (delegate != null) {
+            return delegate;
+        }
         return dialectThreadLocal.get();
     }
 
@@ -188,7 +188,11 @@ public class MyPageAutoDialect {
             }
             dialectThreadLocal.set(dialect);
         }  else {
-            dialectThreadLocal.set(autoGetDialect(ms));
+            if (autoDialect) {
+                dialectThreadLocal.set(autoGetDialect(ms));
+            } else if (delegate == null) {
+                throw new PageException("place config helperDialect property");
+            }
         }
     }
 
