@@ -115,10 +115,11 @@ public class MyPageAutoDialect {
 
     //获取当前的代理对象
     public AbstractHelperDialect getDelegate() {
-        if (delegate != null) {
+        if (autoDialect) {
+            return dialectThreadLocal.get();
+        } else {
             return delegate;
         }
-        return dialectThreadLocal.get();
     }
 
     //移除代理对象
@@ -191,7 +192,7 @@ public class MyPageAutoDialect {
             if (autoDialect) {
                 dialectThreadLocal.set(autoGetDialect(ms));
             } else if (delegate == null) {
-                throw new PageException("place config helperDialect property");
+                delegate = autoGetDialect(ms);
             }
         }
     }
