@@ -25,8 +25,8 @@ spring:
     password: yeah
     database: 6
 pagehelper:
-  auto-dialect: false
-  dialect: vip.yeee.memo.demo.springboot.pagehelper.MyPageHelper
+#  auto-dialect: false
+  auto-runtime-dialect: true
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

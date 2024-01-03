@@ -48,7 +48,7 @@
         <forest.version>1.5.30</forest.version>
         <okhttp-sse-version>4.9.3</okhttp-sse-version>
         <pagehelper.version>5.3.0</pagehelper.version>
-        <pagehelper-spring-boot-starter.version>1.4.2</pagehelper-spring-boot-starter.version>
+        <pagehelper-spring-boot-starter.version>1.4.4</pagehelper-spring-boot-starter.version>
         <jcseg.version>2.6.3</jcseg.version>
         <protobuf-java.version>3.6.1</protobuf-java.version>
         <dingtalk-service-sdk.version>2.0.0</dingtalk-service-sdk.version>
