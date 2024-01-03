@@ -1,5 +1,6 @@
 package vip.yeee.memo.demo.springboot;
 
+import cn.hutool.core.thread.ThreadUtil;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import vip.yeee.memo.demo.springboot.domain.sqlserver.mapper.SqlServerTestAMappe
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * description......
@@ -28,17 +30,35 @@ public class PageHelperTests {
     private SysUserMapper sysUserMapper;
 
     @Test
-    public void test() {
+    public void test() throws InterruptedException {
 
-        // pagehelper.auto-dialect=false 不管用
+        for (int i = 0; i < 20; i++) {
+            ThreadUtil.execAsync(() -> {
+                for (int j = 0; j < 10; j++) {
+                    PageHelper.startPage(1, 10);
+                    List<SysUser> sysUserList = sysUserMapper.selectAll();
+                    log.info("sysUserList = {}", sysUserList.size());
 
-        PageHelper.startPage(1, 10).using("mysql");
-        List<SysUser> sysUserList = sysUserMapper.selectAll();
-        log.info("sysUserList = {}", sysUserList);
+                    PageHelper.startPage(1, 10);
+                    List<SqlServerTestA> serverTestAList = sqlServerTestAMapper.selectAll();
+                    log.info("serverTestAList = {}", serverTestAList.size());
 
-        PageHelper.startPage(1, 10).using("sqlserver");
-        List<SqlServerTestA> serverTestAList = sqlServerTestAMapper.selectAll();
-        log.info("serverTestAList = {}", serverTestAList);
+                    PageHelper.startPage(1, 10);
+                    sysUserList = sysUserMapper.selectAll();
+                    log.info("sysUserList = {}", sysUserList.size());
+
+                    PageHelper.startPage(2, 10);
+                    serverTestAList = sqlServerTestAMapper.selectAll();
+                    log.info("serverTestAList = {}", serverTestAList.size());
+
+                    PageHelper.startPage(2, 10);
+                    sysUserList = sysUserMapper.selectAll();
+                    log.info("sysUserList = {}", sysUserList.size());
+                }
+            });
+        }
+
+        TimeUnit.SECONDS.sleep(200);
 
     }
 }

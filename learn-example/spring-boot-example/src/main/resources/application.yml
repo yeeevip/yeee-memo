@@ -26,6 +26,7 @@ spring:
     database: 6
 pagehelper:
   auto-dialect: false
+  dialect: vip.yeee.memo.demo.springboot.pagehelper.MyPageHelper
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
