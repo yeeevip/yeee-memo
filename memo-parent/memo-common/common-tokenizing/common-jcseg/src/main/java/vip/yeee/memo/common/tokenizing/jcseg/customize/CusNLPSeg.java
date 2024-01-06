@@ -1,4 +1,4 @@
-package vip.yeee.memo.demo.tokenizing.jcseg.customize;
+package vip.yeee.memo.common.tokenizing.jcseg.customize;
 
 import org.lionsoul.jcseg.IWord;
 import org.lionsoul.jcseg.dic.ADictionary;

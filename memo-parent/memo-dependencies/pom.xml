@@ -229,6 +229,11 @@
                 <artifactId>common-activiti7</artifactId>
                 <version>${yeee-memo.version}</version>
             </dependency>
+            <dependency>
+                <groupId>vip.yeee.memo</groupId>
+                <artifactId>common-jcseg</artifactId>
+                <version>${yeee-memo.version}</version>
+            </dependency>
             <!-- log4j -->
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>

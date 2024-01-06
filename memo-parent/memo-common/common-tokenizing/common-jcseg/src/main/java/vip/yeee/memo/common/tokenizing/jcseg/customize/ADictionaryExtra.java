@@ -1,9 +1,9 @@
-package vip.yeee.memo.demo.tokenizing.jcseg.config;
+package vip.yeee.memo.common.tokenizing.jcseg.customize;
 
-import cn.hutool.core.collection.IterUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.extra.tokenizer.TokenizerEngine;
 import cn.hutool.extra.tokenizer.engine.jcseg.JcsegEngine;
+import lombok.extern.slf4j.Slf4j;
 import org.lionsoul.jcseg.IDictionary;
 import org.lionsoul.jcseg.IWord;
 import org.lionsoul.jcseg.SynonymsEntry;
@@ -13,7 +13,6 @@ import org.lionsoul.jcseg.segmenter.Entity;
 import org.lionsoul.jcseg.segmenter.SegmenterConfig;
 import org.lionsoul.jcseg.segmenter.Word;
 import org.lionsoul.jcseg.util.StringUtil;
-import vip.yeee.memo.demo.tokenizing.jcseg.customize.CusNLPSeg;
 
 import java.io.*;
 import java.net.URLDecoder;
@@ -28,15 +27,15 @@ import java.util.zip.ZipInputStream;
  * @author yeee
  * @since 2021/8/27 17:32
  */
+@Slf4j
 public class ADictionaryExtra {
 
     private final static List<String[]> synBuffer = Collections.synchronizedList(new ArrayList<>());
     private static final Map<String, SynonymsEntry> rootMap = new HashMap<>();
     private static final Object LOCK = new Object();
     private static ADictionary singletonDic = null;
-    public static TokenizerEngine engine = null;
 
-    static  {
+    public static TokenizerEngine getTokenizerEngine() {
         SegmenterConfig config = new SegmenterConfig(true);
         synchronized (LOCK) {
             if ( singletonDic == null ) {
@@ -53,12 +52,16 @@ public class ADictionaryExtra {
                      * And we directly load the default lexicons that in the class path
                      */
                     loadClassPath(singletonDic);
-                    String[] lexpath = config.getLexiconPath();
-                    if ( lexpath == null ) {
+                    String[] lexPath = config.getLexiconPath();
+                    if ( lexPath == null ) {
 
                     } else {
-                        for ( String lpath : lexpath ) loadExtraDirectory(singletonDic, config, lpath);
-                        if ( config.isAutoload() ) singletonDic.startAutoload();
+                        for ( String path : lexPath ) {
+                            loadExtraDirectory(singletonDic, config, path);
+                        }
+                        if ( config.isAutoload() ) {
+                            singletonDic.startAutoload();
+                        }
                     }
 
                     /*
@@ -73,7 +76,7 @@ public class ADictionaryExtra {
             }
         }
 //        engine = new JcsegEngine(ISegment.NLP.factory.create(config, singletonDic));
-        engine = new JcsegEngine(new CusNLPSeg(config, singletonDic));
+        return new JcsegEngine(new CusNLPSeg(config, singletonDic));
     }
 
     private static void loadExtraDirectory(ADictionary dictionary, SegmenterConfig config, String lexDir) throws IOException {
@@ -81,6 +84,8 @@ public class ADictionaryExtra {
         if ( ! path.exists() ) {
             throw new IOException("Lexicon directory ["+lexDir+"] is not exists.");
         }
+
+        log.info("[COMMON-JCSEG]---------加载用户配置词库----{}----", lexDir);
 
         /*
          * load all the lexicon file under the lexicon path
@@ -539,16 +544,6 @@ public class ADictionaryExtra {
             }
 
             synBuffer.clear();
-        }
-    }
-    public static void main(String[] args) {
-        Iterator<cn.hutool.extra.tokenizer.Word> it;
-        it = ADictionaryExtra.engine.parse("就爱色");
-        if(IterUtil.isNotEmpty(it)) {
-            while(it.hasNext()) {
-                String text = it.next().getText();
-                System.out.println(text);
-            }
         }
     }
 }

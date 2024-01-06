@@ -27,6 +27,7 @@
         <module>common-dingtalk</module>
         <module>common-kit</module>
         <module>common-workflow</module>
+        <module>common-tokenizing</module>
     </modules>
 
     <build>
