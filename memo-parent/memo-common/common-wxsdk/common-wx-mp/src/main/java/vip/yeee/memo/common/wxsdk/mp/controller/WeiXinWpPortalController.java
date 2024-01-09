@@ -28,14 +28,14 @@ public class WeiXinWpPortalController {
 
     @RequestMapping(value = "/wp/portal/{appid}", produces = "application/xml; charset=UTF-8")
     public String post(HttpServletRequest request,
-                       @PathVariable String appid,
-                       @RequestBody(required = false) String requestBody,
+                       @RequestBody(required = false)String requestBody,
+                       @PathVariable ("appid") String appid,
                        @RequestParam("signature") String signature,
                        @RequestParam("timestamp") String timestamp,
                        @RequestParam("nonce") String nonce,
-                       @RequestParam("openid") String openid,
-                       @RequestParam(name = "encrypt_type", required = false) String encType,
-                       @RequestParam(name = "msg_signature", required = false) String msgSignature) {
+                       @RequestParam(value = "openid", required = false) String openid,
+                       @RequestParam("encrypt_type") String encType,
+                       @RequestParam("msg_signature") String msgSignature) {
 
         log.info(
                 "\n接收微信请求：[appId=[{}], openid=[{}], signature=[{}], encType=[{}], msgSignature=[{}],"
