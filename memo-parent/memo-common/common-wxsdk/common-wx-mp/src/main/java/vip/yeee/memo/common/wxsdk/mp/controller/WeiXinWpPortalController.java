@@ -43,13 +43,13 @@ public class WeiXinWpPortalController {
                 appid, openid, signature, encType, msgSignature, timestamp, nonce, requestBody);
         log.info("query：" + request.getQueryString() + "\nbody：" + requestBody);
 
+        if (!this.wxService.switchover(appid)) {
+            throw new IllegalArgumentException(String.format("未找到对应appid=[%s]的配置，请核实！", appid));
+        }
+
         if ((encType != null && !StringUtils.equalsIgnoreCase("aes", encType))
                 || !wxService.checkSignature(timestamp, nonce, signature)) {
             throw new IllegalArgumentException("非法请求，可能属于伪造的请求！");
-        }
-
-        if (!this.wxService.switchover(appid)) {
-            throw new IllegalArgumentException(String.format("未找到对应appid=[%s]的配置，请核实！", appid));
         }
 
         String out = null;
