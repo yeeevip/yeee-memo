@@ -43,7 +43,8 @@ public class WeiXinWpPortalController {
                 appid, openid, signature, encType, msgSignature, timestamp, nonce, requestBody);
         log.info("query：" + request.getQueryString() + "\nbody：" + requestBody);
 
-        if (!StringUtils.equalsIgnoreCase("aes", encType) || !wxService.checkSignature(timestamp, nonce, signature)) {
+        if ((encType != null && !StringUtils.equalsIgnoreCase("aes", encType))
+                || !wxService.checkSignature(timestamp, nonce, signature)) {
             throw new IllegalArgumentException("非法请求，可能属于伪造的请求！");
         }
 
