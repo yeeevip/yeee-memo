@@ -34,8 +34,8 @@ public class WeiXinWpPortalController {
                        @RequestParam("timestamp") String timestamp,
                        @RequestParam("nonce") String nonce,
                        @RequestParam(value = "openid", required = false) String openid,
-                       @RequestParam("encrypt_type") String encType,
-                       @RequestParam("msg_signature") String msgSignature) {
+                       @RequestParam(name = "encrypt_type", required = false) String encType,
+                       @RequestParam(name = "msg_signature", required = false) String msgSignature) {
 
         log.info(
                 "\n接收微信请求：[appId=[{}], openid=[{}], signature=[{}], encType=[{}], msgSignature=[{}],"
