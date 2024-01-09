@@ -33,7 +33,7 @@ public class WeiXinWaPortalController {
     @Resource
     private WxMaMessageRouter wxMaMessageRouter;
 
-    @PostMapping(value = "/wa/portal/{appid}", produces = "application/xml; charset=UTF-8")
+    @RequestMapping(value = "/wa/portal/{appid}", produces = "application/xml; charset=UTF-8")
     public void post(@PathVariable String appid, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         if (!this.wxMaService.switchover(appid)) {

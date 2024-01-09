@@ -24,7 +24,7 @@ public class WeiXinWpPortalController {
     @Resource
     private WxMpMessageRouter messageRouter;
 
-    @PostMapping(value = "/wp/portal/{appid}", produces = "application/xml; charset=UTF-8")
+    @RequestMapping(value = "/wp/portal/{appid}", produces = "application/xml; charset=UTF-8")
     public String post(@PathVariable String appid,
                        @RequestBody String requestBody,
                        @RequestParam("signature") String signature,
