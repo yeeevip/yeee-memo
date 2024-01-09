@@ -33,6 +33,7 @@ public class WeiXinWpPortalController {
                        @RequestParam("signature") String signature,
                        @RequestParam("timestamp") String timestamp,
                        @RequestParam("nonce") String nonce,
+                       @RequestParam(value = "echostr", required = false) String echostr,
                        @RequestParam(value = "openid", required = false) String openid,
                        @RequestParam(name = "encrypt_type", required = false) String encType,
                        @RequestParam(name = "msg_signature", required = false) String msgSignature) {
@@ -50,6 +51,10 @@ public class WeiXinWpPortalController {
         if ((encType != null && !StringUtils.equalsIgnoreCase("aes", encType))
                 || !wxService.checkSignature(timestamp, nonce, signature)) {
             throw new IllegalArgumentException("非法请求，可能属于伪造的请求！");
+        }
+
+        if (StringUtils.isNotBlank(echostr)) {
+            return echostr;
         }
 
         String out = null;
