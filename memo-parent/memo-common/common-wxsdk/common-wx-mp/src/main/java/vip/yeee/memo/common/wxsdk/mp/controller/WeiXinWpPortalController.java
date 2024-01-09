@@ -29,7 +29,7 @@ public class WeiXinWpPortalController {
     @RequestMapping(value = "/wp/portal/{appid}", produces = "application/xml; charset=UTF-8")
     public String post(HttpServletRequest request,
                        @PathVariable String appid,
-                       @RequestBody String requestBody,
+                       @RequestBody(required = false) String requestBody,
                        @RequestParam("signature") String signature,
                        @RequestParam("timestamp") String timestamp,
                        @RequestParam("nonce") String nonce,
@@ -41,7 +41,7 @@ public class WeiXinWpPortalController {
                 "\n接收微信请求：[appId=[{}], openid=[{}], signature=[{}], encType=[{}], msgSignature=[{}],"
                         + " timestamp=[{}], nonce=[{}], requestBody=[\n{}\n] ",
                 appid, openid, signature, encType, msgSignature, timestamp, nonce, requestBody);
-        log.info("query：" + request.getQueryString() + "\nbody："+requestBody);
+        log.info("query：" + request.getQueryString() + "\nbody：" + requestBody);
 
         if (!StringUtils.equalsIgnoreCase("aes", encType) || !wxService.checkSignature(timestamp, nonce, signature)) {
             throw new IllegalArgumentException("非法请求，可能属于伪造的请求！");
