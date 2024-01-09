@@ -5,9 +5,11 @@ import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * description......
@@ -25,7 +27,8 @@ public class WeiXinWpPortalController {
     private WxMpMessageRouter messageRouter;
 
     @RequestMapping(value = "/wp/portal/{appid}", produces = "application/xml; charset=UTF-8")
-    public String post(@PathVariable String appid,
+    public String post(HttpServletRequest request,
+                       @PathVariable String appid,
                        @RequestBody String requestBody,
                        @RequestParam("signature") String signature,
                        @RequestParam("timestamp") String timestamp,
@@ -34,12 +37,18 @@ public class WeiXinWpPortalController {
                        @RequestParam(name = "encrypt_type", required = false) String encType,
                        @RequestParam(name = "msg_signature", required = false) String msgSignature) {
 
-        if (!this.wxService.switchover(appid)) {
-            throw new IllegalArgumentException(String.format("未找到对应appid=[%s]的配置，请核实！", appid));
+        log.info(
+                "\n接收微信请求：[appId=[{}], openid=[{}], signature=[{}], encType=[{}], msgSignature=[{}],"
+                        + " timestamp=[{}], nonce=[{}], requestBody=[\n{}\n] ",
+                appid, openid, signature, encType, msgSignature, timestamp, nonce, requestBody);
+        log.info("query：" + request.getQueryString() + "\nbody："+requestBody);
+
+        if (!StringUtils.equalsIgnoreCase("aes", encType) || !wxService.checkSignature(timestamp, nonce, signature)) {
+            throw new IllegalArgumentException("非法请求，可能属于伪造的请求！");
         }
 
-        if (!wxService.checkSignature(timestamp, nonce, signature)) {
-            throw new IllegalArgumentException("非法请求，可能属于伪造的请求！");
+        if (!this.wxService.switchover(appid)) {
+            throw new IllegalArgumentException(String.format("未找到对应appid=[%s]的配置，请核实！", appid));
         }
 
         String out = null;
