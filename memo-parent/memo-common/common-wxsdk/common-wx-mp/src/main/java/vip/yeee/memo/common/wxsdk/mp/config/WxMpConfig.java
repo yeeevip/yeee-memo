@@ -102,7 +102,7 @@ public class WxMpConfig {
     }};
 
     @Bean
-    public WxMpMessageRouter messageRouter(WxMpService wxMpService) {
+    public WxMpMessageRouter wxMpMessageRouter(WxMpService wxMpService) {
 
         final WxMpMessageRouter newRouter = new WxMpMessageRouter(wxMpService);
 

@@ -99,7 +99,7 @@ public class WxMaConfigure {
     }};
 
     @Bean
-    public WxMaMessageRouter messageRouter(WxMaService wxMaService) {
+    public WxMaMessageRouter wxMaMessageRouter(WxMaService wxMaService) {
 
         final WxMaMessageRouter newRouter = new WxMaMessageRouter(wxMaService);
 //
