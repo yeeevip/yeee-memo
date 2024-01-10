@@ -22,4 +22,6 @@ public class ApiAuthedUser {
      * 用户名
      */
     private String username;
+
+    private String source;
 }
