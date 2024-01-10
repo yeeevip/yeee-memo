@@ -284,8 +284,15 @@ public class RedisUtil {
     /**
      * 移除缓存
      */
-    public void removeList(String k) {
-        remove(RedisConstant.KEY_PREFIX_LIST + k);
+    public Long removeList(String k, long count, Object value) {
+        String key = RedisConstant.KEY_PREFIX_LIST + k;
+        try {
+            ListOperations<String, String> listOps = redisTemplate.opsForList();
+            return listOps.remove(key, count, value);
+        } catch (Throwable t) {
+            log.error("移除list缓存失败key[" + RedisConstant.KEY_PREFIX_LIST + k + "]", t);
+            throw new RuntimeException(t);
+        }
     }
 
     /**
@@ -487,6 +494,31 @@ public class RedisUtil {
      */
     public void removeZSet(String k) {
         remove(RedisConstant.KEY_PREFIX_ZSET + k);
+    }
+
+    /**
+     * 移除缓存
+     */
+    public Long removeZSetRangeByScore(String k, double min, double max) {
+        String key = RedisConstant.KEY_PREFIX_HASH + k;
+        try {
+            ZSetOperations<String, String> operations = redisTemplate.opsForZSet();
+            return operations.removeRangeByScore(key, min, max);
+        } catch (Throwable t) {
+            log.error("移除zset缓存失败key[" + RedisConstant.KEY_PREFIX_LIST + k + "]", t);
+            throw new RuntimeException(t);
+        }
+    }
+
+    public Long getZSetSize(String k) {
+        String key = RedisConstant.KEY_PREFIX_HASH + k;
+        try {
+            ZSetOperations<String, String> operations = redisTemplate.opsForZSet();
+            return operations.size(key);
+        } catch (Throwable t) {
+            log.error("获取缓存失败key[" + RedisConstant.KEY_PREFIX_LIST + k + "]", t);
+            throw new RuntimeException(t);
+        }
     }
 
     /**
