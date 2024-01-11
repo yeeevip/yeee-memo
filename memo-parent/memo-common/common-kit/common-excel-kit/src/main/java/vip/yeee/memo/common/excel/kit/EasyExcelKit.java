@@ -62,6 +62,10 @@ public class EasyExcelKit {
         }
     }
 
+    public static <T> void export(OutputStream out, List<T> exportDataList) {
+        export(out, (Class<T>) exportDataList.get(0).getClass(), exportDataList);
+    }
+
     public static <T> void export(OutputStream out, Class<T> clazz, List<T> exportDataList) {
         try {
             ExcelWriter excelWriter = EasyExcelKit.buildExcelWriter(out, clazz);
@@ -74,8 +78,16 @@ public class EasyExcelKit {
         }
     }
 
+    public static <T> void export2Response(List<T> exportDataList) {
+        export2Response(exportDataList, (Class<T>) exportDataList.get(0).getClass());
+    }
+
     public static <T> void export2Response(List<T> exportDataList, Class<T> clazz) {
         EasyExcelKit.export2Response(null, exportDataList, clazz, null);
+    }
+
+    public static <T> void export2Response(List<T> exportDataList, String fileName) {
+        EasyExcelKit.export2Response(null, exportDataList, (Class<T>) exportDataList.get(0).getClass(), fileName);
     }
 
     public static <T> void export2Response(List<T> exportDataList, Class<T> clazz, String fileName) {
