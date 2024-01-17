@@ -33,3 +33,13 @@ mybatis:
 logging:
   level:
     org.apache.ibatis: debug
+yeee:
+  custom:
+    redis:
+      enabled: true
+      instance:
+        - beanName: customeRedisTemplate01
+          host: 127.0.0.1.1
+          port: 6379
+          password: yeah
+          database: 0
