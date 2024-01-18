@@ -29,7 +29,7 @@ public class CustomRedisTests {
     @Resource
     private RedisTemplate<String, Object> customeRedisTemplate01;
 
-    private DefaultRedisScript<Boolean> updateObjectLuaScript = null;
+    private DefaultRedisScript<CustomObject> updateObjectLuaScript = null;
 
     String oldKey = "YEEE:TEST:OLD";
     String newKey = "YEEE:TEST:NEW";
@@ -44,7 +44,7 @@ public class CustomRedisTests {
 
         updateObjectLuaScript = new DefaultRedisScript<>();
         updateObjectLuaScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("script/updateobject.lua")));
-        updateObjectLuaScript.setResultType(Boolean.class);
+        updateObjectLuaScript.setResultType(CustomObject.class);
 
     }
 
@@ -54,7 +54,8 @@ public class CustomRedisTests {
         log.info("OLD = {}", old);
 
         ArrayList<String> keys = Lists.newArrayList(oldKey, newKey);
-        customeRedisTemplate01.execute(updateObjectLuaScript, keys, "111111111", "用户1", new Date().getTime());
+        CustomObject replaced = customeRedisTemplate01.execute(updateObjectLuaScript, keys, "111111111", "用户1", new Date().getTime());
+        log.info("REPLACED = {}", replaced);
 
         CustomObject news = (CustomObject) customeRedisTemplate01.opsForValue().get(newKey);
         log.info("NEW = {}", news);

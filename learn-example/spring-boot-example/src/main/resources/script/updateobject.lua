@@ -1,4 +1,5 @@
 
+-- 测试
 
 local oldKey = KEYS[1]
 local newKey = KEYS[2]
@@ -19,4 +20,4 @@ end
 
 redis.call('SET', newKey, replacedValue)
 
-return 1
+return replacedValue
