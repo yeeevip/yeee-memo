@@ -35,11 +35,11 @@ public class AllTypeLockUseExample {
      */
     public void testReentrantLock() {
         RLock lock = redissonClient1.getLock("anyLock");
+        // 1.最常用的使用方法
+        lock.lock();
+        // 2.支持过期解锁功能，10s以后自动解锁，无需调用unlock()方法手动解锁
+        lock.lock(10, TimeUnit.SECONDS);
         try {
-            // 1.最常用的使用方法
-            lock.lock();
-            // 2.支持过期解锁功能，10s以后自动解锁，无需调用unlock()方法手动解锁
-            lock.lock(10, TimeUnit.SECONDS);
             // 3.尝试加锁，最多等待3s，上锁以后10s解锁
             boolean res = lock.tryLock(3, 10, TimeUnit.SECONDS);
             if (res) {
@@ -48,7 +48,9 @@ public class AllTypeLockUseExample {
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
-            lock.unlock();
+            if (lock.isLocked() && lock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
         }
     }
 
@@ -60,8 +62,8 @@ public class AllTypeLockUseExample {
     public void testAsyncReentrantLock() {
         RLock lock = redissonClient1.getLock("anyLock");
         try {
-            lock.lockAsync();
-            lock.lockAsync(10, TimeUnit.SECONDS);
+            lock.lockAsync().get();
+            lock.lockAsync(10, TimeUnit.SECONDS).get();
             RFuture<Boolean> res = lock.tryLockAsync(3, 10, TimeUnit.SECONDS);
             if (res.get()) {
                 // do your business
