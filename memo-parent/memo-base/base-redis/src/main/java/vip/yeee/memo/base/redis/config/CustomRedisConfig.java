@@ -20,6 +20,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.GenericApplicationContext;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -77,6 +78,7 @@ public class CustomRedisConfig implements InitializingBean, ApplicationContextAw
         this.applicationContext = applicationContext;
     }
 
+//    public RedisTemplate<String, Object> getRedisTemplate(CustomRedisProperty.CustomRedisProperties customRedisProperties, RedisConnectionFactory factory) {
     public RedisTemplate<String, Object> getRedisTemplate(CustomRedisProperty.CustomRedisProperties customRedisProperties) {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration ();
         redisStandaloneConfiguration.setHostName(customRedisProperties.getHost());

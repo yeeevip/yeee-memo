@@ -9,7 +9,7 @@ local value = redis.call('GET', oldKey)
 local replacements = {
     ['"exchangeUserId":null'] = '"exchangeUserId":' .. ARGV[1],
     ['"exchangeUser":null'] = '"exchangeUser":' .. ARGV[2],
-    ['"exchangeTime":null'] = '"exchangeTime":["cn.hutool.core.date.DateTime",' .. ARGV[3] ..']'
+    ['"exchangeTime":null'] = '"exchangeTime":["java.util.Date",' .. ARGV[3] ..']'
 }
 
 local replacedValue = value
