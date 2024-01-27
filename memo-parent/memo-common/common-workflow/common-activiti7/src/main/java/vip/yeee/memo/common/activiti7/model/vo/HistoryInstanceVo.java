@@ -12,26 +12,22 @@ import java.util.Date;
  * @since 2023/12/15 17:45
  */
 @Data
-public class InstanceVo {
+public class HistoryInstanceVo {
 
     private String id;
-
-    private String name;
-
-    private String status;
 
     private String processDefinitionId;
 
     private String processDefinitionKey;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date startDate;
-
-    private Integer processDefinitionVersion;
-
     private String definitionName;
 
-    private String deploymentId;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date startTime;
 
-    private String curTask;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date endTime;
+
+    private String duration;
+
 }
