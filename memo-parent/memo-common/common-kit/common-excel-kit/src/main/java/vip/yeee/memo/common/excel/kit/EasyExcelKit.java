@@ -8,6 +8,7 @@ import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.builder.ExcelWriterSheetBuilder;
 import com.alibaba.excel.write.metadata.WriteSheet;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 import vip.yeee.memo.base.model.exception.BizException;
@@ -19,6 +20,7 @@ import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * description......
@@ -78,6 +80,18 @@ public class EasyExcelKit {
         }
     }
 
+    public static <T> void export(OutputStream out, List<String> headList, List<T> exportDataList) {
+        try {
+            ExcelWriter excelWriter = EasyExcelKit.buildExcelWriter(out, headList);
+            WriteSheet writeSheet = EasyExcelKit.buildWriteSheet(excelWriter, 0, "工作表1").build();
+            EasyExcelKit.export(excelWriter, writeSheet, exportDataList);
+            excelWriter.finish();
+        } catch (Exception e) {
+            log.error("【导出失败】 ", e);
+            throw new BizException("导出失败");
+        }
+    }
+
     public static <T> void export2Response(List<T> exportDataList) {
         export2Response(exportDataList, (Class<T>) exportDataList.get(0).getClass());
     }
@@ -119,6 +133,13 @@ public class EasyExcelKit {
         return EasyExcelFactory
                 .write(out)
                 .head(clazz)
+                .build();
+    }
+
+    public static <T> ExcelWriter buildExcelWriter(OutputStream out, List<String> headList) {
+        return EasyExcelFactory
+                .write(out)
+                .head(headList.stream().map(Lists::newArrayList).collect(Collectors.toList()))
                 .build();
     }
 
