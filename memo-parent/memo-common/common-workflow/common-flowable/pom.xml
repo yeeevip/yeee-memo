@@ -3,18 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>memo-common</artifactId>
+        <artifactId>common-workflow</artifactId>
         <groupId>vip.yeee.memo</groupId>
         <version>3.2.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>common-workflow</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>common-flowable</artifactId>
 
-    <modules>
-        <module>common-activiti7</module>
-        <module>common-flowable</module>
-    </modules>
+
 
 </project>
