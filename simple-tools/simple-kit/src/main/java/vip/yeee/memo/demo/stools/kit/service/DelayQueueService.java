@@ -30,7 +30,7 @@ public class DelayQueueService {
 
     public void addTestQueue(Integer ele, long delayTime) {
         log.info("【队列-TEST】- 添加元素，ele = {}", ele);
-        delayQueueKit.addDelayQueue(TEST_QUEUE, ele, Math.max(delayTime - System.currentTimeMillis(), 0), TimeUnit.MILLISECONDS);
+        delayQueueKit.addDelayQueue(TEST_QUEUE, ele, true, Math.max(delayTime - System.currentTimeMillis(), 0), TimeUnit.MILLISECONDS);
     }
 
     public void consumeTestQueueMsg(Consumer<Integer> handler) {
