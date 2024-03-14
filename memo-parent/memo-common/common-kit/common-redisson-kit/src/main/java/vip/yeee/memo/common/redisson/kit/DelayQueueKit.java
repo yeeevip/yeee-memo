@@ -5,9 +5,14 @@ import org.redisson.api.RBlockingDeque;
 import org.redisson.api.RDelayedQueue;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Component;
+import vip.yeee.memo.common.redisson.util.Md5Util;
 
 import javax.annotation.Resource;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 /**
@@ -26,6 +31,12 @@ public class DelayQueueKit {
 
     public final static String QUEUE_PREFIX = "YEEEE:DELAY_QUEUE:";
 
+    private final boolean isReSend= false;
+    private final Long[] RESEND_DELAYED_SECONDS = {TimeUnit.SECONDS.toSeconds(15)
+            , TimeUnit.MINUTES.toSeconds(1), TimeUnit.MINUTES.toSeconds(10)
+            , TimeUnit.HOURS.toSeconds(1), TimeUnit.HOURS.toSeconds(5)};
+    private final Map<String, AtomicInteger> MSG_RETRY_COUNTER = new ConcurrentHashMap<>();
+
     /**
      * 添加延迟队列
      *
@@ -40,6 +51,7 @@ public class DelayQueueKit {
         if (removeOld) {
             delayedQueue.remove(msg);
         }
+        log.info("【队列-{}】- 发送消息：{} - DELAY：{}", queueCode, msg, delay);
         delayedQueue.offer(msg, delay, timeUnit);
     }
     public <T> void addDelayQueue(String queueCode, T msg, long delay, TimeUnit timeUnit) {
@@ -66,6 +78,18 @@ public class DelayQueueKit {
                 log.info("【队列-{}】- 处理元素成功 - ele = {}", queueCode, ele);
             } catch (Exception e) {
                 log.error("【队列-{}】- 处理元素失败 - ele = {}", queueCode, ele, e);
+                if (isReSend) {
+                    String md5 = Md5Util.md5(ele.toString());
+                    AtomicInteger atomicInteger = Optional
+                            .ofNullable(MSG_RETRY_COUNTER.get(md5))
+                            .orElseGet(() -> {
+                                AtomicInteger count = new AtomicInteger(0);
+                                MSG_RETRY_COUNTER.put(md5, count);
+                                return count;
+                            });
+                    int index = Math.min(atomicInteger.getAndIncrement(), RESEND_DELAYED_SECONDS.length - 1);
+                    addDelayQueue(queueCode, ele, RESEND_DELAYED_SECONDS[index], TimeUnit.SECONDS);
+                }
             }
         }
     }
