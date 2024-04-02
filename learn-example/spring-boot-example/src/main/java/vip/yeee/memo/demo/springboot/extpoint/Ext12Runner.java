@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
  * 项目启动前，热点数据的预加载、清除临时文件、读取自定义配置信息等；
  *
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/8/14 10:01
  */
 @Slf4j

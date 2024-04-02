@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/11/16 15:34
  */
 public abstract class AbstractCustomUserDetailsService implements UserDetailsService {

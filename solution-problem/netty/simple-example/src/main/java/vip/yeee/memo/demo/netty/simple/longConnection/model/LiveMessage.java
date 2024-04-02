@@ -2,7 +2,7 @@ package vip.yeee.memo.demo.netty.simple.longConnection.model;
 
 /**
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2021/12/14 18:24
  */
 public class LiveMessage {

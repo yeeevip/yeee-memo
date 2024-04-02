@@ -18,7 +18,7 @@ import java.util.function.Consumer;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/9/17 17:34
  * @see vip.yeee.memo.demo.stools.kit.service.DelayQueueService
  */

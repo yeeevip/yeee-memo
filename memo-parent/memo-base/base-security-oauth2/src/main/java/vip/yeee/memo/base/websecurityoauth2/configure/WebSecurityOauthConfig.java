@@ -13,7 +13,7 @@ import vip.yeee.memo.base.websecurityoauth2.constant.AuthConstant;
 /**
  * SpringSecurity配置类
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/4/28 16:14
  */
 //@Order(Integer.MIN_VALUE)

@@ -23,7 +23,7 @@ import java.lang.reflect.Constructor;
  * 1.3 getEarlyBeanReference
  *  在InstantiationAwareBeanPostProcessor.postProcessBeforeInstantiation方法触发执行之后执行
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/8/14 10:01
  */
 @Slf4j

@@ -10,7 +10,7 @@ import com.google.gson.Gson;
 
 /**
  * 数字藏品智能合约接口实现类
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/5/13 15:09
  */
 public class NFTPropertyContract extends BaseContract implements HPC721Metadata, NFTPropertyService {

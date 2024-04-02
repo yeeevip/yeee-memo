@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2021/12/15 11:13
  */
 public class LongConnClient {

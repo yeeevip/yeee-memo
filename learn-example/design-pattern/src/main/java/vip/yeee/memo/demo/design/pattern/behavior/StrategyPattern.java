@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * 策略模式
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/7/21 10:06
  */
 public class StrategyPattern {

@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2024/1/15 10:19
  */
 public class StringDataConvert {

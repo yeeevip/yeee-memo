@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
  * 2. 应用
  * 可以用于修改默认设置的属性、添加补充额外的属性值，或者针对关键属性做校验
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/8/14 10:01
  */
 @Slf4j

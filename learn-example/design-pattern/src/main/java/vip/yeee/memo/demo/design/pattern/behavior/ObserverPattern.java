@@ -8,7 +8,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * 观察者模式，又叫发布-订阅模式（Publish/Subscribe）
  * 应用：一个对象的行为改变可能会导致其他一个或者多个对象的行为发生改变
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/7/21 11:34
  */
 public class ObserverPattern {

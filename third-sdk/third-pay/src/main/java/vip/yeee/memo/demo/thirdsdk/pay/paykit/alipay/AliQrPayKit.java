@@ -20,7 +20,7 @@ import vip.yeee.memo.demo.thirdsdk.pay.utils.AmountUtil;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/12/22 15:25
  */
 @Slf4j

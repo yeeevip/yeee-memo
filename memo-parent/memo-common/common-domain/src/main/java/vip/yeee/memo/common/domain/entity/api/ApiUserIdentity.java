@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * 三方开放平台用户
  * </p>
  *
- * @author yeeeee
+ * @author https://www.yeee.vipe
  * @since 2022-02-22
  */
 @Data

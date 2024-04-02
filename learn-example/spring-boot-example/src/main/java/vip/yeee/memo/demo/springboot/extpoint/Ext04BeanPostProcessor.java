@@ -33,7 +33,7 @@ import vip.yeee.memo.demo.springboot.extpoint.bean.TestBean03;
  *
  * 3.1 实现BeanPostProcessor接口，按需重写before、after方法，标记为bean
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/8/14 10:01
  */
 @Slf4j

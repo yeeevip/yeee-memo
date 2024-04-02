@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 简单工程模式
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/7/21 15:20
  */
 public class SimpleFactoryPattern {

@@ -6,7 +6,7 @@ import vip.yeee.memo.demo.springboot.domain.mysql.entity.SysUser;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2024/1/2 14:43
  */
 public interface SysUserMapper extends BaseMapper<SysUser> {

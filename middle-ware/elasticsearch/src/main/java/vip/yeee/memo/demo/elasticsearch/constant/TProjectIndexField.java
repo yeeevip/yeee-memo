@@ -3,7 +3,7 @@ package vip.yeee.memo.demo.elasticsearch.constant;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/4/25 23:05
  */
 public interface TProjectIndexField {

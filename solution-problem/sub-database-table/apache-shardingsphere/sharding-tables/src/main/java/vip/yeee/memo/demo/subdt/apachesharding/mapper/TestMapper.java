@@ -6,7 +6,7 @@ import vip.yeee.memo.demo.subdt.apachesharding.entity.Test;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/6/22 17:20
  */
 public interface TestMapper extends BaseMapper<Test> {

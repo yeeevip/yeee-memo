@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  * 1.客户端发送的是msg且10s内没有发送心跳，则过期关闭连接并清除缓存
  * 2.客户端在每个时间窗口5s内没有发送heart，则主动关闭连接
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2021/12/14 18:23
  */
 public class LiveHandler extends SimpleChannelInboundHandler<LiveMessage> {

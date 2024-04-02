@@ -1,7 +1,7 @@
 package vip.yeee.memo.base.mybatisplus.warpper;
 
 /**
- * @author yeee丶一页 (quhailong1995@gmail.com)
+ * @author yeee丶一页 (https://www.yeee.vip)
  */
 public enum SqlCompareMode {
 

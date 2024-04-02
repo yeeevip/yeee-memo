@@ -28,7 +28,7 @@ import java.util.Map;
 /**
  * 认证服务器配置
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/4/28 16:25
  */
 @Configuration

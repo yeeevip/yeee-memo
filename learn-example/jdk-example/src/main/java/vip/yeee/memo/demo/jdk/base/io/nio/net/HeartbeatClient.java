@@ -7,7 +7,7 @@ import java.nio.channels.SocketChannel;
 
 /**
  * description......
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2021/12/14 15:15
  */
 public class HeartbeatClient {

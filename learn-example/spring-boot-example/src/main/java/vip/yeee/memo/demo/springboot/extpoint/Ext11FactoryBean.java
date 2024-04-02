@@ -30,7 +30,7 @@ import org.springframework.stereotype.Component;
  * 对Bean进行属性配置，或者需要增强某些功能，采用普通的方式就比较麻烦了，
  * 这个时候我们可以声明当前类为FactoryBean的泛型，对这个Bean对象进行属性设置功能增强，再在getObject方法中获取这个Bean注入到IOC中。
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/8/14 10:01
  */
 @Component

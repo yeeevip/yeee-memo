@@ -8,7 +8,7 @@ import javax.persistence.Table;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2024/2/22 17:27
  */
 @AllArgsConstructor

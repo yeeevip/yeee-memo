@@ -27,7 +27,7 @@ import vip.yeee.memo.demo.springboot.extpoint.bean.TestBean01;
  *
  * 3.1 实现BeanFactoryPostProcessor接口，标记为bean
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/8/14 10:01
  */
 @Slf4j

@@ -16,7 +16,7 @@ import vip.yeee.memo.demo.thirdsdk.pay.paykit.wxpay.v3.partner.request.WxPayUnif
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/12/22 18:04
  */
 @Slf4j

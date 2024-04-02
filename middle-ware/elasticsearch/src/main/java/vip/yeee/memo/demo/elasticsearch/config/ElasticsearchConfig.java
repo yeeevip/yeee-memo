@@ -16,7 +16,7 @@
 ///**
 // * ###不使用springboot-starter的情况###，构建配置类注入bean，手动构建elasticsearchRestTemplate
 // *
-// * @author yeeee
+// * @author https://www.yeee.vip
 // * @since 2022/4/25 21:59
 // */
 //@Component

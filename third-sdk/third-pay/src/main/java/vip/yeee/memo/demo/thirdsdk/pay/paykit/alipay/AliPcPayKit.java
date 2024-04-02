@@ -21,7 +21,7 @@ import vip.yeee.memo.demo.thirdsdk.pay.constant.PayConstant;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/12/21 11:30
  */
 @Slf4j

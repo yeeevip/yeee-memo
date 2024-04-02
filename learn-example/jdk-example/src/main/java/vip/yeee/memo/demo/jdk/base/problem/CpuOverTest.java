@@ -3,7 +3,7 @@ package vip.yeee.memo.demo.jdk.base.problem;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/10/20 14:27
  */
 public class CpuOverTest {

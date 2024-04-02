@@ -15,7 +15,7 @@ import java.io.IOException;
  * 仅需登录一次
  * 目标：他的用户在他的系统直接可以使用我们的平台服务
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/3/20 18:47
  */
 @RestController

@@ -7,7 +7,7 @@ import vip.yeee.memo.demo.thirdsdk.pay.model.bo.WxPayConfigBO;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/3/16 20:28
  */
 @Service

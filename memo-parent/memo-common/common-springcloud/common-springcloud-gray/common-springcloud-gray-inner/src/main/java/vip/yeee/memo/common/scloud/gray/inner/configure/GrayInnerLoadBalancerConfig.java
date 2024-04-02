@@ -12,7 +12,7 @@ import vip.yeee.memo.common.scloud.gray.common.handle.GrayLoadBalancer;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/12/6 17:29
  */
 @Configuration

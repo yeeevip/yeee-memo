@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/11/30 11:21
  */
 @Configuration

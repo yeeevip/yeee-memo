@@ -3,7 +3,7 @@ package vip.yeee.memo.common.scloud.gray.common.constant;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/12/6 16:25
  */
 public interface CloudGrayConstant {

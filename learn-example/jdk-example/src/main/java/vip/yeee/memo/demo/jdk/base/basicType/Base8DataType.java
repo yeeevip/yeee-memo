@@ -2,7 +2,7 @@ package vip.yeee.memo.demo.jdk.base.basicType;
 
 /**
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2021/12/15 15:02
  */
 public class Base8DataType {

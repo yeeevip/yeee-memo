@@ -7,7 +7,7 @@ import vip.yeee.memo.base.model.rest.CommonResult;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/8/18 18:33
  */
 @FeignClient(name = "seata-client-02", path = "/client02")

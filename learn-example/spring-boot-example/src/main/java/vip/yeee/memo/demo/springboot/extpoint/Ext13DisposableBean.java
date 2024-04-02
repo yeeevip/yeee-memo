@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
  * 如果某些Bean在容器关闭后，需要做一些【释放业务资源】之类的操作，就能用到这个扩展点了
  *
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/8/14 10:01
  */
 @Slf4j

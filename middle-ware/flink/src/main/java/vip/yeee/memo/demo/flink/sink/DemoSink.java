@@ -7,7 +7,7 @@ import org.apache.flink.streaming.api.functions.sink.RichSinkFunction;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/8/2 10:59
  */
 @Slf4j

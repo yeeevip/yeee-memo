@@ -6,7 +6,7 @@ import vip.yeee.memo.demo.netty.heartcheck.client.heart.NettyClient;
 
 /**
  * description......
- * @author yeeee
+ * @author https://www.yeee.vip
  */
 public class ClientStart implements ApplicationContextInitializer {
 

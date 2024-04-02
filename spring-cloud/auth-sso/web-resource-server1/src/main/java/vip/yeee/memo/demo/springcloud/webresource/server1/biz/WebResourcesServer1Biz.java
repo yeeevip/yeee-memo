@@ -9,7 +9,7 @@ import vip.yeee.memo.base.websecurityoauth2.model.AuthedUser;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/11/17 13:18
  */
 @Slf4j

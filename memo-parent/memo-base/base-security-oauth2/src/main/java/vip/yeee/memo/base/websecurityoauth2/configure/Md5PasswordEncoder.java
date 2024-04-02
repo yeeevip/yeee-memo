@@ -6,7 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/11/17 14:00
  */
 public class Md5PasswordEncoder implements PasswordEncoder {

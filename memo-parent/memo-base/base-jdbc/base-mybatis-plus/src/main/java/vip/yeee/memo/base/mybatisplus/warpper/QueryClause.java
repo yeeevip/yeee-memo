@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author yeee丶一页 (quhailong1995@gmail.com)
+ * @author yeee丶一页 (https://www.yeee.vip)
  */
 @Data
 public class QueryClause implements Serializable {

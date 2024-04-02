@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/6/22 18:24
  */
 @EnableMethodCache(basePackages = "vip.yeee.memo.demo.cache.jetcache.cache")

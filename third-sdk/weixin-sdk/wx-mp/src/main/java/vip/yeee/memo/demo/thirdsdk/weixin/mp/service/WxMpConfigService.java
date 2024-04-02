@@ -8,7 +8,7 @@ import vip.yeee.memo.common.wxsdk.mp.service.IWxMpConfigService;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/4/8 14:43
  */
 @Service

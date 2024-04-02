@@ -3,7 +3,7 @@ package vip.yeee.memo.demo.design.pattern.create;
 /**
  * 原型模式
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/7/21 18:04
  */
 public class PrototypePattern {

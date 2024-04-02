@@ -3,7 +3,7 @@ package vip.yeee.memo.common.platformauth.server.constant;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/4/28 16:32
  */
 public interface SecurityConstants {

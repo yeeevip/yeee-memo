@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * -Xms1m -Xmx1m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=C:/Users/yeeee/Desktop/新建文件夹
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/10/20 15:12
  */
 public class OutOfMemoryTest {

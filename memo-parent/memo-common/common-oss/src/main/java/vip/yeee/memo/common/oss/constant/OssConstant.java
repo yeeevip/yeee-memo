@@ -3,7 +3,7 @@ package vip.yeee.memo.common.oss.constant;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/6/12 10:14
  */
 public class OssConstant {

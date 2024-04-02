@@ -18,7 +18,7 @@ import javax.annotation.Resource;
 /**
  * 自定义认证逻辑，这里可以拿到用户输入的用户名密码，可以做【等保】
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/11/24 14:53
  */
 @Component

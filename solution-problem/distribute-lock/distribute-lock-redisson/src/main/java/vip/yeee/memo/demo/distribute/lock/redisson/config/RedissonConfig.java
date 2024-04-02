@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * description ...
  *
- * @author yeeeee
+ * @author https://www.yeee.vipe
  * @since 2021/12/23 16:40
  */
 @Configuration

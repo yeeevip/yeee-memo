@@ -10,7 +10,7 @@ import java.time.Duration;
 /**
  * description ...
  *
- * @author yeeeee
+ * @author https://www.yeee.vipe
  * @since 2021/12/27 11:38
  */
 @Configuration

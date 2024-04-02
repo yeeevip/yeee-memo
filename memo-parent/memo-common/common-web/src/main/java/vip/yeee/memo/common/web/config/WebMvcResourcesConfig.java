@@ -15,7 +15,7 @@ import java.util.Collections;
 /**
  * 资源配置类
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/7/12 14:16
  */
 @Configuration

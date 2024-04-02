@@ -21,7 +21,7 @@ import java.util.Date;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/11/25 13:46
  */
 public class CustomTokenService extends DefaultTokenServices {

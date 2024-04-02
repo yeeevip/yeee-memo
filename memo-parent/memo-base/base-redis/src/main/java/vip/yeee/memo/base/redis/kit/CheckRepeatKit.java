@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * description......
- * @author yeeee
+ * @author https://www.yeee.vip
  */
 @Component
 public class CheckRepeatKit {

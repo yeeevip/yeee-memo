@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
  * 2. 应用
  * 继承于BeanPostProcessor，提供了更细粒度的控制和定制Bean实例化过程的能力，可在bean实例化前后执行相应的逻辑
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/8/14 10:01
  */
 @Slf4j

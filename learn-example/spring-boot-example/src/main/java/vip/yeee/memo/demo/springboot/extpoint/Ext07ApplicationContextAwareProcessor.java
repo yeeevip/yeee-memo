@@ -27,7 +27,7 @@ import org.springframework.util.StringValueResolver;
  *  继承BeanPostProcessor，与前面BeanPostProcessor的执行时机一致
  *
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/8/14 10:01
  */
 @Slf4j

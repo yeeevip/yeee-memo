@@ -23,7 +23,7 @@ import java.util.Map;
 
 /**
  * description ...
- * @author yeeeeee
+ * @author https://www.yeee.vipee
  * @since 2022/2/22 11:19
  */
 @Slf4j
@@ -41,7 +41,7 @@ public class WxMpEventHandler implements WxMpMessageHandler {
 
     /**
      * description ...
-     * @author yeeeeee
+     * @author https://www.yeee.vipee
      * @since 2022/2/23 10:10
      */
     @Override

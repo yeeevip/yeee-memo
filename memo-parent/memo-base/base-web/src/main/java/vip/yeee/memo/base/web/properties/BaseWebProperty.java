@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/6/22 18:56
  */
 @ConfigurationProperties(prefix = "yeee.web")

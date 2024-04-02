@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
  *
  * 2.1 实现SmartInitializingSingleton接口的bean的作用域必须是单例，afterSingletonsInstantiated()才会触发；
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/8/14 10:01
  */
 @Component

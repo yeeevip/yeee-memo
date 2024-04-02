@@ -10,7 +10,7 @@ import springfox.documentation.swagger.web.UiConfigurationBuilder;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/11/28 13:37
  */
 @Configuration

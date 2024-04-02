@@ -6,7 +6,7 @@ import vip.yeee.memo.demo.springboot.domain.mysql.entity.TempTest1;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2024/2/22 17:29
  */
 public interface TempTest1Mapper extends Mapper<TempTest1> {

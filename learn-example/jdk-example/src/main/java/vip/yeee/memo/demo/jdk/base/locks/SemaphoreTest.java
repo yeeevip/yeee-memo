@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * 假若一个工厂有 5 台机器，但是有 8 个工人，一台机器同时只能被一个工人使用，只有使用完了，其他工人才能继续使用
  *
- * @author yeeeee
+ * @author https://www.yeee.vipe
  * @since 2022/3/8 17:25
  */
 public class SemaphoreTest {

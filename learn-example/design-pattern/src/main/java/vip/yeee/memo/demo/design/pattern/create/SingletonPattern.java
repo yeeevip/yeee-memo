@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 单例模式
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/7/21 10:50
  */
 public class SingletonPattern {

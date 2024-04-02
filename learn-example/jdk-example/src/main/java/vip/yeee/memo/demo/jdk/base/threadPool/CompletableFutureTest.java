@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 /**
  * description ...
  *
- * @author yeeeee
+ * @author https://www.yeee.vipe
  * @since 2021/12/28 18:12
  */
 @Slf4j
@@ -19,7 +19,7 @@ public class CompletableFutureTest {
 
     /**
      * thenAccept、exceptionally方法的使用
-     * @author yeeeeee
+     * @author https://www.yeee.vipee
      * @since 2022/1/4 10:56
      */
     public void testThenAcceptAndExceptionally() throws InterruptedException {
@@ -52,7 +52,7 @@ public class CompletableFutureTest {
 
     /**
      * 使用thenApplyAsync实现多任务的串行异步执行
-     * @author yeeeeee
+     * @author https://www.yeee.vipee
      * @since 2022/1/4 11:33
      */
     public void testThenApplyAsync() throws InterruptedException {
@@ -82,7 +82,7 @@ public class CompletableFutureTest {
 
     /**
      * anyOf并行处理执行任务，任意一个完成就会执行
-     * @author yeeeeee
+     * @author https://www.yeee.vipee
      * @since 2022/1/4 11:48
      */
     public void testAnyOf() throws InterruptedException {
@@ -141,7 +141,7 @@ public class CompletableFutureTest {
 
     /**
      * allOf()，所有CompletableFuture执行完毕后回调
-     * @author yeeeeee
+     * @author https://www.yeee.vipee
      * @since 2022/1/4 13:40
      */
     public void testAllOf() throws InterruptedException {
@@ -175,7 +175,7 @@ public class CompletableFutureTest {
 
     /**
      * 使用 CompletableFuture 和 CountDownLatch 进行并发回调
-     * @author yeeeeee
+     * @author https://www.yeee.vipee
      * @since 2021/12/28 18:13
      */
     public void testMultiCallBack() {

@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/11/21 11:33
  */
 //@LoadBalancerClient(name = "cloud-web-resources-server1", configuration = GrayInnerLoadBalancerConfig.class)

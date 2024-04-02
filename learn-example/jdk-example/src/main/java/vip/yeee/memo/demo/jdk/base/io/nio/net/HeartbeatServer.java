@@ -8,7 +8,7 @@ import java.util.Set;
 
 /**
  * JDK1.4非阻塞IO-多路复用器-网络
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2021/12/14 15:29
  */
 public class HeartbeatServer {

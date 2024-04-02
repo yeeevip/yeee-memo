@@ -2,7 +2,7 @@ package vip.yeee.memo.demo.simpletool.my;
 
 /**
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2020/12/4 13:35
  */
 public class OnlineInterviewBizException extends Exception {

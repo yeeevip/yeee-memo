@@ -5,7 +5,7 @@ import vip.yeee.memo.common.wxsdk.mp.properties.WxMpProperties;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/4/8 14:29
  */
 public interface IWxMpConfigService {

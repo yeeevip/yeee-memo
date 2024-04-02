@@ -29,7 +29,7 @@ package vip.yeee.memo.demo.jdk.base.jvm;
  * #################################################
  *
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/5/16 14:30
  */
 public class JvmRunDetailExample {

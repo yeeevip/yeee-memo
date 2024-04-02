@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/5/4 17:41
  */
 public class StreamExample {

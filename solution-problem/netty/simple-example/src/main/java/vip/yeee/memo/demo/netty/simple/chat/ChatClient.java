@@ -19,7 +19,7 @@ import java.util.Scanner;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/5/12 16:39
  */
 public class ChatClient {

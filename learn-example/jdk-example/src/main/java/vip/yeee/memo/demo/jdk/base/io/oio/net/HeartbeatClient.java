@@ -6,7 +6,7 @@ import java.net.Socket;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/4/21 14:47
  */
 public class HeartbeatClient {

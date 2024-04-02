@@ -32,7 +32,7 @@ import java.util.Map;
  *  SpringApplication springApplication = new SpringApplication(SpringbootExampleApplication.class);
  *  springApplication.addInitializers(new Ext01ApplicationContextInitializer());
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/8/14 9:28        -
  */
 @Slf4j

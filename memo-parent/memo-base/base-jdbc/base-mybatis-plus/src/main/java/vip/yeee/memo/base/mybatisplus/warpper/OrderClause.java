@@ -5,7 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @author yeee丶一页 (quhailong1995@gmail.com)
+ * @author yeee丶一页 (https://www.yeee.vip)
  */
 @Data
 public class OrderClause implements Serializable {

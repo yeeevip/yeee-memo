@@ -10,7 +10,7 @@ import vip.yeee.memo.base.mybatisplus.plugins.PigPaginationInnerInterceptor;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/7/15 13:46
  */
 @Configuration

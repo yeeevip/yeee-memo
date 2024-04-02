@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/6/22 15:14
  */
 @MapperScan("vip.yeee.memo.demo.subdt.apachesharding.mapper")

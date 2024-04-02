@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * 众筹项目表
  * </p>
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022-05-17
  */
 @Data

@@ -11,7 +11,7 @@ import java.nio.channels.CompletionHandler;
 /**
  * JDK1.7异步IO-网络
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/4/21 14:45
  */
 public class HeartbeatServer {

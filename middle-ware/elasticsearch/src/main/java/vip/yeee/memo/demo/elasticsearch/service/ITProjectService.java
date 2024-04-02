@@ -8,7 +8,7 @@ import vip.yeee.memo.demo.elasticsearch.domain.mysql.entity.TProject;
  * 众筹项目表 服务类
  * </p>
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022-05-17
  */
 public interface ITProjectService extends IService<TProject> {

@@ -7,7 +7,7 @@ import vip.yeee.memo.demo.scloud.rpc.feign03.feign.TestFeignService;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/8/3 15:15
  */
 @Slf4j

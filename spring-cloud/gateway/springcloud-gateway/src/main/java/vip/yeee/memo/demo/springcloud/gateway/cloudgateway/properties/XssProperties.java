@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * XSS跨站脚本配置
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/9/11 15:18
  */
 @Configuration

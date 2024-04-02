@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/8/19 16:37
  */
 @MapperScan(basePackages = "vip.yeee.memo.demo.thirdsdk.pay.domain.mysql.mapper")

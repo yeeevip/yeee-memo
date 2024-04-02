@@ -16,7 +16,7 @@ import java.util.Map;
  * http内容 工具类
  * </p>
  *
- * @author yeah丶一页 (quhailong1995@gmail.com)
+ * @author yeah丶一页 (https://www.yeee.vip)
  */
 public class HttpRequestUtils {
     

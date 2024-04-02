@@ -17,7 +17,7 @@ import java.io.IOException;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/5/8 10:30
  */
 public class CusNLPSeg extends NLPSeg {

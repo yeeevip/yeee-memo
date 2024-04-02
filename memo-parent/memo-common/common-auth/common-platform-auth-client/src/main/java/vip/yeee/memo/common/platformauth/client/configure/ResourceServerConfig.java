@@ -48,7 +48,7 @@ import java.util.stream.Collectors;
 /**
  * 资源服务器配置
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/4/28 17:02
  */
 @Configuration

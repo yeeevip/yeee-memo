@@ -8,7 +8,7 @@ import vip.yeee.memo.common.tokenizing.jcseg.customize.ADictionaryExtra;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2024/1/6 22:46
  */
 @Configuration

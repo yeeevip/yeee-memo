@@ -6,7 +6,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/4/8 16:54
  */
 public class Websocket {

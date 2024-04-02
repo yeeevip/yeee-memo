@@ -8,7 +8,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 /**
  * 读多写少；读读并行
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/3/28 15:31
  */
 public class ReadWriteLockTest {

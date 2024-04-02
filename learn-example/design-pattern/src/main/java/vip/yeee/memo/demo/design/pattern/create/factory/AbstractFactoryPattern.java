@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 抽象工厂
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/7/21 16:46
  */
 public class AbstractFactoryPattern {

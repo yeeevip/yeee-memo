@@ -8,7 +8,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/8/18 16:48
  */
 @MapperScan("vip.yeee.memo.demo.scloud.tac.seata01.domain.mysql.mapper")

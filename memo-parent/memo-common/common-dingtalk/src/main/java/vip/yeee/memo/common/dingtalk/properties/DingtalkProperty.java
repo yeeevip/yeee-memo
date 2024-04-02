@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/6/20 17:33
  */
 @ConfigurationProperties(prefix = "yeee.dingtalk")

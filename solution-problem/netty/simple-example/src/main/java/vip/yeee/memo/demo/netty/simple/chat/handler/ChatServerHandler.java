@@ -12,7 +12,7 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/5/12 16:36
  */
 public class ChatServerHandler extends SimpleChannelInboundHandler<String> {

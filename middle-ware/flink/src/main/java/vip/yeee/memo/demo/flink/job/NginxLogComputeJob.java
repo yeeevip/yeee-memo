@@ -21,7 +21,7 @@ import java.util.Properties;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/8/2 13:50
  */
 public class NginxLogComputeJob {

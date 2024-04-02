@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * description ...
  *
- * @author yeeeee
+ * @author https://www.yeee.vipe
  * @since 2022/1/7 17:54
  */
 @Slf4j
@@ -22,7 +22,7 @@ public class ThreadPoolTest {
     /**
      * 优点：创建一个固定大小线程池，超出的线程会在队列中等待。
      * 缺点：不支持自定义拒绝策略，大小固定，难以扩展。
-     * @author yeeeee
+     * @author https://www.yeee.vipe
     **/
     public void testExecutorsNewFixedThreadPool() {
         ExecutorService executorService = Executors.newFixedThreadPool(3);
@@ -51,7 +51,7 @@ public class ThreadPoolTest {
 
     /**
      * 核心线程数是 0， 最大线程数是 Integer.MAX_VALUE，全部都是空闲线程60s后回收
-     * @author yeeeee
+     * @author https://www.yeee.vipe
     **/
     public void testExecutorsNewCachedThreadPool() {
         AtomicInteger atomicInteger = new AtomicInteger(0);
@@ -78,7 +78,7 @@ public class ThreadPoolTest {
     /**
      * 优点：创建一个单线程的线程池，保证线程的顺序执行
      * 缺点：不适合并发。
-     * @author yeeeee
+     * @author https://www.yeee.vipe
      **/
     public void testExecutorsNewSingleThreadExecutor() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -112,7 +112,7 @@ public class ThreadPoolTest {
     /**
      * 优点：创建一个固定大小线程池，可以定时或周期性的执行任务。
      * 缺点：一旦一个任务执行失败就不会再次执行
-     * @author yeeeee
+     * @author https://www.yeee.vipe
      **/
     public void testExecutorsNewScheduledThreadPool() {
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(2);

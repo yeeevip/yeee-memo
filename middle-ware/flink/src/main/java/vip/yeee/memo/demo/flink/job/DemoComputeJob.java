@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/8/2 11:01
  */
 public class DemoComputeJob {

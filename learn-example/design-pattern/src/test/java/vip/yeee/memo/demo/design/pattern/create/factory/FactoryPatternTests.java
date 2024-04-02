@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 /**
  * 简单工厂模式
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/7/21 16:10
  */
 public class FactoryPatternTests {

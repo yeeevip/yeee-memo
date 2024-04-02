@@ -7,7 +7,7 @@ import vip.yeee.memo.demo.blockchain.hyperchain.biz.bo.NftIssueBO;
 /**
  * 数字藏品区块链-sdk
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/5/16 16:48
  */
 public interface NFTPropertyService {

@@ -22,7 +22,7 @@ import java.util.Date;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/11/30 10:21
  */
 @ConditionalOnProperty(value = "yeee.apiauth.jwt.useJws", havingValue = "true")

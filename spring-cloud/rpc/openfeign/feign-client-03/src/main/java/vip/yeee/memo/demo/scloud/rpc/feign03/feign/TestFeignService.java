@@ -7,7 +7,7 @@ import vip.yeee.memo.demo.scloud.rpc.feign03.feign.fallback.TestFeignFallback;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/8/3 15:14
  */
 @FeignClient(name = "feign-service-server", path = "/fss", fallback = TestFeignFallback.class)

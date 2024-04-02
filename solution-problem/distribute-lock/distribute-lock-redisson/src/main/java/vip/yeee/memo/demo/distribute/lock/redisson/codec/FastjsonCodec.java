@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * description ...
  *
- * @author yeeeee
+ * @author https://www.yeee.vipe
  * @since 2021/12/23 20:58
  */
 public class FastjsonCodec extends BaseCodec {

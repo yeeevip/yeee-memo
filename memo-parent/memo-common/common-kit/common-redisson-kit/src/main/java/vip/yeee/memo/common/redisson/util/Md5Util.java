@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2024/3/14 14:57
  */
 public class Md5Util {

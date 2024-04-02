@@ -2,7 +2,7 @@ package vip.yeee.memo.demo.netty.heartcheck.common.entity;
 
 /**
  * description......
- * @author yeeee
+ * @author https://www.yeee.vip
  */
 public class MonitorVo {
 

@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2023/2/17 14:59
  */
 public class LogUtils {

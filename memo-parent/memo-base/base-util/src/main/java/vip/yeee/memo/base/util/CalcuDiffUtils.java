@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * 计算差异
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2021/12/6 14:54
  */
 public class CalcuDiffUtils {
@@ -51,7 +51,7 @@ public class CalcuDiffUtils {
     }
 
     /**
-     * @author yeeee
+     * @author https://www.yeee.vip
      * @since 2021/6/28 15:37
      */
     public static boolean judgeSalaryDiff(String salaryRange1, String salaryRange2, Integer gapGt, Integer gapLe) {

@@ -8,7 +8,7 @@ import vip.yeee.memo.demo.thirdsdk.pay.domain.mysql.entity.PayOrder;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/8/21 10:15
  */
 public interface PayOrderMapper extends BaseMapper<PayOrder> {

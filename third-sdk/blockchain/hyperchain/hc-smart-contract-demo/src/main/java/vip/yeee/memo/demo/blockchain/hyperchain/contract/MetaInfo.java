@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * 藏品实体类
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/5/13 15:09
  */
 public class MetaInfo {

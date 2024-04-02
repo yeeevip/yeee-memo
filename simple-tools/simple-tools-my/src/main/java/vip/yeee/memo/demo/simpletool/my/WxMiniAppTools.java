@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 /**
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2021/12/6 14:37
  */
 @Slf4j
@@ -44,7 +44,7 @@ public class WxMiniAppTools {
     }
 
     /**
-     * @author yeeee
+     * @author https://www.yeee.vip
      * @since 2021/6/28 15:37
      */
     public static Object authCode2Session(String code) {
@@ -53,7 +53,7 @@ public class WxMiniAppTools {
     }
 
     /**
-     *@author yeeee
+     *@author https://www.yeee.vip
      * @since 2021/6/28 15:37
      */
     public static String wxAppGetAccessToken() throws Exception {
@@ -72,7 +72,7 @@ public class WxMiniAppTools {
     }
 
     /**
-     * @author yeeee
+     * @author https://www.yeee.vip
      * @since 2021/6/28 15:37
      */
     public static String wxAppGenerateUrlScheme(Integer linkType, Integer orderId, Integer taskId, Integer voucherId, String linkTicket) {
@@ -96,7 +96,7 @@ public class WxMiniAppTools {
     }
 
     /**
-     * @author yeeee
+     * @author https://www.yeee.vip
      * @since 2021/6/28 15:37
      */
     public static String wxAppGenerateUrlLink(JSONObject confObj, Integer linkId, Integer linkType) {

@@ -5,7 +5,7 @@ import cn.hyperchain.contract.BaseContractInterface;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/5/16 13:37
  */
 public interface NFTPropertyService extends BaseContractInterface {

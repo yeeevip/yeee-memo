@@ -11,7 +11,7 @@ import vip.yeee.memo.demo.elasticsearch.service.ITProjectService;
  * 众筹项目表 服务实现类
  * </p>
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022-05-17
  */
 @Service
