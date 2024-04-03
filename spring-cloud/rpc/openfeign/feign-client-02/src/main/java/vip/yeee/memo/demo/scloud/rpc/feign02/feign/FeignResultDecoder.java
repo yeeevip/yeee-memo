@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 /**
  * 自定义一个解码器，对feign服务端返回的数据重新包装
  *
- * @author https://www.yeee.vipe
+ * @author https://www.yeee.vip
  * @since 2021/12/29 14:49
  */
 public class FeignResultDecoder implements Decoder {

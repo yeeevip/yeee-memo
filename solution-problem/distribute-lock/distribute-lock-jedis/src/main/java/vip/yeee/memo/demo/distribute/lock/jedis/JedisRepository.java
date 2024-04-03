@@ -5,7 +5,7 @@ import redis.clients.jedis.Jedis;
 /**
  * description ...
  *
- * @author https://www.yeee.vipe
+ * @author https://www.yeee.vip
  * @since 2021/12/22 15:23
  */
 public class JedisRepository extends Jedis {

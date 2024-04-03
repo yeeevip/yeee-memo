@@ -24,7 +24,7 @@ import java.util.EnumSet;
 /**
  * description ...
  *
- * @author https://www.yeee.vipe
+ * @author https://www.yeee.vip
  * @since 2021/12/27 10:24
  */
 @Slf4j

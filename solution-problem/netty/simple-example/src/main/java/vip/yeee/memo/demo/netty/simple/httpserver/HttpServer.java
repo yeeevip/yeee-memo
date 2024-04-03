@@ -13,7 +13,7 @@ import io.netty.handler.codec.http.HttpResponseEncoder;
 
 /**
  * mvn compile、mvn exec:java -Dexec.mainClass="com.netty.learn.httpserver.HttpServer" -Dexec.args="arg0 arg1 arg2"
- * @author https://www.yeee.vipee
+ * @author https://www.yeee.vip
  * @since 2021/12/14 16:31
  */
 public class HttpServer {

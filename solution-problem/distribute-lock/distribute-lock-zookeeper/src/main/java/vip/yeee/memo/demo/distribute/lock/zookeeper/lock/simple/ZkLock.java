@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * 顺序性，第一个创建节点的抢锁成功
  *
- * @author https://www.yeee.vipe
+ * @author https://www.yeee.vip
  * @since 2021/12/29 18:28
  */
 @Slf4j
@@ -90,7 +90,7 @@ public class ZkLock implements Lock {
 
     /**
      * 监听前一个Znode节点（prior_path成员）的删除事件
-     * @author https://www.yeee.vipee
+     * @author https://www.yeee.vip
      * @since 2021/12/30 16:37
      */
     private void await() throws Exception {

@@ -10,7 +10,7 @@ import java.util.concurrent.*;
 
 /**
  * 使用轮子 org.apache.curator.framework.recipes.locks.InterProcessMutex
- * @author https://www.yeee.vipe
+ * @author https://www.yeee.vip
  * @since 2021/12/30 18:07
  */
 @Slf4j

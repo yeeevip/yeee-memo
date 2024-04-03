@@ -18,7 +18,7 @@ import java.util.concurrent.CountDownLatch;
 /**
  * description ...
  *
- * @author https://www.yeee.vipe
+ * @author https://www.yeee.vip
  * @since 2021/12/30 10:48
  */
 
@@ -30,7 +30,7 @@ public class ZkClientApiDemo {
 
     /**
      * 创建持久化节点
-     * @author https://www.yeee.vipee
+     * @author https://www.yeee.vip
      * @since 2021/12/30 10:54
      */
     public void createPersistentNode() {
@@ -45,7 +45,7 @@ public class ZkClientApiDemo {
 
     /**
      * 创建临时节点，断开连接删除节点
-     * @author https://www.yeee.vipee
+     * @author https://www.yeee.vip
      * @since 2021/12/30 13:34
      */
     public void createEphemeralNode() {
@@ -60,7 +60,7 @@ public class ZkClientApiDemo {
 
     /**
      * 创建持久化有序节点
-     * @author https://www.yeee.vipee
+     * @author https://www.yeee.vip
      * @since 2021/12/30 13:59
      */
     public void cretePersistentSeqNode() {
@@ -75,7 +75,7 @@ public class ZkClientApiDemo {
 
     /**
      * 创建临时有序节点
-     * @author https://www.yeee.vipee
+     * @author https://www.yeee.vip
      * @since 2021/12/30 14:04
      */
     public void createEphemeralSeqNode() {
@@ -90,7 +90,7 @@ public class ZkClientApiDemo {
 
     /**
      * 设置节点数据
-     * @author https://www.yeee.vipee
+     * @author https://www.yeee.vip
      * @since 2021/12/30 14:06
      */
     public void setNodeData() {
@@ -105,7 +105,7 @@ public class ZkClientApiDemo {
 
     /**
      * 删除节点
-     * @author https://www.yeee.vipee
+     * @author https://www.yeee.vip
      * @since 2021/12/30 14:12
      */
     public void deleteNode() {
@@ -118,7 +118,7 @@ public class ZkClientApiDemo {
 
     /**
      * 获取节点数据
-     * @author https://www.yeee.vipee
+     * @author https://www.yeee.vip
      * @since 2021/12/30 14:15
      */
     public void getNodeData() {
@@ -133,7 +133,7 @@ public class ZkClientApiDemo {
 
     /**
      * 设置节点权限
-     * @author https://www.yeee.vipee
+     * @author https://www.yeee.vip
      * @since 2021/12/30 14:22
      */
     public void setNodeAcl() {
@@ -144,7 +144,7 @@ public class ZkClientApiDemo {
 
     /**
      * 获取节点的子节点
-     * @author https://www.yeee.vipee
+     * @author https://www.yeee.vip
      * @since 2021/12/30 14:25
      */
     public void getNodeChildren() {
@@ -157,7 +157,7 @@ public class ZkClientApiDemo {
 
     /**
      * 测试watch机制
-     * @author https://www.yeee.vipee
+     * @author https://www.yeee.vip
      * @since 2021/12/30 14:30
      */
     public void nodeWatch() throws InterruptedException {
@@ -169,7 +169,7 @@ public class ZkClientApiDemo {
              * 子节点变化实际回调方法
              * @param s 节点路径
              * @param list 变化后的子节点列表
-             * @author https://www.yeee.vipee
+             * @author https://www.yeee.vip
              * @since 2021/12/30 14:36
              */
             @Override
@@ -185,7 +185,7 @@ public class ZkClientApiDemo {
              * 节点数据发生改变回调方法
              * @param s 节点路径
              * @param o 修改后的数据
-             * @author https://www.yeee.vipee
+             * @author https://www.yeee.vip
              * @since 2021/12/30 14:39
              */
             @Override
@@ -195,7 +195,7 @@ public class ZkClientApiDemo {
 
             /**
              * 节点删除事件回调方法
-             * @author https://www.yeee.vipee
+             * @author https://www.yeee.vip
              * @since 2021/12/30 14:40
              */
             @Override

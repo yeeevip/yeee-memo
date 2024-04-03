@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * description ...
  *
- * @author https://www.yeee.vipe
+ * @author https://www.yeee.vip
  * @since 2021/12/28 16:25
  */
 public class AllTypeLockUseExample {
@@ -30,7 +30,7 @@ public class AllTypeLockUseExample {
 
     /**
      * 可重入锁-sync
-     * @author https://www.yeee.vipee
+     * @author https://www.yeee.vip
      * @since 2021/12/28 16:37
      */
     public void testReentrantLock() {
@@ -56,7 +56,7 @@ public class AllTypeLockUseExample {
 
     /**
      * 可重入锁-async
-     * @author https://www.yeee.vipee
+     * @author https://www.yeee.vip
      * @since 2021/12/28 16:37
      */
     public void testAsyncReentrantLock() {
@@ -77,7 +77,7 @@ public class AllTypeLockUseExample {
 
     /**
      * 公平锁 / 优先分配锁给先发出请求的线程
-     * @author https://www.yeee.vipee
+     * @author https://www.yeee.vip
      * @since 2021/12/28 16:38
      */
     public void testFairLock() {
@@ -109,7 +109,7 @@ public class AllTypeLockUseExample {
      * 一般场景就是某些业务需要同时锁住多个资源，使用【一个redisson实例】
      * 也可以将多个不同master redisson实例加锁，性能比起redLock低很多
      * 比如说，在一个下单的业务场景中，同时需要锁定订单、库存、商品，基于这种需要锁多种资源的场景中
-     * @author https://www.yeee.vipee
+     * @author https://www.yeee.vip
      * @since 2021/12/28 16:43
      */
     public void testMultiLock() {
@@ -138,7 +138,7 @@ public class AllTypeLockUseExample {
      * ，其它线程从新的master获取锁也成功了，就会出现并发安全问题
      * ---
      * 红锁 / 将多个RLock对象关联为一个联锁 [大部分redis节点上加锁成功才算成功 （n / 2 + 1）]
-     * @author https://www.yeee.vipee
+     * @author https://www.yeee.vip
      * @since 2021/12/28 16:52
      */
     public void testRedLock(){
@@ -160,7 +160,7 @@ public class AllTypeLockUseExample {
 
     /**
      * 读写锁
-     * @author https://www.yeee.vipee
+     * @author https://www.yeee.vip
      * @since 2021/12/28 16:54
      */
     public void testReadWriteLock() {
@@ -192,7 +192,7 @@ public class AllTypeLockUseExample {
 
     /**
      * 信号量
-     * @author https://www.yeee.vipee
+     * @author https://www.yeee.vip
      * @since 2021/12/28 16:59
      */
     public void testSemaphore() {
@@ -223,7 +223,7 @@ public class AllTypeLockUseExample {
 
     /**
      * 可过期性信号量
-     * @author https://www.yeee.vipee
+     * @author https://www.yeee.vip
      * @since 2021/12/28 17:18
      */
     public void testPermitExpirableSemaphore() {
@@ -245,7 +245,7 @@ public class AllTypeLockUseExample {
     
     /**
      * 闭锁 / 倒数闩
-     * @author https://www.yeee.vipee
+     * @author https://www.yeee.vip
      * @since 2021/12/28 17:31
      */
     public void testCountDownLatch() {

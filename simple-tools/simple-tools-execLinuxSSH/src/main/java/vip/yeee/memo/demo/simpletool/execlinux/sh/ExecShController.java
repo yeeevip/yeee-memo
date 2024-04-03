@@ -16,7 +16,7 @@ import java.util.UUID;
 /**
  * description ...
  *
- * @author https://www.yeee.vipe
+ * @author https://www.yeee.vip
  * @since 2021/12/27 14:43
  */
 @RestController

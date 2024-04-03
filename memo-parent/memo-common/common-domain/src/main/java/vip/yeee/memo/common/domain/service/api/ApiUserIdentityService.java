@@ -10,7 +10,7 @@ import vip.yeee.memo.common.domain.mapper.api.ApiUserIdentityMapper;
  * 三方开放平台用户 服务实现类
  * </p>
  *
- * @author https://www.yeee.vipe
+ * @author https://www.yeee.vip
  * @since 2022-02-22
  */
 @Service

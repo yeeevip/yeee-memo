@@ -8,7 +8,7 @@ import vip.yeee.memo.common.domain.entity.api.ApiUserIdentity;
  * 三方开放平台用户 Mapper 接口
  * </p>
  *
- * @author https://www.yeee.vipe
+ * @author https://www.yeee.vip
  * @since 2022-02-22
  */
 public interface ApiUserIdentityMapper extends BaseMapper<ApiUserIdentity> {

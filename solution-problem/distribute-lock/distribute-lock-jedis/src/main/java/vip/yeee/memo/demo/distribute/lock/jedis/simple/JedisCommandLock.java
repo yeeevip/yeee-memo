@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.UUID;
 
 /**
- * @author https://www.yeee.vipe
+ * @author https://www.yeee.vip
  * @since  2021/12/22 11:24
  */
 @Slf4j

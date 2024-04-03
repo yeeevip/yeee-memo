@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
  * 字面意思回环栅栏，通过它可以实现让一组线程等待至某个状态之后再全部同时执行
  * 叫做回环是因为当所有等待线程都被释放以后，CyclicBarrier 可以被重用。我们暂且把这个状态就叫做 barrier，当调用 await() 方法之后，线程就处于 barrier 了
  *
- * @author https://www.yeee.vipe
+ * @author https://www.yeee.vip
  * @since 2022/3/8 16:38
  */
 @Slf4j

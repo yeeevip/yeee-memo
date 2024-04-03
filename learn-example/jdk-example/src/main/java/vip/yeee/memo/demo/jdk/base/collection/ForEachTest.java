@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * description ...
  *
- * @author https://www.yeee.vipe
+ * @author https://www.yeee.vip
  * @since 2022/2/14 17:12
  */
 @Slf4j

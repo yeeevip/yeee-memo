@@ -16,7 +16,7 @@ import java.util.concurrent.locks.Lock;
 /**
  * description ...
  *
- * @author https://www.yeee.vipe
+ * @author https://www.yeee.vip
  * @since 2021/12/29 10:50
  */
 @Slf4j
