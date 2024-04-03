@@ -32,7 +32,7 @@ public class CommonActiviti7Controller {
     @Autowired
     private CommonActiviti7Service commonActiviti7Service;
 
-    @GetMapping(value = "/definition/list")
+    @RequestMapping(value = "/definition/list")
     public CommonResult<PageVO<DefinitionVo>> definitionList(PageReqVO<?> reqVO) {
         return CommonResult.success(commonActiviti7Service.definitionList(reqVO));
     }
@@ -42,17 +42,17 @@ public class CommonActiviti7Controller {
         return CommonResult.success(commonActiviti7Service.definitionDelete(req));
     }
 
-    @PostMapping(value = "/definition/addDeploymentByString")
+    @RequestMapping(value = "/definition/addDeploymentByString")
     public CommonResult<Void> definitionAddDeploymentByString(String stringBPMN) {
         return CommonResult.success(commonActiviti7Service.definitionAddDeploymentByString(stringBPMN));
     }
 
-    @GetMapping(value = "/definition/xml")
+    @RequestMapping(value = "/definition/xml")
     public void definitionDetailXml(HttpServletResponse response, String deploymentId, String resourceName) {
         commonActiviti7Service.definitionDetailXml(response, deploymentId, resourceName);
     }
 
-    @GetMapping(value = "/instance/list")
+    @RequestMapping(value = "/instance/list")
     public CommonResult<PageVO<InstanceVo>> instanceList(PageReqVO<?> reqVO) {
         return CommonResult.success(commonActiviti7Service.instanceList(reqVO));
     }
@@ -62,12 +62,12 @@ public class CommonActiviti7Controller {
         return CommonResult.success(commonActiviti7Service.instanceCreate(req));
     }
 
-    @GetMapping(value = "/instance/suspend")
+    @RequestMapping(value = "/instance/suspend")
     public CommonResult<Void> instanceSuspend(String instanceId) {
         return CommonResult.success(commonActiviti7Service.instanceSuspend(instanceId));
     }
 
-    @GetMapping(value = "/instance/resume")
+    @RequestMapping(value = "/instance/resume")
     public CommonResult<Void> instanceResume(String instanceId) {
         return CommonResult.success(commonActiviti7Service.instanceResume(instanceId));
     }
@@ -77,12 +77,12 @@ public class CommonActiviti7Controller {
         return CommonResult.success(commonActiviti7Service.instanceDelete(req));
     }
 
-    @GetMapping(value = "/instance/history/list")
+    @RequestMapping(value = "/instance/history/list")
     public CommonResult<PageVO<HistoryInstanceVo>> instanceHistoryList(PageReqVO<?> reqVO) {
         return CommonResult.success(commonActiviti7Service.instanceHistoryList(reqVO));
     }
 
-    @GetMapping(value = "/task/list")
+    @RequestMapping(value = "/task/list")
     public CommonResult<PageVO<TaskVo>> taskList(PageReqVO<?> reqVO) {
         return CommonResult.success(commonActiviti7Service.taskList(reqVO));
     }

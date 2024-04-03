@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import vip.yeee.memo.demo.springboot.extpoint.Ext01ApplicationContextInitializer;
 
 /**
@@ -13,6 +14,7 @@ import vip.yeee.memo.demo.springboot.extpoint.Ext01ApplicationContextInitializer
  * @since 2023/5/18 9:30
  */
 @Slf4j
+@EnableScheduling
 @SpringBootApplication
 public class SpringbootExampleApplication {
 
