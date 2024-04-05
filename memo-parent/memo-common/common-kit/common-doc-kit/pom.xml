@@ -29,6 +29,20 @@
             <groupId>org.docx4j</groupId>
             <artifactId>docx4j-documents4j-local</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>e-iceblue</groupId>
+            <artifactId>spire.pdf.free</artifactId>
+            <version>5.1.0</version>
+        </dependency>
+
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>com.e-iceblue</id>
+            <url>https://repo.e-iceblue.cn/repository/maven-public/</url>
+        </repository>
+    </repositories>
 
 </project>

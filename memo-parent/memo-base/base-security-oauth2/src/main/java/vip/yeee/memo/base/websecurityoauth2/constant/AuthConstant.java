@@ -80,6 +80,7 @@ public class AuthConstant {
             , "/actuator/**"
             , "/error"
             , "/inner/**"
+            , "/upload/**"
     };
 
     public final static String USERNAME_SEPARATOR = "##";

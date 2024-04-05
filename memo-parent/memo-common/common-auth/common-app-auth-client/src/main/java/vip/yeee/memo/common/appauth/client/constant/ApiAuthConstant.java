@@ -39,6 +39,7 @@ public class ApiAuthConstant {
             , "/actuator/**"
             , "/error"
             , "/inner/**"
+            , "/upload/**"
     };
 
 }

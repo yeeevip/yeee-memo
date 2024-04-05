@@ -3,9 +3,16 @@ package vip.yeee.memo.demo.stools.kit.example;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import com.google.common.collect.Maps;
+import com.spire.pdf.PdfDocument;
+import com.spire.pdf.graphics.PdfFont;
+import com.spire.pdf.graphics.PdfFontFamily;
+import com.spire.pdf.graphics.PdfFontStyle;
+import com.spire.pdf.graphics.PdfTrueTypeFont;
+import com.spire.pdf.graphics.fonts.PdfUsedFont;
 import vip.yeee.memo.common.doc.kit.TemplatePdfBuilderKit;
 import vip.yeee.memo.common.doc.kit.TemplateWordBuilderKit;
 
+import java.awt.*;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
@@ -21,8 +28,10 @@ public class TemplateDocBuilderExample {
 
     public static void main(String[] args) throws Exception {
 //        buildWord();
-        buildPdf();
+//        buildPdf();
 //        word2Pdf();
+
+        replaceAllFonts();
     }
 
     private static void buildWord() throws Exception {
@@ -68,4 +77,36 @@ public class TemplateDocBuilderExample {
         BufferedOutputStream w2pOS = FileUtil.getOutputStream("C:\\Users\\yeeee\\Desktop\\temp\\test\\word2Pdf.pdf");
         IoUtil.copy(new ByteArrayInputStream(outBytes), w2pOS);
     }
+
+
+    public static void replaceAllFonts() throws Exception {
+        //创建PdfDocument类的对象
+        PdfDocument pdf = new PdfDocument();
+
+        //加载PDF文档
+        pdf.loadFromFile("/Users/yeee/Workplaces/private/yeee-memo/simple-tools/simple-kit/files/1_全文片段对照报告.pdf");
+
+        //获取文档中的所有字体
+        PdfUsedFont[] fonts = pdf.getUsedFonts();
+
+        //遍历所有字体
+        for (PdfUsedFont font: fonts) {
+
+            //获取字体大小
+            float fontSize = font.getSize();
+
+            //创建新字体
+            PdfFont newfont = new PdfFont(PdfFontFamily.Helvetica, fontSize, PdfFontStyle.Regular);
+//            PdfTrueTypeFont newfont = new PdfTrueTypeFont(new Font("宋体", Font.PLAIN, (int) fontSize), true);
+
+            //替换原有字体
+            font.replace(newfont);
+        }
+
+        //保存文档
+        pdf.saveToFile("/Users/yeee/Workplaces/private/yeee-memo/simple-tools/simple-kit/files/ReplaceAllFonts.pdf");
+        pdf.dispose();
+    }
+
+
 }
