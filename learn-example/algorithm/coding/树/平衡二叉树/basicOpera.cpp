@@ -22,6 +22,12 @@ int getBalanceFactor(node* root){
 }
 
 void updateHeight(node* root){
+    if(root->lchild==NULL){
+        updateHeight(root->lchild)
+    }
+    if(root->rchild==NULL){
+        updateHeight(root->rchild)
+    }
 	root->height=max(getHeight(root->lchild),getHeight(root->rchild))+1;
 }
 
