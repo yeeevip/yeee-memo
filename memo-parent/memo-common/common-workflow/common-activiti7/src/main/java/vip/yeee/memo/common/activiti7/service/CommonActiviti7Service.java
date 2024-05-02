@@ -18,11 +18,18 @@ import org.activiti.api.task.model.Task;
 import org.activiti.api.task.model.builders.TaskPayloadBuilder;
 import org.activiti.api.task.model.payloads.CompleteTaskPayload;
 import org.activiti.api.task.runtime.TaskRuntime;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.bpmn.model.FlowElement;
+import org.activiti.bpmn.model.Process;
+import org.activiti.bpmn.model.SequenceFlow;
+import org.activiti.bpmn.model.UserTask;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricProcessInstance;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.TaskInfo;
@@ -41,13 +48,16 @@ import vip.yeee.memo.common.activiti7.model.request.TaskCompleteReq;
 import vip.yeee.memo.common.activiti7.model.vo.DefinitionVo;
 import vip.yeee.memo.common.activiti7.model.vo.HistoryInstanceVo;
 import vip.yeee.memo.common.activiti7.model.vo.InstanceVo;
+import vip.yeee.memo.common.activiti7.model.vo.TaskHighlightVo;
 import vip.yeee.memo.common.activiti7.model.vo.TaskVo;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -168,6 +178,7 @@ public class CommonActiviti7Service {
                     ProcessDefinition processDefinition = definitionMap.get(po.getProcessDefinitionId());
                     vo.setDefinitionName(processDefinition.getName());
                     vo.setDeploymentId(processDefinition.getDeploymentId());
+                    vo.setResourceName(processDefinition.getResourceName());
                     List<org.activiti.engine.task.Task> tasks = taskMap.get(po.getId());
                     vo.setCurTask(tasks.stream().map(TaskInfo::getName).collect(Collectors.joining()));
                     return vo;
@@ -211,6 +222,109 @@ public class CommonActiviti7Service {
         return null;
     }
 
+    public TaskHighlightVo instanceTaskHighlight(String instanceId) {
+        HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery()
+                .processInstanceId(instanceId).singleResult();
+        //获取bpmnModel对象
+        BpmnModel bpmnModel = repositoryService.getBpmnModel(historicProcessInstance.getProcessDefinitionId());
+        //因为我们这里只定义了一个Process 所以获取集合中的第一个即可
+        Process process = bpmnModel.getProcesses().get(0);
+        //获取所有的FlowElement信息
+        Collection<FlowElement> flowElements = process.getFlowElements();
+
+        Map<String, String> map = new HashMap<>();
+        for (FlowElement flowElement : flowElements) {
+            //判断是否是连线
+            if (flowElement instanceof SequenceFlow) {
+                SequenceFlow sequenceFlow = (SequenceFlow) flowElement;
+                String ref = sequenceFlow.getSourceRef();
+                String targetRef = sequenceFlow.getTargetRef();
+                map.put(ref + targetRef, sequenceFlow.getId());
+            }
+        }
+
+        //获取流程实例 历史节点(全部)
+        List<HistoricActivityInstance> list = historyService.createHistoricActivityInstanceQuery()
+                .processInstanceId(instanceId)
+                .list();
+        //各个历史节点   两两组合 key
+        Set<String> keyList = new HashSet<>();
+        for (HistoricActivityInstance i : list) {
+            for (HistoricActivityInstance j : list) {
+                if (i != j) {
+                    keyList.add(i.getActivityId() + j.getActivityId());
+                }
+            }
+        }
+        //高亮连线ID
+        Set<String> highLine = new HashSet<>();
+        keyList.forEach(s -> highLine.add(map.get(s)));
+
+
+        //获取流程实例 历史节点（已完成）
+        List<HistoricActivityInstance> listFinished = historyService.createHistoricActivityInstanceQuery()
+                .processInstanceId(instanceId)
+                .finished()
+                .list();
+        //高亮节点ID
+        Set<String> highPoint = new HashSet<>();
+        listFinished.forEach(s -> highPoint.add(s.getActivityId()));
+
+        //获取流程实例 历史节点（待办节点）
+        List<HistoricActivityInstance> listUnFinished = historyService.createHistoricActivityInstanceQuery()
+                .processInstanceId(instanceId)
+                .unfinished()
+                .list();
+
+        //需要移除的高亮连线
+        Set<String> set = new HashSet<>();
+        //待办高亮节点
+        Set<String> waitingToDo = new HashSet<>();
+        listUnFinished.forEach(s -> {
+            waitingToDo.add(s.getActivityId());
+
+            for (FlowElement flowElement : flowElements) {
+                //判断是否是 用户节点
+                if (flowElement instanceof UserTask) {
+                    UserTask userTask = (UserTask) flowElement;
+
+                    if (userTask.getId().equals(s.getActivityId())) {
+                        List<SequenceFlow> outgoingFlows = userTask.getOutgoingFlows();
+                        //因为 高亮连线查询的是所有节点  两两组合 把待办 之后  往外发出的连线 也包含进去了  所以要把高亮待办节点 之后 即出的连线去掉
+                        if (CollectionUtil.isNotEmpty(outgoingFlows)) {
+                            outgoingFlows.forEach(a -> {
+                                if (a.getSourceRef().equals(s.getActivityId())) {
+                                    set.add(a.getId());
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        });
+
+        highLine.removeAll(set);
+
+//
+//        //获取当前用户
+//        Set<String> iDo = new HashSet<>(); //存放 高亮 我的办理节点
+//        //当前用户已完成的任务
+//
+//        List<HistoricTaskInstance> taskInstanceList = historyService.createHistoricTaskInstanceQuery()
+//                .taskAssignee(securityManager.getAuthenticatedUserId())
+//                .finished()
+//                .processInstanceId(instanceId).list();
+//
+//        taskInstanceList.forEach(a -> iDo.add(a.getTaskDefinitionKey()));
+
+        TaskHighlightVo taskHighlightVo = new TaskHighlightVo();
+        taskHighlightVo.setHighPoint(highPoint);
+        taskHighlightVo.setHighLine(highLine);
+        taskHighlightVo.setWaitingToDo(waitingToDo);
+//        taskHighlightVo.setIDo(iDo);
+        return taskHighlightVo;
+    }
+
     public Void instanceDelete(InsDeleteReq req) {
         for (String instanceId : req.getIds()) {
             DeleteProcessPayload payload = ProcessPayloadBuilder
@@ -231,6 +345,7 @@ public class CommonActiviti7Service {
         }
         List<HistoricProcessInstance> historicProcessInstanceList = historyService.createHistoricProcessInstanceQuery()
                 .notDeleted()
+                .finished()
                 .listPage((reqVO.getPageNum() - 1) * reqVO.getPageSize(), reqVO.getPageSize());
 
         Set<String> pdIds = historicProcessInstanceList.stream().map(HistoricProcessInstance::getProcessDefinitionId).collect(Collectors.toSet());
@@ -249,6 +364,8 @@ public class CommonActiviti7Service {
                     vo.setEndTime(po.getEndTime());
                     ProcessDefinition processDefinition = definitionMap.get(po.getProcessDefinitionId());
                     vo.setDefinitionName(processDefinition.getName());
+                    vo.setDeploymentId(processDefinition.getDeploymentId());
+                    vo.setResourceName(processDefinition.getResourceName());
                     if (po.getDurationInMillis() != null) {
                         vo.setDuration(DateUtil.formatBetween(po.getDurationInMillis()));
                     }
@@ -288,6 +405,47 @@ public class CommonActiviti7Service {
                 })
                 .collect(Collectors.toList());
         pageVO.setTotal((long) page.getTotalItems());
+        pageVO.setResult(voList);
+        return pageVO;
+    }
+
+    public PageVO<TaskVo> taskHistoryList(PageReqVO<?> reqVO) {
+        PageVO<TaskVo> pageVO = new PageVO<>(reqVO.getPageNum(), reqVO.getPageSize());
+
+        long totalNum = historyService.createHistoricTaskInstanceQuery().finished()
+                .taskAssignee(securityManager.getAuthenticatedUserId()).count();
+        pageVO.setTotal(totalNum);
+        if (totalNum == 0) {
+            return pageVO;
+        }
+        List<HistoricTaskInstance> historicTaskInstanceList = historyService.createHistoricTaskInstanceQuery()
+                .finished()
+                .orderByHistoricTaskInstanceEndTime().desc()
+                .taskAssignee(securityManager.getAuthenticatedUserId())
+                .listPage((reqVO.getPageNum() - 1) * reqVO.getPageSize(), reqVO.getPageSize());
+        if (CollectionUtil.isEmpty(historicTaskInstanceList)) {
+            return pageVO;
+        }
+
+        Set<String> piIds = historicTaskInstanceList.stream().map(HistoricTaskInstance::getProcessInstanceId).collect(Collectors.toSet());
+        List<org.activiti.engine.runtime.ProcessInstance> instanceList = runtimeService.createProcessInstanceQuery().processInstanceIds(piIds).list();
+        Map<String, org.activiti.engine.runtime.ProcessInstance> definitionMap = instanceList.stream()
+                .collect(Collectors.toMap(org.activiti.engine.runtime.ProcessInstance::getId, Function.identity(), (o, n) -> n));
+        List<TaskVo> voList = historicTaskInstanceList
+                .stream()
+                .map(po -> {
+                    TaskVo vo = new TaskVo();
+                    vo.setId(po.getId());
+                    vo.setName(po.getName());
+                    vo.setEndDate(po.getEndTime());
+                    vo.setAssignee(po.getAssignee());
+                    org.activiti.engine.runtime.ProcessInstance instance = definitionMap.get(po.getProcessInstanceId());
+                    if (instance != null) {
+                        vo.setInstanceName(instance.getProcessDefinitionName());
+                    }
+                    return vo;
+                })
+                .collect(Collectors.toList());
         pageVO.setResult(voList);
         return pageVO;
     }

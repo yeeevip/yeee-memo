@@ -33,5 +33,7 @@ public class InstanceVo {
 
     private String deploymentId;
 
+    private String resourceName;
+
     private String curTask;
 }

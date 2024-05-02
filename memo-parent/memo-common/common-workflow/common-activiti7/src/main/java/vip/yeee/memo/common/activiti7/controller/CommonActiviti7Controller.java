@@ -13,6 +13,7 @@ import vip.yeee.memo.common.activiti7.model.request.TaskCompleteReq;
 import vip.yeee.memo.common.activiti7.model.vo.DefinitionVo;
 import vip.yeee.memo.common.activiti7.model.vo.HistoryInstanceVo;
 import vip.yeee.memo.common.activiti7.model.vo.InstanceVo;
+import vip.yeee.memo.common.activiti7.model.vo.TaskHighlightVo;
 import vip.yeee.memo.common.activiti7.model.vo.TaskVo;
 import vip.yeee.memo.common.activiti7.service.CommonActiviti7Service;
 
@@ -72,6 +73,11 @@ public class CommonActiviti7Controller {
         return CommonResult.success(commonActiviti7Service.instanceResume(instanceId));
     }
 
+    @RequestMapping(value = "/instance/taskHighlight")
+    public CommonResult<TaskHighlightVo> instanceTaskHighlight(String instanceId) {
+        return CommonResult.success(commonActiviti7Service.instanceTaskHighlight(instanceId));
+    }
+
     @PostMapping(value = "/instance/delete")
     public CommonResult<Void> instanceDelete(@RequestBody InsDeleteReq req) {
         return CommonResult.success(commonActiviti7Service.instanceDelete(req));
@@ -85,6 +91,11 @@ public class CommonActiviti7Controller {
     @RequestMapping(value = "/task/list")
     public CommonResult<PageVO<TaskVo>> taskList(PageReqVO<?> reqVO) {
         return CommonResult.success(commonActiviti7Service.taskList(reqVO));
+    }
+
+    @RequestMapping(value = "/task/history/list")
+    public CommonResult<PageVO<TaskVo>> taskHistoryList(PageReqVO<?> reqVO) {
+        return CommonResult.success(commonActiviti7Service.taskHistoryList(reqVO));
     }
 
     @PostMapping(value = "/task/complete")

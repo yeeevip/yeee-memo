@@ -30,4 +30,8 @@ public class HistoryInstanceVo {
 
     private String duration;
 
+    private String deploymentId;
+
+    private String resourceName;
+
 }
