@@ -14,6 +14,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>seata-client-postgresql</module>
         <module>seata-client-01</module>
         <module>seata-client-02</module>
         <module>seata-client-03</module>

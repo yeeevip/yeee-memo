@@ -18,4 +18,9 @@ public class SeataClient03Controller {
         return CommonResult.success(seataClient03Biz.seataExecOpr());
     }
 
+    @GetMapping("/seata/exec/mixdatabase/opr")
+    public CommonResult<Void> seataExecMixDatabaseOpr() {
+        return CommonResult.success(seataClient03Biz.seataExecMixDatabaseOpr());
+    }
+
 }

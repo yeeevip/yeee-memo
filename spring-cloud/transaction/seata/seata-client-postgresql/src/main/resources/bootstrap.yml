@@ -1,0 +1,33 @@
+server:
+  port: 8804
+  servlet:
+    context-path: /clientpgsql
+spring:
+  application:
+    name: seata-client-postgresql
+  profiles:
+    active: test
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://127.0.0.1:5432/public
+    username: postgres
+    password: root
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      discovery:
+        namespace: e69ceae8-160c-4d52-b512-ad0e919ad86b
+        group: ${spring.profiles.active}
+# seata 配置
+seata:
+  enabled: true
+  # 默认AT模式
+  data-source-proxy-mode: AT
+  # 使用哪个事务组
+  tx-service-group: yeee_test_tx_group
+  service:
+    # 事务组对应的集群名称
+    vgroup-mapping:
+      yeee_test_tx_group: seata-server-yeee
+    grouplist:
+      seata-server-yeee: 127.0.0.1:8091

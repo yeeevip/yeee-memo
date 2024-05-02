@@ -123,6 +123,10 @@
 
     1.业务库脚本(回滚日志表)
     -- for AT mode you must to init this sql for you business database. the seata server not need it.
+
+
+    -- mysql
+
     CREATE TABLE IF NOT EXISTS `undo_log`
     (
     `branch_id`     BIGINT(20)   NOT NULL COMMENT 'branch transaction id',
@@ -136,5 +140,27 @@
     ) ENGINE = InnoDB
     AUTO_INCREMENT = 1
     DEFAULT CHARSET = utf8 COMMENT ='AT transaction mode undo table';
+
+    -- postgresql
+
+    CREATE SEQUENCE undo_log_id_seq
+    START 1
+    INCREMENT 1;
+
+    DROP TABLE IF    EXISTS "undo_log";
+    CREATE TABLE "undo_log" (
+    "id" INT8 NOT NULL DEFAULT nextval('undo_log_seq'),
+    "branch_id" INT8 NOT NULL,
+    "xid" VARCHAR (100) NOT NULL,
+    "context" VARCHAR (128) NOT NULL,
+    "rollback_info" BYTEA NOT NULL,
+    "log_status" INT4 NOT NULL,
+    "log_created" TIMESTAMP,
+    "log_modified" TIMESTAMP,
+    "ext" VARCHAR (100) DEFAULT NULL,
+    PRIMARY KEY ("id"),
+    UNIQUE ("branch_id", "xid")
+    );
+
 
 
