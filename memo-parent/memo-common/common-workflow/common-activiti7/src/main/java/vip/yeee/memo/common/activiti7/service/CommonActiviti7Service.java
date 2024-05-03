@@ -3,6 +3,7 @@ package vip.yeee.memo.common.activiti7.service;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.IoUtil;
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.api.process.model.ProcessInstance;
 import org.activiti.api.process.model.builders.ProcessPayloadBuilder;
@@ -32,6 +33,7 @@ import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.task.IdentityLink;
 import org.activiti.engine.task.TaskInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -260,6 +262,8 @@ public class CommonActiviti7Service {
         Set<String> highLine = new HashSet<>();
         keyList.forEach(s -> highLine.add(map.get(s)));
 
+        Map<String, String> finishedUserTaskMap = Maps.newHashMap();
+        Map<String, String> unFinishedUserTaskMap = Maps.newHashMap();
 
         //获取流程实例 历史节点（已完成）
         List<HistoricActivityInstance> listFinished = historyService.createHistoricActivityInstanceQuery()
@@ -268,7 +272,12 @@ public class CommonActiviti7Service {
                 .list();
         //高亮节点ID
         Set<String> highPoint = new HashSet<>();
-        listFinished.forEach(s -> highPoint.add(s.getActivityId()));
+        listFinished.forEach(s -> {
+            highPoint.add(s.getActivityId());
+            if ("userTask".equals(s.getActivityType())) {
+                finishedUserTaskMap.put(s.getActivityId(), s.getAssignee());
+            }
+        });
 
         //获取流程实例 历史节点（待办节点）
         List<HistoricActivityInstance> listUnFinished = historyService.createHistoricActivityInstanceQuery()
@@ -301,6 +310,13 @@ public class CommonActiviti7Service {
                     }
                 }
             }
+
+            if ("userTask".equals(s.getActivityType())) {
+                List<IdentityLink> identityLinksForTask = taskService.getIdentityLinksForTask(s.getTaskId());
+                if (CollectionUtil.isNotEmpty(identityLinksForTask)) {
+                    unFinishedUserTaskMap.put(s.getActivityId(), identityLinksForTask.stream().map(IdentityLink::getUserId).collect(Collectors.joining(",")));
+                }
+            }
         });
 
         highLine.removeAll(set);
@@ -321,6 +337,11 @@ public class CommonActiviti7Service {
         taskHighlightVo.setHighPoint(highPoint);
         taskHighlightVo.setHighLine(highLine);
         taskHighlightVo.setWaitingToDo(waitingToDo);
+
+        taskHighlightVo.setFinishedUserTaskMap(finishedUserTaskMap);
+
+        taskHighlightVo.setUnFinishedUserTaskMap(unFinishedUserTaskMap);
+
 //        taskHighlightVo.setIDo(iDo);
         return taskHighlightVo;
     }

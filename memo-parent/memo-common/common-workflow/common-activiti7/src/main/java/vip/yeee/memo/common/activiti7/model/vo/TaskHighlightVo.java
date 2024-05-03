@@ -2,6 +2,7 @@ package vip.yeee.memo.common.activiti7.model.vo;
 
 import lombok.Data;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -20,4 +21,8 @@ public class TaskHighlightVo {
     private Set<String> iDo;
 
     private Set<String> waitingToDo;
+
+    private Map<String, String> finishedUserTaskMap;
+
+    private Map<String, String> unFinishedUserTaskMap;
 }
