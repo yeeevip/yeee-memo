@@ -9,7 +9,7 @@ spring:
     active: test
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://127.0.0.1:5432/public
+    url: jdbc:postgresql://127.0.0.1:5432/test
     username: postgres
     password: root
   cloud:
