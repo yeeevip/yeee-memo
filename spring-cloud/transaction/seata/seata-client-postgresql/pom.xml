@@ -25,6 +25,22 @@
             <version>2.5.0</version>
         </dependency>
         <dependency>
+            <groupId>org.locationtech.jts</groupId>
+            <artifactId>jts-core</artifactId>
+            <version>1.18.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-main</artifactId>
+            <version>28.2</version>
+        </dependency>
+        <!--      seata序列化    -->
+        <dependency>
+            <groupId>io.seata</groupId>
+            <artifactId>seata-serializer-kryo</artifactId>
+            <version>1.4.2</version>
+        </dependency>
+        <dependency>
             <groupId>vip.yeee.memo</groupId>
             <artifactId>common-web</artifactId>
         </dependency>

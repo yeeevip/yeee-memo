@@ -28,7 +28,7 @@ public class SeataClient01Biz {
         testEntity.setField2(DateUtil.format(new Date(), DatePattern.CHINESE_DATE_TIME_PATTERN));
         testEntityService.save(testEntity);
         log.info("seataExecOpr--->1 SUCCESS！！！");
-        throw new RuntimeException();
-//        return null;
+//        throw new RuntimeException();
+        return null;
     }
 }

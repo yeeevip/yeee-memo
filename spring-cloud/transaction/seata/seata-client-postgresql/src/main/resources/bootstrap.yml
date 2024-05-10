@@ -20,6 +20,9 @@ spring:
         group: ${spring.profiles.active}
 # seata 配置
 seata:
+  client:
+    undo:
+      logSerialization: kryo
   enabled: true
   # 默认AT模式
   data-source-proxy-mode: AT

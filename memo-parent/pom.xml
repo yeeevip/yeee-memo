@@ -190,6 +190,11 @@
             <name>Spring Milestones</name>
             <url>https://repo.spring.io/milestone</url>
         </repository>
+        <repository>
+            <id>mvnrepository</id>
+            <name>mvnrepository</name>
+            <url>https://nexus.terrestris.de/repository/public/</url>
+        </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
