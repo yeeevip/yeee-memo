@@ -35,7 +35,7 @@ public class AliPayConfigBO {
     /** 支付宝根证书 **/
     private String alipayRootCert;
 
-    private String gatewayUrl;
+    private String gatewayUrl = "https://openapi.alipay.com/gateway.do";
 
 
 
