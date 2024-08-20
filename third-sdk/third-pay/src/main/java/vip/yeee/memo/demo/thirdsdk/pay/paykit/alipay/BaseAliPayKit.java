@@ -203,7 +203,7 @@ public abstract class BaseAliPayKit implements PayKit {
 
     @Override
     public Pair<String, ChannelRetMsgBO> checkAndParseRefundNoticeParams() throws Exception {
-        return null;
+        return checkAndParsePayNoticeParams();
     }
 
     protected String getPayNotifyUrl() {
