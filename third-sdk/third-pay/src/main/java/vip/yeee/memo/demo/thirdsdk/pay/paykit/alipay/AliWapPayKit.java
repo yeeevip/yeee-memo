@@ -65,19 +65,40 @@ public class AliWapPayKit extends BaseAliPayKit {
             AlipayClient alipayClient = payContext.getAlipayClient();
             if (PayConstant.PAY_DATA_TYPE.FORM.equals(reqBO.getPayDataType())) {
                 AlipayTradeWapPayResponse response = alipayClient.pageExecute(req);
-                respBO.setFormContent(response.getBody());
-                retMsgBO.setChannelAttach(respBO.getFormContent());
-                retMsgBO.setChannelOrderId(response.getTradeNo());
+                if (response.isSuccess()) {
+                    retMsgBO.setChannelState(ChannelRetMsgBO.ChannelState.CONFIRM_SUCCESS);
+                    respBO.setFormContent(response.getBody());
+                    retMsgBO.setChannelAttach(respBO.getFormContent());
+                    retMsgBO.setChannelOrderId(response.getTradeNo());
+                } else {
+                    retMsgBO.setChannelState(ChannelRetMsgBO.ChannelState.CONFIRM_FAIL);
+                    retMsgBO.setChannelErrCode(response.getSubCode());
+                    retMsgBO.setChannelErrMsg(response.getSubMsg());
+                }
             } else if (PayConstant.PAY_DATA_TYPE.CODE_IMG_URL.equals(reqBO.getPayDataType())) {
                 AlipayTradeWapPayResponse response = alipayClient.pageExecute(req, "GET");
-                respBO.setCodeImgUrl(payProperties.getSiteUrl() + "/general/img/qr/" + PayKit.aes.encryptHex(response.getBody()) + ".png");
-                retMsgBO.setChannelAttach(respBO.getCodeImgUrl());
-                retMsgBO.setChannelOrderId(response.getTradeNo());
+                if (response.isSuccess()) {
+                    retMsgBO.setChannelState(ChannelRetMsgBO.ChannelState.CONFIRM_SUCCESS);
+                    respBO.setCodeImgUrl(payProperties.getSiteUrl() + "/general/img/qr/" + PayKit.aes.encryptHex(response.getBody()) + ".png");
+                    retMsgBO.setChannelAttach(respBO.getCodeImgUrl());
+                    retMsgBO.setChannelOrderId(response.getTradeNo());
+                } else {
+                    retMsgBO.setChannelState(ChannelRetMsgBO.ChannelState.CONFIRM_FAIL);
+                    retMsgBO.setChannelErrCode(response.getSubCode());
+                    retMsgBO.setChannelErrMsg(response.getSubMsg());
+                }
             } else {
                 AlipayTradeWapPayResponse response = alipayClient.pageExecute(req, "GET");
-                respBO.setPayUrl(response.getBody());
-                retMsgBO.setChannelAttach(respBO.getPayUrl());
-                retMsgBO.setChannelOrderId(response.getTradeNo());
+                if (response.isSuccess()) {
+                    retMsgBO.setChannelState(ChannelRetMsgBO.ChannelState.CONFIRM_SUCCESS);
+                    respBO.setPayUrl(response.getBody());
+                    retMsgBO.setChannelAttach(respBO.getPayUrl());
+                    retMsgBO.setChannelOrderId(response.getTradeNo());
+                } else {
+                    retMsgBO.setChannelState(ChannelRetMsgBO.ChannelState.CONFIRM_FAIL);
+                    retMsgBO.setChannelErrCode(response.getSubCode());
+                    retMsgBO.setChannelErrMsg(response.getSubMsg());
+                }
             }
             retMsgBO.setChannelState(ChannelRetMsgBO.ChannelState.WAITING);
             return respBO;
