@@ -61,14 +61,26 @@ public class AliPcPayKit extends BaseAliPayKit {
             respBO.setMchId(payContext.getAliPayConfig().getSubAppId());
             if(PayConstant.PAY_DATA_TYPE.FORM.equals(reqBO.getPayDataType())) {
                 AlipayTradePagePayResponse response = payContext.getAlipayClient().pageExecute(req);
-                respBO.setFormContent(response.getBody());
-                channelRetMsg.setChannelAttach(respBO.getFormContent());
-                channelRetMsg.setChannelOrderId(response.getTradeNo());
+                if (response.isSuccess()) {
+                    respBO.setFormContent(response.getBody());
+                    channelRetMsg.setChannelAttach(respBO.getFormContent());
+                    channelRetMsg.setChannelOrderId(response.getTradeNo());
+                } else {
+                    channelRetMsg.setChannelState(ChannelRetMsgBO.ChannelState.CONFIRM_FAIL);
+                    channelRetMsg.setChannelErrCode(response.getSubCode());
+                    channelRetMsg.setChannelErrMsg(response.getSubMsg());
+                }
             } else {
                 AlipayTradePagePayResponse response = payContext.getAlipayClient().pageExecute(req, "GET");
-                respBO.setPayUrl(response.getBody());
-                channelRetMsg.setChannelAttach(respBO.getPayUrl());
-                channelRetMsg.setChannelOrderId(response.getTradeNo());
+                if (response.isSuccess()) {
+                    respBO.setPayUrl(response.getBody());
+                    channelRetMsg.setChannelAttach(respBO.getPayUrl());
+                    channelRetMsg.setChannelOrderId(response.getTradeNo());
+                } else {
+                    channelRetMsg.setChannelState(ChannelRetMsgBO.ChannelState.CONFIRM_FAIL);
+                    channelRetMsg.setChannelErrCode(response.getSubCode());
+                    channelRetMsg.setChannelErrMsg(response.getSubMsg());
+                }
             }
             channelRetMsg.setChannelState(ChannelRetMsgBO.ChannelState.WAITING);
             return respBO;

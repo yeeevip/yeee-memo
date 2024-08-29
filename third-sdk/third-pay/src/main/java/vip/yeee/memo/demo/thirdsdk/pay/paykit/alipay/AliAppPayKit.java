@@ -54,10 +54,16 @@ public class AliAppPayKit extends BaseAliPayKit {
             // 调用sdkExecute生成orderStr（未真正请求支付宝服务端）
             // 用于商户客户端将orderStr传给支付宝APP（SDK）调用支付宝服务端进行支付预下单唤起支付宝收银台
             AlipayTradeAppPayResponse response = payContext.getAlipayClient().sdkExecute(req);
-            respBO.setPayData(response.getBody());
-            retMsgBO.setChannelAttach(respBO.getPayData());
-            retMsgBO.setChannelState(ChannelRetMsgBO.ChannelState.WAITING);
-            retMsgBO.setChannelOrderId(response.getTradeNo());
+            if (response.isSuccess()) {
+                respBO.setPayData(response.getBody());
+                retMsgBO.setChannelAttach(respBO.getPayData());
+                retMsgBO.setChannelState(ChannelRetMsgBO.ChannelState.WAITING);
+                retMsgBO.setChannelOrderId(response.getTradeNo());
+            } else {
+                retMsgBO.setChannelState(ChannelRetMsgBO.ChannelState.CONFIRM_FAIL);
+                retMsgBO.setChannelErrCode(response.getSubCode());
+                retMsgBO.setChannelErrMsg(response.getSubMsg());
+            }
             return respBO;
         } catch (Exception e) {
             log.info("【统一下单-支付宝APP支付】- 下单失败 reqBO = {}", reqBO,  e);
