@@ -12,6 +12,12 @@
 | yeee-crowdfunding | 大学生众筹平台      | [仓库](https://gitee.com/yeeevip/yeee-crowdfunding.git) |
 | yeee-activiti7    | activiti7工作流 | [仓库](https://gitee.com/yeeevip/yeee-activiti7.git) |
 
+## 升级版：JDK17 + SpringBoot3
+
+| 项目名称              | 描述                   |                          仓库地址                          |
+|:------------------|:---------------------|:------------------------------------------------------:|
+| Yeee-JavaWeb通用脚手架升级版         | JDK17 + SpringBoot3 |     [仓库](https://gitee.com/yeeevip/yeee-momoo)     | 
+
 ## 模块说明
 
 ---------------------------------
