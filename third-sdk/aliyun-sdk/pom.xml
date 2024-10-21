@@ -17,6 +17,7 @@
         <module>ali-nls</module> <!-- 智能语音 -->
         <module>ali-oss</module> <!-- 对象存储 -->
         <module>ali-pnp</module>
+        <module>ali-sms</module>
     </modules>
 
 </project>
