@@ -22,7 +22,7 @@ spring:
   redis:
     host: 127.0.0.1
     port: 6379
-    password: yeah
+    password:
     database: 6
 pagehelper:
 #  auto-dialect: false
@@ -41,5 +41,5 @@ yeee:
         - beanName: customeRedisTemplate01
           host: 127.0.0.1
           port: 6379
-          password: yeah
+          password:
           database: 0

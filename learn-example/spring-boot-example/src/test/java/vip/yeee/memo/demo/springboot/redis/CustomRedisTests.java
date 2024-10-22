@@ -5,11 +5,13 @@ import com.google.common.collect.Lists;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.scripting.support.ResourceScriptSource;
+import vip.yeee.memo.base.redis.utils.RedisUtil;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -28,6 +30,8 @@ public class CustomRedisTests {
 
     @Resource
     private RedisTemplate<String, Object> customeRedisTemplate01;
+    @Resource
+    private RedisUtil redisUtil;
 
     private DefaultRedisScript<CustomObject> updateObjectLuaScript = null;
 
@@ -54,7 +58,7 @@ public class CustomRedisTests {
         log.info("OLD = {}", old);
 
         ArrayList<String> keys = Lists.newArrayList(oldKey, newKey);
-        CustomObject replaced = customeRedisTemplate01.execute(updateObjectLuaScript, keys, "111111111", "用户1", new Date().getTime());
+        Object replaced = redisUtil.executeScript(updateObjectLuaScript, keys, "111111111", "用户1", new Date().getTime());
         log.info("REPLACED = {}", replaced);
 
         CustomObject news = (CustomObject) customeRedisTemplate01.opsForValue().get(newKey);

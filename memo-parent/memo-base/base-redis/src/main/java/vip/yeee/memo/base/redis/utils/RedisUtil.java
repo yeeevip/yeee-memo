@@ -9,9 +9,12 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.data.redis.connection.stream.*;
 import org.springframework.data.redis.core.*;
+import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.data.redis.domain.geo.BoundingBox;
 import org.springframework.data.redis.domain.geo.GeoReference;
 import org.springframework.stereotype.Component;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisCluster;
 import vip.yeee.memo.base.redis.constant.RedisConstant;
 
 import java.time.Duration;
@@ -818,6 +821,30 @@ public class RedisUtil {
             log.error("获取Stream失败，key[" + key + "]", e);
             throw new RuntimeException(e);
         }
+    }
+
+    public Object executeScript(RedisScript script, List<String> keys, Object... args) {
+        return redisTemplate.execute(script, keys, args);
+//        // 将可变参转为 List
+//        List<String> list = new ArrayList<>();
+//        for (Object arg : args) {
+//            list.add(arg.toString());
+//        }
+//        // 将 RedisScript 转换为 string 类型的脚本
+//        String scriptScriptAsString = script.getScriptAsString();
+//        return redisTemplate.execute((RedisCallback<Object>) connection -> {
+//            // 获取连接
+//            Object nativeConnection = connection.getNativeConnection();
+//            // 集群模式的实例
+//            if (nativeConnection instanceof JedisCluster) {
+//                return ((JedisCluster) nativeConnection).eval(scriptScriptAsString, keys, list);
+//            }
+//            // 单机模式的实例
+//            if (nativeConnection instanceof Jedis) {
+//                return ((Jedis) nativeConnection).eval(scriptScriptAsString, keys, list);
+//            }
+//            return null;
+//        });
     }
 
 }
