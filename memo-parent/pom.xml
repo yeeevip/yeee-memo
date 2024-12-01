@@ -195,6 +195,16 @@
             <name>mvnrepository</name>
             <url>https://nexus.terrestris.de/repository/public/</url>
         </repository>
+        <repository>
+            <id>mvnrepository.com</id>
+            <url>https://mvnrepository.com/repository/maven-public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
