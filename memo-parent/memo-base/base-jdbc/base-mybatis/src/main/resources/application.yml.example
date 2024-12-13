@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/java_memo?serverTimezone=GMT%2B8&useSSL=false
+    url: jdbc:mysql://localhost:3306/java_memo?characterEncoding=UTF-8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
     username: root
     password: root
 mybatis:
